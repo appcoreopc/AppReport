@@ -14,9 +14,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule, Routes } from '@angular/router';
 
+import { EmployeeEffects } from './employee/employee-component/employeeEffects';
+import {EmployeeReducer} from './employee/employee-component/employeeReducer';
 
 export const ROUTES: Routes = [
-  //{ path: '', component: DashboardComponent }
+   { path: 'employee', component: EmployeeComponentComponent },
+  { path: 'user', component: UserComponentComponent }
 ];
 
 
@@ -34,8 +37,8 @@ export const ROUTES: Routes = [
   imports: [
     BrowserModule, 
     HttpModule, 
-    StoreModule.forRoot([]),
-    EffectsModule.forRoot([]), 
+    StoreModule.forRoot([EmployeeReducer]),
+    EffectsModule.forRoot([EmployeeEffects]), 
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],
