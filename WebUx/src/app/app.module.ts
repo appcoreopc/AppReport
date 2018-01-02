@@ -13,6 +13,7 @@ import { ConfigResourceComponentComponent } from './setup/config-resource-compon
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule, Routes } from '@angular/router';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { EmployeeEffects } from './employee/employee-component/employeeEffects';
 import {EmployeeReducer} from './employee/employee-component/employeeReducer';
@@ -35,7 +36,7 @@ export const ROUTES: Routes = [
     ConfigResourceComponentComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule, NgxDatatableModule,
     HttpModule, 
     StoreModule.forRoot([EmployeeReducer]),
     EffectsModule.forRoot([EmployeeEffects]), 
