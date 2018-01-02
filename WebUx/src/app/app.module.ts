@@ -10,10 +10,19 @@ import { MaterialCategoryComponentComponent } from './material/material-category
 import { StnCustomComponentComponent } from './material/stn-custom-component/stn-custom-component.component';
 import { SupplierComponentComponent } from './material/supplier-component/supplier-component.component';
 import { ConfigResourceComponentComponent } from './setup/config-resource-component/config-resource-component.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { RouterModule, Routes } from '@angular/router';
+
+
+export const ROUTES: Routes = [
+  //{ path: '', component: DashboardComponent }
+];
+
 
 @NgModule({
   declarations: [
-    AppComponent,
+      AppComponent,
     UserComponentComponent,
     EmployeeComponentComponent,
     RawMaterialComponentComponent,
@@ -24,7 +33,10 @@ import { ConfigResourceComponentComponent } from './setup/config-resource-compon
   ],
   imports: [
     BrowserModule, 
-    HttpModule
+    HttpModule, 
+    StoreModule.forRoot([]),
+    EffectsModule.forRoot([]), 
+    RouterModule.forRoot(ROUTES)
   ],
   providers: [],
   bootstrap: [AppComponent]
