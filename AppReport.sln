@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppReport", "AppReport\AppReport.csproj", "{623D8CAB-4701-40F2-B5B9-635C59F3E1D9}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{D36181A6-AA85-4B7B-A1AF-CDD16E70CB75}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AppReportDataStore", "AppReportDataStore\AppReportDataStore.sqlproj", "{8C191657-632F-48EE-801A-98F310A194D5}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PTS", "PTS\PTS.sqlproj", "{23ECABBF-2D85-4E96-9575-CA2CE80E637C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,17 @@ Global
 		{D36181A6-AA85-4B7B-A1AF-CDD16E70CB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D36181A6-AA85-4B7B-A1AF-CDD16E70CB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D36181A6-AA85-4B7B-A1AF-CDD16E70CB75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C191657-632F-48EE-801A-98F310A194D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C191657-632F-48EE-801A-98F310A194D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C191657-632F-48EE-801A-98F310A194D5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{8C191657-632F-48EE-801A-98F310A194D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C191657-632F-48EE-801A-98F310A194D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C191657-632F-48EE-801A-98F310A194D5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{23ECABBF-2D85-4E96-9575-CA2CE80E637C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23ECABBF-2D85-4E96-9575-CA2CE80E637C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23ECABBF-2D85-4E96-9575-CA2CE80E637C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{23ECABBF-2D85-4E96-9575-CA2CE80E637C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23ECABBF-2D85-4E96-9575-CA2CE80E637C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23ECABBF-2D85-4E96-9575-CA2CE80E637C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {966709DC-06E2-4B0F-A5C1-C548E131F09B}
 	EndGlobalSection
 EndGlobal
