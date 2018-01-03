@@ -1,6 +1,7 @@
-AppReport\bin\*
-AppReport\obj\*
-PTS\bin\*
-PTS\obj\*
-AppReport.Services\bin\*
-AppReport.Services\obj\*
+AppReport/bin
+AppReport/obj
+PTS/bin
+PTS/obj
+AppReport.Services/bin
+AppReport.Services/obj
+
