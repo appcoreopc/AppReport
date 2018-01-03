@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AppReport.Config;
+using AppReport.Services.PTSDataModel;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -24,6 +27,11 @@ namespace AppReport
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+
+            services.Configure<AppConfig>(Configuration);
+
+            services.AddDbContext<PTSContext>(options => options.UseSqlServer(Configuration.GetConnectionString(AppConstant.DatabaseName)));
+            
             services.AddMvc();
         }
 
