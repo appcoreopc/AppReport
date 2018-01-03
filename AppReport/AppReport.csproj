@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputType>exe</OutputType>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -11,6 +11,7 @@
     <ApplicationIcon />
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
+    <AssemblyName>AppReport</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,6 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppReport.Services\AppReport.Services.csproj" />
   </ItemGroup>
 
 </Project>

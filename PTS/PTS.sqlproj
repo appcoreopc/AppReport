@@ -113,5 +113,6 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
+    <Build Include="dbo\Tables\Employe.sql" />
   </ItemGroup>
 </Project>
