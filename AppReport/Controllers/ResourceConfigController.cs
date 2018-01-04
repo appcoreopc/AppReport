@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppReport.Controllers
 {
+    [Route("api/[controller]")]
     public class ResourceConfigController : Controller
     {
         public IActionResult Index()

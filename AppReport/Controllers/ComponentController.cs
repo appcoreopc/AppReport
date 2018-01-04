@@ -1,13 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using AppReport.Services.PTSDataModel;
 
 namespace AppReport.Controllers
 {
     public class ComponentController : Controller
     {
+        private PTSContext _ptsContext;
+
+        public ComponentController(PTSContext ptsContext)
+        {
+            _ptsContext = ptsContext;
+        }
+
         public IActionResult Index()
         {
             return View();
