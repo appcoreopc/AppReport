@@ -14,5 +14,15 @@ namespace AppReport.Services
         {
             _context = context;
         }
+        
+        public IEnumerable<Rmaterial> GetAllUsers()
+        {
+            return _context.Rmaterial;
+        }
+
+        public IEnumerable<Rmaterial> GetAllUsers(int skipAmount, int takeAmount)
+        {
+            return _context.Rmaterial.Skip(skipAmount).Take(takeAmount);
+        }
     }
 }

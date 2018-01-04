@@ -14,6 +14,16 @@ namespace AppReport.Services
         {
             _context = context;
         }
+
+        public IEnumerable<Supplier> GetAll()
+        {
+            return _context.Supplier;
+        }
+
+        public IEnumerable<Supplier> GetAll(int skipAmount, int takeAmount)
+        {
+            return _context.Supplier.Skip(skipAmount).Take(takeAmount);
+        }
     }
        
 
