@@ -1,4 +1,4 @@
-﻿using AppReport.Services.PTSDataModel;
+﻿using AppReport.DataServices.PTSDataModel;
 
 namespace AppReport.Services
 {

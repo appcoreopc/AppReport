@@ -1,4 +1,4 @@
-using AppReport.Services.PTSDataModel;
+using AppReport.DataServices.PTSDataModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppReport.Controllers

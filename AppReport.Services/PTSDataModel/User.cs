@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppReport.Services.PTSDataModel
+namespace AppReport.DataServices.PTSDataModel
 {
     public partial class User
     {

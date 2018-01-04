@@ -1,5 +1,5 @@
 ﻿using AppReport.Config;
-using AppReport.Services.PTSDataModel;
+using AppReport.DataServices.PTSDataModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

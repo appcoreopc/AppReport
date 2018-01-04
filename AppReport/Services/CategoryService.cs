@@ -1,10 +1,10 @@
-﻿using AppReport.Services.PTSDataModel;
+﻿using AppReport.DataServices.PTSDataModel;
 
 namespace AppReport.Services
 {
     public class CategoryService
     {
-        PTSContext _context;
+        private PTSContext _context;
         public CategoryService(PTSContext context)
         {
             _context = context;

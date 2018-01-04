@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using AppReport.Services.PTSDataModel;
+using AppReport.DataServices.PTSDataModel;
 using AppReport.RequestModel;
 using AppReport.Services;
 
