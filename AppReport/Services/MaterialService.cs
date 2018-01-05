@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace AppReport.Services
 {
-    public class MaterialService
+    public class MaterialService : AppDataObject
     {
         private PTSContext _context;
 
-        public MaterialService(PTSContext context)
+        public MaterialService(PTSContext context):base(context)
         {
             _context = context;
         }
         
-        public IEnumerable<Rmaterial> GetAllUsers()
+        public IEnumerable<Rmaterial> GetAll()
         {
             return _context.Rmaterial;
         }
@@ -24,5 +24,19 @@ namespace AppReport.Services
         {
             return _context.Rmaterial.Skip(skipAmount).Take(takeAmount);
         }
+
+        public bool Delete(int id)
+        {
+            return Remove<Rmaterial>(id);
+        }
+
+        public bool Save(Rmaterial user)
+        {
+            return Save<Rmaterial>(user, user.Rmid);
+        }
+
+
     }
+
+
 }

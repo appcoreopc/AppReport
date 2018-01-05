@@ -25,37 +25,35 @@ namespace AppReport.Controllers
         {
             var users = new UserService(_ptsContext).GetAll();
             return new JsonResult(users);
-        }     
+        }
 
         [HttpPost]
         public IActionResult Save(UserRequestModel requestUser)
         {
-            var user = new User()
+            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))
             {
-                Name = requestUser.Name,
-            };
+                var user = new User()
+                {
+                    Id = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
+                    Name = requestUser.Name,
+                };
 
-            if (user != null && !string.IsNullOrEmpty(user.Name))
-            {
                 var result = new UserService(_ptsContext).Save<User>(user, user.Id);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
-
             return new BadRequestResult();
-
         }
-        
+
         [HttpDelete]
-        public IActionResult Delete(UserRequestModel user)
+        public IActionResult Delete(UserRequestModel requestData)
         {
-            if (user.Id.HasValue)
+            if (requestData.Id.HasValue)
             {
-                var result = new UserService(_ptsContext).Delete(user.Id.Value);
+                var result = new UserService(_ptsContext).Delete(requestData.Id.Value);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else
                 return new BadRequestResult();
-
         }
     }
 

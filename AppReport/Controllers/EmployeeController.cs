@@ -27,22 +27,28 @@ namespace AppReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save(EmployeeRequestModel requestEmployee)
+        public IActionResult Save(UserRequestModel requestUser)
         {
-            var user = new Employee()
+            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))
             {
-                EmpName = requestEmployee.Name,
-            };
-            var result = new EmployeeService(_ptsContext).Save(user);
-            return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                var user = new Employee()
+                {
+                    EmpId = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
+                    EmpName = requestUser.Name,
+                };
+
+                var result = new EmployeeService(_ptsContext).Save<Employee>(user, user.EmpId);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+            }
+            return new BadRequestResult();
         }
 
         [HttpDelete]
-        public IActionResult Delete(EmployeeRequestModel user)
+        public IActionResult Delete(UserRequestModel requestData)
         {
-            if (user.Id.HasValue)
+            if (requestData.Id.HasValue)
             {
-                var result = new EmployeeService(_ptsContext).Delete(user.Id.Value);
+                var result = new UserService(_ptsContext).Delete(requestData.Id.Value);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else
