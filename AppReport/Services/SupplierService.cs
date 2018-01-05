@@ -1,16 +1,14 @@
 ﻿using AppReport.DataServices.PTSDataModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppReport.Services
 {
-    public class SupplierService
+    public class SupplierService : AppDataObject
     {
         private PTSContext _context;
 
-        public SupplierService(PTSContext context)
+        public SupplierService(PTSContext context): base(context)
         {
             _context = context;
         }
@@ -24,7 +22,21 @@ namespace AppReport.Services
         {
             return _context.Supplier.Skip(skipAmount).Take(takeAmount);
         }
-    }
-       
+
+        public bool SaveUser(Supplier supplier)
+        {
+            return base.Save<Supplier>(supplier);
+        }
+
+        public bool SaveUser(int supplierId)
+        {
+            var supplier = FindById<Supplier>(supplierId);
+            if (supplier != null)
+                return Save(supplier);
+            else
+                return false;
+        }
+
+    }       
 
 }

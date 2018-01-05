@@ -2,14 +2,13 @@
 
 namespace AppReport.Services
 {
-    public class CategoryService
+    public class CategoryService  : AppDataObject
     {
         private PTSContext _context;
-        public CategoryService(PTSContext context)
+        public CategoryService(PTSContext context):base(context)
         {
             _context = context;
         }
-        
-    
+            
     }
 }

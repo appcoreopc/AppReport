@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace AppReport.Services
 {
-    public class UserService
+    public class UserService : AppDataObject
     {
         private PTSContext _context;
 
-        public UserService(PTSContext context)
+        public UserService(PTSContext context):base(context)
         {
             _context = context;
         }
         
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<User> GetAll()
         {
             return _context.User;
         }
@@ -23,5 +23,16 @@ namespace AppReport.Services
         {
             return _context.User.Skip(skipAmount).Take(takeAmount);
         }
+        
+        public bool Delete(int id)
+        {
+            return Remove<User>(id);
+        }
+
+        public bool Save(User user)
+        {
+            return Save<User>(user);
+        }
+    
     }
 }

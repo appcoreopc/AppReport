@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using AppReport.DataServices.PTSDataModel;
 using AppReport.RequestModel;
 using AppReport.Services;
+using AppReport.Util;
 
 namespace AppReport.Controllers
 {
@@ -10,9 +11,7 @@ namespace AppReport.Controllers
     {
         private PTSContext _ptsContext;
 
-        /// <summary>
-        /// 
-        /// 
+        /// <summary>     
         /// http://hamidmosalla.com/2017/03/29/asp-net-core-action-results-explained/
         /// </summary>
         /// <param name="ptsContext"></param>
@@ -20,24 +19,38 @@ namespace AppReport.Controllers
         {
             _ptsContext = ptsContext;
         }
-        
+
         [HttpGet]
         public IActionResult Index()
         {
-            var users = new UserService(_ptsContext).GetAllUsers();
+            var users = new UserService(_ptsContext).GetAll();
             return new JsonResult(users);
-        }
-        
+        }     
+
         [HttpPost]
-        public IActionResult Save(UserRequestModel user)
+        public IActionResult Save(UserRequestModel requestUser)
         {
-            return new CreatedResult("", "ok");
+            var user = new User()
+            {
+                Name = requestUser.Name,
+            };
+
+            var result = new UserService(_ptsContext).Save(user);
+            return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+
         }
         
         [HttpDelete]
         public IActionResult Delete(UserRequestModel user)
-        {          
-            return new OkResult(); // if fails return new NoContentResult();
+        {
+            if (user.Id.HasValue)
+            {
+                var result = new UserService(_ptsContext).Delete(user.Id.Value);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+            }
+            else
+                return new BadRequestResult();
+
         }
     }
 
