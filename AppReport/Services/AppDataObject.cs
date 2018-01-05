@@ -11,8 +11,8 @@ namespace AppReport.Services
         {
             _context = context;
         }
-                
-        public bool Remove<T>(params int[] ids) where T : class 
+
+        public bool Remove<T>(params int[] ids) where T : class
         {
             foreach (var item in ids)
             {
@@ -23,25 +23,25 @@ namespace AppReport.Services
             var noOfObjectChanged = _context.SaveChanges();
             return noOfObjectChanged > 0 ? true : false;
         }
-        
-        public bool Save<T>(params T[] items) where T : class
-        {
-            foreach (var item in items)
-            {
-                var target = _context.Find<T>(item);
-                if (target == null)
-                    _context.Add(target);
-                else
-                    _context.Update(target);
 
-            }
+        public bool Save<T>(T target, int? uniqueId) where T : class
+        {
+            if (!uniqueId.HasValue)
+                _context.Add<T>(target);
+
+            var updateTarget = _context.Find<T>(uniqueId);
+            if (updateTarget != null)
+                _context.Update(target);
+            else
+                _context.Add<T>(target);
+            
             var noOfObjectChanged = _context.SaveChanges();
             return noOfObjectChanged > 0 ? true : false;
         }
-                        
+
         public T FindById<T>(int id) where T : class
         {
-            return _context.Find<T>(id);           
+            return _context.Find<T>(id);
         }
 
     }

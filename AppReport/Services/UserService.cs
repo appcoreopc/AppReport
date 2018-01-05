@@ -31,7 +31,7 @@ namespace AppReport.Services
 
         public bool Save(User user)
         {
-            return Save<User>(user);
+            return Save<User>(user, user.Id);
         }
     
     }

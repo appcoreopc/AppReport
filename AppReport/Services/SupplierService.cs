@@ -25,17 +25,8 @@ namespace AppReport.Services
 
         public bool SaveUser(Supplier supplier)
         {
-            return base.Save<Supplier>(supplier);
-        }
-
-        public bool SaveUser(int supplierId)
-        {
-            var supplier = FindById<Supplier>(supplierId);
-            if (supplier != null)
-                return Save(supplier);
-            else
-                return false;
-        }
+            return base.Save<Supplier>(supplier, supplier.SupplierId);
+        }       
 
     }       
 

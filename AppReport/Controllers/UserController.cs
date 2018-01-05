@@ -35,8 +35,13 @@ namespace AppReport.Controllers
                 Name = requestUser.Name,
             };
 
-            var result = new UserService(_ptsContext).Save(user);
-            return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+            if (user != null && !string.IsNullOrEmpty(user.Name))
+            {
+                var result = new UserService(_ptsContext).Save<User>(user, user.Id);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+            }
+
+            return new BadRequestResult();
 
         }
         

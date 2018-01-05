@@ -8,32 +8,32 @@ namespace AppReport.Services
     {
         private PTSContext _context;
 
-        EmployeeService(PTSContext context) : base(context)
+        public EmployeeService(PTSContext context) : base(context)
         {
             _context = context;
         }
 
-        public IEnumerable<Employee> GetAllUsers()
+        public IEnumerable<Employee> GetAll()
         {
             return _context.Employee;
         }
 
-        public IEnumerable<Employee> GetAllUsers(int skipAmount, int takeAmount)
+        public IEnumerable<Employee> GetAll(int skipAmount, int takeAmount)
         {
             return _context.Employee.Skip(skipAmount).Take(takeAmount);
         }
 
-        public bool DeleteUser(int id)
+        public bool Delete(int id)
         {
             return Remove<User>(id);
         }
         
-        public bool SaveUser(Employee user)
+        public bool Save(Employee user)
         {
-            return base.Save<Employee>(user);
+            return base.Save<Employee>(user, user.EmpId);
         }
 
-        public bool SaveUser(int userId)
+        public bool Save(int userId)
         {
             var user = FindById<Employee>(userId);
             if (user != null)
