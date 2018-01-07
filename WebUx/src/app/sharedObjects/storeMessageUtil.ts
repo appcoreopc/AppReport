@@ -29,9 +29,7 @@
             {                      
                 switch (message.data.type) {
                     case messageType:  
-                    return message.data.data;                        
-                    //var list = JSON.parse(message.data);
-                    //return list;
+                    return { data : message.data.data, type : messageType};    
                 }
             }
         }

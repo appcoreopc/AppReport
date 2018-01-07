@@ -11,32 +11,23 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 })
 
 export class UserComponentComponent implements OnInit {
-
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
+ 
+  rows = [];
 
   columns = [
     { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
+    { name: 'username' }   
   ];
 
-  userSubscription : Subscription;  
-  
+  userSubscription : Subscription;
+  dataList : Array<any> = new Array<any>(); 
+
   constructor(private store : Store<CityAppState>) { 
   }
 
-  ngOnInit() {
-
-    console.log('init subscription');    
-    this.userSubscription = this.store.subscribe(appData => {
-      
-      //this.handleMessage(this.getMessage(appData));  
-      console.log(appData);
-      messageUtil.handleMessage(messageUtil.getMessage(appData, 'USER_GET_OK'), 'USER_GET_OK');
+  ngOnInit() {   
+    this.userSubscription = this.store.subscribe(appData => {           
+      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, USER_GET_OK), USER_GET_OK));
     }); 
   }
 
@@ -44,14 +35,33 @@ export class UserComponentComponent implements OnInit {
      this.getEmployeeRecord();
   }
    
-  save() {     
+  save() {    
   }  
+
+  componentMessageHandle(message : any) {
+
+    if (message && message.type == USER_GET_OK)
+    {
+      this.rows.length = 0;
+      for (var idx in message.data)
+      {
+        var userInfo = message.data[idx];    
+        this.dataList.push({  
+            name : userInfo.name, 
+            username : userInfo.username
+        });
+
+        console.log(this.rows);
+        this.rows = this.dataList;
+      }
+    }    
+  }
 
   getEmployeeRecord()
   {   
     this.store.dispatch(
       {     
-      type: USER_GET 
-    });      
+        type: USER_GET 
+      });      
   }
 }
