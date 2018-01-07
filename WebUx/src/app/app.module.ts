@@ -4,6 +4,9 @@ import { HttpModule} from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { UserComponentComponent } from './user/user-component/user-component.component';
+import { NavigationComponent } from './navigation/navigation.component';
+
+
 import { EmployeeComponentComponent } from './employee/employee-component/employee-component.component';
 import { RawMaterialComponentComponent } from './material/raw-material-component/raw-material-component.component';
 import { MaterialCategoryComponentComponent } from './material/material-category-component/material-category-component.component';
@@ -17,31 +20,33 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { EmployeeEffects } from './employee/employee-component/employeeEffects';
 import {EmployeeReducer} from './employee/employee-component/employeeReducer';
-import { NavigationComponent } from './navigation/navigation.component';
+
+import { UserEffects } from './user/user-component/userEffects';
+import { UserReducer} from './user/user-component/userReducer';
 
 export const ROUTES: Routes = [
    { path: 'employee', component: EmployeeComponentComponent },
-  { path: 'user', component: UserComponentComponent }
+   { path: 'user', component: UserComponentComponent }
 ];
 
 
 @NgModule({
   declarations: [
-      AppComponent,
+    AppComponent,
     UserComponentComponent,
     EmployeeComponentComponent,
+    NavigationComponent,
     RawMaterialComponentComponent,
     MaterialCategoryComponentComponent,
     StnCustomComponentComponent,
     SupplierComponentComponent,
-    ConfigResourceComponentComponent,
-    NavigationComponent
+    ConfigResourceComponentComponent
   ],
   imports: [
     BrowserModule, NgxDatatableModule,
     HttpModule, 
-    StoreModule.forRoot([EmployeeReducer]),
-    EffectsModule.forRoot([EmployeeEffects]), 
+    StoreModule.forRoot([EmployeeReducer, UserReducer]),
+    EffectsModule.forRoot([EmployeeEffects, UserEffects]), 
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],

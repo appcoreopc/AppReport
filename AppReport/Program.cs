@@ -15,10 +15,10 @@ namespace AppReport
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()
+                .UseStartup<Startup>().UseUrls("http://localhost:5050")
                 .UseApplicationInsights()
                 .Build();
-
+            
             host.Run();
         }
     }

@@ -33,6 +33,8 @@ namespace AppReport
             services.AddDbContext<PTSContext>(options => options.UseSqlServer(Configuration.GetConnectionString(AppConstant.DatabaseName)));
             
             services.AddMvc();
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +44,11 @@ namespace AppReport
 
             loggerFactory.AddDebug();
 
-           app.UseMvc();
+            app.UseCors(option => option.WithOrigins("*").AllowAnyMethod()); 
+
+            app.UseMvc();
+
+                
         }
     }
 }

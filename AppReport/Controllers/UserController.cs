@@ -23,6 +23,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
             var users = new UserService(_ptsContext).GetAll();
             return new JsonResult(users);
         }

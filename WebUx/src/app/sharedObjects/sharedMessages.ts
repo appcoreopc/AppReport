@@ -60,9 +60,6 @@ export const STN_CUSTOM_GET = 'STN_CUSTOM_GET';
 export const STN_CUSTOM_GET_ERR = 'STN_CUSTOM_GET_ERR';
 export const STN_CUSTOM_GET_OK = 'STN_CUSTOM_GET_OK';
 
-
-
-
 export interface CityAppState {
 	status: number;	
 	type : string; 
