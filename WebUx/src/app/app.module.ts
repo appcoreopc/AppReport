@@ -17,6 +17,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { EmployeeEffects } from './employee/employee-component/employeeEffects';
 import {EmployeeReducer} from './employee/employee-component/employeeReducer';
+import { NavigationComponent } from './navigation/navigation.component';
 
 export const ROUTES: Routes = [
    { path: 'employee', component: EmployeeComponentComponent },
@@ -33,7 +34,8 @@ export const ROUTES: Routes = [
     MaterialCategoryComponentComponent,
     StnCustomComponentComponent,
     SupplierComponentComponent,
-    ConfigResourceComponentComponent
+    ConfigResourceComponentComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule, NgxDatatableModule,
