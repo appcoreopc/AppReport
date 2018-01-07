@@ -8,7 +8,8 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
 		export function UserReducer(status: CityAppState, action: Action) {
 	switch (action.type) {
 		case USER_GET_OK: 
-		  console.log(action);
+			console.log(action);
+			console.log('user get ok')
 		  return  { status : 1, data : action, type: USER_GET_OK };
 		case USER_SAVE:	
 		  console.log('employee save');	  
