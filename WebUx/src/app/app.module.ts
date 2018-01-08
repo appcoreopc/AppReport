@@ -29,6 +29,7 @@ export const ROUTES: Routes = [
    { path: 'user', component: UserComponentComponent }
 ];
 
+import { ReactiveFormsModule }          from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ export const ROUTES: Routes = [
     ConfigResourceComponentComponent
   ],
   imports: [
-    BrowserModule, NgxDatatableModule,
+    BrowserModule, NgxDatatableModule,ReactiveFormsModule,
     HttpModule, 
     StoreModule.forRoot([EmployeeReducer, UserReducer]),
     EffectsModule.forRoot([EmployeeEffects, UserEffects]), 

@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { CityAppState, USER_GET, USER_GET_OK, USER_SAVE } from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
+import { UserModel } from "../../model/UserModel";
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-component',
@@ -13,6 +15,10 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 export class UserComponentComponent implements OnInit {
  
+  private person: UserModel = new UserModel();
+
+  private personForm: FormGroup;
+
   rows = [];
 
   columns = [
@@ -23,13 +29,16 @@ export class UserComponentComponent implements OnInit {
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
 
-  constructor(private store : Store<CityAppState>) { 
+  constructor(private store : Store<CityAppState>, 
+    private fb: FormBuilder) { 
   }
 
   ngOnInit() {   
     this.userSubscription = this.store.subscribe(appData => {           
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, USER_GET_OK), USER_GET_OK));
     }); 
+
+    this.initForm();
   }
 
   ngAfterViewInit() {
@@ -58,6 +67,22 @@ export class UserComponentComponent implements OnInit {
       }
     }    
   }
+
+  private initForm() {
+    this.personForm = this.fb.group({
+      'name': [this.person.name, [Validators.required, Validators.minLength(1),
+      Validators.maxLength(24)]],
+      'username': [this.person.username, [Validators.required, Validators.minLength(1),
+      Validators.maxLength(24)]]
+    });
+
+    this.personForm.valueChanges.debounceTime(500)
+      .subscribe(data => this.onValueChanged(data));
+  }
+
+  onValueChanged(data?: UserModel) {
+  }
+
 
   dispatchIntent(messageType : string, data? : any)
   {   

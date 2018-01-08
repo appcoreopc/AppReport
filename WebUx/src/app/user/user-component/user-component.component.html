@@ -1,19 +1,23 @@
-<div>
-      <ul>      
-      <li> 
-        User Name 
-      </li>
-      <li> 
-        User Type 
-      </li>
-      <li> 
-        Password 
-      </li>
-    </ul>
-    
-  </div>
 
+<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+  
+  <div>
+      <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" class="form-control" formControlName="name">         
+      </div>
+
+      <div class="form-group">
+          <label for="username">Username</label>
+          <input id="username" type="text" class="form-control" formControlName="username">         
+      </div>    
+  </div>
+  
   <button (click)="save()"> Save </button>
+
+  <p>Form value: {{ personForm.value | json }}</p>
+
+</form>
 
 <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
 [rows]="rows"
