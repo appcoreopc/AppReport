@@ -14,24 +14,24 @@ namespace AppReport.Services
             _context = context;
         }
         
-        public IEnumerable<User> GetAll()
+        public IEnumerable<Users> GetAll()
         {
-            return _context.User;
+            return _context.Users;
         }
 
-        public IEnumerable<User> GetAllUsers(int skipAmount, int takeAmount)
+        public IEnumerable<Users> GetAllUsers(int skipAmount, int takeAmount)
         {
-            return _context.User.Skip(skipAmount).Take(takeAmount);
+            return _context.Users.Skip(skipAmount).Take(takeAmount);
         }
         
         public bool Delete(int id)
         {
-            return Remove<User>(id);
+            return Remove<Users>(id);
         }
 
-        public bool Save(User user)
+        public bool Save(Users user)
         {
-            return Save<User>(user, user.Id);
+            return Save<Users>(user, user.UserId);
         }
     
     }

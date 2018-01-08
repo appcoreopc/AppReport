@@ -30,7 +30,6 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<Uom> Uom { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
-        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         // Unable to generate entity type for table 'dbo.RMCat'. Please see the warning messages.
@@ -38,7 +37,7 @@ namespace AppReport.DataServices.PTSDataModel
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlServer(@"Server=localhost;Database=PTS;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1121,6 +1120,58 @@ namespace AppReport.DataServices.PTSDataModel
                     .HasColumnName("EditedDT")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.FCoAdd1)
+                    .HasColumnName("F_CoAdd1")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoAdd2)
+                    .HasColumnName("F_CoAdd2")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoAdd3)
+                    .HasColumnName("F_CoAdd3")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoAdd4)
+                    .HasColumnName("F_CoAdd4")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoEmail)
+                    .HasColumnName("F_CoEmail")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoFax)
+                    .HasColumnName("F_CoFax")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoGstno)
+                    .HasColumnName("F_CoGSTNo")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoLogo)
+                    .HasColumnName("F_CoLogo")
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(e => e.FCoName)
+                    .HasColumnName("F_CoName")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FCoRegNo)
+                    .HasColumnName("F_CoRegNo")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoSplno)
+                    .HasColumnName("F_CoSPLNo")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoTel)
+                    .HasColumnName("F_CoTel")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoWebsite)
+                    .HasColumnName("F_CoWebsite")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.FGstcost)
                     .HasColumnName("F_GSTCost")
                     .HasColumnType("decimal");
@@ -1128,18 +1179,6 @@ namespace AppReport.DataServices.PTSDataModel
                 entity.Property(e => e.FImpCost)
                     .HasColumnName("F_ImpCost")
                     .HasColumnType("decimal");
-
-                entity.Property(e => e.FSignedByIdno)
-                    .HasColumnName("F_SignedByIDNo")
-                    .HasColumnType("varchar(20)");
-
-                entity.Property(e => e.FSignedByName)
-                    .HasColumnName("F_SignedByName")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.FSignedByPos)
-                    .HasColumnName("F_SignedByPos")
-                    .HasMaxLength(50);
 
                 entity.Property(e => e.LetterDate).HasColumnType("datetime");
 
@@ -1171,13 +1210,21 @@ namespace AppReport.DataServices.PTSDataModel
 
                 entity.Property(e => e.RptDate).HasColumnType("datetime");
 
+                entity.Property(e => e.SignedByIdno)
+                    .HasColumnName("SignedByIDNo")
+                    .HasColumnType("varchar(20)");
+
                 entity.Property(e => e.SignedByIdnoImp)
                     .HasColumnName("SignedByIDNo_Imp")
                     .HasColumnType("varchar(20)");
 
+                entity.Property(e => e.SignedByName).HasMaxLength(50);
+
                 entity.Property(e => e.SignedByNameImp)
                     .HasColumnName("SignedByName_Imp")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.SignedByPos).HasMaxLength(50);
 
                 entity.Property(e => e.SignedByPosImp)
                     .HasColumnName("SignedByPos_Imp")
@@ -1269,23 +1316,6 @@ namespace AppReport.DataServices.PTSDataModel
                 entity.Property(e => e.UomTypeId).ValueGeneratedNever();
 
                 entity.Property(e => e.UomTypeName).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasColumnType("varchar(50)");
-
-                entity.Property(e => e.Password)
-                    .HasColumnName("password")
-                    .HasColumnType("varchar(50)");
-
-                entity.Property(e => e.Username)
-                    .HasColumnName("username")
-                    .HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<Users>(entity =>

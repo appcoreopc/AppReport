@@ -1,9 +1,20 @@
 ﻿CREATE TABLE [dbo].[RptSK] (
     [RptId]            INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]      INT             NULL,
+    [F_CoName]         NVARCHAR (50)   NULL,
+    [F_CoRegNo]        VARCHAR (20)    NULL,
+    [F_CoAdd1]         NVARCHAR (100)  NULL,
+    [F_CoAdd2]         NVARCHAR (100)  NULL,
+    [F_CoAdd3]         NVARCHAR (100)  NULL,
+    [F_CoAdd4]         NVARCHAR (100)  NULL,
+    [F_CoTel]          VARCHAR (20)    NULL,
+    [F_CoFax]          VARCHAR (20)    NULL,
+    [F_CoEmail]        VARCHAR (20)    NULL,
+    [F_CoWebsite]      NVARCHAR (50)   NULL,
+    [F_CoLogo]         VARCHAR (50)    NULL,
+    [F_CoSPLNo]        VARCHAR (20)    NULL,
+    [F_CoGSTNo]        VARCHAR (20)    NULL,
     [RptDate]          DATETIME        NULL,
-    [RptMth]           INT             NULL,
-    [RptYr]            INT             NULL,
     [RefNo]            VARCHAR (20)    NULL,
     [LetterDate]       DATETIME        NULL,
     [LRcptDept]        NVARCHAR (50)   NULL,
@@ -13,9 +24,9 @@
     [LRcptAdd3]        NVARCHAR (100)  NULL,
     [LRcptAdd4]        NVARCHAR (100)  NULL,
     [SignedByEmpId]    INT             NULL,
-    [F_SignedByPos]    NVARCHAR (50)   NULL,
-    [F_SignedByName]   NVARCHAR (50)   NULL,
-    [F_SignedByIDNo]   VARCHAR (20)    NULL,
+    [SignedByPos]      NVARCHAR (50)   NULL,
+    [SignedByName]     NVARCHAR (50)   NULL,
+    [SignedByIDNo]     VARCHAR (20)    NULL,
     [SignedDate]       DATE            NULL,
     [F_ImpCost]        DECIMAL (18, 2) NULL,
     [F_GSTCost]        DECIMAL (18, 2) NULL,
@@ -28,4 +39,10 @@
     [EditedDT]         DATETIME        NULL,
     CONSTRAINT [PK_RptSK] PRIMARY KEY CLUSTERED ([RptId] ASC)
 );
+
+
+
+
+
+
 

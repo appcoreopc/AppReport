@@ -7,9 +7,20 @@ namespace AppReport.DataServices.PTSDataModel
     {
         public int RptId { get; set; }
         public int? RptStatusId { get; set; }
+        public string FCoName { get; set; }
+        public string FCoRegNo { get; set; }
+        public string FCoAdd1 { get; set; }
+        public string FCoAdd2 { get; set; }
+        public string FCoAdd3 { get; set; }
+        public string FCoAdd4 { get; set; }
+        public string FCoTel { get; set; }
+        public string FCoFax { get; set; }
+        public string FCoEmail { get; set; }
+        public string FCoWebsite { get; set; }
+        public string FCoLogo { get; set; }
+        public string FCoSplno { get; set; }
+        public string FCoGstno { get; set; }
         public DateTime? RptDate { get; set; }
-        public int? RptMth { get; set; }
-        public int? RptYr { get; set; }
         public string RefNo { get; set; }
         public DateTime? LetterDate { get; set; }
         public string LrcptDept { get; set; }
@@ -19,9 +30,9 @@ namespace AppReport.DataServices.PTSDataModel
         public string LrcptAdd3 { get; set; }
         public string LrcptAdd4 { get; set; }
         public int? SignedByEmpId { get; set; }
-        public string FSignedByPos { get; set; }
-        public string FSignedByName { get; set; }
-        public string FSignedByIdno { get; set; }
+        public string SignedByPos { get; set; }
+        public string SignedByName { get; set; }
+        public string SignedByIdno { get; set; }
         public DateTime? SignedDate { get; set; }
         public decimal? FImpCost { get; set; }
         public decimal? FGstcost { get; set; }
