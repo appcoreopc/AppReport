@@ -1,11 +1,5 @@
-<p>
-  user-component works!
-</p>
-
 <div>
-  
-    <ul>
-      
+      <ul>      
       <li> 
         User Name 
       </li>
@@ -19,10 +13,9 @@
     
   </div>
 
-
   <button (click)="save()"> Save </button>
 
-<ngx-datatable
+<ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
 [rows]="rows"
 [columns]="columns">
 </ngx-datatable>

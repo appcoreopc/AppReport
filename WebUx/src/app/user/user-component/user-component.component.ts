@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, USER_GET, USER_GET_OK } from '../../sharedObjects/sharedMessages';
+import { CityAppState, USER_GET, USER_GET_OK, USER_SAVE } from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 @Component({
   selector: 'app-user-component',
   templateUrl: './user-component.component.html',
-  styleUrls: ['./user-component.component.css']
+  styleUrls: ['./user-component.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 
 export class UserComponentComponent implements OnInit {
@@ -32,10 +33,11 @@ export class UserComponentComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-     this.getEmployeeRecord();
+     this.dispatchIntent(USER_GET);
   }
    
   save() {    
+    //this.dispatchIntent(USER_SAVE);
   }  
 
   componentMessageHandle(message : any) {
@@ -57,11 +59,11 @@ export class UserComponentComponent implements OnInit {
     }    
   }
 
-  getEmployeeRecord()
+  dispatchIntent(messageType : string, data? : any)
   {   
     this.store.dispatch(
       {     
-        type: USER_GET 
+        type: messageType 
       });      
   }
 }
