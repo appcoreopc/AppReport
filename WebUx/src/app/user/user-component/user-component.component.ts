@@ -66,10 +66,10 @@ export class UserComponentComponent implements OnInit {
   save() {    
 
      var saveJson = {
-      name : this.person.name,
-      username : this.person.username
+      Name : this.person.name,
+      Username : this.person.username
     };
-
+    
     console.log(JSON.stringify(saveJson));
     this.dispatchIntent(USER_SAVE, saveJson);
     //this.personForm.reset();

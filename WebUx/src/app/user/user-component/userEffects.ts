@@ -22,12 +22,12 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
     @Effect() userSave$ = this.actions$    
     .ofType(USER_SAVE)   
     .map(action => {  
-     
-      return JSON.stringify(action.data);
+     return JSON.stringify(action.data);
+     //return action.data;
      
     })
-    .switchMap(payload =>  
-      this.http.post(APPLICATION_HOST + '/user/save', payload))      
+    .switchMap(payload =>   
+      this.http.post(APPLICATION_HOST + '/user/save', payload, this.options))      
     .map(res => ({ type: USER_SAVE_SUCCESS, data: res.json() }))
     .catch(() => Observable.of({ type: USER_SAVE_ERR }));
             
