@@ -19,11 +19,7 @@ namespace AppReport.Services
             return _context.Users;
         }
 
-<<<<<<< HEAD
-        public IEnumerable<Users> GetAllUsers(int skipAmount, int takeAmount)
-=======
-        public IEnumerable<User> GetAll(int skipAmount, int takeAmount)
->>>>>>> bc6c9e18dc8e110afaeabb34d0e32ad56ad319c5
+        public IEnumerable<Users> GetAll(int skipAmount, int takeAmount)
         {
             return _context.Users.Skip(skipAmount).Take(takeAmount);
         }
