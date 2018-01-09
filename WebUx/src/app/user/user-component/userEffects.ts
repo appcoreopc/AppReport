@@ -17,21 +17,20 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
     constructor(
       private http: Http,
       private actions$: Actions<CityAppState>
-    ) { }
+    ) {  }
     
     @Effect() userSave$ = this.actions$    
     .ofType(USER_SAVE)   
     .map(action => {  
-      console.log('sending request out!'); 
+     
       return JSON.stringify(action.data);
+     
     })
-    .switchMap(payload =>      
-      
-      this.http.post(APPLICATION_HOST + APP_SERVICE_PATH + '/save', payload, this.options)      
-    )
+    .switchMap(payload =>  
+      this.http.post(APPLICATION_HOST + '/user/save', payload))      
     .map(res => ({ type: USER_SAVE_SUCCESS, data: res.json() }))
     .catch(() => Observable.of({ type: USER_SAVE_ERR }));
-        
+            
     @Effect() userReset$ = this.actions$  
     .ofType(USER_CANCEL)  
     .map(action => 
@@ -41,7 +40,7 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
       
   @Effect() userGet$ = this.actions$    
       .ofType(USER_GET)     
-      .switchMap(payload => this.http.get(APPLICATION_HOST + APP_SERVICE_PATH + '/user')  
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/user/index')  
       .map(res => {   
                 
         return { type: USER_GET_OK, data: res.json()};

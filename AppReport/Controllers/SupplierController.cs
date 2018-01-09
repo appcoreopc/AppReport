@@ -7,7 +7,7 @@ using AppReport.DataServices.PTSDataModel;
 
 namespace AppReport.Controllers
 {
-    [Route("api/[controller]")]
+    
     public class SupplierController : Controller
     {
         private PTSContext _ptsContext;

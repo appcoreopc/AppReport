@@ -5,7 +5,7 @@
             for (var property in store)
             {          
                 var messageValue = store[property];
-                if (messageValue)
+                if (messageValue && messageValue.data)
                 {
                     if (messageValue.data.type == targetMessageType)
                     { 
@@ -20,22 +20,29 @@
         }   
     }
     
-    
     export function handleMessage(store : any, messageType : string)
-    {        
-        try {
-            const message = store;
-            if (message)            
-            {                      
-                switch (message.data.type) {
-                    case messageType:  
-                    return { data : message.data.data, type : messageType};    
+    {                
+        if (store)
+        {
+            try {
+                
+                const message = store;
+                if (message && message.data)            
+                {                      
+                    if (message.data.type)
+                    {
+                        switch (message.data.type) {
+                            case messageType:  
+                            return { data : message.data.data, type : messageType};    
+                        }
+                    }
                 }
             }
-        }
-        catch (e)
-        {
-            console.log(e);
+            catch (e)
+            {
+                console.log(e);
+            }
         }
     }
+    
     

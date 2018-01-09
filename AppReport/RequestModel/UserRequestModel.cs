@@ -11,7 +11,7 @@ namespace AppReport.RequestModel
 
         public string Name { get; set; }
 
-        public string Title { get; set; }
+        public string Username { get; set; }
 
     }
 }

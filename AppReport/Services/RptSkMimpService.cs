@@ -20,7 +20,7 @@ namespace AppReport.Services
 
         public IEnumerable<RptSkMimp> Get(int id)
         {
-            return _context.RptSkMimp.Where(i => i.RptId == id).ToList();
+            return _context.RptSkMimp.Where(i => i.RptId == id).ToList().OrderBy(i => i.FImpDate);
         }
 
         public bool Delete(int id)

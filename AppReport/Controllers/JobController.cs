@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace AppReport.Controllers
 {
-    [Route("api/[controller]")]
+   
 
     public class JobController : Controller
     {

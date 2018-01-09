@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { CityAppState, USER_GET, USER_GET_OK, USER_SAVE } from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
+import { UserModel } from "../../model/UserModel";
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-component',
@@ -13,6 +15,28 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 export class UserComponentComponent implements OnInit {
  
+  private person: UserModel = new UserModel();
+
+  private personForm: FormGroup;
+
+  formErrors = {
+    'name': '',
+    'username': ''
+  };
+
+  validationMessages = {    
+    'name': {
+      'required': 'First Name is required.',
+      'minlength': 'First Name must be at least 4 characters long.',
+      'maxlength': 'First Name cannot be more than 24 characters long.'
+    },
+    'username': {
+      'required': 'Last Name is required.',
+      'minlength': 'Last Name must be at least 4 characters long.',
+      'maxlength': 'Last Name cannot be more than 24 characters long.'
+    }
+  };
+  
   rows = [];
 
   columns = [
@@ -23,13 +47,16 @@ export class UserComponentComponent implements OnInit {
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
 
-  constructor(private store : Store<CityAppState>) { 
+  constructor(private store : Store<CityAppState>, 
+    private fb: FormBuilder) { 
   }
 
   ngOnInit() {   
     this.userSubscription = this.store.subscribe(appData => {           
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, USER_GET_OK), USER_GET_OK));
     }); 
+
+    this.initForm();
   }
 
   ngAfterViewInit() {
@@ -37,7 +64,16 @@ export class UserComponentComponent implements OnInit {
   }
    
   save() {    
-    //this.dispatchIntent(USER_SAVE);
+
+     var saveJson = {
+      name : this.person.name,
+      username : this.person.username
+    };
+
+    console.log(JSON.stringify(saveJson));
+    this.dispatchIntent(USER_SAVE, saveJson);
+    //this.personForm.reset();
+
   }  
 
   componentMessageHandle(message : any) {
@@ -59,11 +95,52 @@ export class UserComponentComponent implements OnInit {
     }    
   }
 
+  private initForm() {
+    this.personForm = this.fb.group({
+      'name': [this.person.name, [Validators.required, Validators.minLength(1),
+      Validators.maxLength(24)]],
+      'username': [this.person.username, [Validators.required, Validators.minLength(1),
+      Validators.maxLength(24)]]
+    });
+
+    this.personForm.valueChanges.debounceTime(500)
+      .subscribe(data => this.onValueChanged(data));
+  }
+
+  onValueChanged(data?: UserModel) {
+
+    if (!this.personForm) { return; }
+
+    const form = this.personForm;
+    this.person.name = data.name;
+    this.person.username = data.username;
+
+    for (const field in this.formErrors) {
+      // clear previous error message (if any)
+      this.formErrors[field] = '';
+      const control = form.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }   
+  }
+
+  onSubmit() {
+    
+    console.log(this.person.name);
+    console.log(this.person.username);
+  }
+
   dispatchIntent(messageType : string, data? : any)
   {   
     this.store.dispatch(
       {     
-        type: messageType 
+        type: messageType,
+        data : data
       });      
   }
 }

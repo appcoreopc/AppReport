@@ -33,6 +33,7 @@ namespace AppReport
             services.AddDbContext<PTSContext>(options => options.UseSqlServer(Configuration.GetConnectionString(AppConstant.DatabaseName)));
             
             services.AddMvc();
+                      
 
             services.AddCors();
         }
@@ -46,9 +47,12 @@ namespace AppReport
 
             app.UseCors(option => option.WithOrigins("*").AllowAnyMethod()); 
 
-            app.UseMvc();
-
-                
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller}/{action}/{id?}", new { action = "Index" });
+            }); 
+            
+                       
         }
     }
 }

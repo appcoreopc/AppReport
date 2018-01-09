@@ -9,6 +9,11 @@ using AppReport.DataServices.PTSDataModel;
 using Microsoft.Extensions.Options;
 using AppReport.Config;
 using System.Collections.Generic;
+using Microsoft.Extensions.Localization;
+using System.Resources;
+using System.Globalization;
+using AppReport.Resources;
+using AppReport.Util;
 
 namespace AppReport.Controllers
 {
@@ -16,12 +21,54 @@ namespace AppReport.Controllers
     public class RptSkController : Controller
     { 
         private PTSContext _ptsContext; 
-        private IHostingEnvironment _env;
+        private IHostingEnvironment _env;  
+          
 
         public RptSkController(IHostingEnvironment env, PTSContext ptsContext, IOptions<AppConfig> accessConfig)
         {
             _env = env;
-            _ptsContext = ptsContext;
+            _ptsContext = ptsContext; 
+        }
+
+
+        public class PDFFooter : PdfPageEventHelper
+        {
+            // write on top of document
+            public override void OnOpenDocument(PdfWriter writer, Document document)
+            {
+                base.OnOpenDocument(writer, document);
+                PdfPTable tabFot = new PdfPTable(new float[] { 1F });
+                tabFot.SpacingAfter = 10F;
+                PdfPCell cell;
+                tabFot.TotalWidth = 300F;
+                cell = new PdfPCell(new Phrase("Header"));
+                tabFot.AddCell(cell);
+                tabFot.WriteSelectedRows(0, -1, 150, document.Top, writer.DirectContent);
+            }
+
+            // write on start of each page
+            public override void OnStartPage(PdfWriter writer, Document document)
+            {
+                base.OnStartPage(writer, document);
+            }
+
+            // write on end of each page
+            public override void OnEndPage(PdfWriter writer, Document document)
+            {
+                base.OnEndPage(writer, document);
+                PdfPTable tabFot = new PdfPTable(new float[] { 1F });
+                PdfPCell cell;
+                tabFot.TotalWidth = 300F;
+                cell = new PdfPCell(new Phrase("Footer"));
+                tabFot.AddCell(cell);
+                tabFot.WriteSelectedRows(0, -1, 150, document.Bottom, writer.DirectContent);
+            }
+
+            //write on close of document
+            public override void OnCloseDocument(PdfWriter writer, Document document)
+            {
+                base.OnCloseDocument(writer, document);
+            }
         }
 
         public IActionResult Index(int id)
@@ -35,14 +82,15 @@ namespace AppReport.Controllers
 
         private void print(RptSk rptSk, IEnumerable<RptSkMimp> rptSkMimp)
         {
+
             using (Stream outStream = new FileStream("D:\\PTSFiles\\PTS Skim Khas_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf", FileMode.OpenOrCreate))
             { 
                  
                 DateTime dtletter = new DateTime(2017, 2, 7);
                 DateTime dtReport = new DateTime(2017, 1, 1); 
-                string letterDate = dtletter.Day.ToString("D" + 2) + "hb " + dtletter.ToString("MMMM") + " " + dtletter.Year.ToString();
-                  
-                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 20f, 20f);
+                string letterDate = dtletter.Day.ToString("D" + 2) + "hb " + ResourceHelper.Get(dtletter.ToString("MMMM")) + " " + dtletter.Year.ToString();
+                
+                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 40f, 20f);
                 //doc.SetMargins(0f, 0f, 10f, 10f);
                 doc.AddAuthor("PTS");
                 doc.AddCreator("PTS");
@@ -51,7 +99,7 @@ namespace AppReport.Controllers
                 doc.AddTitle("PTS SKIM KHAS");
 
                 PdfWriter writer = PdfWriter.GetInstance(doc, outStream);
-
+               // writer.PageEvent = new PDFFooter();
                 doc.Open();
                 // doc.Add(new Paragraph("3 & 5, Lorong Sungai Lokan 3/1, Taman Perindustrian Southtech"));
                 try
@@ -89,7 +137,7 @@ namespace AppReport.Controllers
 
 
                     PdfPTable t1 = new PdfPTable(2);
-                    t1.SetWidths(new float[] { 1f, 3f });
+                    t1.SetWidths(new float[] { 1f, 3f }); 
 
                     string imgLogoPath = webRoot + "\\img\\" + rptSk.FCoLogo;
                     Image imgLogo = Image.GetInstance(imgLogoPath);
@@ -223,7 +271,7 @@ Website: {rptSk.FCoWebsite}", f2));
                     cell.Colspan = 3;
                     t2.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase("PENYATA BULANAN SKIM KHAS ATS BAGI BULAN " + dtReport.ToString("MMMM").ToUpper() + " " + dtReport.Year.ToString(), f5));
+                    cell = new PdfPCell(new Phrase("PENYATA BULANAN SKIM KHAS ATS BAGI BULAN " + ResourceHelper.Get(dtReport.ToString("MMMM")).ToUpper() + " " + dtReport.Year.ToString(), f5));
                     cell.Padding = 0;
                     cell.PaddingTop = 20f;
                     cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
@@ -256,7 +304,7 @@ Website: {rptSk.FCoWebsite}", f2));
                     cell.Colspan = 3;
                     t2.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase("Lampiran C - 0 untuk bulan " + dtReport.ToString("MMMM").ToUpper() + " " + dtReport.Year.ToString(), f4));
+                    cell = new PdfPCell(new Phrase("Lampiran C - 0 untuk bulan " + ResourceHelper.Get(dtReport.ToString("MMMM")).ToUpper() + " " + dtReport.Year.ToString(), f4));
                     cell.Padding = 0;
                     cell.PaddingTop = 5f;
                     cell.PaddingLeft = 22f;
@@ -316,13 +364,13 @@ Website: {rptSk.FCoWebsite}", f2));
                     doc.Add(t2);
 
 
-                    var curBottom = 80f;
+                    var curBottom = 120f; //40f
                     Util.iTextSharp.DrawLine(writer, 50f, curBottom, doc.PageSize.Width - 50f, curBottom, BaseColor.Black, 0.5f);
                     curBottom = curBottom - 2f;
                     Util.iTextSharp.DrawLine(writer, 50f, curBottom, doc.PageSize.Width - 50f, curBottom, BaseColor.Black, 1.0f);
 
                     PdfPTable t3 = new PdfPTable(5);
-                    t3.SpacingBefore = 160f;
+                    t3.SpacingBefore = 100f;
                     t3.SetWidths(new float[] { 7f, 1f, 27f, 1f, 22f });
 
                     cell = new PdfPCell(new Phrase("Specialise in", f2));
@@ -363,7 +411,7 @@ Website: {rptSk.FCoWebsite}", f2));
 
                     doc.Add(t3);
 
-                    doc.SetPageSize(new Rectangle(1100f, 850f));
+                    doc.SetPageSize(new Rectangle(842f, 595f));
                     doc.NewPage();
 
 
@@ -470,7 +518,7 @@ Website: {rptSk.FCoWebsite}", f2));
                     cell.Border = PdfCell.NO_BORDER;
                     t6.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(dtReport.ToString("MMMM").ToUpper() + " " + dtReport.Year.ToString(), f4));
+                    cell = new PdfPCell(new Phrase(ResourceHelper.Get(dtReport.ToString("MMMM")).ToUpper() + " " + dtReport.Year.ToString(), f4));
                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
                     cell.Border = PdfCell.NO_BORDER;
                     t6.AddCell(cell); 
@@ -480,7 +528,7 @@ Website: {rptSk.FCoWebsite}", f2));
 
                     PdfPTable t7 = new PdfPTable(7);
                     t7.SpacingBefore = 20f;
-                    t7.SetWidths(new float[] { 1f, 2f, 5f, 4f, 4f, 4f, 4f});
+                    t7.SetWidths(new float[] { 1f, 3f, 5f, 4f, 4f, 4f, 4f});
 
                     cell = new PdfPCell(new Phrase("Bil", f4));
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -639,7 +687,7 @@ Website: {rptSk.FCoWebsite}", f2));
 
                     PdfPTable t9 = new PdfPTable(3);
                     t9.SpacingBefore = 20f;
-                    t9.SetWidths(new float[] { 1f, 2f, 5f });
+                    t9.SetWidths(new float[] { 1f, 2f, 3f });
 
                     cell = new PdfPCell(new Phrase("Tandatangan  :", f4));
                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -717,6 +765,7 @@ Website: {rptSk.FCoWebsite}", f2));
                     cell.Border = PdfCell.NO_BORDER;
                     t9.AddCell(cell);
 
+                    t9.KeepTogether = true;
                     doc.Add(t9);
                      
                     PdfPTable t10 = new PdfPTable(1);
@@ -727,7 +776,6 @@ Website: {rptSk.FCoWebsite}", f2));
                     cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                     cell.Border = PdfCell.NO_BORDER;
                     t10.AddCell(cell);
-
                     doc.Add(t10);
 
 
