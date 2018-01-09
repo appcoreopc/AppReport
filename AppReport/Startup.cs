@@ -49,7 +49,7 @@ namespace AppReport
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute("default", "{controller}/{action}/{id?}", new { action = "Index" });
             }); 
             
                        

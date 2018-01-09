@@ -5,7 +5,7 @@
             for (var property in store)
             {          
                 var messageValue = store[property];
-                if (messageValue)
+                if (messageValue && messageValue.data)
                 {
                     if (messageValue.data.type == targetMessageType)
                     { 
@@ -27,11 +27,14 @@
             try {
                 
                 const message = store;
-                if (message && message.data && message.data.type)            
+                if (message && message.data)            
                 {                      
-                    switch (message.data.type) {
-                        case messageType:  
-                        return { data : message.data.data, type : messageType};    
+                    if (message.data.type)
+                    {
+                        switch (message.data.type) {
+                            case messageType:  
+                            return { data : message.data.data, type : messageType};    
+                        }
                     }
                 }
             }

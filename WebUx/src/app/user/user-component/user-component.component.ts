@@ -64,12 +64,14 @@ export class UserComponentComponent implements OnInit {
   }
    
   save() {    
-    let saveJson = JSON.stringify({
+
+     var saveJson = {
       name : this.person.name,
       username : this.person.username
-    });  
-    this.dispatchIntent(USER_SAVE, saveJson);
+    };
 
+    console.log(JSON.stringify(saveJson));
+    this.dispatchIntent(USER_SAVE, saveJson);
     //this.personForm.reset();
 
   }  
