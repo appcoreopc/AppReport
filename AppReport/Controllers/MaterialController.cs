@@ -10,7 +10,7 @@ using AppReport.Util;
 
 namespace AppReport.Controllers
 {
-    [Route("api/[controller]")]
+   
     public class MaterialController : Controller
     {
         PTSContext _ptsContext;

@@ -20,22 +20,26 @@
         }   
     }
     
-    
     export function handleMessage(store : any, messageType : string)
-    {        
-        try {
-            const message = store;
-            if (message)            
-            {                      
-                switch (message.data.type) {
-                    case messageType:  
-                    return { data : message.data.data, type : messageType};    
+    {                
+        if (store)
+        {
+            try {
+                
+                const message = store;
+                if (message && message.data && message.data.type)            
+                {                      
+                    switch (message.data.type) {
+                        case messageType:  
+                        return { data : message.data.data, type : messageType};    
+                    }
                 }
             }
-        }
-        catch (e)
-        {
-            console.log(e);
+            catch (e)
+            {
+                console.log(e);
+            }
         }
     }
+    
     

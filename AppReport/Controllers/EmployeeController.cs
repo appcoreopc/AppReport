@@ -8,7 +8,7 @@ using AppReport.RequestModel;
 
 namespace AppReport.Controllers
 {
-    [Route("api/[controller]")]
+  
     public class EmployeeController : Controller
     {
 

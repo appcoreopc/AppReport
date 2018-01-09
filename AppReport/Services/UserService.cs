@@ -19,7 +19,7 @@ namespace AppReport.Services
             return _context.User;
         }
 
-        public IEnumerable<User> GetAllUsers(int skipAmount, int takeAmount)
+        public IEnumerable<User> GetAll(int skipAmount, int takeAmount)
         {
             return _context.User.Skip(skipAmount).Take(takeAmount);
         }

@@ -6,7 +6,7 @@ using AppReport.Util;
 
 namespace AppReport.Controllers
 {
-    [Route("api/[controller]")]
+   
     public class UserController : Controller
     {
         private PTSContext _ptsContext;
@@ -23,8 +23,14 @@ namespace AppReport.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
             var users = new UserService(_ptsContext).GetAll();
+            return new JsonResult(users);
+        }
+        
+        [HttpGet]
+        public IActionResult GetUser(int start, int size)
+        {
+            var users = new UserService(_ptsContext).GetAll(start, size);
             return new JsonResult(users);
         }
 

@@ -27,7 +27,7 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
     })
     .switchMap(payload =>      
       
-      this.http.post(APPLICATION_HOST + APP_SERVICE_PATH + '/save', payload, this.options)      
+      this.http.post(APPLICATION_HOST + APP_SERVICE_PATH + '/user/save', payload, this.options)      
     )
     .map(res => ({ type: USER_SAVE_SUCCESS, data: res.json() }))
     .catch(() => Observable.of({ type: USER_SAVE_ERR }));

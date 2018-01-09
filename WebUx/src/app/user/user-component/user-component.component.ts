@@ -36,7 +36,7 @@ export class UserComponentComponent implements OnInit {
       'maxlength': 'Last Name cannot be more than 24 characters long.'
     }
   };
-
+  
   rows = [];
 
   columns = [
@@ -64,7 +64,14 @@ export class UserComponentComponent implements OnInit {
   }
    
   save() {    
-    //this.dispatchIntent(USER_SAVE);
+    let saveJson = JSON.stringify({
+      name : this.person.name,
+      username : this.person.username
+    });  
+    this.dispatchIntent(USER_SAVE, saveJson);
+
+    //this.personForm.reset();
+
   }  
 
   componentMessageHandle(message : any) {
@@ -130,7 +137,8 @@ export class UserComponentComponent implements OnInit {
   {   
     this.store.dispatch(
       {     
-        type: messageType 
+        type: messageType,
+        data : data
       });      
   }
 }
