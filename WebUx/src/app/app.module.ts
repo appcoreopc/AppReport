@@ -13,10 +13,12 @@ import { MaterialCategoryComponentComponent } from './material/material-category
 import { StnCustomComponentComponent } from './material/stn-custom-component/stn-custom-component.component';
 import { SupplierComponentComponent } from './material/supplier-component/supplier-component.component';
 import { ConfigResourceComponentComponent } from './setup/config-resource-component/config-resource-component.component';
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 
 import { EmployeeEffects } from './employee/employee-component/employeeEffects';
 import {EmployeeReducer} from './employee/employee-component/employeeReducer';
@@ -26,7 +28,8 @@ import { UserReducer} from './user/user-component/userReducer';
 
 export const ROUTES: Routes = [
    { path: 'employee', component: EmployeeComponentComponent },
-   { path: 'user', component: UserComponentComponent }
+   { path: 'user', component: UserComponentComponent }, 
+   { path: 'supplier', component  : SupplierComponentComponent }
 ];
 
 import { ReactiveFormsModule }          from '@angular/forms';
