@@ -23,7 +23,7 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL, SUPPLIER_SAVE_SUCCESS,
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>            
-      this.http.post(APPLICATION_HOST +  '/supplier/create', payload, { headers : headersJson})      
+      this.http.post(APPLICATION_HOST +  '/supplier/save', payload, { headers : headersJson})      
     )
     .map(res => ({ type: SUPPLIER_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: SUPPLIER_SAVE_ERR }));

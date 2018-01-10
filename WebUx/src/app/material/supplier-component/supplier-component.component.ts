@@ -6,7 +6,6 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { SupplierModel } from "../../model/SupplierModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-
 @Component({
   selector: 'app-supplier-component',
   templateUrl: './supplier-component.component.html',
@@ -18,12 +17,12 @@ export class SupplierComponentComponent implements OnInit {
   private personForm: FormGroup;
   
   formErrors = {
-    'name': '',
+    'supplierName': '',
     'createdByUserId': ''
   };
   
   validationMessages = {    
-    'name': {
+    'supplierName': {
       'required': 'First Name is required.',
       'minlength': 'First Name must be at least 4 characters long.',
       'maxlength': 'First Name cannot be more than 24 characters long.'
@@ -38,8 +37,8 @@ export class SupplierComponentComponent implements OnInit {
   rows = [];
   
   columns = [
-    { prop: 'id' },
-    { name: 'name' }   
+    { prop: 'supplierId' },
+    { name: 'supplierName' }   
   ];
   
   userSubscription : Subscription;
@@ -55,11 +54,11 @@ export class SupplierComponentComponent implements OnInit {
       
       this.initForm();      
     }
-        
+    
     ngAfterViewInit() {
       this.dispatchIntent(SUPPLIER_GET);
     }
-        
+    
     componentMessageHandle(message : any) {
       
       if (message && message.type == SUPPLIER_GET_OK)
@@ -67,12 +66,14 @@ export class SupplierComponentComponent implements OnInit {
         this.rows.length = 0;
         for (var idx in message.data)
         {
-          var userInfo = message.data[idx];    
+          var supplierInfo = message.data[idx];    
           this.dataList.push({ 
-
-            id : userInfo.supplierId, 
-            name : userInfo.supplierName, 
-            username : userInfo.username
+            
+            supplierId : supplierInfo.supplierId, 
+            supplierName : supplierInfo.supplierName, 
+            createdByUserId : supplierInfo.createdByUserId,
+            editedByUserId : supplierInfo.editedByUserId, 
+            editedDt  : supplierInfo.editedDt 
           });
           
           console.log(this.rows);
@@ -81,48 +82,63 @@ export class SupplierComponentComponent implements OnInit {
       }    
     }
     
+    save() {    
+      
+      var saveJson = {
+        supplierName : this.supplier.supplierName,
+        createdDT : this.supplier.createdDT,
+        editedByUserId : this.supplier.editedByUserId,
+        editedDT : this.supplier.editedDT,
+        id : this.supplier.supplierId
+      };
+      console.log(saveJson);
+      var strJson = JSON.stringify(saveJson);           
+      this.dispatchIntent(SUPPLIER_SAVE, saveJson);
+      this.personForm.reset();
+    }  
+    
     private initForm() {
       this.personForm = this.fb.group({
-        'name': [this.supplier.supplierName, [Validators.required, Validators.minLength(1),
+        'supplierName': [this.supplier.supplierName, [Validators.required, Validators.minLength(1),
           Validators.maxLength(24)]]
-          });
-          
-          this.personForm.valueChanges.debounceTime(500)
-          .subscribe(data => this.onValueChanged(data));
-        }
+        });
         
-        onValueChanged(data?: SupplierModel) {
+        this.personForm.valueChanges.debounceTime(500)
+        .subscribe(data => this.onValueChanged(data));
+      }
+      
+      onValueChanged(data?: SupplierModel) {
+        
+        if (!this.personForm) { return; }
+        
+        const form = this.personForm;
+        this.supplier.supplierName = data.supplierName;
+        
+        
+        for (const field in this.formErrors) {
+          // clear previous error message (if any)
+          this.formErrors[field] = '';
+          const control = form.get(field);
           
-          if (!this.personForm) { return; }
-          
-          const form = this.personForm;
-          this.supplier.id = data.supplierName;
-                    
-          for (const field in this.formErrors) {
-            // clear previous error message (if any)
-            this.formErrors[field] = '';
-            const control = form.get(field);
-            
-            if (control && control.dirty && !control.valid) {
-              const messages = this.validationMessages[field];
-              for (const key in control.errors) {
-                this.formErrors[field] += messages[key] + ' ';
-              }
+          if (control && control.dirty && !control.valid) {
+            const messages = this.validationMessages[field];
+            for (const key in control.errors) {
+              this.formErrors[field] += messages[key] + ' ';
             }
-          }   
+          }
+        }   
+      }
+      
+      dispatchIntent(messageType : string, data? : any)
+      {   
+        this.store.dispatch(
+          {     
+            type: messageType,
+            data : data
+          });      
         }
         
-        dispatchIntent(messageType : string, data? : any)
-        {   
-          this.store.dispatch(
-            {     
-              type: messageType,
-              data : data
-            });      
-          }
-
-          onSelected(event) {
-            console.log(event);
-          }
-
-        }
+        onSelected(event) {
+          console.log(event);
+        }        
+      }

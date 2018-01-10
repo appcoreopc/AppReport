@@ -34,17 +34,19 @@ namespace AppReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] UserRequestModel requestUser)
+        public IActionResult Save([FromBody] SupplierRequestModel supplierRequest)
         {
-            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))
+            if (supplierRequest != null && !string.IsNullOrEmpty(supplierRequest.SupplierName))
             {
-                var user = new User()
+                var supplier = new Supplier()
                 {
-                    Id = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
-                    Name = requestUser.Name,
+                    SupplierId = supplierRequest.SupplierId.HasValue ? supplierRequest.SupplierId.Value : 0,
+                    SupplierName = supplierRequest.SupplierName,
+                    CreatedByUserId = supplierRequest.CreatedByUserId, 
+                    EditedByUserId = supplierRequest.EditedByUserId
                 };
 
-                var result = new UserService(_ptsContext).Save<User>(user, user.Id);
+                var result = new UserService(_ptsContext).Save<Supplier>(supplier, supplier.SupplierId);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
