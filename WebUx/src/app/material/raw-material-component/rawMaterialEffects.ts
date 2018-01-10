@@ -17,7 +17,7 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
       private actions$: Actions<CityAppState>
     ) { }
     
-    @Effect() citySave$ = this.actions$    
+    @Effect() rawMaterialSave$ = this.actions$    
     .ofType(RAW_MATERIAL_SAVE)   
     .map(action => {  
       console.log('sending request out!'); 
@@ -30,14 +30,14 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
     .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }));
     
     
-    @Effect() cityReset$ = this.actions$  
+    @Effect() rawMaterialReset$ = this.actions$  
     .ofType(RAW_MATERIAL_CANCEL)  
     .map(action => 
       {
         return ({ type: RAW_MATERIAL_CANCEL_OK});
       }); 
       
-      @Effect() cityGet$ = this.actions$    
+      @Effect() rawMaterialGet$ = this.actions$    
       .ofType(RAW_MATERIAL_GET)     
       .map(action => {   
         JSON.stringify(action);

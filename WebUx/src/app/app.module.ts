@@ -22,6 +22,12 @@ import {EmployeeReducer} from './employee/employee-component/employeeReducer';
 
 import { UserEffects } from './user/user-component/userEffects';
 import { UserReducer} from './user/user-component/userReducer';
+
+
+import { SupplierEffects } from './material/supplier-component/supplierEffects';
+import { SupplierReducer} from './material/supplier-component/supplierReducer';
+
+
 import { HttpClientModule}  from '@angular/common/http';
 
 import { ReportEffects } from './reporting/reporting-component//reportingEffects';
@@ -50,8 +56,8 @@ import { ReactiveFormsModule }          from '@angular/forms';
   imports: [
     BrowserModule, NgxDatatableModule,ReactiveFormsModule,HttpClientModule,
      
-    StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer]),
-    EffectsModule.forRoot([EmployeeEffects, UserEffects, ReportEffects]), 
+    StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer, SupplierReducer]),
+    EffectsModule.forRoot([EmployeeEffects, UserEffects, ReportEffects, SupplierEffects]), 
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],

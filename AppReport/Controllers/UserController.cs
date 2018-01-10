@@ -34,8 +34,7 @@ namespace AppReport.Controllers
             return new JsonResult(users);
         }
 
-        [HttpPost]
-        [HttpOptions]
+        [HttpPost]        
         public IActionResult Save([FromBody] UserRequestModel requestUser)
         {
             if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))

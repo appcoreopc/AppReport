@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, USER_GET, USER_GET_OK, USER_SAVE } from '../../sharedObjects/sharedMessages';
+import { CityAppState, SUPPLIER_GET, SUPPLIER_GET_OK, SUPPLIER_SAVE } from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { SupplierModel } from "../../model/SupplierModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-supplier-component',
@@ -13,12 +14,12 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class SupplierComponentComponent implements OnInit {
   
-  private person: SupplierModel = new SupplierModel();
+  private supplier: SupplierModel = new SupplierModel();
   private personForm: FormGroup;
   
   formErrors = {
     'name': '',
-    'username': ''
+    'createdByUserId': ''
   };
   
   validationMessages = {    
@@ -27,7 +28,7 @@ export class SupplierComponentComponent implements OnInit {
       'minlength': 'First Name must be at least 4 characters long.',
       'maxlength': 'First Name cannot be more than 24 characters long.'
     },
-    'username': {
+    'createdByUserId': {
       'required': 'Last Name is required.',
       'minlength': 'Last Name must be at least 4 characters long.',
       'maxlength': 'Last Name cannot be more than 24 characters long.'
@@ -37,8 +38,8 @@ export class SupplierComponentComponent implements OnInit {
   rows = [];
   
   columns = [
-    { prop: 'name' },
-    { name: 'username' }   
+    { prop: 'id' },
+    { name: 'name' }   
   ];
   
   userSubscription : Subscription;
@@ -49,28 +50,28 @@ export class SupplierComponentComponent implements OnInit {
     
     ngOnInit() {
       this.userSubscription = this.store.subscribe(appData => {           
-        this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, USER_GET_OK), USER_GET_OK));
+        this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, SUPPLIER_GET_OK), SUPPLIER_GET_OK));
       }); 
       
-      this.initForm();
-      
+      this.initForm();      
     }
-    
+        
     ngAfterViewInit() {
-      this.dispatchIntent(USER_GET);
+      this.dispatchIntent(SUPPLIER_GET);
     }
-    
-    
+        
     componentMessageHandle(message : any) {
       
-      if (message && message.type == USER_GET_OK)
+      if (message && message.type == SUPPLIER_GET_OK)
       {
         this.rows.length = 0;
         for (var idx in message.data)
         {
           var userInfo = message.data[idx];    
-          this.dataList.push({  
-            name : userInfo.name, 
+          this.dataList.push({ 
+
+            id : userInfo.supplierId, 
+            name : userInfo.supplierName, 
             username : userInfo.username
           });
           
@@ -82,10 +83,8 @@ export class SupplierComponentComponent implements OnInit {
     
     private initForm() {
       this.personForm = this.fb.group({
-        'name': [this.person.name, [Validators.required, Validators.minLength(1),
-          Validators.maxLength(24)]],
-          'username': [this.person.username, [Validators.required, Validators.minLength(1),
-            Validators.maxLength(24)]]
+        'name': [this.supplier.supplierName, [Validators.required, Validators.minLength(1),
+          Validators.maxLength(24)]]
           });
           
           this.personForm.valueChanges.debounceTime(500)
@@ -97,9 +96,8 @@ export class SupplierComponentComponent implements OnInit {
           if (!this.personForm) { return; }
           
           const form = this.personForm;
-          this.person.name = data.name;
-          this.person.username = data.username;
-          
+          this.supplier.id = data.supplierName;
+                    
           for (const field in this.formErrors) {
             // clear previous error message (if any)
             this.formErrors[field] = '';
@@ -122,4 +120,9 @@ export class SupplierComponentComponent implements OnInit {
               data : data
             });      
           }
+
+          onSelected(event) {
+            console.log(event);
+          }
+
         }
