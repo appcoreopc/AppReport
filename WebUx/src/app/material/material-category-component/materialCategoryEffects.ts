@@ -24,7 +24,7 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/materialcategory/create', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/materialcategory/save', payload, {headers : headersJson})      
     )
     .map(res => ({ type: MATERIAL_CATEGORY_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: MATERIAL_CATEGORY_SAVE_ERR }));
@@ -39,7 +39,7 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
       
       @Effect() materialCategoryGet$ = this.actions$    
       .ofType(MATERIAL_CATEGORY_GET)     
-      .map(action => {   
+      .map(action => {  
         JSON.stringify(action);
       })
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/materialcategory/index')  

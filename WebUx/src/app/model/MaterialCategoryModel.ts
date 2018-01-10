@@ -1,4 +1,8 @@
 export class MaterialCategoryModel { 
-    name : string;
-    username : string;
+    rmCatName : string;
+    rMCatId? : string; 
+    createdByUserId : string;
+    createdDT : string;
+    editedByUserId : string;
+    editedDT : string;
 }

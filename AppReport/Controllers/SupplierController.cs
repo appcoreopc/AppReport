@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AppReport.DataServices.PTSDataModel;
 using AppReport.Services;
@@ -9,8 +5,7 @@ using AppReport.Util;
 using AppReport.RequestModel;
 
 namespace AppReport.Controllers
-{
-    
+{    
     public class SupplierController : Controller
     {
         private PTSContext _ptsContext;

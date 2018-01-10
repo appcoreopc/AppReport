@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, USER_GET, USER_GET_OK, USER_SAVE } from '../../sharedObjects/sharedMessages';
+import { CityAppState, MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE } from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { MaterialCategoryModel } from "../../model/MaterialCategoryModel";
@@ -18,28 +18,22 @@ export class MaterialCategoryComponentComponent implements OnInit {
   private personForm: FormGroup;
 
   formErrors = {
-    'name': '',
-    'username': ''
+    'rmCatName': ''
   };
 
   validationMessages = {    
-    'name': {
-      'required': 'First Name is required.',
-      'minlength': 'First Name must be at least 4 characters long.',
-      'maxlength': 'First Name cannot be more than 24 characters long.'
-    },
-    'username': {
-      'required': 'Last Name is required.',
-      'minlength': 'Last Name must be at least 4 characters long.',
-      'maxlength': 'Last Name cannot be more than 24 characters long.'
+    'rmCatName': {
+      'required': 'Material category name is required.',
+      'minlength': 'Material category must be at least 4 characters long.',
+      'maxlength': 'Material category cannot be more than 24 characters long.'
     }
   };
   
   rows = [];
 
   columns = [
-    { prop: 'name' },
-    { name: 'username' }   
+    { prop: 'rMCatId' },
+    { name: 'name' }   
   ];
 
   userSubscription : Subscription;
@@ -51,53 +45,51 @@ export class MaterialCategoryComponentComponent implements OnInit {
 
   ngOnInit() {   
     this.userSubscription = this.store.subscribe(appData => {           
-      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, USER_GET_OK), USER_GET_OK));
+      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, MATERIAL_CATEGORY_GET_OK), MATERIAL_CATEGORY_GET_OK));
     }); 
 
     this.initForm();
   }
 
-  ngAfterViewInit() {
-     this.dispatchIntent(USER_GET);
+  ngAfterViewInit() {     
+     this.dispatchIntent(MATERIAL_CATEGORY_GET);
   }
    
   save() {    
 
      var saveJson = {
-      Name : this.person.name,
-      Username : this.person.username
+      rMCatId : this.person.rMCatId,
+      rmCatName : this.person.rmCatName
     };
 
     console.log(JSON.stringify(saveJson));
-    this.dispatchIntent(USER_SAVE, saveJson);
-    //this.personForm.reset();
+    this.dispatchIntent(MATERIAL_CATEGORY_SAVE, saveJson);
+    this.personForm.reset();
 
   }  
 
   componentMessageHandle(message : any) {
 
-    if (message && message.type == USER_GET_OK)
+    console.log(message);
+
+    if (message && message.type == MATERIAL_CATEGORY_GET_OK)
     {
       this.rows.length = 0;
       for (var idx in message.data)
       {
         var userInfo = message.data[idx];    
         this.dataList.push({  
-            name : userInfo.name, 
-            username : userInfo.username
+          rMCatId : userInfo.rmcatId, 
+          name : userInfo.rmcatName
         });
-
-        console.log(this.rows);
-        this.rows = this.dataList;
       }
-    }    
+      this.rows = this.dataList;
+    }
   }
 
   private initForm() {
     this.personForm = this.fb.group({
-      'name': [this.person.name, [Validators.required, Validators.minLength(1),
-      Validators.maxLength(24)]],
-      'username': [this.person.username, [Validators.required, Validators.minLength(1),
+      'rmCatName': [this.person.rmCatName, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]]
     });
 
@@ -110,8 +102,8 @@ export class MaterialCategoryComponentComponent implements OnInit {
     if (!this.personForm) { return; }
 
     const form = this.personForm;
-    this.person.name = data.name;
-    this.person.username = data.username;
+    this.person.rMCatId = data.rMCatId;
+    this.person.rmCatName = data.rmCatName;
 
     for (const field in this.formErrors) {
       // clear previous error message (if any)
@@ -128,9 +120,7 @@ export class MaterialCategoryComponentComponent implements OnInit {
   }
 
   onSubmit() {
-    
-    console.log(this.person.name);
-    console.log(this.person.username);
+        
   }
 
   dispatchIntent(messageType : string, data? : any)

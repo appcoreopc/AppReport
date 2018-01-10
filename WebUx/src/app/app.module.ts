@@ -27,6 +27,8 @@ import { UserReducer} from './user/user-component/userReducer';
 import { SupplierEffects } from './material/supplier-component/supplierEffects';
 import { SupplierReducer} from './material/supplier-component/supplierReducer';
 
+import { MaterialCategoryEffects } from './material/material-category-component//materialCategoryEffects';
+import { MaterialCategoryReducer} from './material/material-category-component/materialCategoryReducer';
 
 import { HttpClientModule}  from '@angular/common/http';
 
@@ -36,10 +38,14 @@ import { ReportReducer} from './reporting/reporting-component/reportingReducer';
 export const ROUTES: Routes = [
    { path: 'employee', component: EmployeeComponentComponent },
    { path: 'user', component: UserComponentComponent }, 
-   { path: 'supplier', component  : SupplierComponentComponent }
+   { path: 'supplier', component  : SupplierComponentComponent },
+   { path: 'materialCategory', component  : MaterialCategoryComponentComponent },
+   { path: 'rawMaterial', component  : RawMaterialComponentComponent }
 ];
 
+
 import { ReactiveFormsModule }          from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -56,8 +62,8 @@ import { ReactiveFormsModule }          from '@angular/forms';
   imports: [
     BrowserModule, NgxDatatableModule,ReactiveFormsModule,HttpClientModule,
      
-    StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer, SupplierReducer]),
-    EffectsModule.forRoot([EmployeeEffects, UserEffects, ReportEffects, SupplierEffects]), 
+    StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer, SupplierReducer, MaterialCategoryReducer]),
+    EffectsModule.forRoot([EmployeeEffects, UserEffects, ReportEffects, SupplierEffects, MaterialCategoryEffects]), 
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],
