@@ -18,14 +18,14 @@ export class SupplierComponentComponent implements OnInit {
   
   formErrors = {
     'supplierName': '',
-    'createdByUserId': ''
+    'createdByUserId' : ''
   };
   
   validationMessages = {    
     'supplierName': {
-      'required': 'First Name is required.',
-      'minlength': 'First Name must be at least 4 characters long.',
-      'maxlength': 'First Name cannot be more than 24 characters long.'
+      'required': 'Supplier Name is required.',
+      'minlength': 'Supplier Name must be at least 4 characters long.',
+      'maxlength': 'Supplier Name cannot be more than 24 characters long.'
     },
     'createdByUserId': {
       'required': 'Last Name is required.',
