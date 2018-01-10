@@ -17,7 +17,7 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
       private actions$: Actions<CityAppState>
     ) { }
     
-    @Effect() citySave$ = this.actions$    
+    @Effect() materialCategorySave$ = this.actions$    
     .ofType(MATERIAL_CATEGORY_SAVE)   
     .map(action => {  
       console.log('sending request out!'); 
@@ -30,14 +30,14 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
     .catch(() => Observable.of({ type: MATERIAL_CATEGORY_SAVE_ERR }));
     
     
-    @Effect() cityReset$ = this.actions$  
+    @Effect() materialCategoryReset$ = this.actions$  
     .ofType(MATERIAL_CATEGORY_CANCEL)  
     .map(action => 
       {
         return ({ type: MATERIAL_CATEGORY_CANCEL_OK});
       }); 
       
-      @Effect() cityGet$ = this.actions$    
+      @Effect() materialCategoryGet$ = this.actions$    
       .ofType(MATERIAL_CATEGORY_GET)     
       .map(action => {   
         JSON.stringify(action);
