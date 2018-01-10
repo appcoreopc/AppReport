@@ -122,4 +122,9 @@ export class SupplierComponentComponent implements OnInit {
               data : data
             });      
           }
+
+          onSelected(event) {
+            console.log(event);
+          }
+
         }

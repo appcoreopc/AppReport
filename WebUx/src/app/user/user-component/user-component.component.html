@@ -33,5 +33,6 @@
 <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
     [rows]="rows"
     [limit]="10"
+    (select)="onSelect($event)"
     [columns]="columns">
 </ngx-datatable>
