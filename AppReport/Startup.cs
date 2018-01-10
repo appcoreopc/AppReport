@@ -34,8 +34,9 @@ namespace AppReport
             
             services.AddMvc();
                       
-
             services.AddCors();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,14 +46,15 @@ namespace AppReport
 
             loggerFactory.AddDebug();
 
-            app.UseCors(option => option.WithOrigins("*").AllowAnyMethod()); 
+            app.UseCors(option => option.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "{controller}/{action}/{id?}", new { action = "Index" });
+                routes.MapRoute("default", "{controller}/{action}/{id?}");
             }); 
             
-                       
+            
+            
         }
     }
 }

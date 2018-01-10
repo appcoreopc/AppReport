@@ -6,6 +6,10 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { UserModel } from "../../model/UserModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-user-component',
   templateUrl: './user-component.component.html',
@@ -36,7 +40,7 @@ export class UserComponentComponent implements OnInit {
       'maxlength': 'Last Name cannot be more than 24 characters long.'
     }
   };
-  
+
   rows = [];
 
   columns = [
@@ -48,7 +52,7 @@ export class UserComponentComponent implements OnInit {
   dataList : Array<any> = new Array<any>(); 
 
   constructor(private store : Store<CityAppState>, 
-    private fb: FormBuilder) { 
+    private fb: FormBuilder, private http:HttpClient) { 
   }
 
   ngOnInit() {   
@@ -69,9 +73,34 @@ export class UserComponentComponent implements OnInit {
       Name : this.person.name,
       Username : this.person.username
     };
-    
-    console.log(JSON.stringify(saveJson));
-    this.dispatchIntent(USER_SAVE, saveJson);
+
+    var strJson = JSON.stringify(saveJson);
+     
+    //const headers = new HttpHeaders({'Content-Type':'application/json'});
+
+    //let headers = new HttpHeaders();
+
+    //let headers = new Headers({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+
+    //headers.set('Content-Type', 'application/json');
+    //headers.append('Content-Type', 'application/json');
+    //headers.append('Accept', 'application/json');
+    //headers.set('Accept', 'application/json')
+    //var options = new RequestOptions({ headers: headers });
+
+    //console.log('headers');
+    console.log(headers);
+  
+    this.http.get(APPLICATION_HOST + '/user/index').subscribe(data => {
+        console.log(data);
+    });
+    this.http.post(APPLICATION_HOST + '/user/save',
+     "{name:'jeremy', username : 'wooo'}", { headers : headers }).subscribe(data => 
+    {      console.log(data);
+    });        
+
+    //this.dispatchIntent(USER_SAVE, saveJson);
     //this.personForm.reset();
 
   }  

@@ -35,7 +35,8 @@ namespace AppReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save(UserRequestModel requestUser)
+        [HttpOptions]
+        public IActionResult Save([FromBody] UserRequestModel requestUser)
         {
             if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))
             {

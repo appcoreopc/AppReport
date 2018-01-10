@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule} from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { UserComponentComponent } from './user/user-component/user-component.component';
@@ -25,6 +24,8 @@ import {EmployeeReducer} from './employee/employee-component/employeeReducer';
 
 import { UserEffects } from './user/user-component/userEffects';
 import { UserReducer} from './user/user-component/userReducer';
+import { HttpClientModule}  from '@angular/common/http';
+
 
 export const ROUTES: Routes = [
    { path: 'employee', component: EmployeeComponentComponent },
@@ -36,7 +37,7 @@ import { ReactiveFormsModule }          from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, 
     UserComponentComponent,
     EmployeeComponentComponent,
     NavigationComponent,
@@ -47,8 +48,8 @@ import { ReactiveFormsModule }          from '@angular/forms';
     ConfigResourceComponentComponent
   ],
   imports: [
-    BrowserModule, NgxDatatableModule,ReactiveFormsModule,
-    HttpModule, 
+    BrowserModule, NgxDatatableModule,ReactiveFormsModule,HttpClientModule,
+     
     StoreModule.forRoot([EmployeeReducer, UserReducer]),
     EffectsModule.forRoot([EmployeeEffects, UserEffects]), 
     RouterModule.forRoot(ROUTES)

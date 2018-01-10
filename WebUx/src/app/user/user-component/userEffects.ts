@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
@@ -11,24 +11,27 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
   @Injectable()  
   export class UserEffects {
     
-    headers: Headers = new Headers({ 'Content-Type': 'application/json' });
-    options = new RequestOptions({ headers: this.headers });
+    //headers: Headers = new Headers({ 'Content-Type': 'application/json' });
+    //ptions = new RequestOptions({ headers: this.headers });
         
     constructor(
-      private http: Http,
+      private http: HttpClient,
       private actions$: Actions<CityAppState>
-    ) {  }
+    ) { 
+
+     }
     
     @Effect() userSave$ = this.actions$    
     .ofType(USER_SAVE)   
     .map(action => {  
-     return JSON.stringify(action.data);
-     //return action.data;
-     
+     return JSON.stringify(action.data);   
     })
-    .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/user/save', payload, this.options))      
-    .map(res => ({ type: USER_SAVE_SUCCESS, data: res.json() }))
+    .switchMap(payload =>    {
+     console.log('posting');
+     console.log(payload);
+     return this.http.post(APPLICATION_HOST + '/user/save', payload);
+    })
+    .map(res => ({ type: USER_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: USER_SAVE_ERR }));
             
     @Effect() userReset$ = this.actions$  
@@ -43,7 +46,7 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/user/index')  
       .map(res => {   
                 
-        return { type: USER_GET_OK, data: res.json()};
+        return { type: USER_GET_OK, data: res};
       }) 
       .catch(() => Observable.of({ type: USER_GET_ERR }))
     ); 
