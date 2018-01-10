@@ -1,4 +1,5 @@
 import { ActionReducer, Action } from '@ngrx/store';
+import { HttpHeaders } from '@angular/common/http';
 
 export const EMPLOYEE_SAVE = 'EMPLOYEE_SAVE';
 export const EMPLOYEE_CANCEL = 'EMPLOYEE_CANCEL';
@@ -89,12 +90,12 @@ export interface CountryData {
 	lon : string; 
 	lat : string;
 	imageUrl : string;
-	type : string; 
-	
+	type : string; 	
 } 
 	
 export interface KeyValueData {
 	key: string;
-	description : string, 
-
+	description : string
 } 
+
+export const headersJson = new HttpHeaders().set('Content-Type', 'application/json');

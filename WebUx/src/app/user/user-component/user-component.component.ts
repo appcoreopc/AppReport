@@ -28,7 +28,8 @@ export class UserComponentComponent implements OnInit {
     'username': ''
   };
 
-  validationMessages = {    
+  validationMessages = {   
+
     'name': {
       'required': 'First Name is required.',
       'minlength': 'First Name must be at least 4 characters long.',
@@ -74,35 +75,9 @@ export class UserComponentComponent implements OnInit {
       Username : this.person.username
     };
 
-    var strJson = JSON.stringify(saveJson);
-     
-    //const headers = new HttpHeaders({'Content-Type':'application/json'});
-
-    //let headers = new HttpHeaders();
-
-    //let headers = new Headers({ 'Content-Type': 'application/json' });
-    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-
-    //headers.set('Content-Type', 'application/json');
-    //headers.append('Content-Type', 'application/json');
-    //headers.append('Accept', 'application/json');
-    //headers.set('Accept', 'application/json')
-    //var options = new RequestOptions({ headers: headers });
-
-    //console.log('headers');
-    console.log(headers);
-  
-    this.http.get(APPLICATION_HOST + '/user/index').subscribe(data => {
-        console.log(data);
-    });
-    this.http.post(APPLICATION_HOST + '/user/save',
-     "{name:'jeremy', username : 'wooo'}", { headers : headers }).subscribe(data => 
-    {      console.log(data);
-    });        
-
-    //this.dispatchIntent(USER_SAVE, saveJson);
-    //this.personForm.reset();
-
+    var strJson = JSON.stringify(saveJson);           
+    this.dispatchIntent(USER_SAVE, saveJson);
+    this.personForm.reset();
   }  
 
   componentMessageHandle(message : any) {

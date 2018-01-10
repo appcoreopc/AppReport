@@ -4,16 +4,13 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
   USER_MESSAGE_END, USER_SAVE_ERR, USER_CANCEL_OK, USER_GET, USER_GET_ERR,
-  USER_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
+  USER_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST, APP_SERVICE_PATH} from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
   
   @Injectable()  
-  export class UserEffects {
+  export class UserEffects {   
     
-    //headers: Headers = new Headers({ 'Content-Type': 'application/json' });
-    //ptions = new RequestOptions({ headers: this.headers });
-        
     constructor(
       private http: HttpClient,
       private actions$: Actions<CityAppState>
@@ -29,7 +26,7 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
     .switchMap(payload =>    {
      console.log('posting');
      console.log(payload);
-     return this.http.post(APPLICATION_HOST + '/user/save', payload);
+     return this.http.post(APPLICATION_HOST + '/user/save', payload, {headers : headersJson});
     })
     .map(res => ({ type: USER_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: USER_SAVE_ERR }));
