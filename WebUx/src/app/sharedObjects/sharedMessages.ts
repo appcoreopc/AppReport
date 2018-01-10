@@ -61,6 +61,16 @@ export const STN_CUSTOM_GET = 'STN_CUSTOM_GET';
 export const STN_CUSTOM_GET_ERR = 'STN_CUSTOM_GET_ERR';
 export const STN_CUSTOM_GET_OK = 'STN_CUSTOM_GET_OK';
 
+export const REPORT_SAVE = 'REPORT_SAVE';
+export const REPORT_CANCEL = 'REPORT_CANCEL';
+export const REPORT_SAVE_SUCCESS = 'REPORT_SAVE_SUCCESS';
+export const REPORT_MESSAGE_END = 'REPORT_MESSAGE_END';
+export const REPORT_SAVE_ERR = 'REPORT_SAVE_ERR';
+export const REPORT_CANCEL_OK = 'REPORT_CANCEL_OK';
+export const REPORT_GET = 'REPORT_GET';
+export const REPORT_GET_ERR = 'REPORT_GET_ERR';
+export const REPORT_GET_OK = 'REPORT_GET_OK';
+
 export interface CityAppState {
 	status: number;	
 	type : string; 
