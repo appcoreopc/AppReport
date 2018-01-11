@@ -23,37 +23,46 @@ namespace AppReport.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUser(int start, int size)
+        public IActionResult Get(int start, int size)
         {
             var suppliers = new RawMaterialService(_ptsContext).GetAll(start, size);
             return new JsonResult(suppliers);
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] MaterialCategoryRequestModel materialCategory)
+        public IActionResult Save([FromBody] RawMaterialRequestModel materialCategory)
         {
-            if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.RMCatName))
+            if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.Rmcode))
             {
-                var supplier = new Rmcat()
+                var supplier = new Rmaterial()
                 {
-                    RmcatId = materialCategory.RMCatId.HasValue ? materialCategory.RMCatId.Value : 0,
-                    RmcatName = materialCategory.RMCatName,
+                    RmcatId = materialCategory.RmcatId.HasValue ? materialCategory.RmcatId.Value : 0,
+                    Rmcode = materialCategory.Rmcode,
+                    Rmdesc = materialCategory.Rmdesc,
+                    CountryList = materialCategory.CountryList,
+                    CreatedDt = materialCategory.CreatedDt,
+                    DutyImpRate = materialCategory.DutyImpRate,
+                    EditedDt = materialCategory.EditedDt,
+                    Gstrate = materialCategory.Gstrate,
+                    Rmid = materialCategory.Rmid,
+                    TariffCode = materialCategory.TariffCode,
+                    Uomid = materialCategory.Uomid,
                     CreatedByUserId = materialCategory.CreatedByUserId,
                     EditedByUserId = materialCategory.EditedByUserId
                 };
 
-                var result = new RawMaterialService(_ptsContext).Save<Rmcat>(supplier, supplier.RmcatId);
+                var result = new RawMaterialService(_ptsContext).Save<Rmaterial>(supplier, supplier.RmcatId);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
         }
 
         [HttpDelete]
-        public IActionResult Delete(MaterialCategoryRequestModel requestData)
+        public IActionResult Delete(RawMaterialRequestModel requestData)
         {
-            if (requestData.RMCatId.HasValue)
+            if (requestData.RmcatId.HasValue)
             {
-                var result = new RawMaterialService(_ptsContext).Delete(requestData.RMCatId.Value);
+                var result = new RawMaterialService(_ptsContext).Delete(requestData.RmcatId.Value);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else

@@ -24,7 +24,7 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/rawmaterial/create', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/rawmaterial/save', payload, {headers : headersJson})      
     )
     .map(res => ({ type: RAW_MATERIAL_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }));
@@ -40,6 +40,7 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
       @Effect() rawMaterialGet$ = this.actions$    
       .ofType(RAW_MATERIAL_GET)     
       .map(action => {   
+        console.log('getting raw material data');
         JSON.stringify(action);
       })
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/rawmaterial/index')  

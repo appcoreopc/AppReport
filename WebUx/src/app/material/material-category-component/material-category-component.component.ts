@@ -33,7 +33,7 @@ export class MaterialCategoryComponentComponent implements OnInit {
 
   columns = [
     { prop: 'rMCatId' },
-    { name: 'name' }   
+    { name: 'rmcatName' }   
   ];
 
   userSubscription : Subscription;
@@ -77,10 +77,10 @@ export class MaterialCategoryComponentComponent implements OnInit {
       this.rows.length = 0;
       for (var idx in message.data)
       {
-        var userInfo = message.data[idx];    
+        var materialCategory = message.data[idx];    
         this.dataList.push({  
-          rMCatId : userInfo.rmcatId, 
-          name : userInfo.rmcatName
+          rMCatId : materialCategory.rmcatId, 
+          rmcatName : materialCategory.rmcatName
         });
       }
       this.rows = this.dataList;

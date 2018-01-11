@@ -2,34 +2,100 @@
 <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
   
   <div>
-      <div class="form-group">
-          <label for="name">Name</label>
-          <input id="name" type="text" class="form-control" formControlName="name">         
-
-          <div *ngIf="formErrors.name" class="alert alert-danger">
-            {{ formErrors.name }}
-        </div>
-
+    <div class="form-group">
+      <label for="rmcode">Code</label>
+      <input id="rmcode" type="text" class="form-control" formControlName="rmcode">         
+      
+      <div *ngIf="formErrors.rmcode" class="alert alert-danger">
+        {{ formErrors.rmcode }}
       </div>
+      
+    </div>
+    
 
-      <div class="form-group">
-          <label for="username">Username</label>
-          <input id="username" type="text" class="form-control" formControlName="username">         
+    <div class="form-group">
+      <label for="rmdesc">Description</label>
+      <input id="rmdesc" type="text" class="form-control" formControlName="rmdesc">         
+      
+      <div *ngIf="formErrors.rmdesc" class="alert alert-danger">
+        {{ formErrors.rmdesc }}
+      </div>
+      
+    </div>
+    
 
-          <div *ngIf="formErrors.username" class="alert alert-danger">
-            {{ formErrors.username }}
-         </div>           
-      </div>    
+    <div class="form-group">
+      <label for="uomid">OUM Id </label>
+      <input id="uomid" type="text" class="form-control" formControlName="uomid">         
+      
+      <div *ngIf="formErrors.uomid" class="alert alert-danger">
+        {{ formErrors.uomid }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="tariffcode">Tariff Code</label>
+      <input id="tariffcode" type="text" class="form-control" formControlName="tariffcode">         
+      
+      <div *ngIf="formErrors.tariffcode" class="alert alert-danger">
+        {{ formErrors.tariffcode }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="countrylist">Country List</label>
+      <input id="countrylist" type="text" class="form-control" formControlName="countrylist">         
+      
+      <div *ngIf="formErrors.countrylist" class="alert alert-danger">
+        {{ formErrors.countrylist }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="dutyimprate">Duty Rate</label>
+      <input id="dutyimprate" type="text" class="form-control" formControlName="dutyimprate">         
+      
+      <div *ngIf="formErrors.dutyimprate" class="alert alert-danger">
+        {{ formErrors.dutyimprate }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="gstRate">Gst Rate</label>
+      <input id="gstRate" type="text" class="form-control" formControlName="gstRate">         
+      
+      <div *ngIf="formErrors.gstRate" class="alert alert-danger">
+        {{ formErrors.gstRate }}
+      </div>
+      
+    </div>
+    
+    
+    
+    
+
   </div>
   
   <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
-
+  
   <p>Form value: {{ personForm.value | json }}</p>
-
+  
 </form>
 
-<ngx-datatable
+
+<ngx-datatable class="material striped" 
+[loadingIndicator]="loadingIndicator"
 [rows]="rows"
+[limit]="10"
+(select)="onSelect($event)"
 [columns]="columns">
 </ngx-datatable>
 
