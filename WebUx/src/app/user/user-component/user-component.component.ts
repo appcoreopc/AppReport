@@ -45,8 +45,8 @@ export class UserComponentComponent implements OnInit {
   rows = [];
 
   columns = [
-    { prop: 'name' },
-    { name: 'username' }   
+    { prop: 'username' },
+    { name: 'password' }   
   ];
 
   userSubscription : Subscription;
@@ -70,11 +70,12 @@ export class UserComponentComponent implements OnInit {
    
   save() {    
 
-     var saveJson = {
-      Name : this.person.name,
-      Username : this.person.username
-    };
-
+  var saveJson = new UserModel();
+      saveJson.userId = this.person.userId;
+      saveJson.username = this.person.username;
+      saveJson.password = this.person.password;
+      saveJson.userTypeId = this.person.userTypeId;
+    
     var strJson = JSON.stringify(saveJson);           
     this.dispatchIntent(USER_SAVE, saveJson);
     this.personForm.reset();
@@ -90,20 +91,21 @@ export class UserComponentComponent implements OnInit {
         var userInfo = message.data[idx];    
         this.dataList.push({  
             name : userInfo.name, 
-            username : userInfo.username
-        });
+            username : userInfo.username,
+            password : userInfo.password
 
-        console.log(this.rows);
-        this.rows = this.dataList;
+        });              
       }
+
+      this.rows = this.dataList;
     }    
   }
 
   private initForm() {
     this.personForm = this.fb.group({
-      'name': [this.person.name, [Validators.required, Validators.minLength(1),
-      Validators.maxLength(24)]],
       'username': [this.person.username, [Validators.required, Validators.minLength(1),
+      Validators.maxLength(24)]],
+      'password': [this.person.password, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]]
     });
 
@@ -116,8 +118,10 @@ export class UserComponentComponent implements OnInit {
     if (!this.personForm) { return; }
 
     const form = this.personForm;
-    this.person.name = data.name;
+    this.person.userId = data.userId;
     this.person.username = data.username;
+    this.person.password = data.password;   
+
 
     for (const field in this.formErrors) {
       // clear previous error message (if any)
@@ -135,8 +139,7 @@ export class UserComponentComponent implements OnInit {
 
   onSubmit() {
     
-    console.log(this.person.name);
-    console.log(this.person.username);
+    
   }
 
   dispatchIntent(messageType : string, data? : any)

@@ -63,13 +63,15 @@ export class StnCustomComponentComponent implements OnInit {
   save() {    
 
      var saveJson = {
-      Name : this.person.name,
+      Name : this.person.username,
       Username : this.person.username
     };
 
     console.log(JSON.stringify(saveJson));
+    
     this.dispatchIntent(USER_SAVE, saveJson);
-    //this.personForm.reset();
+
+    this.personForm.reset();
 
   }  
 
@@ -94,7 +96,7 @@ export class StnCustomComponentComponent implements OnInit {
 
   private initForm() {
     this.personForm = this.fb.group({
-      'name': [this.person.name, [Validators.required, Validators.minLength(1),
+      'name': [this.person.username, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]],
       'username': [this.person.username, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]]
@@ -109,7 +111,7 @@ export class StnCustomComponentComponent implements OnInit {
     if (!this.personForm) { return; }
 
     const form = this.personForm;
-    this.person.name = data.name;
+    
     this.person.username = data.username;
 
     for (const field in this.formErrors) {
@@ -127,9 +129,7 @@ export class StnCustomComponentComponent implements OnInit {
   }
 
   onSubmit() {
-    
-    console.log(this.person.name);
-    console.log(this.person.username);
+        
   }
 
   dispatchIntent(messageType : string, data? : any)
