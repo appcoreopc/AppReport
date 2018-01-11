@@ -2,30 +2,62 @@
 <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
   
   <div>
-      <div class="form-group">
-          <label for="name">Name</label>
-          <input id="name" type="text" class="form-control" formControlName="name">         
-
-          <div *ngIf="formErrors.name" class="alert alert-danger">
-            {{ formErrors.name }}
-        </div>
-
+    <div class="form-group">
+      <label for="empName">Employee Name </label>
+      <input id="empName" type="text" class="form-control" formControlName="empName">         
+      
+      <div *ngIf="formErrors.empName" class="alert alert-danger">
+        {{ formErrors.empName }}
       </div>
-
-      <div class="form-group">
-          <label for="username">Username</label>
-          <input id="username" type="text" class="form-control" formControlName="username">         
-
-          <div *ngIf="formErrors.username" class="alert alert-danger">
-            {{ formErrors.username }}
-         </div>           
-      </div>    
+      
+    </div>
+    
+    <div class="form-group">
+      <label for="empIdno">Employee No Id</label>
+      <input id="empIdno" type="text" class="form-control" formControlName="empIdno">         
+      
+      <div *ngIf="formErrors.empIdno" class="alert alert-danger">
+        {{ formErrors.empIdno }}
+      </div>           
+    </div>    
+    
+    <div class="form-group">
+      <label for="empAd1">Address</label>
+      <input id="empAd1" type="text" class="form-control" formControlName="empAd1">         
+      
+      <div *ngIf="formErrors.empAd1" class="alert alert-danger">
+        {{ formErrors.empAd1 }}
+      </div>           
+    </div>    
+    
+    <div class="form-group">
+      <label for="empAd2">Address 2</label>
+      <input id="empAd2" type="text" class="form-control" formControlName="empAd2">         
+      
+      <div *ngIf="formErrors.empAd2" class="alert alert-danger">
+        {{ formErrors.empAd2 }}
+      </div>           
+    </div>    
+        
+    <div class="form-group">
+      <label for="empAd3">Address 3</label>
+      <input id="empAd3" type="text" class="form-control" formControlName="empAd3">         
+      
+      <div *ngIf="formErrors.empAd3" class="alert alert-danger">
+        {{ formErrors.empAd3 }}
+      </div>           
+    </div>    
+    
+    
+    
+    
+    
   </div>
   
   <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
-
+  
   <p>Form value: {{ personForm.value | json }}</p>
-
+  
 </form>
 
 <ngx-datatable

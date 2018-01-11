@@ -20,11 +20,11 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
     @Effect() citySave$ = this.actions$    
     .ofType(EMPLOYEE_SAVE)   
     .map(action => {  
-      console.log('sending request out!'); 
+      
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/city/create', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/employee/save', payload, {headers : headersJson})      
     )
     .map(res => ({ type: EMPLOYEE_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: EMPLOYEE_SAVE_ERR }));
@@ -42,7 +42,7 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
       .map(action => {   
         JSON.stringify(action);
       })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/city/index')  
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/employee/index')  
       .map(res => {       
         return { type: EMPLOYEE_GET_OK, data: res};
       }) 
