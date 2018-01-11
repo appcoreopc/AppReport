@@ -18,12 +18,12 @@ export class RawMaterialComponentComponent implements OnInit {
   
   formErrors = {
     'Rmcode': '' ,
-    'rmdesc' : '',
-    'uomid' : '', 
-    'tariffcode' : '',
-    'countrylist' : '',
-    'dutyimprate' : '',
-    'gstRate' : ''
+    'Rmdesc' : '',
+    'Uomid' : '', 
+    'TariffCode' : '',
+    'CountryList' : '',
+    'DutyImpRate' : '',
+    'Gstrate' : ''
   };
   
   validationMessages = {    
@@ -32,38 +32,38 @@ export class RawMaterialComponentComponent implements OnInit {
       'minlength': 'Code must be at least 4 characters long.',
       'maxlength': 'Code cannot be more than 24 characters long.'
     }, 
-    'rmdesc': {
+    'Rmdesc': {
       'required': 'Description is required.',
       'minlength': 'Description must be at least 4 characters long.',
       'maxlength': 'Description cannot be more than 24 characters long.'
     },    
-    'uomid': {
-      'required': 'Description is required.',
-      'minlength': 'Description must be at least 4 characters long.',
-      'maxlength': 'Description cannot be more than 24 characters long.'
+    'Uomid': {
+      'required': 'Uom Id is required.',
+      'minlength': 'Uom Id  must be at least 4 characters long.',
+      'maxlength': 'Uom Id  cannot be more than 24 characters long.'
     },
     
-    'tariffcode': {
-      'required': 'Description is required.',
-      'minlength': 'Description must be at least 4 characters long.',
-      'maxlength': 'Description cannot be more than 24 characters long.'
+    'TariffCode': {
+      'required': 'Tariff Code is required.',
+      'minlength': 'Tariff Code must be at least 4 characters long.',
+      'maxlength': 'Tariff Code cannot be more than 24 characters long.'
     },
     
-    'countrylist': {
-      'required': 'Description is required.',
-      'minlength': 'Description must be at least 4 characters long.',
-      'maxlength': 'Description cannot be more than 24 characters long.'
+    'CountryList': {
+      'required': 'Country List is required.',
+      'minlength': 'Country List must be at least 4 characters long.',
+      'maxlength': 'Country List cannot be more than 24 characters long.'
     },
     
-    'dutyimprate': {
-      'required': 'Description is required.',
-      'minlength': 'Description must be at least 4 characters long.',
-      'maxlength': 'Description cannot be more than 24 characters long.'
+    'DutyImpRate': {
+      'required': 'Duty Imp Rate is required.',
+      'minlength': 'Duty Imp Rate must be at least 4 characters long.',
+      'maxlength': 'Duty Imp Rate cannot be more than 24 characters long.'
     },
-    'gstRate': {
-      'required': 'Description is required.',
-      'minlength': 'Description must be at least 4 characters long.',
-      'maxlength': 'Description cannot be more than 24 characters long.'
+    'Gstrate': {
+      'required': 'Gst Rate is required.',
+      'minlength': 'Gst Rate must be at least 4 characters long.',
+      'maxlength': 'Gst Rate cannot be more than 24 characters long.'
     }
   };
   
@@ -147,9 +147,7 @@ export class RawMaterialComponentComponent implements OnInit {
                     'DutyImpRate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                       Validators.maxLength(24)]],
                       'Gstrate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
-                        Validators.maxLength(24)]],
-                        
-                     
+                        Validators.maxLength(24)]]
                         
                       });
                       
