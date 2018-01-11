@@ -17,7 +17,7 @@ export class RawMaterialComponentComponent implements OnInit {
   private personForm: FormGroup;
   
   formErrors = {
-    'rmcode': '' ,
+    'Rmcode': '' ,
     'rmdesc' : '',
     'uomid' : '', 
     'tariffcode' : '',
@@ -27,7 +27,7 @@ export class RawMaterialComponentComponent implements OnInit {
   };
   
   validationMessages = {    
-    'rmcode': {
+    'Rmcode': {
       'required': 'Code is required.',
       'minlength': 'Code must be at least 4 characters long.',
       'maxlength': 'Code cannot be more than 24 characters long.'
@@ -132,23 +132,21 @@ export class RawMaterialComponentComponent implements OnInit {
     
 
     private initForm() {
-      this.personForm = this.fb.group({
-        'Rmid': [this.currentModel.Rmid, [Validators.required, Validators.minLength(1),
-          Validators.maxLength(24)]],
-          'rmcode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+      this.personForm = this.fb.group({    
+          'Rmcode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
             Validators.maxLength(24)]],
-            'rmdesc': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+            'Rmdesc': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
               Validators.maxLength(24)]],
               
-              'uomid': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+              'Uomid': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                 Validators.maxLength(24)]],
-                'tariffcode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                'TariffCode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                   Validators.maxLength(24)]],
-                  'countrylist': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                  'CountryList': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                     Validators.maxLength(24)]],
-                    'dutyimprate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                    'DutyImpRate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                       Validators.maxLength(24)]],
-                      'gstRate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                      'Gstrate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                         Validators.maxLength(24)]],
                         
                      
@@ -167,6 +165,14 @@ export class RawMaterialComponentComponent implements OnInit {
                       this.currentModel.Rmid = data.Rmid;
                       this.currentModel.Rmcode = data.Rmcode;
                       this.currentModel.Rmdesc = data.Rmdesc;
+                      this.currentModel.Uomid = data.Uomid;
+                      this.currentModel.TariffCode = data.TariffCode;
+                      this.currentModel.CountryList = data.CountryList;
+                      this.currentModel.DutyImpRate = data.DutyImpRate;
+                      this.currentModel.Gstrate = data.Gstrate;
+                      this.currentModel.RmcatId = data.RmcatId;
+                     
+                     
                       
                       for (const field in this.formErrors) {
                         // clear previous error message (if any)
