@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppReport.DataServices.PTSDataModel
+namespace AppReport.PTSDataModel
 {
     public partial class RptLgYrdy
     {
         public int TxnId { get; set; }
         public int? RptId { get; set; }
+        public int? RptY { get; set; }
         public string StkDesc { get; set; }
         public string TariffCode { get; set; }
         public int? Qty { get; set; }

@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppReport.DataServices.PTSDataModel
+namespace AppReport.PTSDataModel
 {
     public partial class RptM1
     {
         public int RptId { get; set; }
         public int? RptStatusId { get; set; }
         public DateTime? RptDate { get; set; }
+        public int? RptMth { get; set; }
+        public int? RptYr { get; set; }
         public string RefNo { get; set; }
         public DateTime? LetterDate { get; set; }
-        public string FCoName { get; set; }
-        public string FCoRegNo { get; set; }
-        public string FCoAdd1 { get; set; }
-        public string FCoAdd2 { get; set; }
-        public string FCoAdd3 { get; set; }
-        public string FCoAdd4 { get; set; }
-        public string FCoTel { get; set; }
-        public string FCoFax { get; set; }
-        public string FCoEmail { get; set; }
-        public string FCoWebsite { get; set; }
-        public string FCoLogo { get; set; }
         public string LrcptDept { get; set; }
         public string LrcptBr { get; set; }
         public string LrcptAdd1 { get; set; }
@@ -37,11 +28,10 @@ namespace AppReport.DataServices.PTSDataModel
         public decimal? SalesFiz { get; set; }
         public decimal? SalesLocal { get; set; }
         public int? SignedByEmpId { get; set; }
-        public string SignedByPos { get; set; }
-        public string SignedByName { get; set; }
-        public string SignedByIdno { get; set; }
+        public string FSignedByPos { get; set; }
+        public string FSignedByName { get; set; }
+        public string FSignedByIdno { get; set; }
         public DateTime? SignedDate { get; set; }
-        public string LicenseNo { get; set; }
         public decimal? RmdutyImp { get; set; }
         public decimal? Rmgst { get; set; }
         public decimal? RmdutyExcise { get; set; }
@@ -55,13 +45,13 @@ namespace AppReport.DataServices.PTSDataModel
         public decimal? FSumDutyExcise { get; set; }
         public decimal? FSumTaxLost { get; set; }
         public int? CreatedByEmpId { get; set; }
-        public string CreatedByPos { get; set; }
-        public string CreatedByName { get; set; }
-        public string CreatedByIdno { get; set; }
+        public string FCreatedByPos { get; set; }
+        public string FCreatedByName { get; set; }
+        public string FCreatedByIdno { get; set; }
         public int? AppdByEmpId { get; set; }
-        public string AppdByPos { get; set; }
-        public string AppdByName { get; set; }
-        public string AppdByIdno { get; set; }
+        public string FAppdByPos { get; set; }
+        public string FAppdByName { get; set; }
+        public string FAppdByIdno { get; set; }
         public decimal? FOpenBal { get; set; }
         public decimal? FImpWgt { get; set; }
         public decimal? FImpFreightCost { get; set; }

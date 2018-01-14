@@ -4,26 +4,23 @@ using System.Linq;
 
 namespace AppReport.Services
 {
-    public class RptSkService : AppDataObject
+    public class RptLgYexpService : AppDataObject
     {
         private PTSContext _context;
 
-        public RptSkService(PTSContext context) : base(context)
+        public RptLgYexpService(PTSContext context) : base(context)
         {
             _context = context;
         }
 
-        public IEnumerable<RptSk> GetAll()
+        public IEnumerable<RptLgYexp> GetAll()
         {
-            return _context.RptSk;
+            return _context.RptLgYexp;
         }
 
-        public RptSk Get(int id)
+        public IEnumerable<RptLgYexp> Get(int id, int y)
         {
-            if (_context.RptSk == null || _context.RptSk.Count() == 0)
-                return null;
-
-            return _context.RptSk.Where(i => i.RptId == id).Single();
+            return _context.RptLgYexp.Where(i => i.RptId == id && i.RptY == y).ToList().OrderBy(i => i.StkDesc);
         }
 
         public bool Delete(int id)
@@ -31,14 +28,14 @@ namespace AppReport.Services
             return Remove<User>(id);
         }
         
-        public bool Save(RptSk rpt)
+        public bool Save(RptLgYexp rpt)
         {
-            return base.Save<RptSk>(rpt, rpt.RptId);
+            return base.Save<RptLgYexp>(rpt, rpt.RptId);
         }
 
         public bool Save(int userId)
         {
-            var rpt = FindById<RptSk>(userId);
+            var rpt = FindById<RptLgYexp>(userId);
             if (rpt != null)
                 return Save(rpt);
             else

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppReport.DataServices.PTSDataModel
+namespace AppReport.PTSDataModel
 {
     public partial class RptLg
     {
@@ -36,6 +36,10 @@ namespace AppReport.DataServices.PTSDataModel
         public string LrcptAdd4 { get; set; }
         public string PbbcekNo { get; set; }
         public decimal? LicenseFee { get; set; }
+        public string LocImpMY1 { get; set; }
+        public string LocImpMY2 { get; set; }
+        public string LocExpMY1 { get; set; }
+        public string LocExpMY2 { get; set; }
         public int? SignedByEmpId { get; set; }
         public string SignedByPos { get; set; }
         public string SignedByName { get; set; }
@@ -55,6 +59,14 @@ namespace AppReport.DataServices.PTSDataModel
         public string BrcptAdd2 { get; set; }
         public string BrcptAdd3 { get; set; }
         public string BrcptAdd4 { get; set; }
+        public int? BsignedByEmpId { get; set; }
+        public string BsignedByPos { get; set; }
+        public string BsignedByName { get; set; }
+        public string BsignedByIdno { get; set; }
+        public string BsignedByAdd1 { get; set; }
+        public string BsignedByAdd2 { get; set; }
+        public string BsignedByAdd3 { get; set; }
+        public string BsignedByAdd4 { get; set; }
         public string RptCoName { get; set; }
         public int? RptSignedByEmpId { get; set; }
         public string RptSignedByPos { get; set; }
@@ -106,34 +118,18 @@ namespace AppReport.DataServices.PTSDataModel
         public decimal? FImpReturnedWgtY2 { get; set; }
         public decimal? FImpCloseBalWgtY2 { get; set; }
         public decimal? FImpCloseBalCostY2 { get; set; }
-        public decimal? FExpOpenBalQtyY1 { get; set; }
-        public decimal? FExpOpenBalCostY1 { get; set; }
-        public decimal? FExpMadeQtyY1 { get; set; }
-        public decimal? FExpMadeCostY1 { get; set; }
-        public decimal? FExpQtyY1 { get; set; }
-        public decimal? FExpCostY1 { get; set; }
-        public decimal? FExpLocSalesQtyY1 { get; set; }
-        public decimal? FExpLocSalesCostY1 { get; set; }
-        public decimal? FExpDamagedQtyY1 { get; set; }
-        public decimal? FExpDamagedCostY1 { get; set; }
-        public decimal? FExpCloseQtyY1 { get; set; }
-        public decimal? FExpCloseCostY1 { get; set; }
-        public decimal? FExpOpenBalQtyY2 { get; set; }
-        public decimal? FExpOpenBalCostY2 { get; set; }
-        public decimal? FExpMadeQtyY2 { get; set; }
-        public decimal? FExpMadeCostY2 { get; set; }
-        public decimal? FExpQtyY2 { get; set; }
-        public decimal? FExpCostY2 { get; set; }
-        public decimal? FExpLocSalesQtyY2 { get; set; }
-        public decimal? FExpLocSalesCostY2 { get; set; }
-        public decimal? FExpDamagedQtyY2 { get; set; }
-        public decimal? FExpDamagedCostY2 { get; set; }
-        public decimal? FExpCloseQtyY2 { get; set; }
-        public decimal? FExpCloseCostY2 { get; set; }
-        public decimal? FRdyCost { get; set; }
-        public decimal? FRdyDutyImpCost { get; set; }
-        public decimal? FRdyGstcost { get; set; }
-        public decimal? FRdyTaxCost { get; set; }
+        public decimal? FRdyCostY1 { get; set; }
+        public decimal? FRdyDutyImpCostY1 { get; set; }
+        public decimal? FRdyGstcostY1 { get; set; }
+        public decimal? FRdyTaxCostY1 { get; set; }
+        public decimal? FRdyCostY3 { get; set; }
+        public decimal? FRdyDutyImpCostY3 { get; set; }
+        public decimal? FRdyGstcostY3 { get; set; }
+        public decimal? FRdyTaxCostY3 { get; set; }
+        public decimal? FRdyStkCostY2 { get; set; }
+        public decimal? FRdyDutyImpCostY2 { get; set; }
+        public decimal? FRdyGstcostY2 { get; set; }
+        public decimal? FRdyTaxCostY2 { get; set; }
         public int? FBgtQtyLoc { get; set; }
         public decimal? FBgtCostLoc { get; set; }
         public decimal? FBgtDutyImpCostLoc { get; set; }
