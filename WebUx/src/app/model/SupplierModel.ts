@@ -1,4 +1,9 @@
 export class SupplierModel { 
-    name : string;
-    username : string;
+    supplierName : string;
+    supplierId? : string; 
+    createdByUserId : string;
+    createdDT : string;
+    editedByUserId : string;
+    editedDT : string;
+    
 }

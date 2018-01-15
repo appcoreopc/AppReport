@@ -82,6 +82,7 @@ export class EmployeeComponentComponent implements OnInit {
         'username': [this.person.username, [Validators.required, Validators.minLength(1),
         Validators.maxLength(24)]]
       });
+      
   
       this.personForm.valueChanges.debounceTime(500)
         .subscribe(data => this.onValueChanged(data));
