@@ -71,6 +71,17 @@ export const REPORT_GET = 'REPORT_GET';
 export const REPORT_GET_ERR = 'REPORT_GET_ERR';
 export const REPORT_GET_OK = 'REPORT_GET_OK';
 
+export const NAVIGATION_SAVE = 'NAVIGATION_SAVE';
+export const NAVIGATION_CANCEL = 'NAVIGATION_CANCEL';
+export const NAVIGATION_SAVE_SUCCESS = 'NAVIGATION_SAVE_SUCCESS';
+export const NAVIGATION_MESSAGE_END = 'NAVIGATION_MESSAGE_END';
+export const NAVIGATION_SAVE_ERR = 'NAVIGATION_SAVE_ERR';
+export const NAVIGATION_CANCEL_OK = 'NAVIGATION_CANCEL_OK';
+export const NAVIGATION_GET = 'NAVIGATION_GET';
+export const NAVIGATION_GET_ERR = 'NAVIGATION_GET_ERR';
+export const NAVIGATION_GET_OK = 'NAVIGATION_GET_OK';
+
+
 export interface CityAppState {
 	status: number;	
 	type : string; 
@@ -107,5 +118,6 @@ export interface KeyValueData {
 	key: string;
 	description : string
 } 
+
 
 export const headersJson = new HttpHeaders().set('Content-Type', 'application/json');
