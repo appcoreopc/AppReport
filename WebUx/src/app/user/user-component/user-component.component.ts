@@ -72,8 +72,10 @@ export class UserComponentComponent implements OnInit {
   save() {    
 
      var saveJson = {
-      Name : this.person.name,
-      Username : this.person.username
+
+      Id : this.person.userId,
+      Username : this.person.username, 
+
     };
 
     var strJson = JSON.stringify(saveJson);           
@@ -102,7 +104,7 @@ export class UserComponentComponent implements OnInit {
 
   private initForm() {
     this.personForm = this.fb.group({
-      'name': [this.person.name, [Validators.required, Validators.minLength(1),
+      'name': [this.person.username, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]],
       'username': [this.person.username, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]]
@@ -117,7 +119,7 @@ export class UserComponentComponent implements OnInit {
     if (!this.personForm) { return; }
 
     const form = this.personForm;
-    this.person.name = data.name;
+    this.person.userId = data.userId;
     this.person.username = data.username;
 
     for (const field in this.formErrors) {
@@ -135,9 +137,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   onSubmit() {
-    
-    console.log(this.person.name);
-    console.log(this.person.username);
+     
   }
 
   dispatchIntent(messageType : string, data? : any)

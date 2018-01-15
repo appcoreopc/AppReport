@@ -78,9 +78,9 @@ export class EmployeeComponentComponent implements OnInit {
 
     private initForm() {
       this.personForm = this.fb.group({
-        'name': [this.person.name, [Validators.required, Validators.minLength(1),
+        'name': [this.person.empName, [Validators.required, Validators.minLength(1),
         Validators.maxLength(24)]],
-        'username': [this.person.username, [Validators.required, Validators.minLength(1),
+        'username': [this.person.empName, [Validators.required, Validators.minLength(1),
         Validators.maxLength(24)]]
       });
       
@@ -94,8 +94,8 @@ export class EmployeeComponentComponent implements OnInit {
       if (!this.personForm) { return; }
   
       const form = this.personForm;
-      this.person.name = data.name;
-      this.person.username = data.username;
+      this.person.empName = data.empName;
+      
   
       for (const field in this.formErrors) {
         // clear previous error message (if any)
