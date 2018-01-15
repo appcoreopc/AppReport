@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
+
 import {NAVIGATION_SAVE, NAVIGATION_CANCEL, NAVIGATION_SAVE_SUCCESS,
   NAVIGATION_MESSAGE_END, NAVIGATION_SAVE_ERR, NAVIGATION_CANCEL_OK, NAVIGATION_GET, NAVIGATION_GET_ERR,
   NAVIGATION_GET_OK, CityAppState, CityData, headersJson } from '../sharedObjects/sharedMessages';

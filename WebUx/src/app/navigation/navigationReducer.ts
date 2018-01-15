@@ -4,7 +4,7 @@ import { ActionReducer, Action } from '@ngrx/store';
 import {NAVIGATION_SAVE, NAVIGATION_CANCEL, NAVIGATION_SAVE_SUCCESS,
 	 NAVIGATION_MESSAGE_END, NAVIGATION_SAVE_ERR, NAVIGATION_CANCEL_OK, NAVIGATION_GET, NAVIGATION_GET_ERR,
 	  NAVIGATION_GET_OK, CityAppState, CityData } from '../sharedObjects/sharedMessages';
-
+	  
 		export function ReportReducer(status: CityAppState, action: Action) {
 	switch (action.type) {
 		case NAVIGATION_GET_OK: 
