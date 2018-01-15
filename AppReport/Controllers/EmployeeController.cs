@@ -27,18 +27,14 @@ namespace AppReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] EmployeeRequestModel requestUser)
+        public IActionResult Save(UserRequestModel requestUser)
         {
-            if (requestUser != null && !string.IsNullOrEmpty(requestUser.EmpName))
+            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))
             {
                 var user = new Employee()
                 {
-                    EmpId = requestUser.EmpId,
-                    EmpName = requestUser.EmpName,
-                    EmpAd1 = requestUser.EmpAd1,
-                    EmpAd2 = requestUser.EmpAd2,
-                    EmpAd3 = requestUser.EmpAd3,
-                    EmpIdno = requestUser.EmpIdno
+                    EmpId = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
+                    EmpName = requestUser.Name,
                 };
 
                 var result = new EmployeeService(_ptsContext).Save<Employee>(user, user.EmpId);

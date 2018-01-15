@@ -7,6 +7,17 @@ namespace AppReport.DataServices.PTSDataModel
     {
         public int RptId { get; set; }
         public int? RptStatusId { get; set; }
+        public string FCoName { get; set; }
+        public string FCoRegNo { get; set; }
+        public string FCoAdd1 { get; set; }
+        public string FCoAdd2 { get; set; }
+        public string FCoAdd3 { get; set; }
+        public string FCoAdd4 { get; set; }
+        public string FCoTel { get; set; }
+        public string FCoFax { get; set; }
+        public string FCoEmail { get; set; }
+        public string FCoWebsite { get; set; }
+        public string FCoLogo { get; set; }
         public int? RptY1 { get; set; }
         public int? RptY2 { get; set; }
         public DateTime? RptSdateY1 { get; set; }
@@ -24,29 +35,31 @@ namespace AppReport.DataServices.PTSDataModel
         public string LrcptAdd3 { get; set; }
         public string LrcptAdd4 { get; set; }
         public string PbbcekNo { get; set; }
-        public string LicenseFee { get; set; }
-        public string LocImpMY1 { get; set; }
-        public string LocImpMY2 { get; set; }
-        public string LocExpMY1 { get; set; }
-        public string LocExpMY2 { get; set; }
+        public decimal? LicenseFee { get; set; }
         public int? SignedByEmpId { get; set; }
-        public string FSignedByPos { get; set; }
-        public string FSignedByName { get; set; }
-        public string FSignedByIdno { get; set; }
+        public string SignedByPos { get; set; }
+        public string SignedByName { get; set; }
         public DateTime? SignedDate { get; set; }
+        public string AppByPos { get; set; }
+        public string AppByName { get; set; }
+        public string AppByIdno { get; set; }
+        public string AppCoName { get; set; }
+        public string AppAdd1 { get; set; }
+        public string AppAdd2 { get; set; }
+        public string AppAdd3 { get; set; }
+        public string AppAdd4 { get; set; }
+        public DateTime? AppDate { get; set; }
         public string BrcptDept { get; set; }
         public string BrcptBr { get; set; }
         public string BrcptAdd1 { get; set; }
         public string BrcptAdd2 { get; set; }
         public string BrcptAdd3 { get; set; }
         public string BrcptAdd4 { get; set; }
-        public string FBsignedByPos { get; set; }
-        public string FBsignedByName { get; set; }
-        public string FBsignedByIdno { get; set; }
-        public string FBsignedByAdd1 { get; set; }
-        public string FBsignedByAdd2 { get; set; }
-        public string FBsignedByAdd3 { get; set; }
-        public string FBsignedByAdd4 { get; set; }
+        public string RptCoName { get; set; }
+        public int? RptSignedByEmpId { get; set; }
+        public string RptSignedByPos { get; set; }
+        public string RptSignedByIdno { get; set; }
+        public string RptSignedByName { get; set; }
         public string MfdGood { get; set; }
         public DateTime? MfdLicenseSdate { get; set; }
         public DateTime? MfdLicenseEdate { get; set; }
@@ -93,18 +106,34 @@ namespace AppReport.DataServices.PTSDataModel
         public decimal? FImpReturnedWgtY2 { get; set; }
         public decimal? FImpCloseBalWgtY2 { get; set; }
         public decimal? FImpCloseBalCostY2 { get; set; }
-        public decimal? FRdyCostY1 { get; set; }
-        public decimal? FRdyDutyImpCostY1 { get; set; }
-        public decimal? FRdyGstcostY1 { get; set; }
-        public decimal? FRdyTaxCostY1 { get; set; }
-        public decimal? FRdyCostY3 { get; set; }
-        public decimal? FRdyDutyImpCostY3 { get; set; }
-        public decimal? FRdyGstcostY3 { get; set; }
-        public decimal? FRdyTaxCostY3 { get; set; }
-        public decimal? FRdyStkCostY2 { get; set; }
-        public decimal? FRdyDutyImpCostY2 { get; set; }
-        public decimal? FRdyGstcostY2 { get; set; }
-        public decimal? FRdyTaxCostY2 { get; set; }
+        public decimal? FExpOpenBalQtyY1 { get; set; }
+        public decimal? FExpOpenBalCostY1 { get; set; }
+        public decimal? FExpMadeQtyY1 { get; set; }
+        public decimal? FExpMadeCostY1 { get; set; }
+        public decimal? FExpQtyY1 { get; set; }
+        public decimal? FExpCostY1 { get; set; }
+        public decimal? FExpLocSalesQtyY1 { get; set; }
+        public decimal? FExpLocSalesCostY1 { get; set; }
+        public decimal? FExpDamagedQtyY1 { get; set; }
+        public decimal? FExpDamagedCostY1 { get; set; }
+        public decimal? FExpCloseQtyY1 { get; set; }
+        public decimal? FExpCloseCostY1 { get; set; }
+        public decimal? FExpOpenBalQtyY2 { get; set; }
+        public decimal? FExpOpenBalCostY2 { get; set; }
+        public decimal? FExpMadeQtyY2 { get; set; }
+        public decimal? FExpMadeCostY2 { get; set; }
+        public decimal? FExpQtyY2 { get; set; }
+        public decimal? FExpCostY2 { get; set; }
+        public decimal? FExpLocSalesQtyY2 { get; set; }
+        public decimal? FExpLocSalesCostY2 { get; set; }
+        public decimal? FExpDamagedQtyY2 { get; set; }
+        public decimal? FExpDamagedCostY2 { get; set; }
+        public decimal? FExpCloseQtyY2 { get; set; }
+        public decimal? FExpCloseCostY2 { get; set; }
+        public decimal? FRdyCost { get; set; }
+        public decimal? FRdyDutyImpCost { get; set; }
+        public decimal? FRdyGstcost { get; set; }
+        public decimal? FRdyTaxCost { get; set; }
         public int? FBgtQtyLoc { get; set; }
         public decimal? FBgtCostLoc { get; set; }
         public decimal? FBgtDutyImpCostLoc { get; set; }

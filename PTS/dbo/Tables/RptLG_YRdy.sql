@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[RptLG_YRdy] (
     [TxnId]       INT             IDENTITY (1, 1) NOT NULL,
     [RptId]       INT             NULL,
-    [RptY]        INT             NULL,
     [StkDesc]     NVARCHAR (500)  NULL,
     [TariffCode]  VARCHAR (50)    NULL,
     [Qty]         INT             NULL,
@@ -13,4 +12,6 @@
     [TaxCost]     DECIMAL (18, 2) NULL,
     CONSTRAINT [PK_RptLG_YRdyStk] PRIMARY KEY CLUSTERED ([TxnId] ASC)
 );
+
+
 

@@ -4,7 +4,7 @@
     [RptY]           INT             NULL,
     [RMId]           INT             NULL,
     [F_RMCatName]    NVARCHAR (100)  NULL,
-    [F_RMDesc]       NCHAR (10)      NULL,
+    [F_RMDesc]       NVARCHAR (500)  NULL,
     [F_UOMCode]      NVARCHAR (10)   NULL,
     [F_TariffCode]   VARCHAR (50)    NULL,
     [F_OpenBalWgt]   DECIMAL (10, 2) NULL,
@@ -20,4 +20,6 @@
     [F_CloseBalCost] DECIMAL (18, 2) NULL,
     CONSTRAINT [PK_RptLG_YImpRM] PRIMARY KEY CLUSTERED ([TxnId] ASC)
 );
+
+
 

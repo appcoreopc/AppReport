@@ -1,6 +1,17 @@
 ﻿CREATE TABLE [dbo].[RptLG] (
     [RptId]                 INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]           INT             NULL,
+    [F_CoName]              NVARCHAR (50)   NULL,
+    [F_CoRegNo]             VARCHAR (20)    NULL,
+    [F_CoAdd1]              NVARCHAR (100)  NULL,
+    [F_CoAdd2]              NVARCHAR (100)  NULL,
+    [F_CoAdd3]              NVARCHAR (100)  NULL,
+    [F_CoAdd4]              NVARCHAR (100)  NULL,
+    [F_CoTel]               VARCHAR (20)    NULL,
+    [F_CoFax]               VARCHAR (20)    NULL,
+    [F_CoEmail]             VARCHAR (20)    NULL,
+    [F_CoWebsite]           NVARCHAR (50)   NULL,
+    [F_CoLogo]              VARCHAR (50)    NULL,
     [RptY1]                 INT             NULL,
     [RptY2]                 INT             NULL,
     [RptSDate_Y1]           DATE            NULL,
@@ -9,7 +20,7 @@
     [RptEDate_Y2]           DATE            NULL,
     [RptSDate_Y3]           DATE            NULL,
     [RptEDate_Y3]           DATE            NULL,
-    [RefNo]                 VARCHAR (20)    NULL,
+    [RefNo]                 VARCHAR (50)    NULL,
     [LDate]                 DATETIME        NULL,
     [LRcptDept]             NVARCHAR (50)   NULL,
     [LRcptBr]               NVARCHAR (50)   NULL,
@@ -18,29 +29,31 @@
     [LRcptAdd3]             NVARCHAR (100)  NULL,
     [LRcptAdd4]             NVARCHAR (100)  NULL,
     [PBBCekNo]              NVARCHAR (50)   NULL,
-    [LicenseFee]            NCHAR (10)      NULL,
-    [LocImpM_Y1]            NVARCHAR (50)   NULL,
-    [LocImpM_Y2]            NVARCHAR (50)   NULL,
-    [LocExpM_Y1]            NVARCHAR (50)   NULL,
-    [LocExpM_Y2]            NVARCHAR (50)   NULL,
+    [LicenseFee]            DECIMAL (18, 2) NULL,
     [SignedByEmpId]         INT             NULL,
-    [F_SignedByPos]         NVARCHAR (50)   NULL,
-    [F_SignedByName]        NVARCHAR (50)   NULL,
-    [F_SignedByIDNo]        VARCHAR (20)    NULL,
+    [SignedByPos]           NVARCHAR (50)   NULL,
+    [SignedByName]          NVARCHAR (50)   NULL,
     [SignedDate]            DATE            NULL,
+    [AppByPos]              NVARCHAR (50)   NULL,
+    [AppByName]             NVARCHAR (50)   NULL,
+    [AppByIDNo]             VARCHAR (20)    NULL,
+    [AppCoName]             NVARCHAR (50)   NULL,
+    [AppAdd1]               NVARCHAR (100)  NULL,
+    [AppAdd2]               NVARCHAR (100)  NULL,
+    [AppAdd3]               NVARCHAR (100)  NULL,
+    [AppAdd4]               NVARCHAR (100)  NULL,
+    [AppDate]               DATE            NULL,
     [BRcptDept]             NVARCHAR (50)   NULL,
     [BRcptBr]               NVARCHAR (50)   NULL,
     [BRcptAdd1]             NVARCHAR (100)  NULL,
     [BRcptAdd2]             NVARCHAR (100)  NULL,
     [BRcptAdd3]             NVARCHAR (100)  NULL,
     [BRcptAdd4]             NVARCHAR (100)  NULL,
-    [F_BSignedByPos]        NVARCHAR (50)   NULL,
-    [F_BSignedByName]       NVARCHAR (50)   NULL,
-    [F_BSignedByIDNo]       VARCHAR (20)    NULL,
-    [F_BSignedByAdd1]       NVARCHAR (100)  NULL,
-    [F_BSignedByAdd2]       NVARCHAR (100)  NULL,
-    [F_BSignedByAdd3]       NVARCHAR (100)  NULL,
-    [F_BSignedByAdd4]       NVARCHAR (100)  NULL,
+    [RptCoName]             NVARCHAR (50)   NULL,
+    [RptSignedByEmpId]      INT             NULL,
+    [RptSignedByPos]        NVARCHAR (50)   NULL,
+    [RptSignedByIDNo]       VARCHAR (20)    NULL,
+    [RptSignedByName]       NVARCHAR (50)   NULL,
     [MfdGood]               NVARCHAR (MAX)  NULL,
     [MfdLicenseSDate]       DATE            NULL,
     [MfdLicenseEDate]       DATE            NULL,
@@ -87,18 +100,34 @@
     [F_Imp_ReturnedWgt_Y2]  DECIMAL (10, 2) NULL,
     [F_Imp_CloseBalWgt_Y2]  DECIMAL (10, 2) NULL,
     [F_Imp_CloseBalCost_Y2] DECIMAL (18, 2) NULL,
-    [F_Rdy_Cost_Y1]         DECIMAL (18, 2) NULL,
-    [F_Rdy_DutyImpCost_Y1]  DECIMAL (18, 2) NULL,
-    [F_Rdy_GSTCost_Y1]      DECIMAL (18, 2) NULL,
-    [F_Rdy_TaxCost_Y1]      DECIMAL (18, 2) NULL,
-    [F_Rdy_Cost_Y3]         DECIMAL (18, 2) NULL,
-    [F_Rdy_DutyImpCost_Y3]  DECIMAL (18, 2) NULL,
-    [F_Rdy_GSTCost_Y3]      DECIMAL (18, 2) NULL,
-    [F_Rdy_TaxCost_Y3]      DECIMAL (18, 2) NULL,
-    [F_Rdy_StkCost_Y2]      DECIMAL (18, 2) NULL,
-    [F_Rdy_DutyImpCost_Y2]  DECIMAL (18, 2) NULL,
-    [F_Rdy_GSTCost_Y2]      DECIMAL (18, 2) NULL,
-    [F_Rdy_TaxCost_Y2]      DECIMAL (18, 2) NULL,
+    [F_Exp_OpenBalQty_Y1]   DECIMAL (10, 2) NULL,
+    [F_Exp_OpenBalCost_Y1]  DECIMAL (18, 2) NULL,
+    [F_Exp_MadeQty_Y1]      DECIMAL (10, 2) NULL,
+    [F_Exp_MadeCost_Y1]     DECIMAL (18, 2) NULL,
+    [F_Exp_Qty_Y1]          DECIMAL (10, 2) NULL,
+    [F_Exp_Cost_Y1]         DECIMAL (18, 2) NULL,
+    [F_Exp_LocSalesQty_Y1]  DECIMAL (10, 2) NULL,
+    [F_Exp_LocSalesCost_Y1] DECIMAL (18, 2) NULL,
+    [F_Exp_DamagedQty_Y1]   DECIMAL (10, 2) NULL,
+    [F_Exp_DamagedCost_Y1]  DECIMAL (18, 2) NULL,
+    [F_Exp_CloseQty_Y1]     DECIMAL (10, 2) NULL,
+    [F_Exp_CloseCost_Y1]    DECIMAL (18, 2) NULL,
+    [F_Exp_OpenBalQty_Y2]   DECIMAL (10, 2) NULL,
+    [F_Exp_OpenBalCost_Y2]  DECIMAL (18, 2) NULL,
+    [F_Exp_MadeQty_Y2]      DECIMAL (10, 2) NULL,
+    [F_Exp_MadeCost_Y2]     DECIMAL (18, 2) NULL,
+    [F_Exp_Qty_Y2]          DECIMAL (10, 2) NULL,
+    [F_Exp_Cost_Y2]         DECIMAL (18, 2) NULL,
+    [F_Exp_LocSalesQty_Y2]  DECIMAL (10, 2) NULL,
+    [F_Exp_LocSalesCost_Y2] DECIMAL (18, 2) NULL,
+    [F_Exp_DamagedQty_Y2]   DECIMAL (10, 2) NULL,
+    [F_Exp_DamagedCost_Y2]  DECIMAL (18, 2) NULL,
+    [F_Exp_CloseQty_Y2]     DECIMAL (10, 2) NULL,
+    [F_Exp_CloseCost_Y2]    DECIMAL (18, 2) NULL,
+    [F_Rdy_Cost]            DECIMAL (18, 2) NULL,
+    [F_Rdy_DutyImpCost]     DECIMAL (18, 2) NULL,
+    [F_Rdy_GSTCost]         DECIMAL (18, 2) NULL,
+    [F_Rdy_TaxCost]         DECIMAL (18, 2) NULL,
     [F_Bgt_Qty_Loc]         INT             NULL,
     [F_Bgt_Cost_Loc]        DECIMAL (18, 2) NULL,
     [F_Bgt_DutyImpCost_Loc] DECIMAL (18, 2) NULL,
@@ -113,6 +142,30 @@
     [CreatedDT]             DATETIME        NULL,
     [EditedByUserId]        INT             NULL,
     [EditedDT]              DATETIME        NULL,
-    CONSTRAINT [PK_RptLG] PRIMARY KEY CLUSTERED ([RptId] ASC)
+    CONSTRAINT [PK_RptLG_1] PRIMARY KEY CLUSTERED ([RptId] ASC)
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

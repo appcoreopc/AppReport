@@ -62,11 +62,29 @@ namespace AppReport.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apr.
+        /// </summary>
+        internal static string Apr {
+            get {
+                return ResourceManager.GetString("Apr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to April.
         /// </summary>
         internal static string April {
             get {
                 return ResourceManager.GetString("April", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ogo.
+        /// </summary>
+        internal static string Aug {
+            get {
+                return ResourceManager.GetString("Aug", resourceCulture);
             }
         }
         
@@ -80,6 +98,15 @@ namespace AppReport.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dis.
+        /// </summary>
+        internal static string Dec {
+            get {
+                return ResourceManager.GetString("Dec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disember.
         /// </summary>
         internal static string December {
@@ -89,11 +116,29 @@ namespace AppReport.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feb.
+        /// </summary>
+        internal static string Feb {
+            get {
+                return ResourceManager.GetString("Feb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Februari.
         /// </summary>
         internal static string February {
             get {
                 return ResourceManager.GetString("February", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jan.
+        /// </summary>
+        internal static string Jan {
+            get {
+                return ResourceManager.GetString("Jan", resourceCulture);
             }
         }
         
@@ -127,6 +172,15 @@ namespace AppReport.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Mac.
         /// </summary>
+        internal static string Mar {
+            get {
+                return ResourceManager.GetString("Mar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mac.
+        /// </summary>
         internal static string March {
             get {
                 return ResourceManager.GetString("March", resourceCulture);
@@ -143,6 +197,123 @@ namespace AppReport.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Januari.
+        /// </summary>
+        internal static string MMMM_1 {
+            get {
+                return ResourceManager.GetString("MMMM_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oktober.
+        /// </summary>
+        internal static string MMMM_10 {
+            get {
+                return ResourceManager.GetString("MMMM_10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to November.
+        /// </summary>
+        internal static string MMMM_11 {
+            get {
+                return ResourceManager.GetString("MMMM_11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disember.
+        /// </summary>
+        internal static string MMMM_12 {
+            get {
+                return ResourceManager.GetString("MMMM_12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Februari.
+        /// </summary>
+        internal static string MMMM_2 {
+            get {
+                return ResourceManager.GetString("MMMM_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mac.
+        /// </summary>
+        internal static string MMMM_3 {
+            get {
+                return ResourceManager.GetString("MMMM_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to April.
+        /// </summary>
+        internal static string MMMM_4 {
+            get {
+                return ResourceManager.GetString("MMMM_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mei.
+        /// </summary>
+        internal static string MMMM_5 {
+            get {
+                return ResourceManager.GetString("MMMM_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jun.
+        /// </summary>
+        internal static string MMMM_6 {
+            get {
+                return ResourceManager.GetString("MMMM_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Julai.
+        /// </summary>
+        internal static string MMMM_7 {
+            get {
+                return ResourceManager.GetString("MMMM_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ogos.
+        /// </summary>
+        internal static string MMMM_8 {
+            get {
+                return ResourceManager.GetString("MMMM_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to September.
+        /// </summary>
+        internal static string MMMM_9 {
+            get {
+                return ResourceManager.GetString("MMMM_9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nov.
+        /// </summary>
+        internal static string Nov {
+            get {
+                return ResourceManager.GetString("Nov", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to November.
         /// </summary>
         internal static string November {
@@ -152,11 +323,29 @@ namespace AppReport.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Okt.
+        /// </summary>
+        internal static string Oct {
+            get {
+                return ResourceManager.GetString("Oct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oktober.
         /// </summary>
         internal static string October {
             get {
                 return ResourceManager.GetString("October", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sep.
+        /// </summary>
+        internal static string Sep {
+            get {
+                return ResourceManager.GetString("Sep", resourceCulture);
             }
         }
         

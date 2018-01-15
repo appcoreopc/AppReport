@@ -1,0 +1,36 @@
+<h1>Employee</h1>
+<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+  
+  <div>
+      <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" class="form-control" formControlName="name">         
+
+          <div *ngIf="formErrors.name" class="alert alert-danger">
+            {{ formErrors.name }}
+        </div>
+
+      </div>
+
+      <div class="form-group">
+          <label for="username">Username</label>
+          <input id="username" type="text" class="form-control" formControlName="username">         
+
+          <div *ngIf="formErrors.username" class="alert alert-danger">
+            {{ formErrors.username }}
+         </div>           
+      </div>    
+  </div>
+  
+  <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
+
+  <p>Form value: {{ personForm.value | json }}</p>
+
+</form>
+
+<ngx-datatable
+[rows]="rows"
+[columns]="columns">
+</ngx-datatable>
+
+

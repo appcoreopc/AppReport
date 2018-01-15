@@ -34,19 +34,19 @@ namespace AppReport.Controllers
             return new JsonResult(users);
         }
 
-        [HttpPost]        
+        [HttpPost]
+        [HttpOptions]
         public IActionResult Save([FromBody] UserRequestModel requestUser)
         {
-            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Username))
+            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))
             {
-                var user = new Users()
-                {                    
-                    UserId = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
-                    Username = requestUser.Username,
-                    Password = requestUser.Password
+                var user = new User()
+                {
+                    Id = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
+                    Name = requestUser.Name,
                 };
 
-                var result = new UserService(_ptsContext).Save<Users>(user, user.UserId);
+                var result = new UserService(_ptsContext).Save<User>(user, user.Id);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();

@@ -2,10 +2,19 @@
     [RptId]              INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]        INT             NULL,
     [RptDate]            DATE            NULL,
-    [RptMth]             INT             NULL,
-    [RptYr]              INT             NULL,
-    [RefNo]              VARCHAR (20)    NULL,
+    [RefNo]              VARCHAR (50)    NULL,
     [LetterDate]         DATETIME        NULL,
+    [F_CoName]           NVARCHAR (50)   NULL,
+    [F_CoRegNo]          VARCHAR (20)    NULL,
+    [F_CoAdd1]           NVARCHAR (100)  NULL,
+    [F_CoAdd2]           NVARCHAR (100)  NULL,
+    [F_CoAdd3]           NVARCHAR (100)  NULL,
+    [F_CoAdd4]           NVARCHAR (100)  NULL,
+    [F_CoTel]            VARCHAR (20)    NULL,
+    [F_CoFax]            VARCHAR (20)    NULL,
+    [F_CoEmail]          VARCHAR (20)    NULL,
+    [F_CoWebsite]        NVARCHAR (50)   NULL,
+    [F_CoLogo]           VARCHAR (50)    NULL,
     [LRcptDept]          NVARCHAR (50)   NULL,
     [LRcptBr]            NVARCHAR (50)   NULL,
     [LRcptAdd1]          NVARCHAR (100)  NULL,
@@ -22,10 +31,11 @@
     [SalesFIZ]           DECIMAL (18, 2) NULL,
     [SalesLocal]         DECIMAL (18, 2) NULL,
     [SignedByEmpId]      INT             NULL,
-    [F_SignedByPos]      NVARCHAR (50)   NULL,
-    [F_SignedByName]     NVARCHAR (50)   NULL,
-    [F_SignedByIDNo]     VARCHAR (20)    NULL,
+    [SignedByPos]        NVARCHAR (50)   NULL,
+    [SignedByName]       NVARCHAR (50)   NULL,
+    [SignedByIDNo]       VARCHAR (20)    NULL,
     [SignedDate]         DATE            NULL,
+    [LicenseNo]          VARCHAR (50)    NULL,
     [RMDutyImp]          DECIMAL (18, 2) NULL,
     [RMGST]              DECIMAL (18, 2) NULL,
     [RMDutyExcise]       DECIMAL (18, 2) NULL,
@@ -39,13 +49,13 @@
     [F_SumDutyExcise]    DECIMAL (18, 2) NULL,
     [F_SumTaxLost]       DECIMAL (18, 2) NULL,
     [CreatedByEmpId]     INT             NULL,
-    [F_CreatedByPos]     NVARCHAR (50)   NULL,
-    [F_CreatedByName]    NVARCHAR (50)   NULL,
-    [F_CreatedByIDNo]    VARCHAR (20)    NULL,
+    [CreatedByPos]       NVARCHAR (50)   NULL,
+    [CreatedByName]      NVARCHAR (50)   NULL,
+    [CreatedByIDNo]      VARCHAR (20)    NULL,
     [AppdByEmpId]        INT             NULL,
-    [F_AppdByPos]        NVARCHAR (50)   NULL,
-    [F_AppdByName]       NVARCHAR (50)   NULL,
-    [F_AppdByIDNo]       VARCHAR (20)    NULL,
+    [AppdByPos]          NVARCHAR (50)   NULL,
+    [AppdByName]         NVARCHAR (50)   NULL,
+    [AppdByIDNo]         VARCHAR (20)    NULL,
     [F_OpenBal]          DECIMAL (10, 2) NULL,
     [F_ImpWgt]           DECIMAL (10, 2) NULL,
     [F_ImpFreightCost]   DECIMAL (18, 2) NULL,
@@ -61,4 +71,14 @@
     [EditedDT]           DATETIME        NULL,
     CONSTRAINT [PK_RptM1_1] PRIMARY KEY CLUSTERED ([RptId] ASC)
 );
+
+
+
+
+
+
+
+
+
+
 

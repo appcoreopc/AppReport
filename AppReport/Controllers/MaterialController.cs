@@ -30,12 +30,12 @@ namespace AppReport.Controllers
         [HttpPost]
         public IActionResult Save(UserRequestModel requestUser)
         {
-            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Username))
+            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Name))
             {
                 var rawMaterial = new Rmaterial()
                 {
                     Rmid = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
-                    Rmcode = requestUser.Username,
+                    Rmcode = requestUser.Name,
                 };
 
                 var result = new MaterialService(_ptsContext).Save<Rmaterial>(rawMaterial, rawMaterial.Rmid);

@@ -20,6 +20,9 @@ namespace AppReport.Services
 
         public RptSk Get(int id)
         {
+            if (_context.RptSk == null || _context.RptSk.Count() == 0)
+                return null;
+
             return _context.RptSk.Where(i => i.RptId == id).Single();
         }
 

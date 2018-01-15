@@ -15,7 +15,7 @@
     [F_CoSPLNo]        VARCHAR (20)    NULL,
     [F_CoGSTNo]        VARCHAR (20)    NULL,
     [RptDate]          DATETIME        NULL,
-    [RefNo]            VARCHAR (20)    NULL,
+    [RefNo]            VARCHAR (50)    NULL,
     [LetterDate]       DATETIME        NULL,
     [LRcptDept]        NVARCHAR (50)   NULL,
     [LRcptBr]          NVARCHAR (50)   NULL,
@@ -39,6 +39,8 @@
     [EditedDT]         DATETIME        NULL,
     CONSTRAINT [PK_RptSK] PRIMARY KEY CLUSTERED ([RptId] ASC)
 );
+
+
 
 
 
