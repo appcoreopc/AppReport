@@ -9,4 +9,6 @@ export class EmployeeModel {
     createdDt : Date; 
     editedByUserId : number;
     editedDt : Date;
+
+    
 }

@@ -5,4 +5,5 @@ export class SupplierModel {
     createdDT : string;
     editedByUserId : string;
     editedDT : string;
+    
 }
