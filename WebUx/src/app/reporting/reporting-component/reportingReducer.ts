@@ -1,4 +1,3 @@
-
 import { ActionReducer, Action } from '@ngrx/store';
 
 import {REPORT_SAVE, REPORT_CANCEL, REPORT_SAVE_SUCCESS,

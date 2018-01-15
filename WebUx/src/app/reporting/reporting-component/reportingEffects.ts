@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
+
 import {REPORT_SAVE, REPORT_CANCEL, REPORT_SAVE_SUCCESS,
   REPORT_MESSAGE_END, REPORT_SAVE_ERR, REPORT_CANCEL_OK, REPORT_GET, REPORT_GET_ERR,
   REPORT_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
