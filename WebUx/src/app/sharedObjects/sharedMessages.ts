@@ -82,7 +82,6 @@ export const NAVIGATION_GET_ERR = 'NAVIGATION_GET_ERR';
 export const NAVIGATION_GET_OK = 'NAVIGATION_GET_OK';
 
 
-
 export interface CityAppState {
 	status: number;	
 	type : string; 
