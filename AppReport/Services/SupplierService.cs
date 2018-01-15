@@ -26,13 +26,8 @@ namespace AppReport.Services
         public bool SaveUser(Supplier supplier)
         {
             return base.Save<Supplier>(supplier, supplier.SupplierId);
-        }
+        }       
 
-        public bool Delete(int supplierId)
-        {
-            return Remove<Supplier>(supplierId);
-        }
-
-    }
+    }       
 
 }

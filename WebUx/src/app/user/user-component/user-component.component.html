@@ -3,21 +3,21 @@
   
   <div>
       <div class="form-group">
-          <label for="username">Username</label>
-          <input id="username" type="text" class="form-control" formControlName="username">         
+          <label for="name">Name</label>
+          <input id="name" type="text" class="form-control" formControlName="name">         
 
-          <div *ngIf="formErrors.username" class="alert alert-danger">
-            {{ formErrors.username }}
+          <div *ngIf="formErrors.name" class="alert alert-danger">
+            {{ formErrors.name }}
         </div>
 
       </div>
 
       <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password" type="text" class="form-control" formControlName="password">         
+          <label for="username">Username</label>
+          <input id="username" type="text" class="form-control" formControlName="username">         
 
-          <div *ngIf="formErrors.password" class="alert alert-danger">
-            {{ formErrors.password }}
+          <div *ngIf="formErrors.username" class="alert alert-danger">
+            {{ formErrors.username }}
          </div>          
       </div>    
 
@@ -33,6 +33,5 @@
 <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
     [rows]="rows"
     [limit]="10"
-    (select)="onSelect($event)"
     [columns]="columns">
 </ngx-datatable>

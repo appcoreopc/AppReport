@@ -45,8 +45,8 @@ export class UserComponentComponent implements OnInit {
   rows = [];
 
   columns = [
-    { prop: 'username' },
-    { name: 'password' }   
+    { prop: 'name' },
+    { name: 'username' }   
   ];
 
   userSubscription : Subscription;
@@ -70,12 +70,11 @@ export class UserComponentComponent implements OnInit {
    
   save() {    
 
-  var saveJson = new UserModel();
-      saveJson.userId = this.person.userId;
-      saveJson.username = this.person.username;
-      saveJson.password = this.person.password;
-      saveJson.userTypeId = this.person.userTypeId;
-    
+     var saveJson = {
+      Name : this.person.name,
+      Username : this.person.username
+    };
+
     var strJson = JSON.stringify(saveJson);           
     this.dispatchIntent(USER_SAVE, saveJson);
     this.personForm.reset();
@@ -91,21 +90,20 @@ export class UserComponentComponent implements OnInit {
         var userInfo = message.data[idx];    
         this.dataList.push({  
             name : userInfo.name, 
-            username : userInfo.username,
-            password : userInfo.password
+            username : userInfo.username
+        });
 
-        });              
+        console.log(this.rows);
+        this.rows = this.dataList;
       }
-
-      this.rows = this.dataList;
     }    
   }
 
   private initForm() {
     this.personForm = this.fb.group({
-      'username': [this.person.username, [Validators.required, Validators.minLength(1),
+      'name': [this.person.name, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]],
-      'password': [this.person.password, [Validators.required, Validators.minLength(1),
+      'username': [this.person.username, [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)]]
     });
 
@@ -118,10 +116,8 @@ export class UserComponentComponent implements OnInit {
     if (!this.personForm) { return; }
 
     const form = this.personForm;
-    this.person.userId = data.userId;
+    this.person.name = data.name;
     this.person.username = data.username;
-    this.person.password = data.password;   
-
 
     for (const field in this.formErrors) {
       // clear previous error message (if any)
@@ -139,7 +135,8 @@ export class UserComponentComponent implements OnInit {
 
   onSubmit() {
     
-    
+    console.log(this.person.name);
+    console.log(this.person.username);
   }
 
   dispatchIntent(messageType : string, data? : any)

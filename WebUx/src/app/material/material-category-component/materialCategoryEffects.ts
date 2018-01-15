@@ -17,29 +17,29 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
       private actions$: Actions<CityAppState>
     ) { }
     
-    @Effect() materialCategorySave$ = this.actions$    
+    @Effect() citySave$ = this.actions$    
     .ofType(MATERIAL_CATEGORY_SAVE)   
     .map(action => {  
       console.log('sending request out!'); 
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/materialcategory/save', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/materialcategory/create', payload, {headers : headersJson})      
     )
     .map(res => ({ type: MATERIAL_CATEGORY_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: MATERIAL_CATEGORY_SAVE_ERR }));
     
     
-    @Effect() materialCategoryReset$ = this.actions$  
+    @Effect() cityReset$ = this.actions$  
     .ofType(MATERIAL_CATEGORY_CANCEL)  
     .map(action => 
       {
         return ({ type: MATERIAL_CATEGORY_CANCEL_OK});
       }); 
       
-      @Effect() materialCategoryGet$ = this.actions$    
+      @Effect() cityGet$ = this.actions$    
       .ofType(MATERIAL_CATEGORY_GET)     
-      .map(action => {  
+      .map(action => {   
         JSON.stringify(action);
       })
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/materialcategory/index')  

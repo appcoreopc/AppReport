@@ -35,6 +35,7 @@ namespace AppReport
             services.AddMvc();
                       
             services.AddCors();
+
             
         }
 

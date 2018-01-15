@@ -17,30 +17,29 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
       private actions$: Actions<CityAppState>
     ) { }
     
-    @Effect() rawMaterialSave$ = this.actions$    
+    @Effect() citySave$ = this.actions$    
     .ofType(RAW_MATERIAL_SAVE)   
     .map(action => {  
       console.log('sending request out!'); 
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/rawmaterial/save', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/rawmaterial/create', payload, {headers : headersJson})      
     )
     .map(res => ({ type: RAW_MATERIAL_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }));
     
     
-    @Effect() rawMaterialReset$ = this.actions$  
+    @Effect() cityReset$ = this.actions$  
     .ofType(RAW_MATERIAL_CANCEL)  
     .map(action => 
       {
         return ({ type: RAW_MATERIAL_CANCEL_OK});
       }); 
       
-      @Effect() rawMaterialGet$ = this.actions$    
+      @Effect() cityGet$ = this.actions$    
       .ofType(RAW_MATERIAL_GET)     
       .map(action => {   
-        console.log('getting raw material data');
         JSON.stringify(action);
       })
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/rawmaterial/index')  

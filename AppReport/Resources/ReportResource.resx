@@ -117,17 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Apr" xml:space="preserve">
+    <value>Apr</value>
+  </data>
   <data name="April" xml:space="preserve">
     <value>April</value>
+  </data>
+  <data name="Aug" xml:space="preserve">
+    <value>Ogo</value>
   </data>
   <data name="August" xml:space="preserve">
     <value>Ogos</value>
   </data>
+  <data name="Dec" xml:space="preserve">
+    <value>Dis</value>
+  </data>
   <data name="December" xml:space="preserve">
     <value>Disember</value>
   </data>
+  <data name="Feb" xml:space="preserve">
+    <value>Feb</value>
+  </data>
   <data name="February" xml:space="preserve">
     <value>Februari</value>
+  </data>
+  <data name="Jan" xml:space="preserve">
+    <value>Jan</value>
   </data>
   <data name="January" xml:space="preserve">
     <value>Januari</value>
@@ -138,19 +153,67 @@
   <data name="June" xml:space="preserve">
     <value>Jun</value>
   </data>
+  <data name="Mar" xml:space="preserve">
+    <value>Mac</value>
+  </data>
   <data name="March" xml:space="preserve">
     <value>Mac</value>
   </data>
   <data name="May" xml:space="preserve">
     <value>Mei</value>
   </data>
+  <data name="MMMM_1" xml:space="preserve">
+    <value>Januari</value>
+  </data>
+  <data name="MMMM_2" xml:space="preserve">
+    <value>Februari</value>
+  </data>
+  <data name="MMMM_3" xml:space="preserve">
+    <value>Mac</value>
+  </data>
+  <data name="MMMM_4" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="Nov" xml:space="preserve">
+    <value>Nov</value>
+  </data>
   <data name="November" xml:space="preserve">
     <value>November</value>
+  </data>
+  <data name="Oct" xml:space="preserve">
+    <value>Okt</value>
   </data>
   <data name="October" xml:space="preserve">
     <value>Oktober</value>
   </data>
+  <data name="Sep" xml:space="preserve">
+    <value>Sep</value>
+  </data>
   <data name="September" xml:space="preserve">
+    <value>September</value>
+  </data>
+  <data name="MMMM_10" xml:space="preserve">
+    <value>Oktober</value>
+  </data>
+  <data name="MMMM_11" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="MMMM_12" xml:space="preserve">
+    <value>Disember</value>
+  </data>
+  <data name="MMMM_5" xml:space="preserve">
+    <value>Mei</value>
+  </data>
+  <data name="MMMM_6" xml:space="preserve">
+    <value>Jun</value>
+  </data>
+  <data name="MMMM_7" xml:space="preserve">
+    <value>Julai</value>
+  </data>
+  <data name="MMMM_8" xml:space="preserve">
+    <value>Ogos</value>
+  </data>
+  <data name="MMMM_9" xml:space="preserve">
     <value>September</value>
   </data>
 </root>

@@ -9,7 +9,7 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
 		case MATERIAL_CATEGORY_GET_OK: 
 		  return  { status : 1, data : action, type: MATERIAL_CATEGORY_GET_OK };
 		case MATERIAL_CATEGORY_SAVE:	
-		  console.log('material category save');	  
+		  console.log('employee save');	  
 		  return  { status : 2, data : action, type: MATERIAL_CATEGORY_MESSAGE_END };	
 		case MATERIAL_CATEGORY_CANCEL:
 			console.log(MATERIAL_CATEGORY_CANCEL);
