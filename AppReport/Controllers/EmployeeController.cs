@@ -29,21 +29,21 @@ namespace AppReport.Controllers
         [HttpPost]
         public IActionResult Save([FromBody] EmployeeRequestModel requestUser)
         {
-            if (requestUser != null && !string.IsNullOrEmpty(requestUser.EmpName))
-            {
-                var user = new Employee()
-                {
-                    EmpId = requestUser.EmpId,
-                    EmpName = requestUser.EmpName,
-                    EmpAd1 = requestUser.EmpAd1,
-                    EmpAd2 = requestUser.EmpAd2,
-                    EmpAd3 = requestUser.EmpAd3,
-                    EmpIdno = requestUser.EmpIdno
-                };
+            //if (requestUser != null && !string.IsNullOrEmpty(requestUser.EmpName))
+            //{
+            //    var user = new Employee()
+            //    {
+            //        EmpId = requestUser.EmpId,
+            //        EmpName = requestUser.EmpName,
+            //        EmpAd1 = requestUser.EmpAd1,
+            //        EmpAd2 = requestUser.EmpAd2,
+            //        EmpAd3 = requestUser.EmpAd3,
+            //        EmpIdno = requestUser.EmpIdno
+            //    };
 
-                var result = new EmployeeService(_ptsContext).Save<Employee>(user, user.EmpId);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
-            }
+            //    var result = new EmployeeService(_ptsContext).Save<Employee>(user, user.EmpId);
+            //    return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+            //}
             return new BadRequestResult();
         }
 

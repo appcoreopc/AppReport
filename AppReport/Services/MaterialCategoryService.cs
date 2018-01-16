@@ -12,14 +12,14 @@ namespace AppReport.Services
         {
             _context = context;
         }
-        public IEnumerable<Rmcat> GetAll()
+        public IEnumerable<Users> GetAll()
         {
-            return _context.Rmcat;
+            return _context.Users;
         }
 
-        public IEnumerable<Rmcat> GetAll(int skipAmount, int takeAmount)
+        public IEnumerable<Users> GetAll(int skipAmount, int takeAmount)
         {
-            return _context.Rmcat.Skip(skipAmount).Take(takeAmount);
+            return _context.Users.Skip(skipAmount).Take(takeAmount);
         }
 
         public bool Save(Rmcat materialCategory)

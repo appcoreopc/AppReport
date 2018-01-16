@@ -43,7 +43,7 @@ namespace AppReport.Controllers
                 {                    
                     UserId = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
                     Username = requestUser.Username,
-                    Password = requestUser.Password
+                    //Password = requestUser.Password
                 };
 
                 var result = new UserService(_ptsContext).Save<Users>(user, user.UserId);
