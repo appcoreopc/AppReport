@@ -1,0 +1,102 @@
+<h1>Material Category</h1>
+<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+  
+  <div>
+    <div class="form-group">
+      <label for="rmcode">Code</label>
+      <input id="Rmcode" type="text" class="form-control" formControlName="Rmcode">         
+      
+      <div *ngIf="formErrors.Rmcode" class="alert alert-danger">
+        {{ formErrors.Rmcode }}
+      </div>
+      
+    </div>
+    
+
+    <div class="form-group">
+      <label for="Rmdesc">Description</label>
+      <input id="Rmdesc" type="text" class="form-control" formControlName="Rmdesc">         
+      
+      <div *ngIf="formErrors.Rmdesc" class="alert alert-danger">
+        {{ formErrors.Rmdesc }}
+      </div>
+      
+    </div>
+    
+
+    <div class="form-group">
+      <label for="uomid">OUM Id </label>
+      <input id="Uomid" type="text" class="form-control" formControlName="Uomid">         
+      
+      <div *ngIf="formErrors.Uomid" class="alert alert-danger">
+        {{ formErrors.Uomid }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="TariffCode">Tariff Code</label>
+      <input id="TariffCode" type="text" class="form-control" formControlName="TariffCode">         
+      
+      <div *ngIf="formErrors.TariffCode" class="alert alert-danger">
+        {{ formErrors.TariffCode }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="CountryList">Country List</label>
+      <input id="CountryList" type="text" class="form-control" formControlName="CountryList">         
+      
+      <div *ngIf="formErrors.CountryList" class="alert alert-danger">
+        {{ formErrors.CountryList }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="DutyImpRate">Duty Rate</label>
+      <input id="DutyImpRate" type="text" class="form-control" formControlName="DutyImpRate">         
+      
+      <div *ngIf="formErrors.DutyImpRate" class="alert alert-danger">
+        {{ formErrors.DutyImpRate }}
+      </div>
+      
+    </div>
+
+
+    <div class="form-group">
+      <label for="Gstrate">Gst Rate</label>
+      <input id="Gstrate" type="text" class="form-control" formControlName="Gstrate">         
+      
+      <div *ngIf="formErrors.Gstrate" class="alert alert-danger">
+        {{ formErrors.Gstrate }}
+      </div>
+      
+    </div>
+    
+    
+    
+    
+
+  </div>
+  
+  <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
+  
+  <p>Form value: {{ personForm.value | json }}</p>
+  
+</form>
+
+
+<ngx-datatable class="material striped" 
+[loadingIndicator]="loadingIndicator"
+[rows]="rows"
+[limit]="10"
+(select)="onSelect($event)"
+[columns]="columns">
+</ngx-datatable>
+
+

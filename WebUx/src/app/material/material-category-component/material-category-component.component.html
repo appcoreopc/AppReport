@@ -1,0 +1,29 @@
+<h1>Material Category</h1>
+<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+  
+  <div>
+      <div class="form-group">
+          <label for="categoryName">Category Name</label>
+          <input id="rmCatName" type="text" class="form-control" formControlName="rmCatName">         
+
+          <div *ngIf="formErrors.rmCatName" class="alert alert-danger">
+            {{ formErrors.rmCatName }}
+        </div>
+
+      </div>
+       
+  </div>
+  
+  <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
+
+  <p>Form value: {{ personForm.value | json }}</p>
+
+</form>
+
+<ngx-datatable class="material striped" 
+[loadingIndicator]="loadingIndicator"
+    [rows]="rows"
+    [limit]="10"
+    (select)="onSelect($event)"
+    [columns]="columns">
+</ngx-datatable>
