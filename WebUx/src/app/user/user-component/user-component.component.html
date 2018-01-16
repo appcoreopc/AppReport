@@ -1,38 +1,41 @@
-
-<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
-  
-  <div>
-      <div class="form-group">
-          <label for="username">Username</label>
-          <input id="username" type="text" class="form-control" formControlName="username">         
-
-          <div *ngIf="formErrors.username" class="alert alert-danger">
-            {{ formErrors.username }}
+<div class="container"> 
+    
+    
+    <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+        
+        <div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input id="username" type="text" class="form-control" formControlName="username">         
+                
+                <div *ngIf="formErrors.username" class="alert alert-danger">
+                    {{ formErrors.username }}
+                </div>
+                
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="text" class="form-control" formControlName="password">         
+                
+                <div *ngIf="formErrors.password" class="alert alert-danger">
+                    {{ formErrors.password }}
+                </div>          
+            </div>    
+            
         </div>
-
-      </div>
-
-      <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password" type="text" class="form-control" formControlName="password">         
-
-          <div *ngIf="formErrors.password" class="alert alert-danger">
-            {{ formErrors.password }}
-         </div>          
-      </div>    
-
-
-  </div>
-  
-  <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
-
-  <p>Form value: {{ personForm.value | json }}</p>
-
-</form>
+        
+        <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
+        
+        <p>Form value: {{ personForm.value | json }}</p>
+        
+    </form>
+    
+</div>
 
 <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
-    [rows]="rows"
-    [limit]="10"
-    (select)="onSelect($event)"
-    [columns]="columns">
+[rows]="rows"
+[limit]="10"
+(select)="onSelect($event)"
+[columns]="columns">
 </ngx-datatable>

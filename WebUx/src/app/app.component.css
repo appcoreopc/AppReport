@@ -1,1 +1,3 @@
-@import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+div .container { 
+    padding: 10px 10px 10px 10px;    
+}

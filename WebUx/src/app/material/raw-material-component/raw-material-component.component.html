@@ -1,4 +1,8 @@
 <h1>Material Category</h1>
+
+<div class="container"> 
+
+
 <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
   
   <div>
@@ -89,6 +93,9 @@
   <p>Form value: {{ personForm.value | json }}</p>
   
 </form>
+
+</div>
+
 
 
 <ngx-datatable class="material striped" 
