@@ -37,13 +37,6 @@ import { HttpClientModule }  from '@angular/common/http';
 import { ReportEffects } from './reporting/reporting-component//reportingEffects';
 import { ReportReducer} from './reporting/reporting-component/reportingReducer';
 
-export const ROUTES: Routes = [
-   { path: 'employee', component: EmployeeComponentComponent },
-   { path: 'user', component: UserComponentComponent }, 
-   { path: 'supplier', component  : SupplierComponentComponent },
-   { path: 'materialCategory', component  : MaterialCategoryComponentComponent },
-   { path: 'rawMaterial', component  : RawMaterialComponentComponent }
-];
 
 import { ReactiveFormsModule }          from '@angular/forms';
 
@@ -51,6 +44,21 @@ import { ReportGrnComponent } from './report/report-grn/report-grn.component';
 import { LampiranM1ComponentComponent } from './report/lampiran-m1-component/lampiran-m1-component.component';
 import { LesenGudangComponentComponent } from './report/lesen-gudang-component/lesen-gudang-component.component';
 import { SkimKhasComponentComponent } from './report/skim-khas-component/skim-khas-component.component';
+
+
+export const ROUTES: Routes = [
+  { path: 'employee', component: EmployeeComponentComponent },
+  { path: 'user', component: UserComponentComponent }, 
+  { path: 'supplier', component  : SupplierComponentComponent },
+  { path: 'materialCategory', component  : MaterialCategoryComponentComponent },
+  { path: 'rawMaterial', component  : RawMaterialComponentComponent },
+  { path: 'grn', component  : ReportGrnComponent },
+  { path: 'm1', component  : LampiranM1ComponentComponent },
+  { path: 'lesen', component  : LesenGudangComponentComponent },
+  { path: 'skim', component  : SkimKhasComponentComponent }
+];
+
+
 
 @NgModule({
   declarations: [

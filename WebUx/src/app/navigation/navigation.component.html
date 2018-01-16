@@ -3,15 +3,30 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">  
-          <a class="navbar-brand">PTS Reporting</a>
-          <a class="nav-item nav-link" routerLink="/employee" routerLinkActive="active"> Employee </a>
-          <a class="nav-item nav-link" routerLink="/user" routerLinkActive="active"> User </a>
-          <a class="nav-item nav-link" routerLink="/supplier" routerLinkActive="active"> Supplier </a>
-          <a class="nav-item nav-link" routerLink="/materialCategory" routerLinkActive="active"> Material Category </a>
-          <a class="nav-item nav-link" routerLink="/rawMaterial" routerLinkActive="active"> Raw Material </a>
-      </div>
+      <ul class="navbar-nav">  
+          <li class="navbar-brand">PTS Reporting</li>
+          <li class="nav-item nav-link" routerLink="/employee" routerLinkActive="active"> Employee </li>
+          <li class="nav-item nav-link" routerLink="/user" routerLinkActive="active"> User </li>
+          <li class="nav-item nav-link" routerLink="/supplier" routerLinkActive="active"> Supplier </li>
+          <li class="nav-item nav-link" routerLink="/materialCategory" routerLinkActive="active"> Material Category </li>
+          <li class="nav-item nav-link" routerLink="/rawMaterial" routerLinkActive="active">Raw Material</li>
+          <li class="nav-item dropdown">          
+          
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Report 
+            </a>
+
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+                <a class="dropdown-item" routerLink="/grn" routerLinkActive="active"> GRN </a>
+                <a class="dropdown-item" routerLink="/m1" routerLinkActive="active"> Lampiran M1 </a>
+                <a class="dropdown-item" routerLink="/lesen" routerLinkActive="active"> Lesen Gudang </a>
+                <a class="dropdown-item" routerLink="/supplier" routerLinkActive="active"> Supplier </a>
+              </div>
+          </li>
+        </ul>
     </div>
   </nav>
 
 
+
+  
