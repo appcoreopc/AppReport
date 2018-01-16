@@ -9,8 +9,7 @@ import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS,
 	switch (action.type) {
 		case M1LAMPIRAN_GET_OK: 
 		  return  { status : 1, data : action, type: M1LAMPIRAN_GET_OK };
-		case M1LAMPIRAN_SAVE:	
-		  console.log('employee save');	  
+		case M1LAMPIRAN_SAVE:		 
 		  return  { status : 2, data : action, type: M1LAMPIRAN_MESSAGE_END };	
 		case M1LAMPIRAN_CANCEL:
 			console.log(M1LAMPIRAN_CANCEL);

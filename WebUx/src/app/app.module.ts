@@ -45,6 +45,16 @@ import { LampiranM1ComponentComponent } from './report/lampiran-m1-component/lam
 import { LesenGudangComponentComponent } from './report/lesen-gudang-component/lesen-gudang-component.component';
 import { SkimKhasComponentComponent } from './report/skim-khas-component/skim-khas-component.component';
 
+import { GrnReducer } from './report/report-grn/grnReducer';
+import { M1LampiranReducer } from './report/lampiran-m1-component/m1Reducer';
+import { LesenReducer } from './report/lesen-gudang-component/lesenReducer';
+import { SkimKhasReducer } from './report/skim-khas-component/skimReducer';
+
+import { GrnEffects } from './report/report-grn/grnEffects';
+import { M1LampiranEffects } from './report/lampiran-m1-component/m1Effects';
+import { SkimKhasEffects } from './report/skim-khas-component/skimEffects';
+import { LesenEffects } from './report/lesen-gudang-component/lesenEffects';
+
 
 export const ROUTES: Routes = [
   { path: 'employee', component: EmployeeComponentComponent },
@@ -57,8 +67,6 @@ export const ROUTES: Routes = [
   { path: 'lesen', component  : LesenGudangComponentComponent },
   { path: 'skim', component  : SkimKhasComponentComponent }
 ];
-
-
 
 @NgModule({
   declarations: [
@@ -80,10 +88,12 @@ export const ROUTES: Routes = [
     BrowserModule, NgxDatatableModule,ReactiveFormsModule,HttpClientModule,
      
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
-       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer]),
+       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
+        M1LampiranReducer, SkimKhasReducer, LesenReducer]),
        
     EffectsModule.forRoot([EmployeeEffects, UserEffects,
-       ReportEffects, SupplierEffects, MaterialCategoryEffects, RawMaterialEffects]), 
+       ReportEffects, SupplierEffects, MaterialCategoryEffects, 
+       RawMaterialEffects, GrnEffects, M1LampiranEffects, SkimKhasEffects, LesenEffects]), 
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],

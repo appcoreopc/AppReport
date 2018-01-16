@@ -10,14 +10,14 @@ import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
   import 'rxjs/Rx';
   
   @Injectable()
-  export class EmployeeEffects {   
+  export class LesenEffects {   
            
     constructor(
       private http: HttpClient,
       private actions$: Actions<CityAppState>
     ) { }
     
-    @Effect() citySave$ = this.actions$    
+    @Effect() LesenSave$ = this.actions$    
     .ofType(LESEN_SAVE)   
     .map(action => {  
       
@@ -30,14 +30,14 @@ import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
     .catch(() => Observable.of({ type: LESEN_SAVE_ERR }));
     
     
-    @Effect() cityReset$ = this.actions$  
+    @Effect() LesenReset$ = this.actions$  
     .ofType(LESEN_CANCEL)  
     .map(action => 
       {
         return ({ type: LESEN_CANCEL_OK});
       }); 
       
-      @Effect() cityGet$ = this.actions$    
+      @Effect() LesenGet$ = this.actions$    
       .ofType(LESEN_GET)     
       .map(action => {   
         JSON.stringify(action);

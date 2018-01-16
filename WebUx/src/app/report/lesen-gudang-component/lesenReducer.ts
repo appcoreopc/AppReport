@@ -1,16 +1,14 @@
-
 import { ActionReducer, Action } from '@ngrx/store';
 
 import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
 	 LESEN_MESSAGE_END, LESEN_SAVE_ERR, LESEN_CANCEL_OK, LESEN_GET, LESEN_GET_ERR,
 	  LESEN_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 
-		export function EmployeeReducer(status: CityAppState, action: Action) {
+		export function LesenReducer(status: CityAppState, action: Action) {
 	switch (action.type) {
 		case LESEN_GET_OK: 
 		  return  { status : 1, data : action, type: LESEN_GET_OK };
-		case LESEN_SAVE:	
-		  console.log('employee save');	  
+		case LESEN_SAVE:		
 		  return  { status : 2, data : action, type: LESEN_MESSAGE_END };	
 		case LESEN_CANCEL:
 			console.log(LESEN_CANCEL);
