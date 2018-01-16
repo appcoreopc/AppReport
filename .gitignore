@@ -6,3 +6,5 @@ AppReport.Services/bin
 AppReport.Services/obj
 PTS/PTS.jfm
 PTS/PTS.dbmdl
+.vs/AppReport/v15/sqlite3/storage.ide-shm
+.vs/AppReport/v15/sqlite3/storage.ide-wal

@@ -3,10 +3,11 @@ using AppReport.DataServices.PTSDataModel;
 using AppReport.RequestModel;
 using AppReport.Services;
 using AppReport.Util;
+using System;
 
 namespace AppReport.Controllers
 {
-   
+
     public class UserController : Controller
     {
         private PTSContext _ptsContext;
@@ -26,7 +27,7 @@ namespace AppReport.Controllers
             var users = new UserService(_ptsContext).GetAll();
             return new JsonResult(users);
         }
-        
+
         [HttpGet]
         public IActionResult GetUser(int start, int size)
         {
@@ -34,16 +35,17 @@ namespace AppReport.Controllers
             return new JsonResult(users);
         }
 
-        [HttpPost]        
+        [HttpPost]
         public IActionResult Save([FromBody] UserRequestModel requestUser)
         {
             if (requestUser != null && !string.IsNullOrEmpty(requestUser.Username))
             {
                 var user = new Users()
-                {                    
+                {
                     UserId = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
                     Username = requestUser.Username,
-                    //Password = requestUser.Password
+                    Password = requestUser.Password,
+                    EditedDt = DateTime.UtcNow
                 };
 
                 var result = new UserService(_ptsContext).Save<Users>(user, user.UserId);
