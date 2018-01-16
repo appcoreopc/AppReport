@@ -32,7 +32,7 @@ import { MaterialCategoryReducer} from './material/material-category-component/m
 import { RawMaterialEffects } from './material/raw-material-component/rawMaterialEffects';
 import { RawMaterialReducer} from './material/raw-material-component/rawMaterialReducer';
 
-import { HttpClientModule}  from '@angular/common/http';
+import { HttpClientModule }  from '@angular/common/http';
 
 import { ReportEffects } from './reporting/reporting-component//reportingEffects';
 import { ReportReducer} from './reporting/reporting-component/reportingReducer';
@@ -47,6 +47,11 @@ export const ROUTES: Routes = [
 
 import { ReactiveFormsModule }          from '@angular/forms';
 
+import { ReportGrnComponent } from './report/report-grn/report-grn.component';
+import { LampiranM1ComponentComponent } from './report/lampiran-m1-component/lampiran-m1-component.component';
+import { LesenGudangComponentComponent } from './report/lesen-gudang-component/lesen-gudang-component.component';
+import { SkimKhasComponentComponent } from './report/skim-khas-component/skim-khas-component.component';
+
 @NgModule({
   declarations: [
     AppComponent, 
@@ -57,7 +62,11 @@ import { ReactiveFormsModule }          from '@angular/forms';
     MaterialCategoryComponentComponent,
     StnCustomComponentComponent,
     SupplierComponentComponent,
-    ConfigResourceComponentComponent
+    ConfigResourceComponentComponent,
+    ReportGrnComponent,
+    LampiranM1ComponentComponent,
+    LesenGudangComponentComponent,
+    SkimKhasComponentComponent
   ],
   imports: [
     BrowserModule, NgxDatatableModule,ReactiveFormsModule,HttpClientModule,
