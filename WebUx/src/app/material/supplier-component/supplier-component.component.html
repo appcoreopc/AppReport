@@ -1,33 +1,36 @@
 
 <div class="container"> 
-
-<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+    <h1>Supplier</h1>
+  <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+    
+    <div>
+      <div class="form-group">
+        <label for="name">Supplier Name</label>
+        <input id="name" type="text" class="form-control" formControlName="supplierName">         
+        
+        <div *ngIf="formErrors.supplierName" class="alert alert-danger">
+          {{ formErrors.supplierName }}
+        </div>     
+      </div>        
+    </div>
+    
+    <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="save()"> Save </button>
+    
+    <p>Form value: {{ personForm.value | json }}</p>
+    
+  </form>
   
-  <div>
-    <div class="form-group">
-      <label for="name">Supplier Name</label>
-      <input id="name" type="text" class="form-control" formControlName="supplierName">         
-      
-      <div *ngIf="formErrors.supplierName" class="alert alert-danger">
-        {{ formErrors.supplierName }}
-      </div>     
-    </div>        
-  </div>
-  
-  <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
-  
-  <p>Form value: {{ personForm.value | json }}</p>
-  
-</form>
-
 </div>
 
 
-<ngx-datatable class="material striped" 
-[loadingIndicator]="loadingIndicator"
-[rows]="rows"
-[limit]="10"
-(select)="onSelect($event)"
-[columns]="columns">
+<div class="container"> 
+  
+  <ngx-datatable class="material striped" 
+  [loadingIndicator]="loadingIndicator"
+  [rows]="rows"
+  [limit]="10"
+  (select)="onSelect($event)"
+  [columns]="columns">
 </ngx-datatable>
 
+</div>

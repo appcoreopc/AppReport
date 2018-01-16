@@ -1,7 +1,10 @@
-<h1>Material Category</h1>
+
 
 
 <div class="container"> 
+
+    <h1>Material Category</h1>
+
 <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
   
   <div>
@@ -17,13 +20,15 @@
        
   </div>
   
-  <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
+  <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="save()"> Save </button>
 
   <p>Form value: {{ personForm.value | json }}</p>
 
 </form>
 
 </div>
+
+<div class="container"> 
 
 <ngx-datatable class="material striped" 
 [loadingIndicator]="loadingIndicator"
@@ -32,3 +37,5 @@
     (select)="onSelect($event)"
     [columns]="columns">
 </ngx-datatable>
+
+</div>
