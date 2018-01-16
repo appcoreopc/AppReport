@@ -15,7 +15,9 @@ export class RawMaterialComponentComponent implements OnInit {
   
   private currentModel: RawMaterialModel = new RawMaterialModel();
   private personForm: FormGroup;
-  
+
+  countries : string[] = ['malaysia', 'new zeland', 'australia'];
+    
   formErrors = {
     'Rmcode': '' ,
     'Rmdesc' : '',
