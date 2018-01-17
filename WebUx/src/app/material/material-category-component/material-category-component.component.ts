@@ -32,8 +32,9 @@ export class MaterialCategoryComponentComponent implements OnInit {
   rows = [];
 
   columns = [
-    { prop: 'rMCatId' },
-    { name: 'rmcatName' }   
+    { prop: 'rMCatId', name : 'Category Id' },
+    { prop: 'rmcode',  name : 'Code', width : 250 },
+    { prop: 'rmdesc', name : 'Description',  width : 350 }   
   ];
 
   userSubscription : Subscription;
@@ -80,7 +81,8 @@ export class MaterialCategoryComponentComponent implements OnInit {
         var materialCategory = message.data[idx];    
         this.dataList.push({  
           rMCatId : materialCategory.rmcatId, 
-          rmcatName : materialCategory.rmcatName
+          rmcode : materialCategory.rmcode,
+          rmdesc : materialCategory.rmdesc
         });
       }
       this.rows = this.dataList;

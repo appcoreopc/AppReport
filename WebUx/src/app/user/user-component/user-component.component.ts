@@ -18,18 +18,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class UserComponentComponent implements OnInit {
- 
+  
   private person: UserModel = new UserModel();
-
+  
   private personForm: FormGroup;
-
+  
   formErrors = {
     'name': '',
     'username': ''
   };
-
+  
   validationMessages = {   
-
+    
     'name': {
       'required': 'First Name is required.',
       'minlength': 'First Name must be at least 4 characters long.',
@@ -41,113 +41,114 @@ export class UserComponentComponent implements OnInit {
       'maxlength': 'Last Name cannot be more than 24 characters long.'
     }
   };
-
+  
   rows = [];
-
+  
   columns = [
-    { prop: 'username' },
-    { name: 'password' }   
+    { prop: 'username', 'Name': 'Name' },
+    { prop: 'password', 'Name': 'Password' }   
   ];
-
+  
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
-
+  
   constructor(private store : Store<CityAppState>, 
     private fb: FormBuilder, private http:HttpClient) { 
-  }
-
-  ngOnInit() {   
-    this.userSubscription = this.store.subscribe(appData => {           
-      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, USER_GET_OK), USER_GET_OK));
-    }); 
-
-    this.initForm();
-  }
-
-  ngAfterViewInit() {
-     this.dispatchIntent(USER_GET);
-  }
-   
-  save() {    
-
-  var saveJson = new UserModel();
+    }
+    
+    ngOnInit() {   
+      this.userSubscription = this.store.subscribe(appData => {           
+        this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, USER_GET_OK), USER_GET_OK));
+      }); 
+      
+      this.initForm();
+    }
+    
+    ngAfterViewInit() {
+      this.dispatchIntent(USER_GET);
+    }
+    
+    save() {    
+      
+      var saveJson = new UserModel();
       saveJson.userId = this.person.userId;
       saveJson.username = this.person.username;
       saveJson.password = this.person.password;
       saveJson.userTypeId = this.person.userTypeId;
+      
+      var strJson = JSON.stringify(saveJson);           
+      this.dispatchIntent(USER_SAVE, saveJson);
+      this.personForm.reset();
+    }  
     
-    var strJson = JSON.stringify(saveJson);           
-    this.dispatchIntent(USER_SAVE, saveJson);
-    this.personForm.reset();
-  }  
-
-  componentMessageHandle(message : any) {
-
-    if (message && message.type == USER_GET_OK)
-    {
-      this.rows.length = 0;
-      for (var idx in message.data)
+    componentMessageHandle(message : any) {
+      
+      if (message && message.type == USER_GET_OK)
       {
-        var userInfo = message.data[idx];    
-        this.dataList.push({  
+        this.rows.length = 0;
+        for (var idx in message.data)
+        {
+          var userInfo = message.data[idx];    
+          this.dataList.push({  
             name : userInfo.name, 
             username : userInfo.username,
             password : userInfo.password
-
-        });              
-      }
-
-      this.rows = this.dataList;
-    }    
-  }
-
-  private initForm() {
-    this.personForm = this.fb.group({
-      'username': [this.person.username, [Validators.required, Validators.minLength(1),
-      Validators.maxLength(24)]],
-      'password': [this.person.password, [Validators.required, Validators.minLength(1),
-      Validators.maxLength(24)]]
-    });
-
-    this.personForm.valueChanges.debounceTime(500)
-      .subscribe(data => this.onValueChanged(data));
-  }
-
-  onValueChanged(data?: UserModel) {
-
-    if (!this.personForm) { return; }
-
-    const form = this.personForm;
-    this.person.userId = data.userId;
-    this.person.username = data.username;
-    this.person.password = data.password;   
-
-
-    for (const field in this.formErrors) {
-      // clear previous error message (if any)
-      this.formErrors[field] = '';
-      const control = form.get(field);
-
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
+            
+          });              
         }
-      }
-    }   
-  }
-
-  onSubmit() {
+        
+        this.rows = this.dataList;
+      }    
+    }
     
-    
-  }
-
-  dispatchIntent(messageType : string, data? : any)
-  {   
-    this.store.dispatch(
-      {     
-        type: messageType,
-        data : data
-      });      
-  }
-}
+    private initForm() {
+      this.personForm = this.fb.group({
+        'username': [this.person.username, [Validators.required, Validators.minLength(1),
+          Validators.maxLength(24)]],
+          'password': [this.person.password, [Validators.required, Validators.minLength(1),
+            Validators.maxLength(24)]]
+          });
+          
+          this.personForm.valueChanges.debounceTime(500)
+          .subscribe(data => this.onValueChanged(data));
+        }
+        
+        onValueChanged(data?: UserModel) {
+          
+          if (!this.personForm) { return; }
+          
+          const form = this.personForm;
+          this.person.userId = data.userId;
+          this.person.username = data.username;
+          this.person.password = data.password;   
+          
+          
+          for (const field in this.formErrors) {
+            // clear previous error message (if any)
+            this.formErrors[field] = '';
+            const control = form.get(field);
+            
+            if (control && control.dirty && !control.valid) {
+              const messages = this.validationMessages[field];
+              for (const key in control.errors) {
+                this.formErrors[field] += messages[key] + ' ';
+              }
+            }
+          }   
+        }
+        
+        onSubmit() {
+          
+          
+        }
+        
+        dispatchIntent(messageType : string, data? : any)
+        {   
+          this.store.dispatch(
+            {     
+              type: messageType,
+              data : data
+            });      
+          }
+        }
+        

@@ -21,8 +21,7 @@
                 <div *ngIf="formErrors.password" class="alert alert-danger">
                     {{ formErrors.password }}
                 </div>          
-            </div>    
-            
+            </div>  
         </div>
         
         <button lass="btn btn-primary"  [disabled]="!personForm.valid" (click)="save()"> Save </button>
@@ -38,7 +37,8 @@
 [rows]="rows"
 [limit]="10"
 (select)="onSelect($event)"
-[columns]="columns">
+[columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
+[footerHeight]="50">
 </ngx-datatable>
 </div>
 

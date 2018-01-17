@@ -23,7 +23,7 @@ namespace AppReport.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetUser(int start, int size)
+        public IActionResult Get(int start, int size)
         {
             var suppliers = new MaterialCategoryService(_ptsContext).GetAll(start, size);
             return new JsonResult(suppliers);

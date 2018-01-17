@@ -34,9 +34,14 @@
 </div>
 
 
-<ngx-datatable
+  
+<ngx-datatable class="material striped" 
+[loadingIndicator]="loadingIndicator"
 [rows]="rows"
-[columns]="columns">
+[limit]="10"
+(select)="onSelect($event)"
+[columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
+[footerHeight]="50">
 </ngx-datatable>
 
 
