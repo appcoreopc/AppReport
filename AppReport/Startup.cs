@@ -30,7 +30,7 @@ namespace AppReport
 
             services.Configure<AppConfig>(Configuration);
 
-            services.AddDbContext<PTSContext>(options => options.UseSqlServer(Configuration.GetConnectionString(AppConstant.DatabaseName)));
+            services.AddDbContext<PTSContext>(options => options.UseSqlServer(Configuration.GetConnectionString(AppConstant.AppSettingDataConnection)));
             
             services.AddMvc();
                       

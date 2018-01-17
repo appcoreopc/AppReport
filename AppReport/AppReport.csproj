@@ -20,6 +20,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PTSDataModel\**" />
+    <Content Remove="PTSDataModel\**" />
+    <EmbeddedResource Remove="PTSDataModel\**" />
+    <None Remove="PTSDataModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
   <ItemGroup>

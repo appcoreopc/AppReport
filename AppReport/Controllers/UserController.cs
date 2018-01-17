@@ -66,5 +66,4 @@ namespace AppReport.Controllers
                 return new BadRequestResult();
         }
     }
-
 }
