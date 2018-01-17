@@ -56,7 +56,6 @@ export class EmployeeComponentComponent implements OnInit {
       'minlength': 'Last Name must be at least 4 characters long.',
       'maxlength': 'Last Name cannot be more than 24 characters long.'
     }
-
   };
 
   userSubscription : Subscription;
@@ -64,9 +63,9 @@ export class EmployeeComponentComponent implements OnInit {
   rows = [];
 
   columns = [
-    { prop: 'empName' },
-    { name: 'empIdno' },      
-    { name: 'empAd1' }
+    { prop: 'empName', name : 'Name' },
+    { prop: 'empIdno', name : 'Employee No' },      
+    { prop: 'empAd1', name : 'Address', width : 350 }
 
   ];
 
@@ -184,7 +183,6 @@ export class EmployeeComponentComponent implements OnInit {
         type: messageType,
         data : data
       });      
-  }
-  
+  } 
   
 }

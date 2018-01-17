@@ -70,11 +70,11 @@ export class RawMaterialComponentComponent implements OnInit {
   };
   
   rows = [];
-  
+    
   columns = [
-    { prop: 'rmid' },
-    { name: 'rmcode' },
-    { name: 'rmdesc' }         
+    { prop: 'rmid' , name : 'Id'},
+    { prop: 'rmcode', name : 'Code' },
+    { prop: 'rmdesc', name : 'Description', width : 350 }         
   ];
   
   userSubscription : Subscription;

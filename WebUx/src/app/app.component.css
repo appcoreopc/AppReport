@@ -1,3 +1,13 @@
 div .container { 
     padding: 10px 10px 10px 10px;    
 }
+
+/*
+.ngx-datatable.material .datatable-footer { 
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    font-size: 16px;
+}
+@import '../../node_modules/@swimlane/ngx-datatable/release/assets/app.css';
+@import '../../node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
+
+*/
