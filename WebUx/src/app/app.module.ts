@@ -56,6 +56,9 @@ import { LesenEffects } from './report/lesen-gudang-component/lesenEffects';
 import { UOMEffects } from './effects/uomEffects';
 import { UOMReducer } from './reducers/uomReducer';
 
+import {CalendarModule} from 'primeng/calendar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 export const ROUTES: Routes = [
   { path: 'employee', component: EmployeeComponentComponent },
   { path: 'user', component: UserComponentComponent }, 
@@ -85,7 +88,7 @@ export const ROUTES: Routes = [
     SkimKhasComponentComponent
   ],
   imports: [
-    BrowserModule, NgxDatatableModule,ReactiveFormsModule,HttpClientModule,
+    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, BrowserAnimationsModule,
      
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
        SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,

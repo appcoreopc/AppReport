@@ -45,8 +45,10 @@
       
       <div class="form-group">
         <label for="TariffCode">Tariff Code</label>
-        <input id="TariffCode" type="text" class="form-control" formControlName="TariffCode">         
-        
+                     
+        <p-calendar class="form-control"  dateFormat="dd/mm/yy" formControlName="TariffCode">
+        </p-calendar>
+
         <div *ngIf="formErrors.TariffCode" class="alert alert-danger">
           {{ formErrors.TariffCode }}
         </div>      
