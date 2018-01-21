@@ -67,8 +67,7 @@ export class RawMaterialComponentComponent implements OnInit {
       'minlength': 'Gst Rate must be at least 4 characters long.',
       'maxlength': 'Gst Rate cannot be more than 24 characters long.'
     }
-  };
-  
+  };  
 
 
   rows = [];
@@ -116,9 +115,7 @@ export class RawMaterialComponentComponent implements OnInit {
     }  
     
     componentMessageHandle(messageAll : Array<any>) {
-
-      console.log(messageAll);
-          
+         
       messageAll.map(message => {       
         
         if (message && message.type == RAW_MATERIAL_GET_OK)
