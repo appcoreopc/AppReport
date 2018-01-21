@@ -3,14 +3,15 @@ using AppReport.RequestModel;
 using AppReport.Services;
 using AppReport.Util;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace AppReport.Controllers
 {
-    public class MaterialCategoryController : Controller
+    public class UOMController : Controller
     {
         private PTSContext _ptsContext;
 
-        public MaterialCategoryController(PTSContext ptsContext)
+        public UOMController(PTSContext ptsContext)
         {
             _ptsContext = ptsContext;
         }
@@ -18,14 +19,14 @@ namespace AppReport.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var suppliers = new MaterialCategoryService(_ptsContext).GetAll();
-            return new JsonResult(suppliers);
+            var itemList = new UOMService(_ptsContext).GetAll();
+            return new JsonResult(itemList);
         }
 
         [HttpGet]
         public IActionResult Get(int start, int size)
         {
-            var suppliers = new MaterialCategoryService(_ptsContext).GetAll(start, size);
+            var suppliers = new UOMService(_ptsContext).GetAll(start, size);
             return new JsonResult(suppliers);
         }
 
@@ -42,7 +43,7 @@ namespace AppReport.Controllers
                     EditedByUserId = materialCategory.EditedByUserId
                 };
 
-                var result = new MaterialCategoryService(_ptsContext).Save<Rmcat>(supplier, supplier.RmcatId);
+                var result = new UOMService(_ptsContext).Save<Rmcat>(supplier, supplier.RmcatId);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
@@ -50,11 +51,10 @@ namespace AppReport.Controllers
 
         [HttpDelete]
         public IActionResult Delete(MaterialCategoryRequestModel requestData)
-        {
-            
+        {   
             if (requestData.RMCatId.HasValue)
             {
-                var result = new MaterialCategoryService(_ptsContext).Delete(requestData.RMCatId.Value);
+                var result = new UOMService(_ptsContext).Delete(requestData.RMCatId.Value);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else

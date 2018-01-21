@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK, RAW_MATERIAL_SAVE } from '../../sharedObjects/sharedMessages';
+import { CityAppState, RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK, RAW_MATERIAL_SAVE , UOM_GET, UOM_GET_OK} from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { RawMaterialModel } from "../../model/RawMaterialModel";
@@ -79,14 +79,23 @@ export class RawMaterialComponentComponent implements OnInit {
   
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
-  
+  uomlist : Array<any> = new Array<any>();
+    
   constructor(private store : Store<CityAppState>, 
     private fb: FormBuilder) { 
     }
     
     ngOnInit() {   
       this.userSubscription = this.store.subscribe(appData => {           
-        this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, RAW_MATERIAL_GET_OK), RAW_MATERIAL_GET_OK));
+      
+        this.componentMessageHandle(
+        messageUtil.handleMessage(messageUtil.getMessage(appData, RAW_MATERIAL_GET_OK), 
+        RAW_MATERIAL_GET_OK));
+
+        this.componentMessageHandle(
+        messageUtil.handleMessage(messageUtil.getMessage(appData, UOM_GET_OK), 
+        UOM_GET_OK));
+
       }); 
       
       this.initForm();
@@ -95,6 +104,7 @@ export class RawMaterialComponentComponent implements OnInit {
     ngAfterViewInit() {
       
       this.dispatchIntent(RAW_MATERIAL_GET);
+      this.dispatchIntent(UOM_GET);
     }
     
     save() {    
@@ -102,14 +112,12 @@ export class RawMaterialComponentComponent implements OnInit {
       var saveJson =  {
         Rmid : this.currentModel.Rmid,
         Rmcode : this.currentModel.Rmcode,
-        Rmdesc : this.currentModel.Rmdesc
-        
+        Rmdesc : this.currentModel.Rmdesc        
       };
       
       console.log(JSON.stringify(saveJson));
       this.dispatchIntent(RAW_MATERIAL_SAVE, saveJson);
-      this.personForm.reset();
-      
+      this.personForm.reset();      
     }  
     
     componentMessageHandle(message : any) {
@@ -119,16 +127,35 @@ export class RawMaterialComponentComponent implements OnInit {
         this.rows.length = 0;
         for (var idx in message.data)
         {
-          var rawMaterialInfo = message.data[idx];    
+          var uomInfo = message.data[idx];    
           this.dataList.push({  
-            rmid : rawMaterialInfo.rmid, 
-            rmdesc : rawMaterialInfo.rmdesc,
-            rmcode : rawMaterialInfo.rmcode
+            rmid : uomInfo.rmid, 
+            rmdesc : uomInfo.rmdesc,
+            rmcode : uomInfo.rmcode
+          });
+        }
+
+        this.rows = this.dataList;       
+      }    
+
+      if (message && message.type == UOM_GET_OK)
+      {      
+        let uomTempList : Array<any> = new Array<any>();
+
+        this.rows.length = 0;
+        for (var idx in message.data)
+        {
+          var uomInfo = message.data[idx];  
+          uomTempList.push({  
+            uomId : uomInfo.uomId, 
+            uomCode : uomInfo.uomCode,
+            uomName : uomInfo.uomName, 
+            uomTypeId : uomInfo.uomTypeId
           });
         }
         
-        this.rows = this.dataList;
-        console.log(this.rows);
+        this.uomlist = uomTempList;
+        console.log(this.uomlist);
       }    
     }
     

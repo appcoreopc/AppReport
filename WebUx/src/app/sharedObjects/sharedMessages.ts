@@ -121,6 +121,16 @@ export const SKIMKHAS_GET = 'SKIMKHAS_GET';
 export const SKIMKHAS_GET_ERR = 'SKIMKHAS_GET_ERR';
 export const SKIMKHAS_GET_OK = 'SKIMKHAS_GET_OK';
 
+export const UOM_SAVE = 'UOM_SAVE';
+export const UOM_CANCEL = 'UOM_CANCEL';
+export const UOM_SAVE_SUCCESS = 'UOM_SAVE_SUCCESS';
+export const UOM_MESSAGE_END = 'UOM_MESSAGE_END';
+export const UOM_SAVE_ERR = 'UOM_SAVE_ERR';
+export const UOM_CANCEL_OK = 'UOM_CANCEL_OK';
+export const UOM_GET = 'UOM_GET';
+export const UOM_GET_ERR = 'UOM_GET_ERR';
+export const UOM_GET_OK = 'UOM_GET_OK';
+
 export interface CityAppState {
 	status: number;	
 	type : string; 

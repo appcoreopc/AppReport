@@ -36,8 +36,6 @@ import { HttpClientModule }  from '@angular/common/http';
 
 import { ReportEffects } from './reporting/reporting-component//reportingEffects';
 import { ReportReducer} from './reporting/reporting-component/reportingReducer';
-
-
 import { ReactiveFormsModule }          from '@angular/forms';
 
 import { ReportGrnComponent } from './report/report-grn/report-grn.component';
@@ -55,6 +53,8 @@ import { M1LampiranEffects } from './report/lampiran-m1-component/m1Effects';
 import { SkimKhasEffects } from './report/skim-khas-component/skimEffects';
 import { LesenEffects } from './report/lesen-gudang-component/lesenEffects';
 
+import { UOMEffects } from './effects/uomEffects';
+import { UOMReducer } from './reducers/uomReducer';
 
 export const ROUTES: Routes = [
   { path: 'employee', component: EmployeeComponentComponent },
@@ -89,11 +89,12 @@ export const ROUTES: Routes = [
      
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
        SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
-        M1LampiranReducer, SkimKhasReducer, LesenReducer]),
+        M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer]),
        
-    EffectsModule.forRoot([EmployeeEffects, UserEffects,
+    EffectsModule.forRoot([EmployeeEffects, UserEffects, 
        ReportEffects, SupplierEffects, MaterialCategoryEffects, 
-       RawMaterialEffects, GrnEffects, M1LampiranEffects, SkimKhasEffects, LesenEffects]), 
+       RawMaterialEffects, GrnEffects, M1LampiranEffects, 
+       SkimKhasEffects, LesenEffects, UOMEffects]), 
     RouterModule.forRoot(ROUTES)
   ],
   providers: [],

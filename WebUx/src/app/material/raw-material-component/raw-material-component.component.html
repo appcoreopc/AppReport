@@ -31,7 +31,10 @@
       
       <div class="form-group">
         <label for="uomid">OUM Id </label>
-        <input id="Uomid" type="text" class="form-control" formControlName="Uomid">         
+       
+        <select formControlName="Uomid" class="form-control">
+          <option *ngFor="let obj of uomlist" [value]="obj.uomId">{{obj.uomCode}}</option>
+        </select>
         
         <div *ngIf="formErrors.Uomid" class="alert alert-danger">
           {{ formErrors.Uomid }}
@@ -48,13 +51,12 @@
           {{ formErrors.TariffCode }}
         </div>      
       </div>
-      
-      
+            
       <div class="form-group">
         <label for="CountryList">Country List</label>
         
         <div>
-          <select formControlName="CountryList">
+          <select formControlName="CountryList" class="form-control">
             <option *ngFor="let obj of countries" [value]="obj">{{obj}}</option>
           </select>
           
@@ -86,11 +88,7 @@
           {{ formErrors.Gstrate }}
         </div>
         
-      </div>
-      
-      
-      
-      
+      </div>               
       
     </div>
     

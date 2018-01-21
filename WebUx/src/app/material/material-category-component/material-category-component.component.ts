@@ -1,7 +1,12 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE } from '../../sharedObjects/sharedMessages';
+
+import { CityAppState, MATERIAL_CATEGORY_GET, 
+  MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE,
+  UOM_CANCEL, UOM_CANCEL_OK, UOM_GET, UOM_GET_ERR, UOM_GET_OK
+} from '../../sharedObjects/sharedMessages';
+
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { MaterialCategoryModel } from "../../model/MaterialCategoryModel";
@@ -48,13 +53,14 @@ export class MaterialCategoryComponentComponent implements OnInit {
     this.userSubscription = this.store.subscribe(appData => {           
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, MATERIAL_CATEGORY_GET_OK), MATERIAL_CATEGORY_GET_OK));
     }); 
-
-    this.initForm();
+    this.initForm();  
   }
 
   ngAfterViewInit() {     
+    
      this.dispatchIntent(MATERIAL_CATEGORY_GET);
-  }
+    
+      }
    
   save() {    
 
@@ -122,11 +128,13 @@ export class MaterialCategoryComponentComponent implements OnInit {
   }
 
   onSubmit() {
+
         
   }
 
   dispatchIntent(messageType : string, data? : any)
   {   
+    
     this.store.dispatch(
       {     
         type: messageType,
