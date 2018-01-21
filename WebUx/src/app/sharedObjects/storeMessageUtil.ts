@@ -42,7 +42,37 @@
             {
                 console.log(e);
             }
-        }
+        }        
+    }    
+    
+    export function getMultiMessage(store : any , messagesTypeToListen : string[])
+    {         
+        return extraMessageFromStore(store, messagesTypeToListen);       
     }
     
+    export function extraMessageFromStore(store : Array<any> , messagesTypeToListen : string[]): Array<any>
+    {         
+        let messageList = new Array<any>();
+        
+        try {                 
+            
+            for (var property in store)
+            {          
+                var messageValue = store[property];
+                if (messageValue && messageValue.data)
+                {
+                    if (messagesTypeToListen.indexOf(messageValue.data.type, 0) >= 0)
+                    { 
+                        messageList.push({data : messageValue, type : messageValue.data.type});                                 
+                    }            
+                }      
+            }              
+            return messageList;
+        }
+        catch (e)
+        {
+            console.log(e);
+        }   
+    }
     
+   

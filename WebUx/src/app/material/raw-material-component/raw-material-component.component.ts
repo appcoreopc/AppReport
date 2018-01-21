@@ -69,6 +69,8 @@ export class RawMaterialComponentComponent implements OnInit {
     }
   };
   
+
+
   rows = [];
     
   columns = [
@@ -86,16 +88,9 @@ export class RawMaterialComponentComponent implements OnInit {
     }
     
     ngOnInit() {   
+
       this.userSubscription = this.store.subscribe(appData => {           
-      
-        this.componentMessageHandle(
-        messageUtil.handleMessage(messageUtil.getMessage(appData, RAW_MATERIAL_GET_OK), 
-        RAW_MATERIAL_GET_OK));
-
-        this.componentMessageHandle(
-        messageUtil.handleMessage(messageUtil.getMessage(appData, UOM_GET_OK), 
-        UOM_GET_OK));
-
+        this.componentMessageHandle(messageUtil.getMultiMessage(appData, ["RAW_MATERIAL_GET_OK", "UOM_GET_OK"]));
       }); 
       
       this.initForm();
@@ -120,43 +115,45 @@ export class RawMaterialComponentComponent implements OnInit {
       this.personForm.reset();      
     }  
     
-    componentMessageHandle(message : any) {
-      
-      if (message && message.type == RAW_MATERIAL_GET_OK)
-      {
-        this.rows.length = 0;
-        for (var idx in message.data)
-        {
-          var uomInfo = message.data[idx];    
-          this.dataList.push({  
-            rmid : uomInfo.rmid, 
-            rmdesc : uomInfo.rmdesc,
-            rmcode : uomInfo.rmcode
-          });
-        }
+    componentMessageHandle(messageAll : Array<any>) {
 
-        this.rows = this.dataList;       
-      }    
-
-      if (message && message.type == UOM_GET_OK)
-      {      
-        let uomTempList : Array<any> = new Array<any>();
-
-        this.rows.length = 0;
-        for (var idx in message.data)
-        {
-          var uomInfo = message.data[idx];  
-          uomTempList.push({  
-            uomId : uomInfo.uomId, 
-            uomCode : uomInfo.uomCode,
-            uomName : uomInfo.uomName, 
-            uomTypeId : uomInfo.uomTypeId
-          });
-        }
+      console.log(messageAll);
+          
+      messageAll.map(message => {       
         
-        this.uomlist = uomTempList;
-        console.log(this.uomlist);
-      }    
+        if (message && message.type == RAW_MATERIAL_GET_OK)
+        {
+          let materialList : Array<any> = new Array<any>();  
+          this.rows.length = 0;
+
+          for (var uomInfo of message.data.data.data)
+          {           
+            materialList.push({  
+              rmid : uomInfo.rmid, 
+              rmdesc : uomInfo.rmdesc,
+              rmcode : uomInfo.rmcode
+            });
+          }
+          this.rows = materialList;       
+        }    
+  
+        if (message && message.type == UOM_GET_OK)
+        {      
+          let uomTempList : Array<any> = new Array<any>();  
+          this.uomlist.length = 0;
+
+          for (var uomInfo of message.data.data.data)
+          {          
+            uomTempList.push({  
+              uomId : uomInfo.uomId, 
+              uomCode : uomInfo.uomCode,
+              uomName : uomInfo.uomName, 
+              uomTypeId : uomInfo.uomTypeId
+            });
+          }          
+          this.uomlist = uomTempList;        
+        }    
+      });     
     }
     
 

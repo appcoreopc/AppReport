@@ -8,6 +8,7 @@ import {UOM_SAVE, UOM_CANCEL, UOM_SAVE_SUCCESS,
 		export function UOMReducer(status: CityAppState, action: Action) {
 	switch (action.type) {
 		case UOM_GET_OK: 	
+		  console.log('uomlist get ok');
 		  return  { status : 1, data : action, type: UOM_GET_OK };
 		case UOM_SAVE:	
 		  console.log('employee save');	  
