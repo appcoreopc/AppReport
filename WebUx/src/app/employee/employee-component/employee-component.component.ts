@@ -33,6 +33,8 @@ export class EmployeeComponentComponent implements OnInit {
     
   };
   
+  itemSelected : boolean = false;
+  
   validationMessages = {    
     'empName': {
       'required': 'First Name is required.',
@@ -63,8 +65,6 @@ export class EmployeeComponentComponent implements OnInit {
   };
   
   userSubscription : Subscription;
-  
-  itemSelected : EmployeeModel;
   
   selected : Array<any> = new Array<any>();
   
@@ -99,7 +99,7 @@ export class EmployeeComponentComponent implements OnInit {
   save()
   {
     var saveJson = new EmployeeModel();
-
+    
     saveJson.empId = this.person.empId;
     saveJson.empName = this.person.empName;
     saveJson.empIdno = this.person.empIdno;
@@ -136,7 +136,7 @@ export class EmployeeComponentComponent implements OnInit {
               
               if (!this.personForm) { return; }
               
-            
+              
               const form = this.personForm;
               this.person.empName = data.empName;
               this.person.empIdno = data.empIdno;
@@ -182,10 +182,11 @@ export class EmployeeComponentComponent implements OnInit {
             }
             
             onSelect(evt : any) {
-              console.log(evt);
+              
               if (evt && evt.selected && evt.selected.length > 0)
               {
-                this.person = evt.selected[0] as EmployeeModel;                
+                this.person = evt.selected[0] as EmployeeModel; 
+                this.itemSelected = true;   
               }
             }
             
@@ -201,6 +202,7 @@ export class EmployeeComponentComponent implements OnInit {
                 this.personForm.get("empIdno").setValue(this.person.empIdno);
                 this.personForm.get("empAd1").setValue(this.person.empAd1);
                 this.personForm.get("empAd2").setValue(this.person.empAd2);
+                
                 this.display = true;
               }       
             }
@@ -208,6 +210,7 @@ export class EmployeeComponentComponent implements OnInit {
             cancel() 
             {
               this.display = false;
+              this.itemSelected = false;
             }
             
             dispatchIntent(messageType : string, data? : any)
@@ -217,7 +220,15 @@ export class EmployeeComponentComponent implements OnInit {
                   type: messageType,
                   data : data
                 });      
-              } 
+              }
+              
+              resetForm() {
+                let emptySpace = "";
+                this.personForm.get("empName").setValue(emptySpace);
+                this.personForm.get("empIdno").setValue(emptySpace);
+                this.personForm.get("empAd1").setValue(emptySpace);
+                this.personForm.get("empAd2").setValue(emptySpace);
+              }
               
             }
             
