@@ -16,7 +16,9 @@ import {DialogModule} from 'primeng/dialog';
 export class EmployeeComponentComponent implements OnInit {
   
   private person: EmployeeModel = new EmployeeModel();
+  
   private personForm: FormGroup;
+  
   display: boolean = false;
   
   dataList : Array<any> = new Array<any>(); 
@@ -62,6 +64,10 @@ export class EmployeeComponentComponent implements OnInit {
   
   userSubscription : Subscription;
   
+  itemSelected : EmployeeModel;
+  
+  selected : Array<any> = new Array<any>();
+  
   rows = [];
   
   columns = [
@@ -93,6 +99,7 @@ export class EmployeeComponentComponent implements OnInit {
   save()
   {
     var saveJson = new EmployeeModel();
+
     saveJson.empId = this.person.empId;
     saveJson.empName = this.person.empName;
     saveJson.empIdno = this.person.empIdno;
@@ -107,6 +114,7 @@ export class EmployeeComponentComponent implements OnInit {
   } 
   
   private initForm() {
+    
     this.personForm = this.fb.group({
       'empName': [this.person.empName, [Validators.required, Validators.minLength(1),
         Validators.maxLength(24)]],
@@ -128,7 +136,7 @@ export class EmployeeComponentComponent implements OnInit {
               
               if (!this.personForm) { return; }
               
-              console.log('test');
+            
               const form = this.personForm;
               this.person.empName = data.empName;
               this.person.empIdno = data.empIdno;
@@ -173,11 +181,29 @@ export class EmployeeComponentComponent implements OnInit {
               }    
             }
             
-      
+            onSelect(evt : any) {
+              console.log(evt);
+              if (evt && evt.selected && evt.selected.length > 0)
+              {
+                this.person = evt.selected[0] as EmployeeModel;                
+              }
+            }
             
             showDialog() {              
               this.display = true;
-            }          
+            }   
+            
+            edit() {  
+              if (this.person)
+              {
+                
+                this.personForm.get("empName").setValue(this.person.empName);
+                this.personForm.get("empIdno").setValue(this.person.empIdno);
+                this.personForm.get("empAd1").setValue(this.person.empAd1);
+                this.personForm.get("empAd2").setValue(this.person.empAd2);
+                this.display = true;
+              }       
+            }
             
             cancel() 
             {

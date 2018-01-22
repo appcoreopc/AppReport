@@ -106,11 +106,12 @@ export class RawMaterialComponentComponent implements OnInit {
     }
     
     save() {    
-      
+
       var saveJson =  {
         Rmid : this.currentModel.Rmid,
         Rmcode : this.currentModel.Rmcode,
-        Rmdesc : this.currentModel.Rmdesc        
+        Rmdesc : this.currentModel.Rmdesc
+    
       };
       
       console.log(JSON.stringify(saveJson));
