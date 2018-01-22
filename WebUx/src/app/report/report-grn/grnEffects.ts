@@ -4,8 +4,12 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
 import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
-  GRN_MESSAGE_END, GRN_SAVE_ERR, GRN_CANCEL_OK, GRN_GET, GRN_GET_ERR,
-  GRN_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
+  GRN_MESSAGE_END, GRN_SAVE_ERR, GRN_CANCEL_OK, GRN_GET, 
+  UOM_GET, UOM_GET_OK, 
+  COMPONENT_GET, COMPONENT_GET_OK, 
+  CURRENCY_GET, CURRENCY_GET_OK, 
+  STNCUSTOM_GET, STNCUSTOM_GET_OK,  
+  GRN_GET_ERR, GRN_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
   
@@ -24,7 +28,7 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/employee/save', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/grn/save', payload, {headers : headersJson})      
     )
     .map(res => ({ type: GRN_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: GRN_SAVE_ERR }));
@@ -42,13 +46,64 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
       .map(action => {   
         JSON.stringify(action);
       })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/employee/index')  
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/grn/index')  
       .map(res => {       
         return { type: GRN_GET_OK, data: res};
       }) 
       .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
     ); 
+
+     @Effect() GrnGetUom$ = this.actions$    
+      .ofType(UOM_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/uom/index')  
+      .map(res => {       
+        return { type: UOM_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+    ); 
     
+    
+     @Effect() GrnGetComponent$ = this.actions$    
+      .ofType(COMPONENT_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/component/index')  
+      .map(res => {       
+        return { type: COMPONENT_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+    ); 
+
+    
+     @Effect() GrnGetCurrency$ = this.actions$    
+      .ofType(CURRENCY_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/currency/index')  
+      .map(res => {       
+        return { type: CURRENCY_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+    ); 
+
+    
+     @Effect() GrnGetStncustom$ = this.actions$    
+      .ofType(STNCUSTOM_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/stncustom/index')  
+      .map(res => {       
+        return { type: STNCUSTOM_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+    ); 
+
   }
   
   

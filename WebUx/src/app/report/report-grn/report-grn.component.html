@@ -1,3 +1,729 @@
-<p>
-  report-grn works!
-</p>
+ 
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	 
+<form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
+<div style="width:100%;padding:5px">
+<div class="panel panel-primary">
+    <div class="panel-heading">GRN</div>
+    <div class="panel-body">
+	
+	 
+		<div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+			 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="grndate">Date :</label>
+					  </div> 
+					  <div class="cell c2">  
+               <div class='input-group date date-control'>  
+							 <input id="grndate" type="text" formControlName="grndate" class="form-control text-control" maxlength="50" />  
+					      </div>
+					  </div> 
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="lotno">LOT No. :</label>
+					  </div> 
+					  <div class="cell c5">
+						<input id="lotno" type="text" formControlName="lotno" class="form-control text-control" maxlength="50" />  
+					  </div>
+				   </div>  
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="supplierId">Supplier :</label>
+					  </div> 
+					  <div class="cell c2">
+						<select class="form-control" formControlName="supplierId" style="width:300px">
+							<option *ngFor="let obj of supplier" [value]="obj">{{obj}}</option>
+						  </select>
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4"> 
+					   <label for="rmid">Raw Material :</label>
+					  </div> 
+					  <div class="cell c5"> 
+						<select class="form-control" formControlName="rmid" style="width:300px">
+							<option *ngFor="let obj of RMaterial" [value]="obj">{{obj}}</option>
+						  </select>
+					  </div>
+				   </div>   
+				   
+					 <div class="form-group row">
+					  <div class="cell c1">
+						<div class="input-group">
+							<div> 
+							 <label>Size :</label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c2345"> 
+						<div class="input-group">
+							<div class="input-group-addon">
+							  <span>Height</span>
+							</div>
+							 <input id="height" type="text" formControlName="height" class="form-control decimal-control"  />
+							 <span class="input-group-btn">
+								<select class="form-control" formControlName="heightUom" style="width:100px">
+								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+								  </select>
+							 </span>
+							<div class="input-group-addon">
+							  <span>Width</span>
+							</div>
+							 <input id="width" type="text" formControlName="width" lass="form-control decimal-control"  />
+							 <span class="input-group-btn">
+								<select class="form-control" formControlName="widthUom" style="width:100px">
+									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+								  </select>
+							 </span> 
+							<div class="input-group-addon">
+							  <span>Thickness</span>
+							</div>
+							 <input id="thick" type="text" formControlName="thick" class="form-control decimal-control"  />
+							 <span class="input-group-btn">
+								<select class="form-control" formControlName="thickUom" style="width:100px">
+									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+								  </select>
+							 </span>
+						  </div>
+					  </div> 
+				   </div>  
+				   
+				   
+					 <div class="form-group row">
+					  <div class="cell c1">
+						<div class="input-group">
+							<div> 
+							 <label>WT :</label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c2"> 
+						<div class="input-group">
+							 <input id="wgt" type="text" class="form-control decimal-control"  /> 
+							<div class="input-group-addon">
+							  <span>KG</span>
+							</div> 
+						  </div>
+					  </div> 
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+						<div class="input-group">
+							<div> 
+							 <label for="roll">Qty (Roll) :</label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c5"> 
+						<div class="input-group"> 
+							 <input id="roll" type="text" class="form-control decimal-control"  /> 
+							 <span class="input-group-btn">
+								<select class="form-control" formControlName="rollUom" style="width:100px">
+									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+								  </select>
+							 </span> 
+						  </div>
+					  </div> 
+				   </div> 
+					 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="dom">DOM :</label>
+					  </div> 
+					  <div class="cell c2">
+						<input id="dom" type="text" class="form-control date-control" /> 
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="dono">INV No. / DO No. :</label>
+					  </div> 
+					  <div class="cell c5">
+						<input id="dono" type="text" class="form-control text-control" maxlength="50" />  
+					  </div>
+				   </div>   
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="stncustomId">STN KASTAM :</label>
+					  </div> 
+					  <div class="cell c2">
+						<select class="form-control" formControlName="stncustomId" style="width:100px">
+						<option *ngFor="let obj of stncustomRows" [value]="obj.stncustomId">{{obj.stncustomName}}</option>
+				 	 </select>
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="componentId">Material / Component :</label>
+					  </div> 
+					  <div class="cell c5">			
+						<select class="form-control" formControlName="componentId" style="width:100px">
+					  	<option *ngFor="let obj of componentRows" [value]="obj.componentId">{{obj.componentName}}</option>
+				 	 </select>
+					  </div>
+				   </div>  
+			  
+				    <div class="form-group row">
+					  <div class="cell c1">
+						<div class="input-group">
+							<div> 
+							 <label for="kaswgt">KAST WT :</label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c2"> 
+						<div class="input-group">
+							 <input id="kaswgt" type="text" class="form-control decimal-control"  /> 
+							<div class="input-group-addon">
+							  <span>KG</span>
+							</div> 
+						  </div>
+					  </div> 
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+						<div class="input-group">
+							<div> 
+							 <label for="dutyImp">Duti Import :</label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c5"> 
+						<div class="input-group"> 
+							 <input id="dutyImp" type="text" class="form-control decimal-control"  />  
+						  </div>
+					  </div> 
+				   </div> 
+				    
+				  <div class="form-group row">
+					  <div class="cell c1">
+						<div class="input-group">
+							<div> 
+							 <label for="gst">GST 6% :</label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c2"> 
+						<div class="input-group">
+							<div class="input-group-addon">
+							  <span>RM</span>
+							</div>
+							 <input id="gst" type="text" class="form-control decimal-control"  />
+						  </div>
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <div class="input-group">
+							<div> 
+							 <label for="cif">CIF Value :</label> 
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c5">	 
+						<div class="input-group"> 
+							 <input id="cif" type="text" class="form-control decimal-control"  />
+						  </div>
+					  </div>
+				   </div> 
+			
+				    
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="customDate">Kastam Date :</label>
+					  </div> 
+					  <div class="cell c2">
+						<input id="customDate" type="text" class="form-control date-control"  />  
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="customNo">Kastam No. :</label>
+					  </div> 
+					  <div class="cell c5">	
+						<input id="customNo" type="text" class="form-control decimal-control" />  
+					  </div>
+				   </div>
+				   
+		</div>
+	  </div> 
+	    
+	    
+	   <div style="clear:both; height:10px"></div>
+		<div class="panel panel-warning">
+			<div class="panel-heading">Raw Material Cost</div>
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+			<div class="form-group row">
+					  <div class="cell c1">
+					   <label for="invoiceNo">Invoice No :</label>
+					  </div> 
+					  <div class="cell c2">
+						<input id="invoiceNo" type="text" class="form-control text-control"  />  
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="currencyId">Currency :</label>
+					  </div> 
+					  <div class="cell c5">	  
+						<select class="form-control" formControlName="currencyId" style="width:100px">
+						<option *ngFor="let obj of currencyRows" [value]="obj.currencyId">{{obj.currencyCode}}</option>
+					   </select>
+					  </div> 
+		      </div>
+			  <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+						 <label for="amountCurrency">Amount Currency:</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="amountCurrency" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+						 <label for="exRate">ExRate :</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group"> 
+						 <input id="exRate" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+			   </div>
+		    </div>
+			   
+			<div class="panel-heading">
+			   
+			 <div class="cell c1">
+				<div class="input-group">
+					<div> 
+					 <label for="amount">Raw Material Amount :</label>
+					</div>
+				  </div>
+			  </div> 
+			  <div class="cell c2"> 
+				 <div class="input-group">
+							
+					<div class="input-group-addon">
+					  <span>RM</span>
+					</div>
+					 <input id="amount" type="text" readonly class="form-control decimal-control" style="width:200px"  /> 
+					  </div>    
+				</div>
+			  </div> 
+		</div>
+		  
+	   <div style="clear:both; height:10px"></div>
+		<div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+			 
+				
+				<div class="form-group row"> 
+				  <div class="cell c1">
+				   <div class="input-group">
+						<div> 
+						 <label for="pono">PO No. :</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2">	 
+					<div class="input-group"> 
+						 <input id="pono" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+			   </div>
+			   
+			   <div class="form-group row">
+				  <div class="cell c1">
+				   <label for="otdlate">OTD / LATE :</label>
+				  </div> 
+				  <div class="cell c2">
+					<input id="otdlate" type="text" class="form-control text-control"  />  
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <label for="fwdInvNo">Forworder Billing Inv. No. :</label>
+				  </div> 
+				  <div class="cell c5">	
+					<input id="fwdInvNo" type="text" class="form-control text-control"  />  
+				  </div>
+			   </div>
+			   
+			   <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+				        <label for="amt">AMT :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+				     <div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="amt" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+				          <label for="forwarder">Forwarder :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group"> 
+					   <input id="forwarder" type="text" class="form-control text-control"  /> 
+					 </div>
+				  </div>
+			  </div>
+			   
+			   <div class="form-group row">
+				  <div class="cell c1">
+				   <label for="docRefNo">DOC. Ref. No. :</label>
+				  </div> 
+				  <div class="cell c2">
+					<input id="docRefNo" type="text" class="form-control text-control"  />  
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <label for="vcarno">VCAR No. :</label>
+				  </div> 
+				  <div class="cell c5">	
+					<input id="vcarno" type="text" class="form-control text-control"  />  
+				  </div>
+			   </div>
+	      </div>
+	 </div>
+	   
+	   <div style="clear:both; height:10px"></div>
+		<div class="panel panel-success">
+			<div class="panel-heading">Freight Cost</div>
+			<div class="panel-body" style="padding:5px; padding-left:30px">
+			  
+			   <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+				        <label for="impFreight">Import Freight :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group"> 
+					   <input id="impFreight" type="text" class="form-control text-control"  /> 
+					 </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+				          <label for="currencyAdj">Currency Adjmt Factor :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="currencyAdj" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+			  </div>
+			  
+			  
+			   <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+						 <label for="termChrg">Terminal Charge :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="termChrg" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+						 <label for="aprtTxFee">Airport Transfer Fee :</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="aprtTxFee" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+			   </div>
+			   
+			   <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+						 <label for="delivery">Delivery :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="delivery" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+						 <label for="handFwd">Handling / Forwarding :</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="handFwd" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+			   </div> 
+			    
+			   <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+						 <label for="customExamFee">Custom Exam.Fee / FCZ :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="customExamFee" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+						 <label for="collectFee">Collection Fee / Forklift:</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="collectFee" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+			   </div> 
+			    
+			   <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+						 <label for="cargoPrmt">Cargo Permit :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group"> 
+						 <input id="cargoPrmt" type="text" class="form-control text-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+						 <label for="docFee">Doc. Fee :</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="docFee" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+			  </div>
+			    
+			   <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+						 <label for="breakBulk">Break Bulk :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="breakBulk" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+				  <div class="cell c4">
+				   <div class="input-group">
+						<div> 
+						 <label for="edifee">EDI Fee (Road):</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c5">	 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="edifee" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				</div>
+			   
+				 <div class="form-group row">
+				  <div class="cell c1">
+					<div class="input-group">
+						<div> 
+						 <label for="freightGst">6% GST :</label>
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="freightGst" type="text" class="form-control decimal-control"  />
+					  </div>
+				  </div>
+				  <div class="cell c3"> 
+				  </div> 
+			   </div>
+			   
+			  </div>
+			<div class="panel-heading">
+			  
+				  <div class="cell c1">
+				   <div class="input-group">
+						<div> 
+						 <label for="totalFreightCost">Total Freight Cost :</label> 
+						</div>
+					  </div>
+				  </div> 
+				  <div class="cell c2345">	 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span class="">RM</span>
+						</div>
+						 <input id="totalFreightCost" readonly type="text" class="form-control decimal-control" style="width:200px"  />
+					  </div>
+				  </div>
+			</div>
+		 </div>
+				
+	     <div class="form-group row" style="padding-left:20px">
+		 
+          <div> 
+		    <div class="input-group">
+				<div class="input-group-addon">
+				  <span>RM</span>
+				</div>
+				 <input id="totalFreightRmcost" readonly type="text" class="form-control decimal-control" style="width:200px" />
+			  </div>
+          </div>  
+       </div>
+		  
+		 <div style="clear:both; padding-top:5px"></div>
+       <div class="form-group row">
+		 <div style="float:left;padding-left:20px">
+                 <label for="totalFreightRmcost" class="label label-success">Total Freight Cost</label>
+		 </div>
+		 <div style="float:left;padding-left:5px">
+                 <label for="totalFreightRmcost" class="label label-default">+</label>
+		 </div>
+		 <div style="float:left;padding-left:5px">
+                 <label for="totalFreightRmcost" class="label label-warning">Raw Material Amount</label>
+		 </div>  
+	    </div>
+		
+       <div class="form-group row">
+          <div class="cell c1"> 
+          </div> 
+          <div class="cell c2"> 
+          </div>
+          <div class="cell c3"> 
+          </div> 
+          <div class="cell c4"> 
+          </div> 
+          <div class="cell c5" style="text-align:right">	   
+				    	<button class="btn btn-primary" [disabled]="!dataForm.valid" (click)="save()"> Save </button>
+			 	  </div>
+       </div>
+			 <p>Form value: {{ dataForm.value | json }}</p>
+	    
+	</div>
+  </div>
+	</div> 
+</form>
+
+<div class="container"> 
+<ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
+    [rows]="rows"
+    [limit]="10"
+    (select)="onSelect($event)"
+    [columns]="columns"
+    [headerHeight]="50"  [rowHeight]="'auto'"
+    [footerHeight]="50">
+</ngx-datatable>
+</div>
+
