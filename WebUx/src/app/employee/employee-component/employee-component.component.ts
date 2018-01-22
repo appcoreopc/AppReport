@@ -65,16 +65,13 @@ export class EmployeeComponentComponent implements OnInit {
   };
   
   userSubscription : Subscription;
-  
-  selected : Array<any> = new Array<any>();
-  
+   
   rows = [];
   
   columns = [
     { prop: 'empName', name : 'Name' },
     { prop: 'empIdno', name : 'Employee No' },      
-    { prop: 'empAd1', name : 'Address', width : 350 }
-    
+    { prop: 'empAd1', name : 'Address', width : 350 }    
   ];
   
   constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
@@ -134,8 +131,7 @@ export class EmployeeComponentComponent implements OnInit {
             
             onValueChanged(data?: EmployeeModel) {
               
-              if (!this.personForm) { return; }
-              
+              if (!this.personForm) { return; }              
               
               const form = this.personForm;
               this.person.empName = data.empName;
@@ -190,8 +186,9 @@ export class EmployeeComponentComponent implements OnInit {
               }
             }
             
-            showDialog() {              
+            addForm() {              
               this.display = true;
+              this.resetForm();
             }   
             
             edit() {  
@@ -205,6 +202,15 @@ export class EmployeeComponentComponent implements OnInit {
                 
                 this.display = true;
               }       
+            }
+
+            resetForm() {
+                                
+              let emptySpace = "";
+              this.personForm.get("empName").setValue(emptySpace);
+              this.personForm.get("empIdno").setValue(emptySpace);
+              this.personForm.get("empAd1").setValue(emptySpace);
+              this.personForm.get("empAd2").setValue(emptySpace);
             }
             
             cancel() 
@@ -220,15 +226,6 @@ export class EmployeeComponentComponent implements OnInit {
                   type: messageType,
                   data : data
                 });      
-              }
-              
-              resetForm() {
-                let emptySpace = "";
-                this.personForm.get("empName").setValue(emptySpace);
-                this.personForm.get("empIdno").setValue(emptySpace);
-                this.personForm.get("empAd1").setValue(emptySpace);
-                this.personForm.get("empAd2").setValue(emptySpace);
-              }
-              
+              }  
             }
             
