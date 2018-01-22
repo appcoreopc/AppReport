@@ -58,6 +58,8 @@ import { UOMReducer } from './reducers/uomReducer';
 
 import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DialogModule} from 'primeng/dialog';
+import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
 
 export const ROUTES: Routes = [
   { path: 'employee', component: EmployeeComponentComponent },
@@ -88,8 +90,9 @@ export const ROUTES: Routes = [
     SkimKhasComponentComponent
   ],
   imports: [
-    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, BrowserAnimationsModule,
-     
+    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, 
+    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule,
+
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
        SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
         M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer]),
