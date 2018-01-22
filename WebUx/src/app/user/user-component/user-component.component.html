@@ -1,44 +1,61 @@
 <div class="container"> 
     
     
-    <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+    <p-dialog header="Add User" [visible]="display" modal='true'>
         
-        <div>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input id="username" type="text" class="form-control" formControlName="username">         
-                
-                <div *ngIf="formErrors.username" class="alert alert-danger">
-                    {{ formErrors.username }}
+        <form [formGroup]='personForm'>
+            
+            <div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" class="form-control" formControlName="username">         
+                    
+                    <div *ngIf="formErrors.username" class="alert alert-danger">
+                        {{ formErrors.username }}
+                    </div>
+                    
                 </div>
                 
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="text" class="form-control" formControlName="password">         
+                    
+                    <div *ngIf="formErrors.password" class="alert alert-danger">
+                        {{ formErrors.password }}
+                    </div>          
+                </div>  
             </div>
             
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" type="text" class="form-control" formControlName="password">         
-                
-                <div *ngIf="formErrors.password" class="alert alert-danger">
-                    {{ formErrors.password }}
-                </div>          
-            </div>  
-        </div>
+            
+            <button class="btn btn-primary commandBtn" [disabled]="!personForm.valid" (click)="save()"> Save </button>
+            
+            <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
+            <p>Form value: {{ personForm.value | json }}</p>
+            
+        </form>
         
-        <button lass="btn btn-primary"  [disabled]="!personForm.valid" (click)="save()"> Save </button>
-        
-        <p>Form value: {{ personForm.value | json }}</p>
-        
-    </form>
+    </p-dialog>
     
 </div>
 
+
+
+<div class="container">       
+    <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
+    <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+    
+</div>
+
+
+
 <div class="container"> 
-<ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
-[rows]="rows"
-[limit]="10"
-(select)="onSelect($event)"
-[columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
-[footerHeight]="50">
+    <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
+    [rows]="rows"
+    [limit]="10"
+    (select)="onSelect($event)"
+    [selectionType]="'single'"
+    [columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
+    [footerHeight]="50">
 </ngx-datatable>
 </div>
 
