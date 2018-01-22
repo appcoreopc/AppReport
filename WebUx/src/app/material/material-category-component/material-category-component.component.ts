@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -44,6 +43,9 @@ export class MaterialCategoryComponentComponent implements OnInit {
 
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
+
+  display: boolean = false;
+  itemSelected : boolean = false;
 
   constructor(private store : Store<CityAppState>, 
     private fb: FormBuilder) { 
@@ -127,9 +129,42 @@ export class MaterialCategoryComponentComponent implements OnInit {
     }   
   }
 
-  onSubmit() {
+  addForm() {              
+    this.display = true;
+    this.resetForm();
+  }   
 
-        
+onSelect(evt : any) {
+    
+    if (evt && evt.selected && evt.selected.length > 0)
+    {
+      this.person = evt.selected[0] as MaterialCategoryModel; 
+      this.itemSelected = true;   
+    }
+  }
+  
+  showDialog() {              
+    this.display = true;
+  }   
+  
+  edit() {  
+    if (this.person)
+    {      
+      this.personForm.get("rmCatName").setValue(this.person.rmCatName);    
+      this.display = true;
+    }       
+  }
+
+  resetForm() {
+                      
+    let emptySpace = "";
+    this.personForm.get("rmCatName").setValue(emptySpace);   
+  }
+  
+  cancel() 
+  {
+    this.display = false;
+    this.itemSelected = false;
   }
 
   dispatchIntent(messageType : string, data? : any)
