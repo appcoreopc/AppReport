@@ -9,15 +9,18 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 @Component({
   selector: 'app-raw-material-component',
   templateUrl: './raw-material-component.component.html',
-  styleUrls: ['./raw-material-component.component.css']
+  styleUrls: ['./raw-material-component.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class RawMaterialComponentComponent implements OnInit {
   
   private currentModel: RawMaterialModel = new RawMaterialModel();
   private personForm: FormGroup;
-
+  
   countries : string[] = ['malaysia', 'new zeland', 'australia'];
-    
+  
+  selected : Array<any> = new Array<any>();
+  
   formErrors = {
     'Rmcode': '' ,
     'Rmdesc' : '',
@@ -68,10 +71,10 @@ export class RawMaterialComponentComponent implements OnInit {
       'maxlength': 'Gst Rate cannot be more than 24 characters long.'
     }
   };  
-
-
+  
+  
   rows = [];
-    
+  
   columns = [
     { prop: 'rmid' , name : 'Id'},
     { prop: 'rmcode', name : 'Code' },
@@ -81,13 +84,13 @@ export class RawMaterialComponentComponent implements OnInit {
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
   uomlist : Array<any> = new Array<any>();
-    
+  
   constructor(private store : Store<CityAppState>, 
     private fb: FormBuilder) { 
     }
     
     ngOnInit() {   
-
+      
       this.userSubscription = this.store.subscribe(appData => {           
         this.componentMessageHandle(messageUtil.getMultiMessage(appData, ["RAW_MATERIAL_GET_OK", "UOM_GET_OK"]));
       }); 
@@ -97,8 +100,9 @@ export class RawMaterialComponentComponent implements OnInit {
     
     ngAfterViewInit() {
       
-      this.dispatchIntent(RAW_MATERIAL_GET);
-      this.dispatchIntent(UOM_GET);
+      //this.dispatchIntent(RAW_MATERIAL_GET);
+      //this.dispatchIntent(UOM_GET);
+      this.generateFakeData();
     }
     
     save() {    
@@ -115,14 +119,14 @@ export class RawMaterialComponentComponent implements OnInit {
     }  
     
     componentMessageHandle(messageAll : Array<any>) {
-         
+      
       messageAll.map(message => {       
         
         if (message && message.type == RAW_MATERIAL_GET_OK)
         {
           let materialList : Array<any> = new Array<any>();  
           this.rows.length = 0;
-
+          
           for (var uomInfo of message.data.data.data)
           {           
             materialList.push({  
@@ -133,12 +137,12 @@ export class RawMaterialComponentComponent implements OnInit {
           }
           this.rows = materialList;       
         }    
-  
+        
         if (message && message.type == UOM_GET_OK)
         {      
           let uomTempList : Array<any> = new Array<any>();  
           this.uomlist.length = 0;
-
+          
           for (var uomInfo of message.data.data.data)
           {          
             uomTempList.push({  
@@ -153,76 +157,97 @@ export class RawMaterialComponentComponent implements OnInit {
       });     
     }
     
-
+    
     private initForm() {
       this.personForm = this.fb.group({    
-          'Rmcode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+        'Rmcode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+          Validators.maxLength(24)]],
+          'Rmdesc': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
             Validators.maxLength(24)]],
-            'Rmdesc': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+            
+            'Uomid': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
               Validators.maxLength(24)]],
-              
-              'Uomid': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+              'TariffCode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                 Validators.maxLength(24)]],
-                'TariffCode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                'CountryList': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                   Validators.maxLength(24)]],
-                  'CountryList': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                  'DutyImpRate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
                     Validators.maxLength(24)]],
-                    'DutyImpRate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
-                      Validators.maxLength(24)]],
-                      'Gstrate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
-                        Validators.maxLength(24)]]
-                        
-                      });
+                    'Gstrate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                      Validators.maxLength(24)]]
                       
-                      this.personForm.valueChanges.debounceTime(500)
-                      .subscribe(data => this.onValueChanged(data));
-                    }
+                    });
                     
-                    onValueChanged(data?: RawMaterialModel) {
+                    this.personForm.valueChanges.debounceTime(500)
+                    .subscribe(data => this.onValueChanged(data));
+                  }
+                  
+                  onValueChanged(data?: RawMaterialModel) {
+                    
+                    if (!this.personForm) { return; }
+                    
+                    const form = this.personForm;
+                    this.currentModel.Rmid = data.Rmid;
+                    this.currentModel.Rmcode = data.Rmcode;
+                    this.currentModel.Rmdesc = data.Rmdesc;
+                    this.currentModel.Uomid = data.Uomid;
+                    this.currentModel.TariffCode = data.TariffCode;
+                    this.currentModel.CountryList = data.CountryList;
+                    this.currentModel.DutyImpRate = data.DutyImpRate;
+                    this.currentModel.Gstrate = data.Gstrate;
+                    this.currentModel.RmcatId = data.RmcatId;
+                    
+                    
+                    
+                    for (const field in this.formErrors) {
+                      // clear previous error message (if any)
+                      this.formErrors[field] = '';
+                      const control = form.get(field);
                       
-                      if (!this.personForm) { return; }
-                      
-                      const form = this.personForm;
-                      this.currentModel.Rmid = data.Rmid;
-                      this.currentModel.Rmcode = data.Rmcode;
-                      this.currentModel.Rmdesc = data.Rmdesc;
-                      this.currentModel.Uomid = data.Uomid;
-                      this.currentModel.TariffCode = data.TariffCode;
-                      this.currentModel.CountryList = data.CountryList;
-                      this.currentModel.DutyImpRate = data.DutyImpRate;
-                      this.currentModel.Gstrate = data.Gstrate;
-                      this.currentModel.RmcatId = data.RmcatId;
-                     
-                     
-                      
-                      for (const field in this.formErrors) {
-                        // clear previous error message (if any)
-                        this.formErrors[field] = '';
-                        const control = form.get(field);
-                        
-                        if (control && control.dirty && !control.valid) {
-                          const messages = this.validationMessages[field];
-                          for (const key in control.errors) {
-                            this.formErrors[field] += messages[key] + ' ';
-                          }
+                      if (control && control.dirty && !control.valid) {
+                        const messages = this.validationMessages[field];
+                        for (const key in control.errors) {
+                          this.formErrors[field] += messages[key] + ' ';
                         }
-                      }   
-                    }
-                    
-                    onSubmit() {
-                      
-                      console.log(this.currentModel.Rmid);
-                      console.log(this.currentModel.Rmcode);
-                    }
-                    
-                    dispatchIntent(messageType : string, data? : any)
-                    {   
-                      this.store.dispatch(
-                        {     
-                          type: messageType,
-                          data : data
-                        });      
                       }
-                      
+                    }   
+                  }
+                  
+                  generateFakeData() 
+                  {
+ 
+                   let materialList = new Array<any>();
+
+                   for(var i = 0; i < 10; i++)
+                   {
+                    materialList.push({  
+                      rmid : i, 
+                      rmdesc : 'desc:' + i,
+                      rmcode : 'code:' + i
+                    });
+                   }
+                    this.rows = materialList;       
+                  }
+                  
+                  
+                  onSubmit() {
+                    
+                    console.log(this.currentModel.Rmid);
+                    console.log(this.currentModel.Rmcode);
+                  }
+
+                  onSelect(evt) {
+                    console.log(evt);
+                  }
+                  
+                  dispatchIntent(messageType : string, data? : any)
+                  {   
+                    this.store.dispatch(
+                      {     
+                        type: messageType,
+                        data : data
+                      });      
                     }
                     
+                  }
+                  

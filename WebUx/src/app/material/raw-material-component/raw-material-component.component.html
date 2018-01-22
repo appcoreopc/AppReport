@@ -97,11 +97,12 @@
     <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="save()"> Save </button>
     
     <p>Form value: {{ personForm.value | json }}</p>
+
+    <p> List value : {{ selected | json }}</p>
     
   </form>
   
 </div>
-
 
 <div class="container">   
   <ngx-datatable class="material striped" 
@@ -109,6 +110,8 @@
   [rows]="rows"
   [limit]="10"
   (select)="onSelect($event)"
+  [selected]="selected"
+  [selectionType]="'single'"
   [columns]="columns"  [headerHeight]="50"  [rowHeight]="'auto'"
   [footerHeight]="50">
 </ngx-datatable>
