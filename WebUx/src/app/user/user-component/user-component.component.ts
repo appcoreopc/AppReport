@@ -178,7 +178,7 @@ export class UserComponentComponent implements OnInit {
         
         addForm() {              
           this.display = true;
-          this.resetForm();
+          //this.resetForm();
         }   
         
         dispatchIntent(messageType : string, data? : any)

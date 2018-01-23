@@ -16,7 +16,8 @@ import {DialogModule} from 'primeng/dialog';
 export class EmployeeComponentComponent implements OnInit {
   
   private person: EmployeeModel = new EmployeeModel();
-  
+  private personTemp : EmployeeModel; 
+
   private personForm: FormGroup;
   
   display: boolean = false;
@@ -180,8 +181,7 @@ export class EmployeeComponentComponent implements OnInit {
                   
                   if (message && message.type == EMPLOYEE_SAVE_SUCCESS)
                   {                  
-                    this.display = false;
-                    //this.resetForm();
+                    this.display = false;                
                   }    
                 });                
               }
@@ -193,12 +193,29 @@ export class EmployeeComponentComponent implements OnInit {
                   this.person = evt.selected[0] as EmployeeModel;                   
                   this.itemSelected = true;   
                 }
+                else 
+                  this.itemSelected = false;
               }
               
-              addForm() {                  
-                this.display = true;
-                //this.personForm.reset();
-                //this.resetForm();
+              addForm() {        
+
+                this.display = true;                               
+                console.log(this.person);   
+                
+                if (this.itemSelected)
+                {
+                  this.personTemp = new EmployeeModel();
+                  this.personTemp.empId = this.person.empId;
+                  this.personTemp.empName = this.person.empName;
+                  this.personTemp.empIdno = this.person.empId;
+                  this.personTemp.empId = this.person.empIdno;
+                  this.personTemp.empAd1 = this.person.empAd1;
+                  this.personTemp.empAd2 = this.person.empAd2;
+                  this.personTemp.empAd3 = this.person.empAd3;
+                }               
+               
+                this.personForm.reset();
+               
               }   
               
               edit() {  
@@ -217,7 +234,7 @@ export class EmployeeComponentComponent implements OnInit {
               }
               
               resetForm() {
-                
+
                 let emptySpace = "";
                 this.personForm.get("empName").setValue(emptySpace);
                 this.personForm.get("empIdno").setValue(emptySpace);
@@ -229,8 +246,21 @@ export class EmployeeComponentComponent implements OnInit {
               cancel() 
               {
                 this.display = false;
-                this.itemSelected = false;
-          
+                console.log(this.person);
+
+                if (this.itemSelected)
+                {
+                  console.log(this.person);
+                  this.person.empId = this.personTemp.empId;
+                  this.person.empName = this.personTemp.empName;
+                  this.person.empIdno = this.personTemp.empId;
+                  this.person.empId = this.personTemp.empIdno;
+                  this.person.empAd1 = this.personTemp.empAd1;
+                  this.person.empAd2 = this.personTemp.empAd2;
+                  this.person.empAd3 = this.personTemp.empAd3;
+                }
+
+                this.itemSelected = false;          
               }
               
               dispatchIntent(messageType : string, data? : any)
