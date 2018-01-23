@@ -41,7 +41,7 @@ namespace AppReport.Services
                     EmpAd3 = requestUser.EmpAd3,
                     EmpIdno = requestUser.EmpIdno
                 };
-                return base.Save<Employee>(user, user.EmpId);
+                return base.Save<Employee>(user, null);
             }
             else
             {

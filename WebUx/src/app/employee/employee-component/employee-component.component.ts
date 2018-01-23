@@ -25,8 +25,7 @@ export class EmployeeComponentComponent implements OnInit {
   
   formErrors = {
     'empName': '',
-    'empIdno': '',
-    
+    'empIdno': '',    
     'empAd1': '',
     'empAd2': '',
     'empAd3': ''    
@@ -36,30 +35,30 @@ export class EmployeeComponentComponent implements OnInit {
   
   validationMessages = {    
     'empName': {
-      'required': 'First Name is required.',
-      'minlength': 'First Name must be at least 4 characters long.',
-      'maxlength': 'First Name cannot be more than 24 characters long.'
+      'required': 'Name is required.',
+      'minlength': 'Name must be at least 4 characters long.',
+      'maxlength': 'Name cannot be more than 24 characters long.'
     },
     'empIdno': {
-      'required': 'Last Name is required.',
-      'minlength': 'Last Name must be at least 4 characters long.',
-      'maxlength': 'Last Name cannot be more than 24 characters long.'
+      'required': 'Employee No is required.',
+      'minlength': 'Employee No must be at least 4 characters long.',
+      'maxlength': 'Employee No cannot be more than 24 characters long.'
     },
     
     'empAd1': {
-      'required': 'Last Name is required.',
-      'minlength': 'Last Name must be at least 4 characters long.',
-      'maxlength': 'Last Name cannot be more than 24 characters long.'
+      'required': 'Address is required.',
+      'minlength': 'Address must be at least 4 characters long.',
+      'maxlength': 'Address cannot be more than 24 characters long.'
     },
     'empAd2': {
-      'required': 'Last Name is required.',
-      'minlength': 'Last Name must be at least 4 characters long.',
-      'maxlength': 'Last Name cannot be more than 24 characters long.'
+      'required': 'Address2 is required.',
+      'minlength': 'Address2 must be at least 4 characters long.',
+      'maxlength': 'Address2 cannot be more than 24 characters long.'
     },
     'empAd3': {
-      'required': 'Last Name is required.',
-      'minlength': 'Last Name must be at least 4 characters long.',
-      'maxlength': 'Last Name cannot be more than 24 characters long.'
+      'required': 'Address3 is required.',
+      'minlength': 'Address3 must be at least 4 characters long.',
+      'maxlength': 'Address3 cannot be more than 24 characters long.'
     }
   };
   
@@ -83,9 +82,14 @@ export class EmployeeComponentComponent implements OnInit {
   ngOnInit() {
     
     this.userSubscription = this.store.subscribe(appData => {           
-      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, EMPLOYEE_GET_OK), EMPLOYEE_GET_OK));
-    }); 
-    
+      this.componentMessageHandle(messageUtil.handleMessage(
+        messageUtil.getMessage(appData, EMPLOYEE_GET_OK), EMPLOYEE_GET_OK));
+
+        this.componentMessageHandle(messageUtil.handleMessage(
+          messageUtil.getMessage(appData, EMPLOYEE_SAVE_SUCCESS), EMPLOYEE_SAVE_SUCCESS));
+
+      }); 
+
     this.initForm();
   }
   
@@ -115,8 +119,7 @@ export class EmployeeComponentComponent implements OnInit {
     this.personForm = this.fb.group({
       'empName': [this.person.empName, [Validators.required, Validators.minLength(1),
         Validators.maxLength(24)]],
-        'empId': [this.person.empIdno, [Validators.required, Validators.minLength(1),
-          Validators.maxLength(24)]],
+        'empId': [this.person.empIdno],
         'empIdno': [this.person.empIdno, [Validators.required, Validators.minLength(1),
           Validators.maxLength(24)]], 
           'empAd1': [this.person.empAd1, [Validators.required, Validators.minLength(1),
