@@ -123,6 +123,8 @@ export class RawMaterialComponentComponent implements OnInit {
     
     componentMessageHandle(messageAll : Array<any>) {
       
+      console.log(messageAll);
+
       messageAll.map(message => {       
         
         if (message && message.type == RAW_MATERIAL_GET_OK)

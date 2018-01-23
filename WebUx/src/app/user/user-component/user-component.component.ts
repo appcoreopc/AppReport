@@ -124,8 +124,7 @@ export class UserComponentComponent implements OnInit {
           this.person.userId = data.userId;
           this.person.username = data.username;
           this.person.password = data.password;   
-          
-          
+                    
           for (const field in this.formErrors) {
             // clear previous error message (if any)
             this.formErrors[field] = '';
