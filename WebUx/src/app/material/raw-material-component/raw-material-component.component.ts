@@ -268,7 +268,7 @@ export class RawMaterialComponentComponent implements OnInit {
                   edit() {  
                     if (this.currentModel)
                     {
-                      
+                      this.personForm.get("Rmid").setValue(this.currentModel.Rmid);
                       this.personForm.get("Rmcode").setValue(this.currentModel.Rmcode);
                       this.personForm.get("Rmdesc").setValue(this.currentModel.Rmdesc);
                       this.personForm.get("Uomid").setValue(this.currentModel.Uomid);
