@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS } from '../../sharedObjects/sharedMessages';
+import { CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
+  ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS } from '../../sharedObjects/sharedMessages';
 import { EmployeeModel } from "../../model/EmployeeModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription'
@@ -16,9 +17,9 @@ import {DialogModule} from 'primeng/dialog';
 export class EmployeeComponentComponent implements OnInit {
   
   private person: EmployeeModel = new EmployeeModel();
-  private personTemp : EmployeeModel; 
-
+  private personTemp : EmployeeModel;   
   private personForm: FormGroup;
+  private intention : number = UPDATE;
   
   display: boolean = false;
   
@@ -91,14 +92,19 @@ export class EmployeeComponentComponent implements OnInit {
       this.initForm();
     }
     
-    ngAfterViewInit() {
-      
+    ngAfterViewInit() {            
       this.dispatchIntent(EMPLOYEE_GET);
     }
     
     save()
-    {
+    {     
+
       var saveJson = new EmployeeModel();
+      if (this.intention == ADD)
+      {
+         saveJson = this.personForm.value as EmployeeModel;
+      }
+      else {
       
       saveJson.empId = this.person.empId;
       saveJson.empName = this.person.empName;
@@ -106,11 +112,31 @@ export class EmployeeComponentComponent implements OnInit {
       saveJson.empAd1 = this.person.empAd1;
       saveJson.empAd2 = this.person.empAd2;
       saveJson.empAd3 = this.person.empAd3;
+      }
       
       var strJson = JSON.stringify(saveJson);           
-      this.dispatchIntent(EMPLOYEE_SAVE, saveJson);
+      this.dispatchIntent(EMPLOYEE_SAVE, saveJson);      
+     // this.restoreFormData();
       
     } 
+
+
+    private createAddForm()
+    {
+      this.personForm = this.fb.group({
+        'empName': ['', [Validators.required, Validators.minLength(1),
+          Validators.maxLength(50)]],
+          'empId': [''],
+          'empIdno': ['', [Validators.required, Validators.minLength(1),
+            Validators.maxLength(20)]], 
+            'empAd1': ['', [Validators.required, Validators.minLength(1),
+              Validators.maxLength(50)]],
+              'empAd2': ['', [Validators.minLength(1),
+                Validators.maxLength(50)]],
+                'empAd3': ['', [Validators.minLength(1),
+                  Validators.maxLength(50)]]
+                });
+    }
     
     private initForm() {
       
@@ -194,47 +220,36 @@ export class EmployeeComponentComponent implements OnInit {
                   this.itemSelected = true;   
                 }
                 else 
-                  this.itemSelected = false;
+                this.itemSelected = false;
               }
               
               addForm() {        
-
-                this.display = true;                               
-                console.log(this.person);   
                 
-                if (this.itemSelected)
-                {
-                  this.personTemp = new EmployeeModel();
-                  this.personTemp.empId = this.person.empId;
-                  this.personTemp.empName = this.person.empName;
-                  this.personTemp.empIdno = this.person.empId;
-                  this.personTemp.empId = this.person.empIdno;
-                  this.personTemp.empAd1 = this.person.empAd1;
-                  this.personTemp.empAd2 = this.person.empAd2;
-                  this.personTemp.empAd3 = this.person.empAd3;
-                }               
-               
-                this.personForm.reset();
-               
+                this.display = true;  
+                //this.copyFormData();                  
+                //this.personForm.reset();    
+                this.intention = ADD;
+                this.createAddForm();  
               }   
               
               edit() {  
                 
+                this.intention = UPDATE;
+                this.initForm();
                 if (this.person)
-                {               
+                {                                 
                   this.personForm.get("empName").setValue(this.person.empName);
                   this.personForm.get("empIdno").setValue(this.person.empIdno);
                   this.personForm.get("empId").setValue(this.person.empId);
                   this.personForm.get("empAd1").setValue(this.person.empAd1);
                   this.personForm.get("empAd2").setValue(this.person.empAd2);
-                  this.personForm.get("empAd3").setValue(this.person.empAd3);
-                  
+                  this.personForm.get("empAd3").setValue(this.person.empAd3);                  
                   this.display = true;
                 }       
               }
               
               resetForm() {
-
+                
                 let emptySpace = "";
                 this.personForm.get("empName").setValue(emptySpace);
                 this.personForm.get("empIdno").setValue(emptySpace);
@@ -245,22 +260,42 @@ export class EmployeeComponentComponent implements OnInit {
               
               cancel() 
               {
-                this.display = false;
-                console.log(this.person);
-
+                this.display = false;      
                 if (this.itemSelected)
                 {
-                  console.log(this.person);
+                  //this.restoreFormData();
+                }
+                
+                this.itemSelected = false;          
+              }
+              
+              copyFormData()
+              {                  
+                if (this.person)
+                {               
+                  this.personTemp = new EmployeeModel();
+                  this.personTemp.empId = this.person.empId;
+                  this.personTemp.empName = this.person.empName;
+                  this.personTemp.empIdno = this.person.empId;
+                  this.personTemp.empId = this.person.empIdno;
+                  this.personTemp.empAd1 = this.person.empAd1;
+                  this.personTemp.empAd2 = this.person.empAd2;
+                  this.personTemp.empAd3 = this.person.empAd3;   
+                }                       
+              }
+              
+              restoreFormData()
+              {                  
+                if (this.itemSelected && this.personTemp)
+                {
                   this.person.empId = this.personTemp.empId;
                   this.person.empName = this.personTemp.empName;
-                  this.person.empIdno = this.personTemp.empId;
-                  this.person.empId = this.personTemp.empIdno;
+                  this.person.empIdno = this.personTemp.empIdno;                 
                   this.person.empAd1 = this.personTemp.empAd1;
                   this.person.empAd2 = this.personTemp.empAd2;
                   this.person.empAd3 = this.personTemp.empAd3;
                 }
-
-                this.itemSelected = false;          
+                
               }
               
               dispatchIntent(messageType : string, data? : any)
