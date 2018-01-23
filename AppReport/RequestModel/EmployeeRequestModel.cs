@@ -4,7 +4,7 @@ namespace AppReport.RequestModel
 {
     public class EmployeeRequestModel
     {
-        public int EmpId { get; set; }
+        public int? EmpId { get; set; }
 
         public string EmpName { get; set; }
 

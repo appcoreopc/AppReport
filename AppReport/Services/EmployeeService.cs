@@ -1,4 +1,5 @@
 ﻿using AppReport.DataServices.PTSDataModel;
+using AppReport.RequestModel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,18 +29,38 @@ namespace AppReport.Services
             return Remove<User>(id);
         }
         
-        public bool Save(Employee user)
+        public bool Save(EmployeeRequestModel requestUser)
         {
-            return base.Save<Employee>(user, user.EmpId);
+            if (!requestUser.EmpId.HasValue)
+            {
+                var user = new Employee()
+                {                  
+                    EmpName = requestUser.EmpName,
+                    EmpAd1 = requestUser.EmpAd1,
+                    EmpAd2 = requestUser.EmpAd2,
+                    EmpAd3 = requestUser.EmpAd3,
+                    EmpIdno = requestUser.EmpIdno
+                };
+                return base.Save<Employee>(user, user.EmpId);
+            }
+            else
+            {
+                var employee = base.FindById<Employee>(requestUser.EmpId.Value);
+                if (employee != null)
+                {
+
+                    employee.EmpName = requestUser.EmpName;
+                    employee.EmpAd1 = requestUser.EmpAd1;
+                    employee.EmpAd2 = requestUser.EmpAd2;
+                    employee.EmpAd3 = requestUser.EmpAd3;
+                    employee.EmpIdno = requestUser.EmpIdno;                   
+                }
+
+                return base.Save<Employee>(employee, employee.EmpId);
+
+            }               
         }
 
-        public bool Save(int userId)
-        {
-            var user = FindById<Employee>(userId);
-            if (user != null)
-                return Save(user);
-            else
-                return false;
-        }
+      
     }
 }

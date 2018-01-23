@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK, EMPLOYEE_GET } from '../../sharedObjects/sharedMessages';
+import { CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS } from '../../sharedObjects/sharedMessages';
 import { EmployeeModel } from "../../model/EmployeeModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription'
@@ -29,8 +29,7 @@ export class EmployeeComponentComponent implements OnInit {
     
     'empAd1': '',
     'empAd2': '',
-    'empAd3': ''
-    
+    'empAd3': ''    
   };
   
   itemSelected : boolean = false;
@@ -108,7 +107,6 @@ export class EmployeeComponentComponent implements OnInit {
     
     var strJson = JSON.stringify(saveJson);           
     this.dispatchIntent(EMPLOYEE_SAVE, saveJson);
-    this.personForm.reset();
     
   } 
   
@@ -117,17 +115,19 @@ export class EmployeeComponentComponent implements OnInit {
     this.personForm = this.fb.group({
       'empName': [this.person.empName, [Validators.required, Validators.minLength(1),
         Validators.maxLength(24)]],
+        'empId': [this.person.empIdno, [Validators.required, Validators.minLength(1),
+          Validators.maxLength(24)]],
         'empIdno': [this.person.empIdno, [Validators.required, Validators.minLength(1),
           Validators.maxLength(24)]], 
           'empAd1': [this.person.empAd1, [Validators.required, Validators.minLength(1),
             Validators.maxLength(24)]],
-            'empAd2': [this.person.empAd2, [Validators.required, Validators.minLength(1),
+            'empAd2': [this.person.empAd2, [Validators.minLength(1),
               Validators.maxLength(24)]],
-              'empAd3': [this.person.empAd3, [Validators.required, Validators.minLength(1),
+              'empAd3': [this.person.empAd3, [Validators.minLength(1),
                 Validators.maxLength(24)]]
               });
               
-              this.personForm.valueChanges.debounceTime(500)
+              this.personForm.valueChanges.debounceTime(300)
               .subscribe(data => this.onValueChanged(data));
             }
             
@@ -136,12 +136,12 @@ export class EmployeeComponentComponent implements OnInit {
               if (!this.personForm) { return; }              
               
               const form = this.personForm;
-              this.person.empName = data.empName;
-              this.person.empIdno = data.empIdno;
               this.person.empId = data.empId;
+              this.person.empName = data.empName;
+              this.person.empIdno = data.empIdno;              
               this.person.empAd1 = data.empAd1;
               this.person.empAd2 = data.empAd2;
-              this.person.empAd2 = data.empAd3;
+              this.person.empAd3 = data.empAd3;
               
               for (const field in this.formErrors) {
                 // clear previous error message (if any)
@@ -173,10 +173,16 @@ export class EmployeeComponentComponent implements OnInit {
                     empAd2 : userInfo.empAd2,
                     empAd3 : userInfo.empAd3
                   });
-                }
-                
+                }                
                 this.rows = this.dataList;
               }    
+
+              if (message && message.type == EMPLOYEE_SAVE_SUCCESS)
+              {
+                console.log('save successful!');
+                this.display = false;
+                this.resetForm();
+              }                            
             }
             
             onSelect(evt : any) {
@@ -184,23 +190,28 @@ export class EmployeeComponentComponent implements OnInit {
               if (evt && evt.selected && evt.selected.length > 0)
               {
                 this.person = evt.selected[0] as EmployeeModel; 
+                console.log(this.person)
                 this.itemSelected = true;   
               }
             }
             
-            addForm() {              
+            addForm() {  
+
               this.display = true;
               this.resetForm();
             }   
             
             edit() {  
+              
               if (this.person)
               {
-                
+               //console.log(this.person);empId
                 this.personForm.get("empName").setValue(this.person.empName);
                 this.personForm.get("empIdno").setValue(this.person.empIdno);
+                this.personForm.get("empId").setValue(this.person.empId);
                 this.personForm.get("empAd1").setValue(this.person.empAd1);
                 this.personForm.get("empAd2").setValue(this.person.empAd2);
+                this.personForm.get("empAd3").setValue(this.person.empAd3);
                 
                 this.display = true;
               }       
@@ -213,6 +224,7 @@ export class EmployeeComponentComponent implements OnInit {
               this.personForm.get("empIdno").setValue(emptySpace);
               this.personForm.get("empAd1").setValue(emptySpace);
               this.personForm.get("empAd2").setValue(emptySpace);
+              this.personForm.get("empAd3").setValue(emptySpace);
             }
             
             cancel() 
