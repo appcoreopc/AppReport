@@ -71,7 +71,9 @@ export class EmployeeComponentComponent implements OnInit {
   columns = [
     { prop: 'empName', name : 'Name' },
     { prop: 'empIdno', name : 'Employee No' },      
-    { prop: 'empAd1', name : 'Address', width : 350 }    
+    { prop: 'empAd1', name : 'Address', width : 350 },
+    { prop: 'empAd2', name : 'Address 2', width : 350 },   
+    { prop: 'empAd3', name : 'Address 3', width : 350 }   
   ];
   
   constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }

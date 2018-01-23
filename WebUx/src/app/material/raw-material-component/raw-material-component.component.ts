@@ -290,8 +290,7 @@ export class RawMaterialComponentComponent implements OnInit {
                     this.personForm.get("CountryList").setValue(emptySpace);
                     this.personForm.get("DutyImpRate").setValue(emptySpace);
                     this.personForm.get("TariffCode").setValue(emptySpace);
-                    this.personForm.get("Gstrate").setValue(emptySpace);
-                    
+                    this.personForm.get("Gstrate").setValue(emptySpace);                    
                   }
                   
                   cancel() 
