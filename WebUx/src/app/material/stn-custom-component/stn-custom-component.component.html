@@ -1,43 +1,55 @@
 <h1>Material Category</h1>
 
 <div class="container"> 
-
-<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
-  
-  <div>
-      <div class="form-group">
+  <p-dialog header="Add Employee" [(visible)]="display" modal='true'>
+    
+    <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+      
+      <div>
+        <div class="form-group">
           <label for="name">Name</label>
           <input id="name" type="text" class="form-control" formControlName="name">         
-
+          
           <div *ngIf="formErrors.name" class="alert alert-danger">
             {{ formErrors.name }}
+          </div>
+          
         </div>
-
-      </div>
-
-      <div class="form-group">
+        
+        <div class="form-group">
           <label for="username">Username</label>
           <input id="username" type="text" class="form-control" formControlName="username">         
-
+          
           <div *ngIf="formErrors.username" class="alert alert-danger">
             {{ formErrors.username }}
-         </div>           
-      </div>    
-  </div>
+          </div>           
+        </div>    
+      </div>
+      
+      <button class="btn btn-primary commandBtn" [disabled]="!personForm.valid" (click)="save()"> Save </button>
+      <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
+      
+      <p>Form value: {{ personForm.value | json }}</p>
+      
+    </form>
+    
+  </p-dialog>
   
-  <button [disabled]="!personForm.valid" (click)="save()"> Save </button>
-
-  <p>Form value: {{ personForm.value | json }}</p>
-
-</form>
-
+  
 </div>
 
-  
+
+<div class="container">       
+  <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
+  <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+</div>
+
+
 <ngx-datatable class="material striped" 
 [loadingIndicator]="loadingIndicator"
 [rows]="rows"
 [limit]="10"
+[selectionType]="'single'"
 (select)="onSelect($event)"
 [columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
 [footerHeight]="50">

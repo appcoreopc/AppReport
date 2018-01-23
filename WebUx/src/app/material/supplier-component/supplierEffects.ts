@@ -19,7 +19,7 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL, SUPPLIER_SAVE_SUCCESS,
     @Effect() supplierSave$ = this.actions$    
     .ofType(SUPPLIER_SAVE)   
     .map(action => {  
-      console.log('sending request out!'); 
+     
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>            
@@ -41,8 +41,7 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL, SUPPLIER_SAVE_SUCCESS,
         JSON.stringify(action);
       })
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/supplier/index')  
-      .map(res => {       
-        console.log(res);
+      .map(res => {              
         return { type: SUPPLIER_GET_OK, data: res};
       }) 
       .catch(() => Observable.of({ type: SUPPLIER_SAVE_ERR }))

@@ -1,117 +1,125 @@
 
 
 <div class="container"> 
-  
-  <h1>Raw Material</h1>
-  
-  <form [formGroup]='personForm' (ngSubmit)="onSubmit()">
+  <p-dialog header="Add Employee" [(visible)]="display" modal='true'>
     
-    <div>
-      <div class="form-group">
-        <label for="rmcode">Code</label>
-        <input id="Rmcode" type="text" class="form-control" formControlName="Rmcode">         
-        
-        <div *ngIf="formErrors.Rmcode" class="alert alert-danger">
-          {{ formErrors.Rmcode }}
-        </div>
-        
-      </div>
-      
-      
-      <div class="form-group">
-        <label for="Rmdesc">Description</label>
-        <input id="Rmdesc" type="text" class="form-control" formControlName="Rmdesc">         
-        
-        <div *ngIf="formErrors.Rmdesc" class="alert alert-danger">
-          {{ formErrors.Rmdesc }}
-        </div>
-        
-      </div>
-      
-      
-      <div class="form-group">
-        <label for="uomid">OUM Id </label>
-        
-        <select formControlName="Uomid" class="form-control">
-          <option *ngFor="let obj of uomlist" [value]="obj.uomId">{{obj.uomCode}}</option>
-        </select>
-        
-        <div *ngIf="formErrors.Uomid" class="alert alert-danger">
-          {{ formErrors.Uomid }}
-        </div>
-        
-      </div>
-      
-      
-      <div class="form-group">
-        <label for="TariffCode">Tariff Code</label>
-        <input id="TariffCode" type="text" class="form-control" >         
+    <h1>Raw Material</h1>
     
-        <div *ngIf="formErrors.TariffCode" class="alert alert-danger">
-          {{ formErrors.TariffCode }}
-        </div>      
-      </div>
+    <form [formGroup]='personForm'>
       
-      <div class="form-group">
-        <label for="CountryList">Country List</label>
-        
-        <div>
-          <select formControlName="CountryList" class="form-control">
-            <option *ngFor="let obj of countries" [value]="obj">{{obj}}</option>
-          </select>
+      <div>
+        <div class="form-group">
+          <label for="rmcode">Code</label>
+          <input id="Rmcode" type="text" class="form-control" formControlName="Rmcode">         
+          
+          <div *ngIf="formErrors.Rmcode" class="alert alert-danger">
+            {{ formErrors.Rmcode }}
+          </div>
           
         </div>
         
-        <div *ngIf="formErrors.CountryList" class="alert alert-danger" formControlName="CountryList">
-          {{ formErrors.CountryList }}
+        
+        <div class="form-group">
+          <label for="Rmdesc">Description</label>
+          <input id="Rmdesc" type="text" class="form-control" formControlName="Rmdesc">         
+          
+          <div *ngIf="formErrors.Rmdesc" class="alert alert-danger">
+            {{ formErrors.Rmdesc }}
+          </div>
+          
         </div>
+        
+        
+        <div class="form-group">
+          <label for="uomid">OUM Id </label>
+          
+          <select formControlName="Uomid" class="form-control">
+            <option *ngFor="let obj of uomlist" [value]="obj.uomId">{{obj.uomCode}}</option>
+          </select>
+          
+          <div *ngIf="formErrors.Uomid" class="alert alert-danger">
+            {{ formErrors.Uomid }}
+          </div>
+          
+        </div>
+        
+        
+        <div class="form-group">
+          <label for="TariffCode">Tariff Code</label>
+          <input id="TariffCode" type="text" class="form-control" >         
+          
+          <div *ngIf="formErrors.TariffCode" class="alert alert-danger">
+            {{ formErrors.TariffCode }}
+          </div>      
+        </div>
+        
+        <div class="form-group">
+          <label for="CountryList">Country List</label>
+          
+          <div>
+            <select formControlName="CountryList" class="form-control">
+              <option *ngFor="let obj of countries" [value]="obj">{{obj}}</option>
+            </select>
+            
+          </div>
+          
+          <div *ngIf="formErrors.CountryList" class="alert alert-danger" formControlName="CountryList">
+            {{ formErrors.CountryList }}
+          </div>
+          
+        </div>
+        
+        
+        <div class="form-group">
+          <label for="DutyImpRate">Duty Rate</label>
+          <input id="DutyImpRate" type="text" class="form-control" formControlName="DutyImpRate">         
+          
+          <div *ngIf="formErrors.DutyImpRate" class="alert alert-danger">
+            {{ formErrors.DutyImpRate }}
+          </div>
+          
+        </div>
+        
+        
+        <div class="form-group">
+          <label for="Gstrate">Gst Rate</label>
+          <input id="Gstrate" type="text" class="form-control" formControlName="Gstrate">         
+          
+          <div *ngIf="formErrors.Gstrate" class="alert alert-danger">
+            {{ formErrors.Gstrate }}
+          </div>
+          
+        </div>               
         
       </div>
       
+      <button class="btn btn-primary commandBtn" [disabled]="!personForm.valid" (click)="save()"> Save </button>
+      <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
+ 
+      <p>Form value: {{ personForm.value | json }}</p>
       
-      <div class="form-group">
-        <label for="DutyImpRate">Duty Rate</label>
-        <input id="DutyImpRate" type="text" class="form-control" formControlName="DutyImpRate">         
-        
-        <div *ngIf="formErrors.DutyImpRate" class="alert alert-danger">
-          {{ formErrors.DutyImpRate }}
-        </div>
-        
-      </div>
-      
-      
-      <div class="form-group">
-        <label for="Gstrate">Gst Rate</label>
-        <input id="Gstrate" type="text" class="form-control" formControlName="Gstrate">         
-        
-        <div *ngIf="formErrors.Gstrate" class="alert alert-danger">
-          {{ formErrors.Gstrate }}
-        </div>
-        
-      </div>               
-      
-    </div>
+    </form>
     
-    <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="save()"> Save </button>
-    
-    <p>Form value: {{ personForm.value | json }}</p>
-    
-  </form>
+  </p-dialog>
   
 </div>
 
 
-<div class="container">   
-  <ngx-datatable class="material striped" 
-  [loadingIndicator]="loadingIndicator"
+<div class="container">       
+    <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
+    <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+</div>
+
+<div class="container"> 
+
+<ngx-datatable class="material striped"
   [rows]="rows"
-  [limit]="10"
-  [selected]="selected"
+  [limit]="10"  
   [selectionType]="'single'"
   (select)="onSelect($event)"
-  [columns]="columns"  [headerHeight]="50"  [rowHeight]="'auto'"
+  [columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
   [footerHeight]="50">
-
+  
 </ngx-datatable>
 
 </div>
