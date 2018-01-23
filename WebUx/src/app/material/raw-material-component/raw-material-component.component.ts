@@ -129,9 +129,7 @@ export class RawMaterialComponentComponent implements OnInit {
         {
           let materialList : Array<any> = new Array<any>();  
           this.rows.length = 0;
-
-          console.log(message.data.data.data);
-          
+  
           for (var rawMaterialInfo of message.data.data.data)
           {           
             materialList.push({  
@@ -214,8 +212,7 @@ export class RawMaterialComponentComponent implements OnInit {
                     this.currentModel.Gstrate = data.Gstrate;
                     this.currentModel.RmcatId = data.RmcatId;
                     
-                    for (const field in this.formErrors) {
-                      // clear previous error message (if any)
+                    for (const field in this.formErrors) {                    
                       this.formErrors[field] = '';
                       const control = form.get(field);
                       
@@ -256,7 +253,6 @@ export class RawMaterialComponentComponent implements OnInit {
                     if (evt && evt.selected && evt.selected.length > 0)
                     {                    
                       this.currentModel = evt.selected[0] as RawMaterialModel; 
-                      console.log(this.currentModel);
                       this.itemSelected = true;   
                     }
                   }
@@ -290,7 +286,7 @@ export class RawMaterialComponentComponent implements OnInit {
                     this.personForm.get("Rmdesc").setValue(emptySpace);
                     this.personForm.get("Uomid").setValue(emptySpace);
                     this.personForm.get("TariffCode").setValue(emptySpace);
-                    
+                    this.personForm.get("Rmid").setValue(emptySpace);
                     this.personForm.get("CountryList").setValue(emptySpace);
                     this.personForm.get("DutyImpRate").setValue(emptySpace);
                     this.personForm.get("TariffCode").setValue(emptySpace);
