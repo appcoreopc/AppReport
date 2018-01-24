@@ -30,8 +30,7 @@ namespace AppReport.Services
             if (!supplierRequest.SupplierId.HasValue)
             {
                 var supplier = new Supplier()
-                {
-                    SupplierId = supplierRequest.SupplierId.Value,
+                {                 
                     SupplierName = supplierRequest.SupplierName,
                     CreatedByUserId = supplierRequest.CreatedByUserId,
                     EditedByUserId = supplierRequest.EditedByUserId
