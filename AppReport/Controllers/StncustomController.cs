@@ -8,13 +8,10 @@ using AppReport.RequestModel;
 using System;
 
 namespace AppReport.Controllers
-{
-       
+{       
     public class StncustomController : Controller
     {
-
         private PTSContext _ptsContext;
-
         public StncustomController(PTSContext ptsContext, IOptions<AppConfig> accessConfig)
         {
             _ptsContext = ptsContext;
@@ -31,13 +28,8 @@ namespace AppReport.Controllers
         public IActionResult Save([FromBody]  StncustomRequestModel reqData)
         {
             if (reqData != null && !string.IsNullOrEmpty(reqData.StncustomName))
-            {
-                var d = new  Stncustom()
-                {
-                     StncustomId = reqData. StncustomId
-                };
-
-                var result = new  StncustomService(_ptsContext).Save< Stncustom>(d, Convert.ToInt32(d. StncustomId));
+            {              
+                var result = new  StncustomService(_ptsContext).Save(reqData);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();

@@ -23,7 +23,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-<<<<<<< HEAD
+
             var d = new UomService(_ptsContext).GetAll();
             return new JsonResult(d);
         }
@@ -55,18 +55,14 @@ namespace AppReport.Controllers
             else
                 return new BadRequestResult();
         }
-=======
-            var itemList = new UOMService(_ptsContext).GetAll();
-            return new JsonResult(itemList);
-        }
+                   
 
         [HttpGet]
         public IActionResult Get(int start, int size)
         {
-            var suppliers = new UOMService(_ptsContext).GetAll(start, size);
-            return new JsonResult(suppliers);
+            var itemList = new UomService(_ptsContext).GetAll();
+            return new JsonResult(itemList);
         }    
-      
->>>>>>> fc483e0062a3fb993f097e53a876569833b69873
+
     }
 }

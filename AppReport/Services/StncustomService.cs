@@ -1,5 +1,5 @@
 ﻿using AppReport.DataServices.PTSDataModel;
-using System;
+using AppReport.RequestModel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,16 +29,38 @@ namespace AppReport.Services
             return Remove<Stncustom>(id);
         }
         
-        public bool Save(Stncustom d)
-        {
-            return base.Save<Stncustom>(d, d.StncustomId);
+        public bool Save(StncustomRequestModel request)
+        {            
+            if (!request.StncustomId.HasValue)
+            {
+                var stncustom = new Stncustom()
+                {
+                    StncustomName = request.StncustomName,
+                    IsLocal = request.IsLocal
+                };
+
+                Add<Stncustom>(stncustom);
+            }
+            else
+            {
+                var stnCustomItem = FindById<Stncustom>(request.StncustomId.Value);
+
+                if (stnCustomItem != null)
+                {
+                    stnCustomItem.StncustomName = request.StncustomName;
+                    stnCustomItem.IsLocal = request.IsLocal;
+                    base.Save<Stncustom>(stnCustomItem, stnCustomItem.StncustomId);
+                }
+            }
+            return false;
         }
+
 
         public bool Save(int id)
         {
             var d = FindById<Stncustom>(id);
             if (d != null)
-                return Save(d);
+                return Save(d, d.StncustomId);
             else
                 return false;
         }
