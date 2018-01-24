@@ -18,13 +18,16 @@ import { ComponentModel } from "../../model/ComponentModel";
 import { SupplierModel } from "../../model/SupplierModel";  
 import { RawMaterialModel } from "../../model/RawMaterialModel";  
 import { CalendarModule } from 'primeng/calendar';
-
+import {DropdownModule} from 'primeng/dropdown';
+import {SpinnerModule} from 'primeng/spinner';
 
 @Component({
   selector: 'app-report-grn',
   templateUrl: './report-grn.component.html',
   styleUrls: ['./report-grn.component.css']
 })
+
+
 
 export class ReportGrnComponent implements OnInit {
 
@@ -88,6 +91,11 @@ export class ReportGrnComponent implements OnInit {
   ];
 
   constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
+
+  
+  totalRMCost() {
+    return this.data.amountCurrency * this.data.exRate;
+  }
 
   name : string; 
   description : string; 
@@ -173,11 +181,18 @@ export class ReportGrnComponent implements OnInit {
       saveJson.totalFreightCost = this.data.totalFreightCost;
       saveJson.totalFreightRmcost = this.data.totalFreightRmcost;
 
-    var strJson = JSON.stringify(saveJson);           
+    var strJson = JSON.stringify(saveJson);   
+    console.log(strJson);        
     this.dispatchIntent(GRN_SAVE, saveJson);
     this.dataForm.reset();
        
   } 
+
+  testsave(){
+     var j= { "grndate": "2018-01-03T16:00:00.000Z", "lotno": "wqeqwe", "supplierId": "2", "rmid": "0", "height": 432, "heightUom": "1", "width": 234, "widthUom": "1", "thick": 234, "thickUom": "1", "wgt": 234, "roll": 234, "rollUom": "2", "dom": "234", "dono": "243", "stncustomId": "2", "componentId": "2", "kaswgt": 24, "dutyImp": 234, "gst": 234, "cif": 234, "customDate": "01/04/2018", "customNo": "234", "invoiceNo": "234234", "currencyId": "2", "amountCurrency": 234, "exRate": 234, "amount": 54756, "pono": "234", "otdlate": "234", "fwdInvNo": "342", "amt": 234, "forwarder": "234", "docRefNo": "234", "vcarno": "234", "impFreight": 234, "currencyAdj": "NA", "termChrg": 234, "aprtTxFee": 234, "delivery": 234, "handFwd": 234, "customExamFee": 432, "collectFee": 234, "cargoPrmt": "234", "docFee": 234, "breakBulk": 234, "edifee": 243, "freightGst": 243, "totalFreightCost": 2790, "totalFreightRmcost": 57546 };
+      this.dispatchIntent(GRN_SAVE, j);
+  }
+
 
     private initForm() {
       this.dataForm = this.fb.group({
@@ -233,7 +248,7 @@ export class ReportGrnComponent implements OnInit {
         'totalFreightRmcost': [this.data.totalFreightRmcost, [Validators.required, Validators.minLength(1)]]
       });
       console.log( this.dataForm);
-      this.dataForm.valueChanges.debounceTime(500)
+      this.dataForm.valueChanges.debounceTime(100)
         .subscribe(data => this.onValueChanged(data));
     }
 
@@ -271,7 +286,7 @@ export class ReportGrnComponent implements OnInit {
       this.data.currencyId = data.currencyId;
       this.data.amountCurrency = data.amountCurrency;
       this.data.exRate = data.exRate;
-      this.data.amount = data.amount;
+      this.data.amount = data.amountCurrency * data.exRate;
       this.data.pono = data.pono;
       this.data.otdlate = data.otdlate;
       this.data.fwdInvNo = data.fwdInvNo;
@@ -292,8 +307,15 @@ export class ReportGrnComponent implements OnInit {
       this.data.breakBulk = data.breakBulk;
       this.data.edifee = data.edifee;
       this.data.freightGst = data.freightGst;
-      this.data.totalFreightCost = data.totalFreightCost;
-      this.data.totalFreightRmcost = data.totalFreightRmcost;
+      this.data.totalFreightCost = data.impFreight + data.termChrg + 
+      data.aprtTxFee + data.delivery + data.handFwd + data.customExamFee + data.collectFee + 
+      data.docFee + data.breakBulk + data.edifee + data.freightGst;
+      this.data.totalFreightRmcost = data.amount + data.totalFreightCost;
+
+      this.dataForm.get("amount").setValue(this.data.amount);
+      this.dataForm.get("totalFreightCost").setValue(this.data.totalFreightCost);
+      this.dataForm.get("totalFreightRmcost").setValue(this.data.totalFreightRmcost);
+      this.dataForm.get("currencyAdj").setValue("NA");
 
       for (const field in this.formErrors) {
         // clear previous error message (if any)
@@ -378,7 +400,12 @@ export class ReportGrnComponent implements OnInit {
       else if (message && message.type == SUPPLIER_GET_OK)
       {
         this.supplierRows.length = 0;
-          
+        
+        this.supplierDataList.push({   
+          supplierId : 0,
+          supplierName : ''
+        });
+
         for (var idx in message.data)
         {
           var supplierDataInfo = message.data[idx] as SupplierModel;    
@@ -396,12 +423,18 @@ export class ReportGrnComponent implements OnInit {
       {
         this.rmRows.length = 0;
          
+        this.rmDataList.push({   
+          Rmid : 0,
+          Rmdesc : ''
+        });
+
         for (var idx in message.data)
         {
-          var rmDataInfo = message.data[idx] as RawMaterialModel;   
+          var rmDataInfo = message.data[idx];   
+         console.log("rmDataInfo",rmDataInfo);
           this.rmDataList.push({   
-            Rmid : rmDataInfo.Rmid,
-            Rmdesc : rmDataInfo.Rmdesc
+            Rmid : rmDataInfo.rmid,
+            Rmdesc : rmDataInfo.rmdesc
           });
         }
 

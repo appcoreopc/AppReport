@@ -28,19 +28,12 @@ namespace AppReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] GrnRequestModel requestUser)
+        public IActionResult Save([FromBody] GrnRequestModel d)
         {
-            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Lotno))
-            {
-                var user = new Grn()
-                {
-                    Grnid = requestUser.Grnid,
-                    Lotno = requestUser.Lotno,
-                    Grndate = requestUser.Grndate,
-                    SupplierId = requestUser.SupplierId 
-                };
 
-                var result = new GrnService(_ptsContext).Save<Grn>(user, Convert.ToInt32(user.Grnid));
+            if (d != null && !string.IsNullOrEmpty(d.Lotno))
+            {
+                var result = new GrnService(_ptsContext).Save(d);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();

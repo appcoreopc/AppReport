@@ -62,7 +62,7 @@
 							<div class="input-group-addon">
 							  <span>Height</span>
 							</div>
-							 <input id="height" type="text" formControlName="height" class="form-control decimal-control"  />
+							 <input id="height" type="number" formControlName="height" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
 								<select class="form-control" formControlName="heightUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
@@ -87,7 +87,7 @@
 							<div class="input-group-addon">
 							  <span>Width</span>
 							</div>
-							 <input id="height" type="text" formControlName="width" class="form-control decimal-control"  />
+							 <input id="height" type="number" formControlName="width" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
 								<select class="form-control" formControlName="widthUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
@@ -111,7 +111,7 @@
 							<div class="input-group-addon">
 							  <span>Thickness</span>
 							</div>
-							 <input id="height" type="text" formControlName="thick" class="form-control decimal-control"  />
+							 <input id="height" type="number" formControlName="thick" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
 								<select class="form-control" formControlName="thickUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
@@ -132,7 +132,7 @@
 					  </div> 
 					  <div class="cell c2"> 
 						<div class="input-group">
-							 <input id="wgt" type="text" class="form-control decimal-control"  /> 
+							 <input id="wgt" type="number" formControlName="wgt" class="form-control decimal-control"  /> 
 							<div class="input-group-addon">
 							  <span>KG</span>
 							</div> 
@@ -149,7 +149,7 @@
 					  </div> 
 					  <div class="cell c5"> 
 						<div class="input-group"> 
-							 <input id="roll" type="text" class="form-control decimal-control"  /> 
+							 <input id="roll" type="number" formControlName="roll" class="form-control decimal-control"  /> 
 							 <span class="input-group-btn">
 								<select class="form-control" formControlName="rollUom" style="width:100px">
 									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
@@ -163,8 +163,8 @@
 					  <div class="cell c1">
 					   <label for="dom">DOM :</label>
 					  </div> 
-					  <div class="cell c2">
-						<input id="dom" type="text" class="form-control date-control" /> 
+					  <div class="cell c2"> 
+							<p-calendar formControlName="dom" showIcon="true"></p-calendar>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -172,7 +172,7 @@
 					   <label for="dono">INV No. / DO No. :</label>
 					  </div> 
 					  <div class="cell c5">
-						<input id="dono" type="text" class="form-control text-control" maxlength="50" />  
+						<input id="dono" formControlName='dono' type="text" class="form-control text-control" maxlength="50" />  
 					  </div>
 				   </div>   
 				   <div class="form-group row">
@@ -206,7 +206,7 @@
 					  </div> 
 					  <div class="cell c2"> 
 						<div class="input-group">
-							 <input id="kaswgt" type="text" class="form-control decimal-control"  /> 
+							 <input id="kaswgt"formControlName="kaswgt" type="number" class="form-control decimal-control"  /> 
 							<div class="input-group-addon">
 							  <span>KG</span>
 							</div> 
@@ -223,7 +223,7 @@
 					  </div> 
 					  <div class="cell c5"> 
 						<div class="input-group"> 
-							 <input id="dutyImp" type="text" class="form-control decimal-control"  />  
+							 <input id="dutyImp" formControlName="dutyImp" type="number" class="form-control decimal-control"  />  
 						  </div>
 					  </div> 
 				   </div> 
@@ -241,7 +241,7 @@
 							<div class="input-group-addon">
 							  <span>RM</span>
 							</div>
-							 <input id="gst" type="text" class="form-control decimal-control"  />
+							 <input id="gst" formControlName="gst" type="number" class="form-control decimal-control"  />
 						  </div>
 					  </div>
 					  <div class="cell c3"> 
@@ -255,7 +255,7 @@
 					  </div> 
 					  <div class="cell c5">	 
 						<div class="input-group"> 
-							 <input id="cif" type="text" class="form-control decimal-control"  />
+							 <input id="cif" formControlName="cif" type="number" class="form-control decimal-control"  />
 						  </div>
 					  </div>
 				   </div> 
@@ -266,7 +266,7 @@
 					   <label for="customDate">Kastam Date :</label>
 					  </div> 
 					  <div class="cell c2">
-						<input id="customDate" type="text" class="form-control date-control"  />  
+							<p-calendar formControlName="customDate" showIcon="true"></p-calendar>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -274,7 +274,7 @@
 					   <label for="customNo">Kastam No. :</label>
 					  </div> 
 					  <div class="cell c5">	
-						<input id="customNo" type="text" class="form-control decimal-control" />  
+						<input id="customNo" formControlName="customNo" type="text" class="form-control decimal-control" />  
 					  </div>
 				   </div>
 				   
@@ -291,7 +291,7 @@
 					   <label for="invoiceNo">Invoice No :</label>
 					  </div> 
 					  <div class="cell c2">
-						<input id="invoiceNo" type="text" class="form-control text-control"  />  
+						<input id="invoiceNo" formControlName="invoiceNo" type="text" class="form-control text-control"  />  
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -317,7 +317,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="amountCurrency" type="text" class="form-control decimal-control"  />
+						 <input id="amountCurrency" formControlName="amountCurrency" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -331,7 +331,7 @@
 				  </div> 
 				  <div class="cell c5">	 
 					<div class="input-group"> 
-						 <input id="exRate" type="text" class="form-control decimal-control"  />
+						 <input id="exRate" formControlName="exRate" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			   </div>
@@ -352,7 +352,7 @@
 					<div class="input-group-addon">
 					  <span>RM</span>
 					</div>
-					 <input id="amount" type="text" readonly class="form-control decimal-control" style="width:200px"  /> 
+					 <input id="amount" type="number" formControlName="amount"  readonly class="form-control decimal-control" style="width:200px"  /> 
 					  </div>    
 				</div>
 			  </div> 
@@ -373,7 +373,7 @@
 				  </div> 
 				  <div class="cell c2">	 
 					<div class="input-group"> 
-						 <input id="pono" type="text" class="form-control decimal-control"  />
+						 <input id="pono" formControlName="pono" type="text" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			   </div>
@@ -383,7 +383,7 @@
 				   <label for="otdlate">OTD / LATE :</label>
 				  </div> 
 				  <div class="cell c2">
-					<input id="otdlate" type="text" class="form-control text-control"  />  
+					<input id="otdlate" formControlName="otdlate" type="text" class="form-control text-control"  />  
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -391,7 +391,7 @@
 				   <label for="fwdInvNo">Forworder Billing Inv. No. :</label>
 				  </div> 
 				  <div class="cell c5">	
-					<input id="fwdInvNo" type="text" class="form-control text-control"  />  
+					<input id="fwdInvNo" formControlName="fwdInvNo" type="text" class="form-control text-control"  />  
 				  </div>
 			   </div>
 			   
@@ -408,7 +408,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="amt" type="text" class="form-control decimal-control"  />
+						 <input id="amt" formControlName="amt" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -422,7 +422,7 @@
 				  </div> 
 				  <div class="cell c5">	 
 					<div class="input-group"> 
-					   <input id="forwarder" type="text" class="form-control text-control"  /> 
+					   <input id="forwarder" formControlName="forwarder" type="text" class="form-control text-control"  /> 
 					 </div>
 				  </div>
 			  </div>
@@ -432,7 +432,7 @@
 				   <label for="docRefNo">DOC. Ref. No. :</label>
 				  </div> 
 				  <div class="cell c2">
-					<input id="docRefNo" type="text" class="form-control text-control"  />  
+					<input id="docRefNo" formControlName="docRefNo" type="text" class="form-control text-control"  />  
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -440,7 +440,7 @@
 				   <label for="vcarno">VCAR No. :</label>
 				  </div> 
 				  <div class="cell c5">	
-					<input id="vcarno" type="text" class="form-control text-control"  />  
+					<input id="vcarno" formControlName="vcarno" type="text" class="form-control text-control"  />  
 				  </div>
 			   </div>
 	      </div>
@@ -460,25 +460,25 @@
 					  </div>
 				  </div> 
 				  <div class="cell c2"> 
-					<div class="input-group"> 
-					   <input id="impFreight" type="text" class="form-control text-control"  /> 
-					 </div>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<span>RM</span>
+							</div>
+						   <input id="impFreight" formControlName="impFreight" type="number" class="form-control text-control"  /> 
+						</div> 
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
 				  <div class="cell c4">
 				   <div class="input-group">
-						<div> 
+						<div style="display:none"> 
 				          <label for="currencyAdj">Currency Adjmt Factor :</label>
 						</div>
 					  </div>
 				  </div> 
 				  <div class="cell c5">	 
-					<div class="input-group">
-						<div class="input-group-addon">
-						  <span>RM</span>
-						</div>
-						 <input id="currencyAdj" type="text" class="form-control decimal-control"  />
+					<div class="input-group" style="display:none">
+						 <input id="currencyAdj" formControlName="currencyAdj" type="text" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			  </div>
@@ -497,7 +497,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="termChrg" type="text" class="form-control decimal-control"  />
+						 <input id="termChrg" formControlName="termChrg" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -514,7 +514,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="aprtTxFee" type="text" class="form-control decimal-control"  />
+						 <input id="aprtTxFee" formControlName="aprtTxFee" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			   </div>
@@ -532,7 +532,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="delivery" type="text" class="form-control decimal-control"  />
+						 <input id="delivery" formControlName="delivery" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -549,7 +549,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="handFwd" type="text" class="form-control decimal-control"  />
+						 <input id="handFwd" formControlName="handFwd" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			   </div> 
@@ -567,7 +567,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="customExamFee" type="text" class="form-control decimal-control"  />
+						 <input id="customExamFee" formControlName="customExamFee" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -584,7 +584,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="collectFee" type="text" class="form-control decimal-control"  />
+						 <input id="collectFee" formControlName="collectFee" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			   </div> 
@@ -599,7 +599,7 @@
 				  </div> 
 				  <div class="cell c2"> 
 					<div class="input-group"> 
-						 <input id="cargoPrmt" type="text" class="form-control text-control"  />
+						 <input id="cargoPrmt" formControlName="cargoPrmt" type="text" class="form-control text-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -616,7 +616,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="docFee" type="text" class="form-control decimal-control"  />
+						 <input id="docFee" formControlName="docFee"  type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			  </div>
@@ -634,7 +634,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="breakBulk" type="text" class="form-control decimal-control"  />
+						 <input id="breakBulk" formControlName="breakBulk" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -651,7 +651,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="edifee" type="text" class="form-control decimal-control"  />
+						 <input id="edifee" formControlName="edifee" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				</div>
@@ -669,7 +669,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="freightGst" type="text" class="form-control decimal-control"  />
+						 <input id="freightGst" formControlName="freightGst" type="number" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 				  <div class="cell c3"> 
@@ -691,7 +691,7 @@
 						<div class="input-group-addon">
 						  <span class="">RM</span>
 						</div>
-						 <input id="totalFreightCost" readonly type="text" class="form-control decimal-control" style="width:200px"  />
+						 <input id="totalFreightCost" formControlName="totalFreightCost" readonly type="number" class="form-control decimal-control" style="width:200px"  />
 					  </div>
 				  </div>
 			</div>
@@ -704,7 +704,7 @@
 				<div class="input-group-addon">
 				  <span>RM</span>
 				</div>
-				 <input id="totalFreightRmcost" readonly type="text" class="form-control decimal-control" style="width:200px" />
+				 <input id="totalFreightRmcost" formControlName="totalFreightRmcost" readonly type="number" class="form-control decimal-control" style="width:200px" />
 			  </div>
           </div>  
        </div>
@@ -733,7 +733,8 @@
           </div> 
           <div class="cell c5" style="text-align:right">	   
 				    	<button class="btn btn-primary" [disabled]="!dataForm.valid" (click)="save()"> Save </button>
-			 	  </div>
+			 	      	<button class="btn btn-primary"  (click)="testsave()"> Test </button>
+			 	</div>
        </div>
 			 <p>Form value: {{ dataForm.value | json }}</p>
 	    

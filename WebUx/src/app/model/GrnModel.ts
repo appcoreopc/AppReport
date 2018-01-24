@@ -2,7 +2,7 @@ export class GrnModel {
     grnid? : number;
     grndate : Date; 
     lotno : string;
-    supplierId? : number;
+    supplierId : number;
     rmid : number;
     height : number;
     heightUom : number;
