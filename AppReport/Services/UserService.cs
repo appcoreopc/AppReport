@@ -40,14 +40,14 @@ namespace AppReport.Services
                     Password = requestUser.Password,
                     UserTypeId = requestUser.UserTypeId
                 };
-                return Save<Users>(user, user.UserId);
+                return Save<Users>(user, null);
             }
             else
             {
                 var user = base.FindById<Users>(requestUser.UserId.Value);
                 if (user != null)
                 {
-                    user.UserId = requestUser.UserId.Value;
+                   
                     user.Username = requestUser.Username;
                     user.Password = requestUser.Password;
                     user.UserTypeId = requestUser.UserTypeId;

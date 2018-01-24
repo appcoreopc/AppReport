@@ -63,152 +63,155 @@ import { CityAppState,
       ngOnInit() {  
         
         this.userSubscription = this.store.subscribe(appData => {  
-
+          
           this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
             [ USER_GET_OK, USER_SAVE_SUCCESS]));
-        
-        });
-        
-        this.configureUpdateForm();
-      }
-      
-      ngAfterViewInit() {
-        this.dispatchIntent(USER_GET);
-      }
-      
-      save() {    
-        
-        var saveJson = new UserModel();
-      
-        if (this.intention == ADD)
-        {
-          saveJson = this.personForm.value as UserModel;
+            
+          });
+          
+          this.configureUpdateForm();
         }
-        else 
-        {
-          saveJson.userId = this.person.userId;
-          saveJson.username = this.person.username;
-          saveJson.password = this.person.password;
-          saveJson.userTypeId = this.person.userTypeId;
+        
+        ngAfterViewInit() {
+          this.dispatchIntent(USER_GET);
+        }
+        
+        save() {    
+          
+          var saveJson = new UserModel();
+          
+          if (this.intention == ADD)
+          {
+            saveJson = this.personForm.value as UserModel;
+          }
+          else 
+          {
+            saveJson.userId = this.person.userId;
+            saveJson.username = this.person.username;
+            saveJson.password = this.person.password;
+            saveJson.userTypeId = this.person.userTypeId;
+            
+          }
+          var strJson = JSON.stringify(saveJson);           
+          this.dispatchIntent(USER_SAVE, saveJson);
+          //this.personForm.reset();        
+        }  
+        
+        componentMessageHandle(messageAll : Array<any>) {
+          
+          messageAll.map(message => {
+            
+            if (message && message.type == USER_GET_OK)
+            {
+              this.rows.length = 0;
+              for (var userInfo of message.data.data.data)
+              {     
+                this.dataList.push({  
+                  userId : userInfo.userId, 
+                  username : userInfo.username,
+                  password : userInfo.password,
+                  userTypeId : userInfo.userTypeId
+                });              
+              }              
+              this.rows = this.dataList;
+            }  
+
+            if (message && message.type == USER_SAVE_SUCCESS)
+            {              
+              this.display = false;      
+            }
+          });
           
         }
-        var strJson = JSON.stringify(saveJson);           
-        this.dispatchIntent(USER_SAVE, saveJson);
-        //this.personForm.reset();        
-      }  
-      
-      componentMessageHandle(messageAll : Array<any>) {
         
-        messageAll.map(message => {
-
-        if (message && message.type == USER_GET_OK)
-        {
-          this.rows.length = 0;
-          for (var userInfo of message.data.data.data)
-          {     
-            this.dataList.push({  
-              userId : userInfo.userId, 
-              username : userInfo.username,
-              password : userInfo.password,
-              userTypeId : userInfo.userTypeId
-            });              
-          }
-          
-          this.rows = this.dataList;
-        }    
-
-      });
-        
-      }
-      
-      private configureAddForm() {
-        this.personForm = this.fb.group({
-          'username': ['', [Validators.required, Validators.minLength(1),
-            Validators.maxLength(24)]],
-            'password': ['', [Validators.required, Validators.minLength(1),
-              Validators.maxLength(24)]]
-            });        
-          }
-                    
-          private configureUpdateForm() {
-            this.personForm = this.fb.group({
-              'username': [this.person.username, [Validators.required, Validators.minLength(1),
-                Validators.maxLength(24)]],
-                'password': [this.person.password, [Validators.required, Validators.minLength(1),
+        private configureAddForm() {
+          this.personForm = this.fb.group({
+            'username': ['', [Validators.required, Validators.minLength(1),
+              Validators.maxLength(24)]],
+              'password': ['', [Validators.required, Validators.minLength(1),
+                Validators.maxLength(24)]]
+              });        
+            }
+            
+            private configureUpdateForm() {
+              this.personForm = this.fb.group({
+                'username': [this.person.username, [Validators.required, Validators.minLength(1),
                   Validators.maxLength(24)]],
-                  'userId': [this.person.userId],
+                  'password': [this.person.password, [Validators.required, Validators.minLength(1),
+                    Validators.maxLength(24)]],
+                    'userId': [this.person.userId],
                     'userTypeId': [this.person.userTypeId]
-                });
-                
-                this.personForm.valueChanges.debounceTime(500)
-                .subscribe(data => this.onValueChanged(data));
-              }
-              
-              onValueChanged(data?: UserModel) {
-                
-                if (!this.personForm) { return; }
-                
-                const form = this.personForm;
-                this.person.userId = data.userId;
-                this.person.username = data.username;
-                this.person.password = data.password;   
-                
-                for (const field in this.formErrors) {
-                  // clear previous error message (if any)
-                  this.formErrors[field] = '';
-                  const control = form.get(field);
+                  });
                   
-                  if (control && control.dirty && !control.valid) {
-                    const messages = this.validationMessages[field];
-                    for (const key in control.errors) {
-                      this.formErrors[field] += messages[key] + ' ';
+                  this.personForm.valueChanges.debounceTime(500)
+                  .subscribe(data => this.onValueChanged(data));
+                }
+                
+                onValueChanged(data?: UserModel) {
+                  
+                  if (!this.personForm) { return; }
+                  
+                  const form = this.personForm;
+                  this.person.userId = data.userId;
+                  this.person.username = data.username;
+                  this.person.password = data.password;   
+                  
+                  for (const field in this.formErrors) {
+                    // clear previous error message (if any)
+                    this.formErrors[field] = '';
+                    const control = form.get(field);
+                    
+                    if (control && control.dirty && !control.valid) {
+                      const messages = this.validationMessages[field];
+                      for (const key in control.errors) {
+                        this.formErrors[field] += messages[key] + ' ';
+                      }
                     }
+                  }   
+                }      
+                
+                onSelect(evt : any) {
+                  
+                  if (evt && evt.selected && evt.selected.length > 0)
+                  {
+                    this.person = evt.selected[0] as UserModel; 
+                    this.itemSelected = true;   
+                    console.log(this.person);
                   }
-                }   
-              }      
-                            
-              onSelect(evt : any) {
+                }
                 
-                if (evt && evt.selected && evt.selected.length > 0)
+                edit() {  
+                  
+                  this.intention = UPDATE;                            
+                  this.configureUpdateForm();
+                  
+                  if (this.person)
+                  {            
+                    this.personForm.get("username").setValue(this.person.username);
+                    this.personForm.get("password").setValue(this.person.password);            
+                    this.display = true;
+                  }       
+                }      
+                
+                cancel() 
                 {
-                  this.person = evt.selected[0] as UserModel; 
-                  this.itemSelected = true;   
-                  console.log(this.person);
+                  this.display = false;
+                  this.itemSelected = false;
                 }
-              }
-                           
-              edit() {  
                 
-                this.intention = UPDATE;                            
-                this.configureUpdateForm();
+                addForm() {              
+                  this.display = true;                          
+                  this.intention = ADD;
+                  this.configureAddForm();  
+                }   
                 
-                if (this.person)
-                {            
-                  this.personForm.get("username").setValue(this.person.username);
-                  this.personForm.get("password").setValue(this.person.password);            
-                  this.display = true;
-                }       
-              }      
-              
-              cancel() 
-              {
-                this.display = false;
-                this.itemSelected = false;
-              }
-              
-              addForm() {              
-                this.display = true;                          
-                this.intention = ADD;
-                this.configureAddForm();  
-              }   
-              
-              dispatchIntent(messageType : string, data? : any)
-              {   
-                this.store.dispatch(
-                  {     
-                    type: messageType,
-                    data : data
-                  });      
+                dispatchIntent(messageType : string, data? : any)
+                {   
+                  this.store.dispatch(
+                    {     
+                      type: messageType,
+                      data : data
+                    });      
+                  }
                 }
-              }
-              
+                
