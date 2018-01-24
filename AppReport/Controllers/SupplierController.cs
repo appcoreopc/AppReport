@@ -41,18 +41,18 @@ namespace AppReport.Controllers
                     EditedByUserId = supplierRequest.EditedByUserId
                 };
 
-                var result = new UserService(_ptsContext).Save<Supplier>(supplier, supplier.SupplierId);
+                var result = new SupplierService(_ptsContext).Save<Supplier>(supplier, supplier.SupplierId);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
         }
 
         [HttpDelete]
-        public IActionResult Delete(UserRequestModel requestData)
+        public IActionResult Delete(SupplierRequestModel requestData)
         {
-            if (requestData.Id.HasValue)
+            if (requestData.SupplierId.HasValue)
             {
-                var result = new UserService(_ptsContext).Delete(requestData.Id.Value);
+                var result = new SupplierService(_ptsContext).Delete(requestData.SupplierId.Value);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else

@@ -40,15 +40,7 @@ namespace AppReport.Controllers
         {
             if (requestUser != null && !string.IsNullOrEmpty(requestUser.Username))
             {
-                var user = new Users()
-                {
-                    UserId = requestUser.Id.HasValue ? requestUser.Id.Value : 0,
-                    Username = requestUser.Username,
-                    Password = requestUser.Password,
-                    EditedDt = DateTime.UtcNow
-                };
-
-                var result = new UserService(_ptsContext).Save<Users>(user, user.UserId);
+                var result = new UserService(_ptsContext).Save(requestUser);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
@@ -57,9 +49,9 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(UserRequestModel requestData)
         {
-            if (requestData.Id.HasValue)
+            if (requestData.UserId.HasValue)
             {
-                var result = new UserService(_ptsContext).Delete(requestData.Id.Value);
+                var result = new UserService(_ptsContext).Delete(requestData.UserId.Value);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else

@@ -17,7 +17,6 @@ import { CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
   export class EmployeeComponentComponent implements OnInit {
     
     private person: EmployeeModel = new EmployeeModel();
-    private personTemp : EmployeeModel;   
     private personForm: FormGroup;
     private intention : number = UPDATE;
     
