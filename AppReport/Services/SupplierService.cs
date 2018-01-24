@@ -1,5 +1,6 @@
 ﻿using AppReport.DataServices.PTSDataModel;
 using AppReport.RequestModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace AppReport.Services
     {
         private PTSContext _context;
 
-        public SupplierService(PTSContext context): base(context)
+        public SupplierService(PTSContext context) : base(context)
         {
             _context = context;
         }
@@ -47,19 +48,15 @@ namespace AppReport.Services
                     supplier.CreatedByUserId = supplierRequest.CreatedByUserId;
                     supplier.EditedByUserId = supplierRequest.EditedByUserId;
                     return base.Save<Supplier>(supplier, supplier.SupplierId);
-                }      
+                }
             }
-
             return false;
-           
         }
 
         public bool Delete(int supplierId)
         {
             return Remove<Supplier>(supplierId);
         }
-        
-
     }
 
 }
