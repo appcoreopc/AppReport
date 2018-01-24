@@ -32,27 +32,19 @@ namespace AppReport.Controllers
         public IActionResult Save([FromBody] SupplierRequestModel supplierRequest)
         {
             if (supplierRequest != null && !string.IsNullOrEmpty(supplierRequest.SupplierName))
-            {
-                var supplier = new Supplier()
-                {
-                    SupplierId = supplierRequest.SupplierId.HasValue ? supplierRequest.SupplierId.Value : 0,
-                    SupplierName = supplierRequest.SupplierName,
-                    CreatedByUserId = supplierRequest.CreatedByUserId, 
-                    EditedByUserId = supplierRequest.EditedByUserId
-                };
-
-                var result = new UserService(_ptsContext).Save<Supplier>(supplier, supplier.SupplierId);
+            {                
+                var result = new SupplierService(_ptsContext).Save(supplierRequest);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
         }
 
         [HttpDelete]
-        public IActionResult Delete(UserRequestModel requestData)
+        public IActionResult Delete(SupplierRequestModel requestData)
         {
-            if (requestData.Id.HasValue)
+            if (requestData.SupplierId.HasValue)
             {
-                var result = new UserService(_ptsContext).Delete(requestData.Id.Value);
+                var result = new SupplierService(_ptsContext).Delete(requestData.SupplierId.Value);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else

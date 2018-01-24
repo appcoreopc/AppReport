@@ -139,6 +139,10 @@ export const CURRENCY_GET_OK = 'CURRENCY_GET_OK';
 export const STNCUSTOM_GET = 'STNCUSTOM_GET'; 
 export const STNCUSTOM_GET_OK = 'STNCUSTOM_GET_OK';
  
+export const VIEW = 0;
+export const UPDATE = 1; 
+export const ADD = 2; 
+export const DELETE = 4;
 
 export interface CityAppState {
 	status: number;	

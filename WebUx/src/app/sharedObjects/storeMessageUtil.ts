@@ -53,12 +53,12 @@
     export function extraMessageFromStore(store : Array<any> , messagesTypeToListen : string[]): Array<any>
     {         
         let messageList = new Array<any>();
-        
+      
         try {                 
             
-            for (var property in store)
+            for (var idx in store)
             {          
-                var messageValue = store[property];
+                var messageValue = store[idx];
                 if (messageValue && messageValue.data)
                 {
                     if (messagesTypeToListen.indexOf(messageValue.data.type, 0) >= 0)

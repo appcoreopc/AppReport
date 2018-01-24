@@ -30,28 +30,11 @@ namespace AppReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] RawMaterialRequestModel materialCategory)
+        public IActionResult Save([FromBody] RawMaterialRequestModel rawMaterial)
         {
-            if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.Rmcode))
-            {
-                var supplier = new Rmaterial()
-                {
-                    RmcatId = materialCategory.RmcatId.HasValue ? materialCategory.RmcatId.Value : 0,
-                    Rmcode = materialCategory.Rmcode,
-                    Rmdesc = materialCategory.Rmdesc,
-                    CountryList = materialCategory.CountryList,
-                    CreatedDt = materialCategory.CreatedDt,
-                    DutyImpRate = materialCategory.DutyImpRate,
-                    EditedDt = materialCategory.EditedDt,
-                    Gstrate = materialCategory.Gstrate,
-                    Rmid = materialCategory.Rmid,
-                    TariffCode = materialCategory.TariffCode,
-                    Uomid = materialCategory.Uomid,
-                    CreatedByUserId = materialCategory.CreatedByUserId,
-                    EditedByUserId = materialCategory.EditedByUserId
-                };
-
-                var result = new RawMaterialService(_ptsContext).Save<Rmaterial>(supplier, supplier.RmcatId);
+            if (rawMaterial != null && !string.IsNullOrEmpty(rawMaterial.Rmcode))
+            {              
+                var result = new RawMaterialService(_ptsContext).Save(rawMaterial);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();

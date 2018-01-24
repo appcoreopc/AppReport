@@ -23,18 +23,24 @@ namespace AppReport.Services
             var noOfObjectChanged = _context.SaveChanges();
             return noOfObjectChanged > 0 ? true : false;
         }
-
+        
         public bool Save<T>(T target, int? uniqueId) where T : class
         {
             if (!uniqueId.HasValue)
-                _context.Add<T>(target);
-
-            var updateTarget = _context.Find<T>(uniqueId);
-            if (updateTarget != null)
-                _context.Update(target);
+                return Add(target);
             else
-                _context.Add<T>(target);
-            
+            {
+                var updateTarget = _context.Find<T>(uniqueId);
+                _context.Update(target);
+                var noOfObjectChanged = _context.SaveChanges();
+                return noOfObjectChanged > 0 ? true : false;
+            }
+        }
+
+
+        public bool Add<T>(T target) where T : class
+        {
+            _context.Add<T>(target);
             var noOfObjectChanged = _context.SaveChanges();
             return noOfObjectChanged > 0 ? true : false;
         }

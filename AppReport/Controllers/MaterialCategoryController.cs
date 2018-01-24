@@ -34,15 +34,7 @@ namespace AppReport.Controllers
         {
             if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.RMCatName))
             {
-                var supplier = new Rmcat()
-                {
-                    RmcatId = materialCategory.RMCatId.HasValue ? materialCategory.RMCatId.Value : 0,
-                    RmcatName = materialCategory.RMCatName,
-                    CreatedByUserId = materialCategory.CreatedByUserId,
-                    EditedByUserId = materialCategory.EditedByUserId
-                };
-
-                var result = new MaterialCategoryService(_ptsContext).Save<Rmcat>(supplier, supplier.RmcatId);
+                var result = new MaterialCategoryService(_ptsContext).Save(materialCategory);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
@@ -50,8 +42,7 @@ namespace AppReport.Controllers
 
         [HttpDelete]
         public IActionResult Delete(MaterialCategoryRequestModel requestData)
-        {
-            
+        {            
             if (requestData.RMCatId.HasValue)
             {
                 var result = new MaterialCategoryService(_ptsContext).Delete(requestData.RMCatId.Value);

@@ -7,22 +7,19 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
 
 		export function UserReducer(status: CityAppState, action: Action) {
 	switch (action.type) {
-		case USER_GET_OK: 
-			console.log(action);
-			console.log('user get ok')
+		case USER_GET_OK: 		
 		  return  { status : 1, data : action, type: USER_GET_OK };
-		case USER_SAVE:	
-		  console.log('employee save');	  
+		case USER_SAVE:		
 		  return  { status : 2, data : action, type: USER_MESSAGE_END };	
 		case USER_CANCEL:
 			console.log(USER_CANCEL);
-			return  { status : 3, type: USER_MESSAGE_END };	
+			return  { status : 3, data : action, type: USER_MESSAGE_END };	
 		case USER_SAVE_SUCCESS:
 			console.log(USER_SAVE_SUCCESS);
-			return { status : 4, type: USER_SAVE_SUCCESS }
+			return { status : 4, data : action, type: USER_SAVE_SUCCESS }
 		case USER_SAVE_ERR:
 			console.log(USER_SAVE_ERR);
-			return  { status : 5, type: USER_MESSAGE_END };			
+			return  { status : 5, data : action, type: USER_MESSAGE_END };			
 		case USER_GET_ERR: 
 		console.log(action);
 		default:

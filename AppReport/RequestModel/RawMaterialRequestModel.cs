@@ -4,7 +4,7 @@ namespace AppReport.RequestModel
 {
     public class RawMaterialRequestModel
     {
-        public int Rmid { get; set; }
+        public int? Rmid { get; set; }
         public string Rmcode { get; set; }
         public int? RmcatId { get; set; }
         public string Rmdesc { get; set; }
