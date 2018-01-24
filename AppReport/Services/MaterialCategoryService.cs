@@ -1,4 +1,5 @@
 ﻿using AppReport.DataServices.PTSDataModel;
+using AppReport.RequestModel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,9 +23,35 @@ namespace AppReport.Services
             return _context.Rmaterial.Skip(skipAmount).Take(takeAmount);
         }
 
-        public bool Save(Rmcat materialCategory)
+        public bool Save(MaterialCategoryRequestModel materialCategory)
         {
-            return base.Save<Rmcat>(materialCategory, materialCategory.RmcatId);
+            if (!materialCategory.RMCatId.HasValue)
+            {
+                var rmcat = new Rmcat()
+                {
+                    RmcatId = materialCategory.RMCatId.Value,
+                    RmcatName = materialCategory.RMCatName,
+                    CreatedByUserId = materialCategory.CreatedByUserId,
+                    EditedByUserId = materialCategory.EditedByUserId
+                };
+                return base.Save<Rmcat>(rmcat, null);
+            }
+            else
+            {
+                var rmcat = FindById<Rmcat>(materialCategory.RMCatId.Value);
+                
+                if (rmcat != null)
+                {
+                    rmcat.RmcatId = materialCategory.RMCatId.Value;
+                    rmcat.RmcatName = materialCategory.RMCatName;
+                    rmcat.CreatedByUserId = materialCategory.CreatedByUserId;
+                    rmcat.EditedByUserId = materialCategory.EditedByUserId;
+                    return base.Save<Rmcat>(rmcat, rmcat.RmcatId);
+                }                
+            }
+
+            return false;
+            
         }
 
         public bool Delete(int materialCategoryId)

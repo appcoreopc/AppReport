@@ -32,16 +32,8 @@ namespace AppReport.Controllers
         public IActionResult Save([FromBody] SupplierRequestModel supplierRequest)
         {
             if (supplierRequest != null && !string.IsNullOrEmpty(supplierRequest.SupplierName))
-            {
-                var supplier = new Supplier()
-                {
-                    SupplierId = supplierRequest.SupplierId.HasValue ? supplierRequest.SupplierId.Value : 0,
-                    SupplierName = supplierRequest.SupplierName,
-                    CreatedByUserId = supplierRequest.CreatedByUserId, 
-                    EditedByUserId = supplierRequest.EditedByUserId
-                };
-
-                var result = new SupplierService(_ptsContext).Save<Supplier>(supplier, supplier.SupplierId);
+            {                
+                var result = new SupplierService(_ptsContext).Save(supplierRequest);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
