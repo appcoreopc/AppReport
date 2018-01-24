@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 
 import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
   GRN_MESSAGE_END, GRN_SAVE_ERR, GRN_CANCEL_OK, GRN_GET, 
+  SUPPLIER_GET, SUPPLIER_GET_OK,  
+  RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK,  
   UOM_GET, UOM_GET_OK, 
   COMPONENT_GET, COMPONENT_GET_OK, 
   CURRENCY_GET, CURRENCY_GET_OK, 
@@ -100,6 +102,31 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/stncustom/index')  
       .map(res => {       
         return { type: STNCUSTOM_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+    ); 
+
+     @Effect() GrnGetMaterial$ = this.actions$    
+      .ofType(RAW_MATERIAL_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/material/index')  
+      .map(res => {       
+        console.log("material",res);
+        return { type: RAW_MATERIAL_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+    ); 
+
+     @Effect() GrnGetSupplier$ = this.actions$    
+      .ofType(SUPPLIER_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/supplier/index')  
+      .map(res => {       
+        return { type: SUPPLIER_GET_OK, data: res};
       }) 
       .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
     ); 

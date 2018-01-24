@@ -70,21 +70,23 @@ export class RawMaterialComponentComponent implements OnInit {
       'minlength': 'Gst Rate must be at least 4 characters long.',
       'maxlength': 'Gst Rate cannot be more than 24 characters long.'
     }
-  };  
-  
-  
+  };    
+    
   rows = [];
   
   columns = [
-    { prop: 'rmid' , name : 'Id'},
-    { prop: 'rmcode', name : 'Code' },
-    { prop: 'rmdesc', name : 'Description', width : 350 }         
+    { prop: 'Rmid' , name : 'Id'},
+    { prop: 'Rmcode', name : 'Code' },
+    { prop: 'Rmdesc', name : 'Description', width : 350 }         
   ];
   
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
   uomlist : Array<any> = new Array<any>();
-  
+    
+  display: boolean = false;
+  itemSelected : boolean = false;
+    
   constructor(private store : Store<CityAppState>, 
     private fb: FormBuilder) { 
     }
@@ -92,7 +94,8 @@ export class RawMaterialComponentComponent implements OnInit {
     ngOnInit() {   
       
       this.userSubscription = this.store.subscribe(appData => {           
-        this.componentMessageHandle(messageUtil.getMultiMessage(appData, ["RAW_MATERIAL_GET_OK", "UOM_GET_OK"]));
+        this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
+          ["RAW_MATERIAL_GET_OK", "UOM_GET_OK"]));
       }); 
       
       this.initForm();
@@ -100,9 +103,9 @@ export class RawMaterialComponentComponent implements OnInit {
     
     ngAfterViewInit() {
       
-      //this.dispatchIntent(RAW_MATERIAL_GET);
-      //this.dispatchIntent(UOM_GET);
-      this.generateFakeData();
+      this.dispatchIntent(RAW_MATERIAL_GET);
+      this.dispatchIntent(UOM_GET);
+      //this.generateFakeData();
     }
     
     save() {    
@@ -110,10 +113,10 @@ export class RawMaterialComponentComponent implements OnInit {
       var saveJson =  {
         Rmid : this.currentModel.Rmid,
         Rmcode : this.currentModel.Rmcode,
-        Rmdesc : this.currentModel.Rmdesc        
+        Rmdesc : this.currentModel.Rmdesc
+        
       };
       
-      console.log(JSON.stringify(saveJson));
       this.dispatchIntent(RAW_MATERIAL_SAVE, saveJson);
       this.personForm.reset();      
     }  
@@ -126,13 +129,21 @@ export class RawMaterialComponentComponent implements OnInit {
         {
           let materialList : Array<any> = new Array<any>();  
           this.rows.length = 0;
-          
-          for (var uomInfo of message.data.data.data)
+  
+          for (var rawMaterialInfo of message.data.data.data)
           {           
             materialList.push({  
-              rmid : uomInfo.rmid, 
-              rmdesc : uomInfo.rmdesc,
-              rmcode : uomInfo.rmcode
+              Rmid : rawMaterialInfo.rmid, 
+              Rmdesc : rawMaterialInfo.rmdesc,
+              Rmcode : rawMaterialInfo.rmcode,
+              RmcatId : rawMaterialInfo.rmcatId,
+
+              CountryList : rawMaterialInfo.countryList,
+              DutyImpRate : rawMaterialInfo.dutyImpRate,
+              Gstrate : rawMaterialInfo.gstrate,
+              Uomid : rawMaterialInfo.uomid,
+              TariffCode : rawMaterialInfo.tariffCode
+
             });
           }
           this.rows = materialList;       
@@ -143,13 +154,13 @@ export class RawMaterialComponentComponent implements OnInit {
           let uomTempList : Array<any> = new Array<any>();  
           this.uomlist.length = 0;
           
-          for (var uomInfo of message.data.data.data)
+          for (var rawMaterialInfo of message.data.data.data)
           {          
             uomTempList.push({  
-              uomId : uomInfo.uomId, 
-              uomCode : uomInfo.uomCode,
-              uomName : uomInfo.uomName, 
-              uomTypeId : uomInfo.uomTypeId
+              uomId : rawMaterialInfo.uomId, 
+              uomCode : rawMaterialInfo.uomCode,
+              uomName : rawMaterialInfo.uomName, 
+              uomTypeId : rawMaterialInfo.uomTypeId
             });
           }          
           this.uomlist = uomTempList;        
@@ -159,21 +170,25 @@ export class RawMaterialComponentComponent implements OnInit {
     
     
     private initForm() {
+
       this.personForm = this.fb.group({    
         'Rmcode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
           Validators.maxLength(24)]],
-          'Rmdesc': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+          'Rmid': [this.currentModel.Rmid, [Validators.required, Validators.minLength(1),
             Validators.maxLength(24)]],
-            
-            'Uomid': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+          'Rmdesc': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+            Validators.maxLength(24)]],            
+            'Uomid': [this.currentModel.Uomid, [Validators.required, Validators.minLength(1),
               Validators.maxLength(24)]],
-              'TariffCode': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+              'TariffCode': [this.currentModel.TariffCode, [Validators.required, Validators.minLength(1),
                 Validators.maxLength(24)]],
-                'CountryList': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                'CountryList': [this.currentModel.CountryList, [Validators.required, Validators.minLength(1),
                   Validators.maxLength(24)]],
-                  'DutyImpRate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
-                    Validators.maxLength(24)]],
-                    'Gstrate': [this.currentModel.Rmcode, [Validators.required, Validators.minLength(1),
+                  'DutyImpRate': [this.currentModel.DutyImpRate, [Validators.required, Validators.minLength(1),
+                    Validators.maxLength(24)]],      
+                    'RmcatId': [this.currentModel.RmcatId, [Validators.required, Validators.minLength(1),
+                      Validators.maxLength(24)]],                 
+                    'Gstrate': [this.currentModel.Gstrate, [Validators.required, Validators.minLength(1),
                       Validators.maxLength(24)]]
                       
                     });
@@ -197,10 +212,7 @@ export class RawMaterialComponentComponent implements OnInit {
                     this.currentModel.Gstrate = data.Gstrate;
                     this.currentModel.RmcatId = data.RmcatId;
                     
-                    
-                    
-                    for (const field in this.formErrors) {
-                      // clear previous error message (if any)
+                    for (const field in this.formErrors) {                    
                       this.formErrors[field] = '';
                       const control = form.get(field);
                       
@@ -212,32 +224,79 @@ export class RawMaterialComponentComponent implements OnInit {
                       }
                     }   
                   }
-                  
+
                   generateFakeData() 
                   {
- 
-                   let materialList = new Array<any>();
-
-                   for(var i = 0; i < 10; i++)
-                   {
-                    materialList.push({  
-                      rmid : i, 
-                      rmdesc : 'desc:' + i,
-                      rmcode : 'code:' + i
-                    });
-                   }
+                    
+                    let materialList = new Array<any>();
+                    
+                    for(var i = 0; i < 10; i++)
+                    {
+                      materialList.push({  
+                        rmid : i, 
+                        rmdesc : 'desc:' + i,
+                        rmcode : 'code:' + i
+                      });
+                    }
                     this.rows = materialList;       
                   }
+                                    
+                  
+                  addForm() {              
+                    this.display = true;
+                    this.resetForm();
+                  }   
                   
                   
-                  onSubmit() {
+                  onSelect(evt : any) {
                     
-                    console.log(this.currentModel.Rmid);
-                    console.log(this.currentModel.Rmcode);
+                    if (evt && evt.selected && evt.selected.length > 0)
+                    {                    
+                      this.currentModel = evt.selected[0] as RawMaterialModel; 
+                      this.itemSelected = true;   
+                    }
                   }
-
-                  onSelect(evt) {
-                    console.log(evt);
+                  
+                  showDialog() {              
+                    this.display = true;
+                  }   
+                  
+                  edit() {  
+                    if (this.currentModel)
+                    {
+                      this.personForm.get("Rmid").setValue(this.currentModel.Rmid);
+                      this.personForm.get("Rmcode").setValue(this.currentModel.Rmcode);
+                      this.personForm.get("Rmdesc").setValue(this.currentModel.Rmdesc);
+                      this.personForm.get("Uomid").setValue(this.currentModel.Uomid);
+                      this.personForm.get("TariffCode").setValue(this.currentModel.TariffCode);
+                      
+                      this.personForm.get("CountryList").setValue(this.currentModel.TariffCode);
+                      this.personForm.get("DutyImpRate").setValue(this.currentModel.TariffCode);
+                      this.personForm.get("TariffCode").setValue(this.currentModel.TariffCode);
+                      this.personForm.get("Gstrate").setValue(this.currentModel.TariffCode);
+                      
+                      this.display = true;
+                    }       
+                  }
+                  
+                  resetForm() {
+                    
+                    let emptySpace = "";
+                    this.personForm.get("Rmcode").setValue(emptySpace);
+                    this.personForm.get("Rmdesc").setValue(emptySpace);
+                    this.personForm.get("Uomid").setValue(emptySpace);
+                    this.personForm.get("TariffCode").setValue(emptySpace);
+                    this.personForm.get("Rmid").setValue(emptySpace);
+                    this.personForm.get("CountryList").setValue(emptySpace);
+                    this.personForm.get("DutyImpRate").setValue(emptySpace);
+                    this.personForm.get("TariffCode").setValue(emptySpace);
+                    this.personForm.get("Gstrate").setValue(emptySpace);                    
+                  }
+                  
+                  cancel() 
+                  {
+                    this.display = false;
+                    this.itemSelected = false;
                   }
                   
                   dispatchIntent(messageType : string, data? : any)

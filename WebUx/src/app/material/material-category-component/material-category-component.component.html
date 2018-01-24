@@ -1,41 +1,50 @@
 
-
-
 <div class="container"> 
-
-    <h1>Material Category</h1>
-
-<form [formGroup]='personForm' (ngSubmit)="onSubmit()">
-  
-  <div>
-      <div class="form-group">
-          <label for="categoryName">Category Name</label>
-          <input id="rmCatName" type="text" class="form-control" formControlName="rmCatName">         
-
-          <div *ngIf="formErrors.rmCatName" class="alert alert-danger">
-            {{ formErrors.rmCatName }}
-        </div>
-
-      </div>
-       
-  </div>
-  
-  <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="save()"> Save </button>
-
-  <p>Form value: {{ personForm.value | json }}</p>
-
-</form>
-
+    
+    <p-dialog header="Add User" [visible]="display" modal='true'>
+        <h1>Material Category</h1>
+        
+        <form [formGroup]='personForm'>
+            
+            <div>
+                <div class="form-group">
+                    <label for="categoryName">Category Name</label>
+                    <input id="rmCatName" type="text" class="form-control" formControlName="rmCatName">         
+                    
+                    <div *ngIf="formErrors.rmCatName" class="alert alert-danger">
+                        {{ formErrors.rmCatName }}
+                    </div>                    
+                </div>                
+            </div>
+            
+            <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="save()"> Save </button>
+            <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
+            
+            <p>Form value: {{ personForm.value | json }}</p>
+            
+        </form>
+        
+    </p-dialog>
+    
 </div>
 
-<div class="container"> 
 
-  
-<ngx-datatable class="material striped" 
+<div class="container">       
+    <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
+    <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+</div>
+
+
+<div class="container"> 
+    
+    
+    <ngx-datatable class="material striped" 
     [loadingIndicator]="loadingIndicator"
     [rows]="rows"
     [limit]="10"
     (select)="onSelect($event)"
+    (select)="onSelect($event)"
+    [selectionType]="'single'"
     [columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
     [footerHeight]="50">
 </ngx-datatable>

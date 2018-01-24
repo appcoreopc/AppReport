@@ -1,17 +1,14 @@
  
  <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-	 
+ 
 <form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
 <div style="width:100%;padding:5px">
 <div class="panel panel-primary">
     <div class="panel-heading">GRN</div>
     <div class="panel-body">
 	
-	 
+	  
 		<div class="panel panel-info"> 
 			<div class="panel-body" style="padding:5px; padding-left:30px"> 
 			 
@@ -19,10 +16,8 @@
 					  <div class="cell c1">
 					   <label for="grndate">Date :</label>
 					  </div> 
-					  <div class="cell c2">  
-               <div class='input-group date date-control'>  
-							 <input id="grndate" type="text" formControlName="grndate" class="form-control text-control" maxlength="50" />  
-					      </div>
+					  <div class="cell c2">   
+							<p-calendar formControlName="grndate" showIcon="true"></p-calendar>
 					  </div> 
 					  <div class="cell c3"> 
 					  </div> 
@@ -39,7 +34,7 @@
 					  </div> 
 					  <div class="cell c2">
 						<select class="form-control" formControlName="supplierId" style="width:300px">
-							<option *ngFor="let obj of supplier" [value]="obj">{{obj}}</option>
+							<option *ngFor="let obj of supplierRows" [value]="obj.supplierId">{{obj.supplierName}}</option>
 						  </select>
 					  </div>
 					  <div class="cell c3"> 
@@ -49,7 +44,7 @@
 					  </div> 
 					  <div class="cell c5"> 
 						<select class="form-control" formControlName="rmid" style="width:300px">
-							<option *ngFor="let obj of RMaterial" [value]="obj">{{obj}}</option>
+							<option *ngFor="let obj of rmRows" [value]="obj.Rmid">{{obj.Rmdesc}}</option>
 						  </select>
 					  </div>
 				   </div>   
@@ -62,7 +57,7 @@
 							</div>
 						  </div>
 					  </div> 
-					  <div class="cell c2345"> 
+					  <div class="cell c2"> 
 						<div class="input-group">
 							<div class="input-group-addon">
 							  <span>Height</span>
@@ -73,29 +68,60 @@
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
 								  </select>
 							 </span>
+						 
+						  </div>
+					  </div> 
+					 </div>  
+					
+					 
+					 <div class="form-group row">
+					  <div class="cell c1">
+						<div class="input-group">
+							<div> 
+							 <label> </label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c2"> 
+						<div class="input-group">
 							<div class="input-group-addon">
 							  <span>Width</span>
 							</div>
-							 <input id="width" type="text" formControlName="width" lass="form-control decimal-control"  />
+							 <input id="height" type="text" formControlName="width" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
 								<select class="form-control" formControlName="widthUom" style="width:100px">
-									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
 								  </select>
-							 </span> 
+							 </span>
+						 
+						  </div>
+					  </div> 
+					 </div> 
+				    
+					 <div class="form-group row">
+					  <div class="cell c1">
+						<div class="input-group">
+							<div> 
+							 <label> </label>
+							</div>
+						  </div>
+					  </div> 
+					  <div class="cell c2"> 
+						<div class="input-group">
 							<div class="input-group-addon">
 							  <span>Thickness</span>
 							</div>
-							 <input id="thick" type="text" formControlName="thick" class="form-control decimal-control"  />
+							 <input id="height" type="text" formControlName="thick" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
 								<select class="form-control" formControlName="thickUom" style="width:100px">
-									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
 								  </select>
 							 </span>
+						 
 						  </div>
 					  </div> 
-				   </div>  
-				   
-				   
+					 </div> 
+
 					 <div class="form-group row">
 					  <div class="cell c1">
 						<div class="input-group">
@@ -154,7 +180,7 @@
 					   <label for="stncustomId">STN KASTAM :</label>
 					  </div> 
 					  <div class="cell c2">
-						<select class="form-control" formControlName="stncustomId" style="width:100px">
+						<select class="form-control select-control" formControlName="stncustomId">
 						<option *ngFor="let obj of stncustomRows" [value]="obj.stncustomId">{{obj.stncustomName}}</option>
 				 	 </select>
 					  </div>
@@ -164,7 +190,7 @@
 					   <label for="componentId">Material / Component :</label>
 					  </div> 
 					  <div class="cell c5">			
-						<select class="form-control" formControlName="componentId" style="width:100px">
+						<select class="form-control" formControlName="componentId">
 					  	<option *ngFor="let obj of componentRows" [value]="obj.componentId">{{obj.componentName}}</option>
 				 	 </select>
 					  </div>

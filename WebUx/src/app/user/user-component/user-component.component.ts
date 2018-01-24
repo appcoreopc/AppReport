@@ -52,6 +52,9 @@ export class UserComponentComponent implements OnInit {
   userSubscription : Subscription;
   dataList : Array<any> = new Array<any>(); 
   
+  private display: boolean = false;
+  private itemSelected : boolean = false; 
+  
   constructor(private store : Store<CityAppState>, 
     private fb: FormBuilder, private http:HttpClient) { 
     }
@@ -135,12 +138,49 @@ export class UserComponentComponent implements OnInit {
               }
             }
           }   
+        }      
+                
+        onSelect(evt : any) {
+          
+          if (evt && evt.selected && evt.selected.length > 0)
+          {
+            this.person = evt.selected[0] as UserModel; 
+            this.itemSelected = true;   
+            console.log(this.person);
+          }
         }
         
-        onSubmit() {
+        showDialog() {              
+          this.display = true;
+        }   
+        
+        edit() {  
           
-          
+          if (this.person)
+          {            
+            this.personForm.get("username").setValue(this.person.username);
+            this.personForm.get("password").setValue(this.person.password);            
+            this.display = true;
+          }       
         }
+        
+        resetForm() {
+          
+          let emptySpace = "";
+          this.personForm.get("password").setValue(emptySpace);
+          this.personForm.get("username").setValue(emptySpace);      
+        }
+        
+        cancel() 
+        {
+          this.display = false;
+          this.itemSelected = false;
+        }
+        
+        addForm() {              
+          this.display = true;
+          this.resetForm();
+        }   
         
         dispatchIntent(messageType : string, data? : any)
         {   

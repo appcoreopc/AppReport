@@ -5,38 +5,38 @@ using System.Linq;
 
 namespace AppReport.Services
 {
-    public class UomService : AppDataObject
+    public class CurrencyService : AppDataObject
     {
         private PTSContext _context;
 
-        public UomService(PTSContext context) : base(context)
+        public CurrencyService(PTSContext context) : base(context)
         {
             _context = context;
         }
 
-        public IEnumerable<Uom> GetAll()
+        public IEnumerable<Currency> GetAll()
         {
-            return _context.Uom;
+            return _context.Currency;
         }
 
-        public IEnumerable<Uom> GetAll(int skipAmount, int takeAmount)
+        public IEnumerable<Currency> GetAll(int skipAmount, int takeAmount)
         {
-            return _context.Uom.Skip(skipAmount).Take(takeAmount);
+            return _context.Currency.Skip(skipAmount).Take(takeAmount);
         }
 
         public bool Delete(int id)
         {
-            return Remove<Uom>(id);
+            return Remove<Currency>(id);
         }
         
-        public bool Save(Uom d)
+        public bool Save(Currency d)
         {
-            return base.Save<Uom>(d, d.UomId);
+            return base.Save<Currency>(d, d.CurrencyId);
         }
 
         public bool Save(int id)
         {
-            var d = FindById<Uom>(id);
+            var d = FindById<Currency>(id);
             if (d != null)
                 return Save(d);
             else

@@ -4,6 +4,8 @@ import { ActionReducer, Action } from '@ngrx/store';
 import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
 	 GRN_MESSAGE_END, GRN_SAVE_ERR, GRN_CANCEL_OK, GRN_GET, GRN_GET_ERR,
 		GRN_GET_OK,
+  SUPPLIER_GET, SUPPLIER_GET_OK,  
+  RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK,  
 		UOM_GET, UOM_GET_OK, 
 		COMPONENT_GET, COMPONENT_GET_OK, 
 		CURRENCY_GET, CURRENCY_GET_OK, 
@@ -35,6 +37,10 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
 		  return  { status : 8, data : action, type: CURRENCY_GET_OK };
 		case STNCUSTOM_GET_OK: 
 		  return  { status : 9, data : action, type: STNCUSTOM_GET_OK };
+		case SUPPLIER_GET_OK: 
+		  return  { status : 10, data : action, type: SUPPLIER_GET_OK };
+		case RAW_MATERIAL_GET_OK: 
+		  return  { status : 11, data : action, type: RAW_MATERIAL_GET_OK };
 		default:
 			return status;						
 		}					

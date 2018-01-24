@@ -9,13 +9,13 @@ using System;
 
 namespace AppReport.Controllers
 {
-  
-    public class UomController : Controller
+       
+    public class CurrencyController : Controller
     {
 
         private PTSContext _ptsContext;
 
-        public UomController(PTSContext ptsContext, IOptions<AppConfig> accessConfig)
+        public CurrencyController(PTSContext ptsContext, IOptions<AppConfig> accessConfig)
         {
             _ptsContext = ptsContext;
         }
@@ -23,32 +23,32 @@ namespace AppReport.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var d = new UomService(_ptsContext).GetAll();
+            var d = new CurrencyService(_ptsContext).GetAll();
             return new JsonResult(d);
         }
 
         [HttpPost]
-        public IActionResult Save([FromBody] UomRequestModel reqData)
+        public IActionResult Save([FromBody]  CurrencyRequestModel reqData)
         {
-            if (reqData != null && !string.IsNullOrEmpty(reqData.UomCode))
+            if (reqData != null && !string.IsNullOrEmpty(reqData.CurrencyCode))
             {
-                var d = new Uom()
+                var d = new Currency()
                 {
-                    UomId = reqData.UomId 
+                   CurrencyId = reqData.CurrencyId
                 };
 
-                var result = new UomService(_ptsContext).Save<Uom>(d, Convert.ToInt32(d.UomId));
+                var result = new CurrencyService(_ptsContext).Save<Currency>(d, Convert.ToInt32(d.CurrencyId));
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             return new BadRequestResult();
         }
 
         [HttpDelete]
-        public IActionResult Delete(UomRequestModel requestData)
+        public IActionResult Delete(CurrencyRequestModel requestData)
         {
-            if (requestData.UomId > 0)
+            if (requestData.CurrencyId > 0)
             {
-                var result = new UomService(_ptsContext).Delete(Convert.ToInt32(requestData.UomId));
+                var result = new CurrencyService(_ptsContext).Delete(Convert.ToInt32(requestData.CurrencyId));
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else

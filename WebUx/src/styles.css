@@ -2,3 +2,17 @@
 @import '~@swimlane/ngx-datatable/release/index.css';
 @import '~@swimlane/ngx-datatable/release/themes/material.css';
 @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+@import "~primeng/resources/primeng.min.css";
+@import "~primeng/resources/themes/omega/theme.css";
+@import "~font-awesome/css/font-awesome.min.css";
+ 
+
+.commandGridSpacer {
+    padding-top: 10px;
+    padding-bottom: 10px;        
+}
+
+button .commandBtn { 
+    padding-right : 10px;
+}

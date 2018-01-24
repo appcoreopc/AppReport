@@ -4,6 +4,8 @@ import { CityAppState, GRN_SAVE, GRN_GET_OK, GRN_GET,
 UOM_GET, UOM_GET_OK, 
 COMPONENT_GET, COMPONENT_GET_OK, 
 CURRENCY_GET, CURRENCY_GET_OK, 
+RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK,
+SUPPLIER_GET, SUPPLIER_GET_OK,
 STNCUSTOM_GET, STNCUSTOM_GET_OK } from '../../sharedObjects/sharedMessages';
 import { GrnModel } from "../../model/GrnModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -13,6 +15,8 @@ import { UomModel } from "../../model/UomModel";
 import { StncustomModel } from "../../model/StncustomModel"; 
 import { CurrencyModel } from "../../model/CurrencyModel";  
 import { ComponentModel } from "../../model/ComponentModel";  
+import { SupplierModel } from "../../model/SupplierModel";  
+import { RawMaterialModel } from "../../model/RawMaterialModel";  
 import { CalendarModule } from 'primeng/calendar';
 
 
@@ -29,6 +33,8 @@ export class ReportGrnComponent implements OnInit {
   private componentData: ComponentModel = new ComponentModel();
   private currencyData: CurrencyModel = new CurrencyModel();
   private stncustomData: StncustomModel = new StncustomModel();
+  private supplierData: SupplierModel = new SupplierModel();
+  private rmData: RawMaterialModel = new RawMaterialModel();
   private dataForm: FormGroup;
 
   dataList : Array<any> = new Array<any>(); 
@@ -36,13 +42,15 @@ export class ReportGrnComponent implements OnInit {
   componentDataList : Array<any> = new Array<any>(); 
   currencyDataList : Array<any> = new Array<any>(); 
   stncustomDataList : Array<any> = new Array<any>(); 
+  supplierDataList : Array<any> = new Array<any>(); 
+  rmDataList : Array<any> = new Array<any>(); 
 
   formErrors = {
     'grnid': '',
     'grndate': '', 
     'lotno': '',
-    'supplierId': '' ,
-    'rmid': ''
+    'supplierId': '' 
+
 
   };
  
@@ -67,6 +75,8 @@ export class ReportGrnComponent implements OnInit {
   componentRows = [];
   stncustomRows = [];
   currencyRows = [];
+  rmRows = [];
+  supplierRows = [];
 
   columns = [
     { prop: 'grnid', name : 'Id' },
@@ -90,6 +100,8 @@ export class ReportGrnComponent implements OnInit {
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, COMPONENT_GET_OK), COMPONENT_GET_OK));
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, CURRENCY_GET_OK), CURRENCY_GET_OK));
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, STNCUSTOM_GET_OK), STNCUSTOM_GET_OK));
+      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, SUPPLIER_GET_OK), SUPPLIER_GET_OK));
+      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, RAW_MATERIAL_GET_OK), RAW_MATERIAL_GET_OK));
     }); 
 
     this.initForm();
@@ -102,6 +114,8 @@ export class ReportGrnComponent implements OnInit {
     this.dispatchIntent(COMPONENT_GET);
     this.dispatchIntent(CURRENCY_GET);
     this.dispatchIntent(STNCUSTOM_GET);
+    this.dispatchIntent(SUPPLIER_GET);
+    this.dispatchIntent(RAW_MATERIAL_GET);
  }
   
   save()
@@ -361,12 +375,56 @@ export class ReportGrnComponent implements OnInit {
         this.rows = this.dataList;
       } 
       
+      else if (message && message.type == SUPPLIER_GET_OK)
+      {
+        this.supplierRows.length = 0;
+          
+        for (var idx in message.data)
+        {
+          var supplierDataInfo = message.data[idx] as SupplierModel;    
+ 
+          this.supplierDataList.push({   
+            supplierId : supplierDataInfo.supplierId,
+            supplierName : supplierDataInfo.supplierName, 
+          });
+        }
+
+        this.supplierRows = this.supplierDataList;
+      }   
+
+     else if (message && message.type == RAW_MATERIAL_GET_OK)
+      {
+        this.rmRows.length = 0;
+         
+        for (var idx in message.data)
+        {
+          var rmDataInfo = message.data[idx] as RawMaterialModel;   
+          this.rmDataList.push({   
+            Rmid : rmDataInfo.Rmid,
+            Rmdesc : rmDataInfo.Rmdesc
+          });
+        }
+
+        this.rmRows = this.rmDataList;
+      }   
+
       else if (message && message.type == UOM_GET_OK)
       {
         this.uomRows.length = 0;
+        
+          this.uomDataList.push({   
+            uomId : 0,
+            uomCode : '',
+            uomName : null,
+            uomTypeId : null 
+          });
+
         for (var idx in message.data)
         {
           var uomDataInfo = message.data[idx] as UomModel;    
+
+          if(uomDataInfo.uomTypeId != 1) continue;
+
           this.uomDataList.push({   
             uomId : uomDataInfo.uomId,
             uomCode : uomDataInfo.uomCode,
