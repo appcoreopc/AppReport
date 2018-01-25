@@ -24,13 +24,16 @@ namespace AppReport.Services
             return noOfObjectChanged > 0 ? true : false;
         }
         
+        ///
         public bool Save<T>(T target, int? uniqueId) where T : class
         {
             if (!uniqueId.HasValue)
                 return Add(target);
             else
             {
-                var updateTarget = _context.Find<T>(uniqueId);
+                // Assume you already do a Context.Find further up - 
+                // Look at EmployeeService for further implementation details //
+
                 _context.Update(target);
                 var noOfObjectChanged = _context.SaveChanges();
                 return noOfObjectChanged > 0 ? true : false;
