@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
+
 import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE_SUCCESS,
   MATERIAL_CATEGORY_MESSAGE_END, MATERIAL_CATEGORY_SAVE_ERR, MATERIAL_CATEGORY_CANCEL_OK, MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_ERR,
   MATERIAL_CATEGORY_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
@@ -19,8 +20,8 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
     
     @Effect() materialCategorySave$ = this.actions$    
     .ofType(MATERIAL_CATEGORY_SAVE)   
-    .map(action => {  
-      console.log('sending request out!'); 
+    .map(action => {           
+     
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
@@ -37,6 +38,8 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
         return ({ type: MATERIAL_CATEGORY_CANCEL_OK});
       }); 
       
+
+
       @Effect() materialCategoryGet$ = this.actions$    
       .ofType(MATERIAL_CATEGORY_GET)     
       .map(action => {  

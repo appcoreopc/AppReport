@@ -29,8 +29,8 @@ namespace AppReport.Services
             {
                 var rmcat = new Rmcat()
                 {
-                    RmcatId = materialCategory.RMCatId.Value,
-                    RmcatName = materialCategory.RMCatName,
+                    RmcatId = materialCategory.RMCatId.HasValue ? materialCategory.RMCatId.Value : 0,
+                    RmcatName = materialCategory.RmCode,                                        
                     CreatedByUserId = materialCategory.CreatedByUserId,
                     EditedByUserId = materialCategory.EditedByUserId
                 };
@@ -43,7 +43,7 @@ namespace AppReport.Services
                 if (rmcat != null)
                 {
                     rmcat.RmcatId = materialCategory.RMCatId.Value;
-                    rmcat.RmcatName = materialCategory.RMCatName;
+                    rmcat.RmcatName = materialCategory.RmCode;
                     rmcat.CreatedByUserId = materialCategory.CreatedByUserId;
                     rmcat.EditedByUserId = materialCategory.EditedByUserId;
                     return base.Save<Rmcat>(rmcat, rmcat.RmcatId);

@@ -9,12 +9,23 @@
             <div>
                 <div class="form-group">
                     <label for="categoryName">Category Name</label>
-                    <input id="rmCatName" type="text" class="form-control" formControlName="rmCatName">         
+                    <input id="rmcode" type="text" class="form-control" formControlName="rmcode">         
                     
-                    <div *ngIf="formErrors.rmCatName" class="alert alert-danger">
-                        {{ formErrors.rmCatName }}
+                    <div *ngIf="formErrors.rmcode" class="alert alert-danger">
+                        {{ formErrors.rmcode }}
                     </div>                    
-                </div>                
+                </div>           
+                                
+                <div class="form-group">
+                        <label for="categoryName">Category Description</label>
+                        <input id="rmdesc" type="text" class="form-control" formControlName="rmdesc">         
+                        
+                        <div *ngIf="formErrors.rmdesc " class="alert alert-danger">
+                            {{ formErrors.rmdesc }}
+                        </div>                    
+                    </div>                
+
+
             </div>
             
             <button class="btn btn-primary" [disabled]="!personForm.valid" (click)="save()"> Save </button>

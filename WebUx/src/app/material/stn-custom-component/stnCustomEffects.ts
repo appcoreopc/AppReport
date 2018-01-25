@@ -19,8 +19,7 @@ import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL, STN_CUSTOM_SAVE_SUCCESS,
     
     @Effect() citySave$ = this.actions$    
     .ofType(STN_CUSTOM_SAVE)   
-    .map(action => {  
-      console.log('sending request out!'); 
+    .map(action => {        
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   

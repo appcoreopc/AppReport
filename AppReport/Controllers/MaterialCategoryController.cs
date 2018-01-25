@@ -32,7 +32,7 @@ namespace AppReport.Controllers
         [HttpPost]
         public IActionResult Save([FromBody] MaterialCategoryRequestModel materialCategory)
         {
-            if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.RMCatName))
+            if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.RmCode))
             {
                 var result = new MaterialCategoryService(_ptsContext).Save(materialCategory);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
