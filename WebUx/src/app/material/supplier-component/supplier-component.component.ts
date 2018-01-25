@@ -70,9 +70,7 @@ import { CityAppState, SUPPLIER_GET,
         }
         
         componentMessageHandle(messageAll : Array<any>) {
-          
-          console.log(messageAll);
-          
+                  
           messageAll.map(message => { 
             
             if (message && message.type == SUPPLIER_GET_OK)
@@ -86,15 +84,15 @@ import { CityAppState, SUPPLIER_GET,
                   createdByUserId : supplierInfo.createdByUserId,
                   editedByUserId : supplierInfo.editedByUserId, 
                   editedDt  : supplierInfo.editedDt 
-                });        
-              }
+                });  
+
               this.rows = this.dataList;
             }
+          }
             
             if (message && message.type == SUPPLIER_SAVE_SUCCESS)
             {
-              this.display = false;
-              console.log('closing form');
+              this.display = false;             
             }
           });    
         }
