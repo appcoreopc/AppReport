@@ -60,11 +60,12 @@ import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DialogModule} from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
+import { AuthGuard } from './auth/AuthGuard';
 
 export const ROUTES: Routes = [
-  { path: 'employee', component: EmployeeComponentComponent },
-  { path: 'user', component: UserComponentComponent }, 
-  { path: 'supplier', component  : SupplierComponentComponent },
+  { path: 'employee', component: EmployeeComponentComponent, canActivate: [AuthGuard] },
+  { path: 'user', component: UserComponentComponent, canActivate: [AuthGuard] }, 
+  { path: 'supplier', component  : SupplierComponentComponent, canActivate: [AuthGuard]  },
   { path: 'materialCategory', component  : MaterialCategoryComponentComponent },
   { path: 'rawMaterial', component  : RawMaterialComponentComponent },
   { path: 'grn', component  : ReportGrnComponent },
@@ -103,7 +104,7 @@ export const ROUTES: Routes = [
        SkimKhasEffects, LesenEffects, UOMEffects]), 
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
