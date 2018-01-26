@@ -57,5 +57,18 @@ namespace AppReport.Controllers
             else
                 return new BadRequestResult();
         }
+
+        [HttpPost]
+        public IActionResult Login([FromBody] UserRequestModel requestUser)
+        {
+            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Username))
+            {
+                (var user, var status) = new UserService(_ptsContext).AuthenticateUser(requestUser);
+
+                return HttpResultIntention.GetStatusCode(ActionIntent.Save, status, null);
+            }
+            return new BadRequestResult();
+        }
+
     }
 }

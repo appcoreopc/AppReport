@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AppReport.DataServices.PTSDataModel;
+using AppReport.RequestModel;
+using AppReport.Util;
+using AppReport.Services;
 
 namespace AppReport.Controllers
 {
@@ -20,5 +23,20 @@ namespace AppReport.Controllers
         {
             return View();
         }
+
+        
+        [HttpPost]
+        public IActionResult Login([FromBody] UserRequestModel requestUser)
+        {
+            if (requestUser != null && !string.IsNullOrEmpty(requestUser.Username))
+            {
+                (var user, var status) = new UserService(_ptsContext).AuthenticateUser(requestUser);
+
+                return HttpResultIntention.GetStatusCode(ActionIntent.Save, status, null);
+            }
+            return new BadRequestResult();
+        }
+
+
     }
 }

@@ -55,6 +55,17 @@ namespace AppReport.Services
                 return Save<Users>(user, user.UserId);
             }                
         }
+        
+        public (Users, bool) AuthenticateUser(UserRequestModel request)
+        {
+            var userAuth = _context.Users.Where(x => x.Username == request.Username &&
+               x.Password == request.Username).FirstOrDefault();
+
+            if (userAuth != null)
+                return (userAuth, true);
+            
+            return (null, false);
+        }
     
     }
 }

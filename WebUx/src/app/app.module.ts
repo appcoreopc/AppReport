@@ -60,7 +60,10 @@ import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DialogModule} from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
+
 import { AuthGuard } from './auth/AuthGuard';
+import { AuthService } from './auth/auth-service.service';
+import { LoginComponent } from './login/login.component';
 
 export const ROUTES: Routes = [
   { path: 'employee', component: EmployeeComponentComponent, canActivate: [AuthGuard] },
@@ -71,8 +74,11 @@ export const ROUTES: Routes = [
   { path: 'grn', component  : ReportGrnComponent },
   { path: 'm1', component  : LampiranM1ComponentComponent },
   { path: 'lesen', component  : LesenGudangComponentComponent },
-  { path: 'skim', component  : SkimKhasComponentComponent }
+  { path: 'skim', component  : SkimKhasComponentComponent },
+  { path: 'login', component  : LoginComponent },
+  { path: '**', component: LoginComponent }
 ];
+
 
 @NgModule({
   declarations: [
@@ -88,23 +94,25 @@ export const ROUTES: Routes = [
     ReportGrnComponent,
     LampiranM1ComponentComponent,
     LesenGudangComponentComponent,
-    SkimKhasComponentComponent
+    SkimKhasComponentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, 
     BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule,
-
+    
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
-       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
-        M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer]),
-       
-    EffectsModule.forRoot([EmployeeEffects, UserEffects, 
-       ReportEffects, SupplierEffects, MaterialCategoryEffects, 
-       RawMaterialEffects, GrnEffects, M1LampiranEffects, 
-       SkimKhasEffects, LesenEffects, UOMEffects]), 
-    RouterModule.forRoot(ROUTES)
-  ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+      SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
+      M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer]),
+      
+      EffectsModule.forRoot([EmployeeEffects, UserEffects, 
+        ReportEffects, SupplierEffects, MaterialCategoryEffects, 
+        RawMaterialEffects, GrnEffects, M1LampiranEffects, 
+        SkimKhasEffects, LesenEffects, UOMEffects]), 
+        RouterModule.forRoot(ROUTES)
+      ],
+      providers: [AuthGuard, AuthService],
+      bootstrap: [AppComponent]
+    })
+    export class AppModule { }
+    

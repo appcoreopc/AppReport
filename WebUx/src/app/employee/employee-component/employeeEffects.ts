@@ -46,7 +46,7 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
       .map(res => {       
         return { type: EMPLOYEE_GET_OK, data: res};
       }) 
-      .catch(() => Observable.of({ type: EMPLOYEE_SAVE_ERR }))
+      .catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
     ); 
     
   }

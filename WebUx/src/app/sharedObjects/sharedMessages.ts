@@ -130,7 +130,6 @@ export const UOM_CANCEL_OK = 'UOM_CANCEL_OK';
 export const UOM_GET = 'UOM_GET';
 export const UOM_GET_ERR = 'UOM_GET_ERR';
 export const UOM_GET_OK = 'UOM_GET_OK';
-
  
 export const COMPONENT_GET = 'COMPONENT_GET'; 
 export const COMPONENT_GET_OK = 'COMPONENT_GET_OK';
@@ -138,6 +137,9 @@ export const CURRENCY_GET = 'CURRENCY_GET';
 export const CURRENCY_GET_OK = 'CURRENCY_GET_OK';
 export const STNCUSTOM_GET = 'STNCUSTOM_GET'; 
 export const STNCUSTOM_GET_OK = 'STNCUSTOM_GET_OK';
+
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERR = 'LOGIN_ERR';
  
 export const VIEW = 0;
 export const UPDATE = 1; 
