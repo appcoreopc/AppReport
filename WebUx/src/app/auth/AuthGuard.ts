@@ -7,6 +7,9 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 import { HttpClient } from '@angular/common/http';
 import {AuthService} from "./auth-service.service";
+import { APPLICATION_HOST } from '../sharedObjects/applicationSetup';
+import {  headersJson , LOGIN_SUCCESS, LOGIN_ERR } from '../sharedObjects/sharedMessages';
+
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -14,9 +17,10 @@ export class AuthGuard implements CanActivate {
   isLoggedIn = false;
   redirectUrl: string;  
 
-  constructor(private router : Router, private authService : AuthService)
-  {
-    
+  constructor(private router : Router, private authService : AuthService,
+     private http: HttpClient)
+  {    
+   
   }  
 
   canActivate(route: ActivatedRouteSnapshot, 

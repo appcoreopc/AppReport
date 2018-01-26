@@ -138,6 +138,7 @@ export const CURRENCY_GET_OK = 'CURRENCY_GET_OK';
 export const STNCUSTOM_GET = 'STNCUSTOM_GET'; 
 export const STNCUSTOM_GET_OK = 'STNCUSTOM_GET_OK';
 
+export const LOGIN_DO = 'LOGIN_DO';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERR = 'LOGIN_ERR';
  

@@ -59,7 +59,7 @@ namespace AppReport.Services
         public (Users, bool) AuthenticateUser(UserRequestModel request)
         {
             var userAuth = _context.Users.Where(x => x.Username == request.Username &&
-               x.Password == request.Username).FirstOrDefault();
+               x.Password == request.Password).FirstOrDefault();
 
             if (userAuth != null)
                 return (userAuth, true);

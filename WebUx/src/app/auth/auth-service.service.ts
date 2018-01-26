@@ -9,22 +9,8 @@ export class AuthService {
   
   isLogin:boolean = false;   
 
-  constructor(private http: HttpClient) { 
-    console.log("initiating login!");
-
-    let payload = { 'username' : 'test' , 'password' : 'tet'};
-
-    this.http.post(APPLICATION_HOST + 'employee/save', payload, 
-    { 
-      headers : headersJson
-    })
-    .map(res => {
-      console.log('getting some response from server');
-      console.log(res);
-      //return Observable.of({ type: LOGIN_SUCCESS, data: res});
-    })
-
-    this.login("test", "test");
+  constructor(private http: HttpClient) {     
+    this.login("miki", "lai");
   }
 
   login(username : string, password : string): boolean
@@ -47,11 +33,16 @@ export class AuthService {
     { 
       headers : headersJson
     })
-    .map(res => {
+    .subscribe(res => {      
       console.log('getting some response from server');
-      console.log(res);
+      console.log(res)
       //return Observable.of({ type: LOGIN_SUCCESS, data: res});
-    })
+    },  
+    err => {
+        console.log(err);      
+    }, () => {
+       console.log('completed!!');
+    });
     //.catch(() => { console.log('test');});
     //.catch(() => { return Observable.of({ type: LOGIN_ERR })});
 
