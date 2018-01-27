@@ -16,3 +16,8 @@
 button .commandBtn { 
     padding-right : 10px;
 }
+
+.ui-dialog.ui-widget .ui-dialog-titlebar {
+     padding: 5px;
+     padding-left: 10px;
+}

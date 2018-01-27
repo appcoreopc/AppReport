@@ -1,13 +1,14 @@
- 
  <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
  
+
+<div class="container"> 
+  
+  <p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="display" modal='true'>
+     
 <form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
-<div style="width:100%;padding:5px">
-<div class="panel panel-primary">
-    <div class="panel-heading">GRN</div>
-    <div class="panel-body">
-	
+<div style="width:100%;padding:0px">
+ 
 	  
 		<div class="panel panel-info"> 
 			<div class="panel-body" style="padding:5px; padding-left:30px"> 
@@ -17,7 +18,7 @@
 					   <label for="grndate">Date :</label>
 					  </div> 
 					  <div class="cell c2">   
-							<p-calendar formControlName="grndate" showIcon="true"></p-calendar>
+							<p-calendar formControlName="grndate" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
 					  </div> 
 					  <div class="cell c3"> 
 					  </div> 
@@ -44,8 +45,8 @@
 					  </div> 
 					  <div class="cell c5"> 
 						<select class="form-control" formControlName="rmid" style="width:300px">
-							<option *ngFor="let obj of rmRows" [value]="obj.Rmid">{{obj.Rmdesc}}</option>
-						  </select>
+							<option *ngFor="let obj of rmRows" [value]="obj.rmid">{{obj.rmdesc}}</option>
+						  </select> 
 					  </div>
 				   </div>   
 				   
@@ -64,11 +65,11 @@
 							</div>
 							 <input id="height" type="number" formControlName="height" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
+							 </span>
+						 
 								<select class="form-control" formControlName="heightUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
 								  </select>
-							 </span>
-						 
 						  </div>
 					  </div> 
 					 </div>  
@@ -87,12 +88,13 @@
 							<div class="input-group-addon">
 							  <span>Width</span>
 							</div>
-							 <input id="height" type="number" formControlName="width" class="form-control decimal-control"  />
-							 <span class="input-group-btn">
+							 <input id="width" type="number" formControlName="width" class="form-control decimal-control"  />
+							  <span class="input-group-btn">
+							 </span>
+						 
 								<select class="form-control" formControlName="widthUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-								  </select>
-							 </span>
+						  </select>
 						 
 						  </div>
 					  </div> 
@@ -111,12 +113,12 @@
 							<div class="input-group-addon">
 							  <span>Thickness</span>
 							</div>
-							 <input id="height" type="number" formControlName="thick" class="form-control decimal-control"  />
+							 <input id="thick" type="number" formControlName="thick" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
+							 </span>
 								<select class="form-control" formControlName="thickUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-								  </select>
-							 </span>
+							  </select>
 						 
 						  </div>
 					  </div> 
@@ -151,10 +153,10 @@
 						<div class="input-group"> 
 							 <input id="roll" type="number" formControlName="roll" class="form-control decimal-control"  /> 
 							 <span class="input-group-btn">
+							 </span> 
 								<select class="form-control" formControlName="rollUom" style="width:100px">
 									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
 								  </select>
-							 </span> 
 						  </div>
 					  </div> 
 				   </div> 
@@ -164,7 +166,7 @@
 					   <label for="dom">DOM :</label>
 					  </div> 
 					  <div class="cell c2"> 
-							<p-calendar formControlName="dom" showIcon="true"></p-calendar>
+							<p-calendar formControlName="dom" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -266,7 +268,7 @@
 					   <label for="customDate">Kastam Date :</label>
 					  </div> 
 					  <div class="cell c2">
-							<p-calendar formControlName="customDate" showIcon="true"></p-calendar>
+							<p-calendar formControlName="customDate" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -732,25 +734,68 @@
           <div class="cell c4"> 
           </div> 
           <div class="cell c5" style="text-align:right">	   
-				    	<button class="btn btn-primary" [disabled]="!dataForm.valid" (click)="save()"> Save </button>
-			 	      	<button class="btn btn-primary"  (click)="testsave()"> Test </button>
+ 
+							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
 			 	</div>
        </div>
 			 <p>Form value: {{ dataForm.value | json }}</p>
-	    
-	</div>
-  </div>
+			<p>Form value: {{ uomRows | json }}</p>
+						<p>Form value: {{ rmDataList | json }}</p>
 	</div> 
 </form>
 
-<div class="container"> 
-<ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
-    [rows]="rows"
-    [limit]="10"
-    (select)="onSelect($event)"
-    [columns]="columns"
-    [headerHeight]="50"  [rowHeight]="'auto'"
-    [footerHeight]="50">
-</ngx-datatable>
+</p-dialog>    
+  
 </div>
 
+<div class="container">   
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>     
+ </div>
+<div style="clear:both; height:10px"></div>
+<div class="container"> 
+  <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
+  [rows]="rows"
+  [limit]="10"
+  (select)="person" 
+  [selectionType]="'single'"
+	(select)="onSelect($event)" 
+  [headerHeight]="30"  [rowHeight]="'auto'"
+	[footerHeight]="30">
+	
+	 <ngx-datatable-column  name="Id" prop="grnid" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Date" prop="grndate"  [width]="100" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+         <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value | date: 'dd/MM/yyyy'}} 
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="LOT No" prop="lotno" [width]="150" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+  	</ngx-datatable-column>
+	 <ngx-datatable-column  name="RawMaterial" prop="rmid" [width]="300" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+					<ng-container *ngFor = "let n of rmRows">
+						<div *ngIf="value===n.rmid">{{n.rmdesc}}</div>
+				  </ng-container>
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Amount" prop="amount" [width]="150"  [resizeable]="true" [sortable]="true" [flexGrow]="1">
+       <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value | number:'1.2-2'}}
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Freight Cost" prop="totalFreightCost" [width]="150"  [resizeable]="true" [sortable]="true" [flexGrow]="1">
+       <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value | number:'1.2-2'}}
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Freight & Raw Mat. Cost" prop="totalFreightRmcost"  [width]="150"  [resizeable]="true" [sortable]="true" [flexGrow]="1">
+       <ng-template let-value="value"  ngx-datatable-cell-template>
+          {{value | number:'1.2-2'}}
+        </ng-template>
+		</ngx-datatable-column>
+			
+</ngx-datatable>
+</div>

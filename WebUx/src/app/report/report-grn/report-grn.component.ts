@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, GRN_SAVE, GRN_GET_OK, GRN_GET,  
-UOM_GET, UOM_GET_OK, 
+import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,  
+UOM_GET, UOM_GET_OK, GRN_SAVE_SUCCESS,
 COMPONENT_GET, COMPONENT_GET_OK, 
 CURRENCY_GET, CURRENCY_GET_OK, 
 RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK,
@@ -20,6 +20,8 @@ import { RawMaterialModel } from "../../model/RawMaterialModel";
 import { CalendarModule } from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import {SpinnerModule} from 'primeng/spinner';
+import {DialogModule} from 'primeng/dialog';
+  
 
 @Component({
   selector: 'app-report-grn',
@@ -39,9 +41,12 @@ export class ReportGrnComponent implements OnInit {
   private supplierData: SupplierModel = new SupplierModel();
   private rmData: RawMaterialModel = new RawMaterialModel();
   private dataForm: FormGroup;
-
+  private intention : number = UPDATE;
+  
+  display: boolean = false; 
+  formTitle: string = "New GRN"; 
   dataList : Array<any> = new Array<any>(); 
-  uomDataList : Array<any> = new Array<any>(); 
+  //uomDataList : Array<any> = new Array<any>(); 
   componentDataList : Array<any> = new Array<any>(); 
   currencyDataList : Array<any> = new Array<any>(); 
   stncustomDataList : Array<any> = new Array<any>(); 
@@ -56,6 +61,9 @@ export class ReportGrnComponent implements OnInit {
 
 
   };
+  
+  itemSelected : boolean = false;
+    
  
   
   validationMessages = {    
@@ -75,11 +83,12 @@ export class ReportGrnComponent implements OnInit {
   
   rows = [];
   uomRows = [];
+  uomRow = [];
   componentRows = [];
   stncustomRows = [];
   currencyRows = [];
   rmRows = [];
-  supplierRows = [];
+  supplierRows = []; 
 
   columns = [
     { prop: 'grnid', name : 'Id' },
@@ -102,7 +111,8 @@ export class ReportGrnComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userSubscription = this.store.subscribe(appData => {           
+    this.userSubscription = this.store.subscribe(appData => {   
+      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, GRN_SAVE_SUCCESS), GRN_SAVE_SUCCESS));
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, GRN_GET_OK), GRN_GET_OK));
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, UOM_GET_OK), UOM_GET_OK)); 
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, COMPONENT_GET_OK), COMPONENT_GET_OK));
@@ -111,8 +121,8 @@ export class ReportGrnComponent implements OnInit {
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, SUPPLIER_GET_OK), SUPPLIER_GET_OK));
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, RAW_MATERIAL_GET_OK), RAW_MATERIAL_GET_OK));
     }); 
-
-    this.initForm();
+ 
+     this.configureEditForm();
   }
   
   ngAfterViewInit() {
@@ -128,64 +138,71 @@ export class ReportGrnComponent implements OnInit {
   
   save()
   {
-      var saveJson = new GrnModel();
-      saveJson.grnid = this.data.grnid;
-      saveJson.grndate = this.data.grndate;
-      saveJson.lotno = this.data.lotno;
-      saveJson.supplierId = this.data.supplierId; 
-      saveJson.rmid = this.data.rmid;  
-      saveJson.height = this.data.height;
-      saveJson.heightUom = this.data.heightUom;
-      saveJson.width = this.data.width;
-      saveJson.widthUom = this.data.widthUom;
-      saveJson.thick = this.data.thick;
-      saveJson.thickUom = this.data.thickUom;
-      saveJson.wgt = this.data.wgt;
-      saveJson.roll = this.data.roll;
-      saveJson.rollUom = this.data.rollUom;
-      saveJson.dom = this.data.dom;
-      saveJson.dono = this.data.dono;
-      saveJson.stncustomId = this.data.stncustomId;
-      saveJson.componentId = this.data.componentId;
-      saveJson.kaswgt = this.data.kaswgt;
-      saveJson.dutyImp = this.data.dutyImp;
-      saveJson.gst = this.data.gst;
-      saveJson.cif = this.data.cif;
-      saveJson.customDate = this.data.customDate;
-      saveJson.customNo = this.data.customNo;
-      saveJson.invoiceNo = this.data.invoiceNo;
-      saveJson.currencyId = this.data.currencyId;
-      saveJson.amountCurrency = this.data.amountCurrency;
-      saveJson.exRate = this.data.exRate;
-      saveJson.amount = this.data.amount;
-      saveJson.pono = this.data.pono;
-      saveJson.otdlate = this.data.otdlate;
-      saveJson.fwdInvNo = this.data.fwdInvNo;
-      saveJson.amt = this.data.amt;
-      saveJson.forwarder = this.data.forwarder;
-      saveJson.docRefNo = this.data.docRefNo;
-      saveJson.vcarno = this.data.vcarno;
-      saveJson.impFreight = this.data.impFreight;
-      saveJson.currencyAdj = this.data.currencyAdj;
-      saveJson.termChrg = this.data.termChrg;
-      saveJson.aprtTxFee = this.data.aprtTxFee;
-      saveJson.delivery = this.data.delivery;
-      saveJson.handFwd = this.data.handFwd;
-      saveJson.customExamFee = this.data.customExamFee;
-      saveJson.collectFee = this.data.collectFee;
-      saveJson.cargoPrmt = this.data.cargoPrmt;
-      saveJson.docFee = this.data.docFee;
-      saveJson.breakBulk = this.data.breakBulk;
-      saveJson.edifee = this.data.edifee;
-      saveJson.freightGst = this.data.freightGst;
-      saveJson.totalFreightCost = this.data.totalFreightCost;
-      saveJson.totalFreightRmcost = this.data.totalFreightRmcost;
-
-    var strJson = JSON.stringify(saveJson);   
-    console.log(strJson);        
-    this.dispatchIntent(GRN_SAVE, saveJson);
-    this.dataForm.reset();
-       
+        var saveJson = new GrnModel();
+        if (this.intention == ADD)
+        {
+             saveJson = this.dataForm.value as GrnModel;
+        }
+        else {
+            saveJson.grnid = this.data.grnid;
+            saveJson.grndate = this.data.grndate;
+            saveJson.lotno = this.data.lotno;
+            saveJson.supplierId = this.data.supplierId; 
+            saveJson.rmid = this.data.rmid;  
+            saveJson.height = this.data.height;
+            saveJson.heightUom = this.data.heightUom;
+            saveJson.width = this.data.width;
+            saveJson.widthUom = this.data.widthUom;
+            saveJson.thick = this.data.thick;
+            saveJson.thickUom = this.data.thickUom;
+            saveJson.wgt = this.data.wgt;
+            saveJson.roll = this.data.roll;
+            saveJson.rollUom = this.data.rollUom;
+            saveJson.dom = this.data.dom;
+            saveJson.dono = this.data.dono;
+            saveJson.stncustomId = this.data.stncustomId;
+            saveJson.componentId = this.data.componentId;
+            saveJson.kaswgt = this.data.kaswgt;
+            saveJson.dutyImp = this.data.dutyImp;
+            saveJson.gst = this.data.gst;
+            saveJson.cif = this.data.cif;
+            saveJson.customDate = this.data.customDate;
+            saveJson.customNo = this.data.customNo;
+            saveJson.invoiceNo = this.data.invoiceNo;
+            saveJson.currencyId = this.data.currencyId;
+            saveJson.amountCurrency = this.data.amountCurrency;
+            saveJson.exRate = this.data.exRate;
+            saveJson.amount = this.data.amount;
+            saveJson.pono = this.data.pono;
+            saveJson.otdlate = this.data.otdlate;
+            saveJson.fwdInvNo = this.data.fwdInvNo;
+            saveJson.amt = this.data.amt;
+            saveJson.forwarder = this.data.forwarder;
+            saveJson.docRefNo = this.data.docRefNo;
+            saveJson.vcarno = this.data.vcarno;
+            saveJson.impFreight = this.data.impFreight;
+            saveJson.currencyAdj = this.data.currencyAdj;
+            saveJson.termChrg = this.data.termChrg;
+            saveJson.aprtTxFee = this.data.aprtTxFee;
+            saveJson.delivery = this.data.delivery;
+            saveJson.handFwd = this.data.handFwd;
+            saveJson.customExamFee = this.data.customExamFee;
+            saveJson.collectFee = this.data.collectFee;
+            saveJson.cargoPrmt = this.data.cargoPrmt;
+            saveJson.docFee = this.data.docFee;
+            saveJson.breakBulk = this.data.breakBulk;
+            saveJson.edifee = this.data.edifee;
+            saveJson.freightGst = this.data.freightGst;
+            saveJson.totalFreightCost = this.data.totalFreightCost;
+            saveJson.totalFreightRmcost = this.data.totalFreightRmcost;
+      }
+        
+        var strJson = JSON.stringify(saveJson);      
+    //this.dispatchIntent(GRN_GET);     
+        this.dispatchIntent(GRN_SAVE, saveJson);
+        
+        console.log("strJson",strJson);
+        this.display = false;  
   } 
 
   testsave(){
@@ -194,7 +211,7 @@ export class ReportGrnComponent implements OnInit {
   }
 
 
-    private initForm() {
+   /* private initForm() {
       this.dataForm = this.fb.group({
         'grndate': [this.data.grndate, [Validators.required, Validators.minLength(1)]], 
         'lotno': [this.data.lotno, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]], 
@@ -250,7 +267,7 @@ export class ReportGrnComponent implements OnInit {
       console.log( this.dataForm);
       this.dataForm.valueChanges.debounceTime(100)
         .subscribe(data => this.onValueChanged(data));
-    }
+    }*/
 
     onValueChanged(data?: GrnModel) {
 
@@ -259,6 +276,7 @@ export class ReportGrnComponent implements OnInit {
   
       console.log('test');
       const form = this.dataForm; 
+      this.data.grnid = data.grnid;
       this.data.grndate = data.grndate;
       this.data.lotno = data.lotno;
       this.data.supplierId = data.supplierId; 
@@ -341,7 +359,7 @@ export class ReportGrnComponent implements OnInit {
           var dataInfo = message.data[idx] as GrnModel;    
           this.dataList.push({   
             grnid : dataInfo.grnid,
-            grndate : dataInfo.grndate,
+            grndate : new Date(dataInfo.grndate),
             lotno : dataInfo.lotno,
             supplierId : dataInfo.supplierId,
             rmid : dataInfo.rmid,
@@ -354,7 +372,7 @@ export class ReportGrnComponent implements OnInit {
             wgt : dataInfo.wgt,
             roll : dataInfo.roll,
             rollUom : dataInfo.rollUom,
-            dom : dataInfo.dom,
+            dom : new Date(dataInfo.dom),
             dono : dataInfo.dono,
             stncustomId : dataInfo.stncustomId,
             componentId : dataInfo.componentId,
@@ -362,7 +380,7 @@ export class ReportGrnComponent implements OnInit {
             dutyImp : dataInfo.dutyImp,
             gst : dataInfo.gst,
             cif : dataInfo.cif,
-            customDate : dataInfo.customDate,
+            customDate : new Date(dataInfo.customDate),
             customNo : dataInfo.customNo,
             invoiceNo : dataInfo.invoiceNo,
             currencyId : dataInfo.currencyId,
@@ -396,7 +414,10 @@ export class ReportGrnComponent implements OnInit {
 
         this.rows = this.dataList;
       } 
-      
+      else if (message && message.type == GRN_SAVE_SUCCESS)
+      {                  
+        this.display = false;                
+      } 
       else if (message && message.type == SUPPLIER_GET_OK)
       {
         this.supplierRows.length = 0;
@@ -424,17 +445,16 @@ export class ReportGrnComponent implements OnInit {
         this.rmRows.length = 0;
          
         this.rmDataList.push({   
-          Rmid : 0,
-          Rmdesc : ''
+          rmid : 0,
+          rmdesc : ''
         });
 
         for (var idx in message.data)
         {
-          var rmDataInfo = message.data[idx];   
-         console.log("rmDataInfo",rmDataInfo);
+          var rmDataInfo = message.data[idx];  
           this.rmDataList.push({   
-            Rmid : rmDataInfo.rmid,
-            Rmdesc : rmDataInfo.rmdesc
+            rmid : rmDataInfo.rmid,
+            rmdesc : rmDataInfo.rmdesc
           });
         }
 
@@ -442,31 +462,38 @@ export class ReportGrnComponent implements OnInit {
       }   
 
       else if (message && message.type == UOM_GET_OK)
-      {
+      { 
         this.uomRows.length = 0;
+        this.uomRow.length = 0;
+        let uomDataList = new Array<any>(); 
         
-          this.uomDataList.push({   
+          uomDataList.push({   
             uomId : 0,
             uomCode : '',
-            uomName : null,
+            uomName : '',
             uomTypeId : null 
           });
 
+         
         for (var idx in message.data)
         {
           var uomDataInfo = message.data[idx] as UomModel;    
 
           if(uomDataInfo.uomTypeId != 1) continue;
 
-          this.uomDataList.push({   
+          uomDataList.push({   
             uomId : uomDataInfo.uomId,
             uomCode : uomDataInfo.uomCode,
             uomName : uomDataInfo.uomName,
             uomTypeId : uomDataInfo.uomTypeId  
           });
+         console.log("uomDataInfo",uomDataInfo);
         }
+         console.log("uomDataList", uomDataList);
 
-        this.uomRows = this.uomDataList;
+        this.uomRows = uomDataList;
+        //this.uomRow = uomDataList;
+         console.log("uomRows",this.uomRows);
       }   
 
       else if (message && message.type == COMPONENT_GET_OK)
@@ -521,6 +548,219 @@ export class ReportGrnComponent implements OnInit {
 
     }
 
+ 
+
+  private configureAddForm()
+  {
+     this.dataForm = this.fb.group({
+        'grnid': [''],
+        'grndate': ['', [Validators.required, Validators.minLength(1)]], 
+        'lotno': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]], 
+        'supplierId': ['', [Validators.required, Validators.minLength(1)]], 
+        'rmid': ['', [Validators.required, Validators.minLength(1)]],  
+        'height': ['', [Validators.required, Validators.minLength(1)]],
+        'heightUom': ['', [Validators.required, Validators.minLength(1)]],
+        'width': ['', [Validators.required, Validators.minLength(1)]],
+        'widthUom': ['', [Validators.required, Validators.minLength(1)]],
+        'thick': ['', [Validators.required, Validators.minLength(1)]],
+        'thickUom': ['', [Validators.required, Validators.minLength(1)]],
+        'wgt': ['', [Validators.required, Validators.minLength(1)]],
+        'roll': ['', [Validators.required, Validators.minLength(1)]],
+        'rollUom': ['', [Validators.required, Validators.minLength(1)]],
+        'dom': ['', [Validators.required, Validators.minLength(1)]],
+        'dono': ['', [Validators.required, Validators.minLength(1)]],
+        'stncustomId': ['', [Validators.required, Validators.minLength(1)]],
+        'componentId': ['', [Validators.required, Validators.minLength(1)]],
+        'kaswgt': ['', [Validators.required, Validators.minLength(1)]],
+        'dutyImp': ['', [Validators.required, Validators.minLength(1)]],
+        'gst': ['', [Validators.required, Validators.minLength(1)]],
+        'cif': ['', [Validators.required, Validators.minLength(1)]],
+        'customDate': ['', [Validators.required, Validators.minLength(1)]],
+        'customNo': ['', [Validators.required, Validators.minLength(1)]],
+        'invoiceNo': ['', [Validators.required, Validators.minLength(1)]],
+        'currencyId': ['', [Validators.required, Validators.minLength(1)]],
+        'amountCurrency': ['', [Validators.required, Validators.minLength(1)]],
+        'exRate': ['', [Validators.required, Validators.minLength(1)]],
+        'amount': ['', [Validators.required, Validators.minLength(1)]],
+        'pono': ['', [Validators.required, Validators.minLength(1)]],
+        'otdlate': ['', [Validators.required, Validators.minLength(1)]],
+        'fwdInvNo': ['', [Validators.required, Validators.minLength(1)]],
+        'amt': ['', [Validators.required, Validators.minLength(1)]],
+        'forwarder': ['', [Validators.required, Validators.minLength(1)]],
+        'docRefNo': ['', [Validators.required, Validators.minLength(1)]],
+        'vcarno': ['', [Validators.required, Validators.minLength(1)]],
+        'impFreight': ['', [Validators.required, Validators.minLength(1)]],
+        'currencyAdj': ['', [Validators.required, Validators.minLength(1)]],
+        'termChrg': ['', [Validators.required, Validators.minLength(1)]],
+        'aprtTxFee': ['', [Validators.required, Validators.minLength(1)]],
+        'delivery': ['', [Validators.required, Validators.minLength(1)]],
+        'handFwd': ['', [Validators.required, Validators.minLength(1)]],
+        'customExamFee': ['', [Validators.required, Validators.minLength(1)]],
+        'collectFee': ['', [Validators.required, Validators.minLength(1)]],
+        'cargoPrmt': ['', [Validators.required, Validators.minLength(1)]],
+        'docFee': ['', [Validators.required, Validators.minLength(1)]],
+        'breakBulk': ['', [Validators.required, Validators.minLength(1)]],
+        'edifee': ['', [Validators.required, Validators.minLength(1)]],
+        'freightGst': ['', [Validators.required, Validators.minLength(1)]],
+        'totalFreightCost': ['', [Validators.required, Validators.minLength(1)]],
+        'totalFreightRmcost': ['', [Validators.required, Validators.minLength(1)]]
+      });
+   }
+                
+private configureEditForm() {
+  
+  this.dataForm = this.fb.group({
+        'grnid': [this.data.grnid],
+        'grndate': [this.data.grndate, [Validators.required, Validators.minLength(1)]], 
+        'lotno': [this.data.lotno, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]], 
+        'supplierId': [this.data.supplierId, [Validators.required, Validators.minLength(1)]], 
+        'rmid': [this.data.rmid, [Validators.required, Validators.minLength(1)]],  
+        'height': [this.data.height, [Validators.required, Validators.minLength(1)]],
+        'heightUom': [this.data.heightUom, [Validators.required, Validators.minLength(1)]],
+        'width': [this.data.width, [Validators.required, Validators.minLength(1)]],
+        'widthUom': [this.data.widthUom, [Validators.required, Validators.minLength(1)]],
+        'thick': [this.data.thick, [Validators.required, Validators.minLength(1)]],
+        'thickUom': [this.data.thickUom, [Validators.required, Validators.minLength(1)]],
+        'wgt': [this.data.wgt, [Validators.required, Validators.minLength(1)]],
+        'roll': [this.data.roll, [Validators.required, Validators.minLength(1)]],
+        'rollUom': [this.data.rollUom, [Validators.required, Validators.minLength(1)]],
+        'dom': [this.data.dom, [Validators.required, Validators.minLength(1)]],
+        'dono': [this.data.dono, [Validators.required, Validators.minLength(1)]],
+        'stncustomId': [this.data.stncustomId, [Validators.required, Validators.minLength(1)]],
+        'componentId': [this.data.componentId, [Validators.required, Validators.minLength(1)]],
+        'kaswgt': [this.data.kaswgt, [Validators.required, Validators.minLength(1)]],
+        'dutyImp': [this.data.dutyImp, [Validators.required, Validators.minLength(1)]],
+        'gst': [this.data.gst, [Validators.required, Validators.minLength(1)]],
+        'cif': [this.data.cif, [Validators.required, Validators.minLength(1)]],
+        'customDate': [this.data.customDate, [Validators.required, Validators.minLength(1)]],
+        'customNo': [this.data.customNo, [Validators.required, Validators.minLength(1)]],
+        'invoiceNo': [this.data.invoiceNo, [Validators.required, Validators.minLength(1)]],
+        'currencyId': [this.data.currencyId, [Validators.required, Validators.minLength(1)]],
+        'amountCurrency': [this.data.amountCurrency, [Validators.required, Validators.minLength(1)]],
+        'exRate': [this.data.exRate, [Validators.required, Validators.minLength(1)]],
+        'amount': [this.data.amount, [Validators.required, Validators.minLength(1)]],
+        'pono': [this.data.pono, [Validators.required, Validators.minLength(1)]],
+        'otdlate': [this.data.otdlate, [Validators.required, Validators.minLength(1)]],
+        'fwdInvNo': [this.data.fwdInvNo, [Validators.required, Validators.minLength(1)]],
+        'amt': [this.data.amt, [Validators.required, Validators.minLength(1)]],
+        'forwarder': [this.data.forwarder, [Validators.required, Validators.minLength(1)]],
+        'docRefNo': [this.data.docRefNo, [Validators.required, Validators.minLength(1)]],
+        'vcarno': [this.data.vcarno, [Validators.required, Validators.minLength(1)]],
+        'impFreight': [this.data.impFreight, [Validators.required, Validators.minLength(1)]],
+        'currencyAdj': [this.data.currencyAdj, [Validators.required, Validators.minLength(1)]],
+        'termChrg': [this.data.termChrg, [Validators.required, Validators.minLength(1)]],
+        'aprtTxFee': [this.data.aprtTxFee, [Validators.required, Validators.minLength(1)]],
+        'delivery': [this.data.delivery, [Validators.required, Validators.minLength(1)]],
+        'handFwd': [this.data.handFwd, [Validators.required, Validators.minLength(1)]],
+        'customExamFee': [this.data.customExamFee, [Validators.required, Validators.minLength(1)]],
+        'collectFee': [this.data.collectFee, [Validators.required, Validators.minLength(1)]],
+        'cargoPrmt': [this.data.cargoPrmt, [Validators.required, Validators.minLength(1)]],
+        'docFee': [this.data.docFee, [Validators.required, Validators.minLength(1)]],
+        'breakBulk': [this.data.breakBulk, [Validators.required, Validators.minLength(1)]],
+        'edifee': [this.data.edifee, [Validators.required, Validators.minLength(1)]],
+        'freightGst': [this.data.freightGst, [Validators.required, Validators.minLength(1)]],
+        'totalFreightCost': [this.data.totalFreightCost, [Validators.required, Validators.minLength(1)]],
+        'totalFreightRmcost': [this.data.totalFreightRmcost, [Validators.required, Validators.minLength(1)]]
+      });
+      
+      this.dataForm.valueChanges.debounceTime(300)
+      .subscribe(data => this.onValueChanged(data));
+ }
+                          
+               
+                          
+  onSelect(evt : any) {
+    
+    if (evt && evt.selected && evt.selected.length > 0)
+    {
+      this.data = evt.selected[0] as GrnModel;                   
+      this.itemSelected = true;   
+    }
+    else 
+    this.itemSelected = false;
+      this.edit();
+  }
+                          
+  addForm() {        
+     
+    this.formTitle = "New GRN"; 
+    this.display = true;                          
+    this.intention = ADD;
+    this.configureAddForm();  
+  }   
+                          
+  edit() {  
+    
+    this.formTitle = "Edit GRN"; 
+    this.intention = UPDATE;                            
+    this.configureEditForm();
+    
+    console.log("edit data",this.data);
+    if (this.data)
+    {                                  
+     this.dataForm.get("grnid").setValue(this.data.grnid);
+     this.dataForm.get("grndate").setValue(new Date(this.data.grndate));
+     this.dataForm.get("lotno").setValue(this.data.lotno);
+     this.dataForm.get("supplierId").setValue(this.data.supplierId);
+     this.dataForm.get("rmid").setValue(this.data.rmid); 
+     this.dataForm.get("height").setValue(this.data.height);
+     this.dataForm.get("heightUom").setValue(this.data.heightUom);
+     this.dataForm.get("width").setValue(this.data.width);
+     this.dataForm.get("widthUom").setValue(this.data.widthUom);
+     this.dataForm.get("thick").setValue(this.data.thick);
+     this.dataForm.get("thickUom").setValue(this.data.thickUom);
+     this.dataForm.get("wgt").setValue(this.data.wgt);
+     this.dataForm.get("roll").setValue(this.data.roll);
+     this.dataForm.get("rollUom").setValue(this.data.rollUom);
+     this.dataForm.get("dom").setValue(new Date(this.data.dom));
+     this.dataForm.get("dono").setValue(this.data.dono);
+     this.dataForm.get("stncustomId").setValue(this.data.stncustomId);
+     this.dataForm.get("componentId").setValue(this.data.componentId);
+     this.dataForm.get("kaswgt").setValue(this.data.kaswgt);
+     this.dataForm.get("dutyImp").setValue(this.data.dutyImp);
+     this.dataForm.get("gst").setValue(this.data.gst);
+     this.dataForm.get("cif").setValue(this.data.cif);
+     this.dataForm.get("customDate").setValue(new Date(this.data.customDate));
+     this.dataForm.get("customNo").setValue(this.data.customNo);
+     this.dataForm.get("invoiceNo").setValue(this.data.invoiceNo);
+     this.dataForm.get("currencyId").setValue(this.data.currencyId);
+     this.dataForm.get("amountCurrency").setValue(this.data.amountCurrency);
+     this.dataForm.get("exRate").setValue(this.data.exRate);
+     this.dataForm.get("amount").setValue(this.data.amount);
+     this.dataForm.get("pono").setValue(this.data.pono);
+     this.dataForm.get("otdlate").setValue(this.data.otdlate);
+     this.dataForm.get("fwdInvNo").setValue(this.data.fwdInvNo);
+     this.dataForm.get("amt").setValue(this.data.amt);
+     this.dataForm.get("forwarder").setValue(this.data.forwarder);
+     this.dataForm.get("docRefNo").setValue(this.data.docRefNo);
+     this.dataForm.get("vcarno").setValue(this.data.vcarno);
+     this.dataForm.get("impFreight").setValue(this.data.impFreight);
+     this.dataForm.get("currencyAdj").setValue(this.data.currencyAdj);
+     this.dataForm.get("termChrg").setValue(this.data.termChrg);
+     this.dataForm.get("aprtTxFee").setValue(this.data.aprtTxFee);
+     this.dataForm.get("delivery").setValue(this.data.delivery);
+     this.dataForm.get("handFwd").setValue(this.data.handFwd);
+     this.dataForm.get("customExamFee").setValue(this.data.customExamFee);
+     this.dataForm.get("collectFee").setValue(this.data.collectFee);
+     this.dataForm.get("cargoPrmt").setValue(this.data.cargoPrmt);
+     this.dataForm.get("docFee").setValue(this.data.docFee);
+     this.dataForm.get("breakBulk").setValue(this.data.breakBulk);
+     this.dataForm.get("edifee").setValue(this.data.edifee);
+     this.dataForm.get("freightGst").setValue(this.data.freightGst);
+     this.dataForm.get("totalFreightCost").setValue(this.data.totalFreightCost);
+     this.dataForm.get("totalFreightRmcost").setValue(this.data.totalFreightRmcost);
+      
+      
+      this.display = true;
+    }       
+  }                          
+                          
+  cancel() 
+  {
+    this.display = false;     
+    this.itemSelected = false;          
+  }    
+
   dispatchIntent(messageType : string, data? : any)
   {   
     console.log(messageType);
@@ -530,6 +770,7 @@ export class ReportGrnComponent implements OnInit {
         type: messageType,
         data : data 
       });      
+ 
   } 
   
 }

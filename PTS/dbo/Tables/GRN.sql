@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[GRN] (
-    [GRNId]              BIGINT          IDENTITY (1, 1) NOT NULL,
+    [GRNId]              INT             IDENTITY (1, 1) NOT NULL,
     [GRNDate]            DATE            NULL,
     [LOTNo]              VARCHAR (50)    NULL,
     [SupplierId]         INT             NULL,
@@ -13,7 +13,7 @@
     [Wgt]                DECIMAL (10, 2) NULL,
     [Roll]               INT             NULL,
     [RollUOM]            INT             NULL,
-    [DOM]                DATETIME        NULL,
+    [DOM]                DATE            NULL,
     [DONo]               VARCHAR (50)    NULL,
     [STNCustomId]        INT             NULL,
     [ComponentId]        INT             NULL,
@@ -56,4 +56,6 @@
     [EditedDT]           DATETIME        NULL,
     CONSTRAINT [PK_GrnLog] PRIMARY KEY CLUSTERED ([GRNId] ASC)
 );
+
+
 
