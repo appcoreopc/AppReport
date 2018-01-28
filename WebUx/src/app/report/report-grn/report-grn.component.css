@@ -4,7 +4,7 @@
     margin-left: 0;
     border-width: .2rem; }
 .row { display:block; padding : 5px;  }
-.cell {display:inline-block;}
+.cell {display:inline-block; vertical-align:text-top;}
 .c1 { width: 15%}
 .c2 { width: 33%}
 .c3 { width: 1%}

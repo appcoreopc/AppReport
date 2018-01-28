@@ -21,3 +21,7 @@ button .commandBtn {
      padding: 5px;
      padding-left: 10px;
 }
+.alert {
+    padding: 5px !important; 
+    margin-bottom: 0px !important; 
+}

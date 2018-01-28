@@ -53,30 +53,219 @@ export class ReportGrnComponent implements OnInit {
   supplierDataList : Array<any> = new Array<any>(); 
   rmDataList : Array<any> = new Array<any>(); 
 
+
   formErrors = {
     'grnid': '',
-    'grndate': '', 
-    'lotno': '',
-    'supplierId': '' 
-
-
+    'grndate': '',
+    'lotno': '', 
+    'supplierId':'', 
+    'rmid':'',  
+    'height':'',
+    'heightUom':'',
+    'width':'',
+    'widthUom':'',
+    'thick':'',
+    'thickUom':'',
+    'wgt':'',
+    'roll':'',
+    'rollUom':'',
+    'dom':'',
+    'dono':'',
+    'stncustomId':'',
+    'componentId':'',
+    'kaswgt':'',
+    'dutyImp':'',
+    'gst':'',
+    'cif':'',
+    'customDate':'',
+    'customNo':'',
+    'invoiceNo':'',
+    'currencyId':'',
+    'amountCurrency':'',
+    'exRate':'',
+    'amount':'',
+    'pono':'',
+    'otdlate':'',
+    'fwdInvNo':'',
+    'amt':'',
+    'forwarder':'',
+    'docRefNo':'',
+    'vcarno':'',
+    'impFreight':'',
+    'currencyAdj':'',
+    'termChrg':'',
+    'aprtTxFee':'',
+    'delivery':'',
+    'handFwd':'',
+    'customExamFee':'',
+    'collectFee':'',
+    'cargoPrmt':'',
+    'docFee':'',
+    'breakBulk':'',
+    'edifee':'',
+    'freightGst':'',
+    'totalFreightCost': '', 
+    'totalFreightRmcost': ''
   };
+
   
+   
   itemSelected : boolean = false;
     
  
   
   validationMessages = {    
     'grndate': {
-      'required': 'First Name is required.',
-      'minlength': 'First Name must be at least 4 characters long.',
-      'maxlength': 'First Name cannot be more than 24 characters long.'
+      'required': 'Date is required.' 
     },
     'lotno': {
-      'required': 'Last Name is required.',
-      'minlength': 'Last Name must be at least 4 characters long.',
-      'maxlength': 'Last Name cannot be more than 24 characters long.'
+      'required': 'LOT No is required.' 
+    },
+    'supplierId': {
+      'required': 'Supplier is required.' ,
+      'min': 'Supplier is required.'
+    },
+    'rmid': {
+      'required': 'Raw Material is required.',
+      'min': 'Raw Material is required.'  
+    },
+    'height': {
+      'required': 'Height is required.' 
+    },
+    'heightUom': {
+      'required': 'Height\'s UOM is required.',
+      'min': 'Height\'s UOM is required.' 
+    },
+    'width': {
+      'required': 'Width is required.' 
+    },
+    'widthUom': {
+      'required': 'Width\'s UOM is required.',
+      'min': 'Width\'s UOM is required.' 
+    },
+    'thick': {
+      'required': 'Thickness is required.' 
+    },
+    'thickUom': {
+      'required': 'Thickness\'s UOM is required.',
+      'min': 'Thickness\'s UOM is required.' 
+    },
+    'wgt': {
+      'required': 'WT is required.' 
+    },
+    'roll': {
+      'required': 'Qty (Roll) is required.' 
+    },
+    'rollUom': {
+      'required': 'Qty (Roll)\'s UOM is required.',
+      'min': 'Qty (Roll)\'s UOM is required.' 
+    },
+    'dom': {
+      'required': 'DOM is required.' 
+     },
+    'dono': {
+      'required': 'INV No. / DO No. is required.' 
+     },
+    'stncustomId': {
+      'required': 'STN KASTAM is required.' ,
+      'min': 'STN KASTAM is required.' 
+     },
+    'componentId': {
+      'required': 'Material / Component is required.',
+      'min': 'Material / Component is required.' 
+     },
+    'kaswgt': {
+      'required': 'KAST WT is required.' 
+     },
+    'dutyImp': {
+      'required': 'Duti Import is required.' 
+     },
+    'gst': {
+      'required': 'GST 6% is required.' 
+     },
+    'cif': {
+      'required': 'CIF Value is required.' 
+     },
+    'customDate': {
+      'required': 'Kastam Date is required.' 
+     },
+    'customNo': {
+      'required': 'Kastam No. is required.'
+     },
+    'invoiceNo': {
+      'required': 'Invoice No is required.' 
+     },
+    'currencyId': {
+      'required': 'Currency  is required.',
+      'min': 'Currency is required.'
+     },
+    'amountCurrency': {
+      'required': 'Amount Currency is required.' 
+     },
+    'exRate': {
+      'required': 'ExRate  is required.' 
+     },
+    'amount': {
+      'required': 'Amount is required.' 
+    },
+    'pono': {
+      'required': 'PO No. is required.' 
+    },
+    'otdlate': {
+      'required': 'OTD / LATE is required.'
+    },
+    'fwdInvNo': {
+      'required': 'Forworder Billing Inv. No. is required.'
+    },
+    'amt': {
+      'required': 'AMT is required.'
+    },
+    'forwarder': {
+      'required': 'Forwarder is required.'
+    },
+    'docRefNo': {
+      'required': 'DOC. Ref. No. is required.'
+    },
+    'vcarno': {
+      'required': 'VCAR No. is required.'
+    },
+    'impFreight': {
+      'required': 'Import Freight is required.'
+    }, 
+    'termChrg': {
+      'required': 'Terminal Charge is required.'
+    },
+    'aprtTxFee': {
+      'required': 'Airport Transfer Fee  is required.'
+    },
+    'delivery': {
+      'required': 'Delivery is required.'
+    },
+    'handFwd': {
+      'required': 'Handling / Forwarding is required.'
+    },
+    'customExamFee': {
+      'required': 'Custom Exam.Fee / FCZ is required.'
+    },
+    'collectFee': {
+      'required': 'Collection Fee / Forklift is required.'
+    },
+    'cargoPrmt': {
+      'required': 'Cargo Permit is required.'
+    },
+    'docFee': {
+      'required': 'Doc. Fee is required.'
+    },
+    'breakBulk': {
+      'required': 'Break Bulk is required.'
+    },
+    'edifee': {
+      'required': 'EDI Fee (Road) is required.'
+    },
+    'freightGst': {
+      'required': '6% GST is required.'
     }  
+
   };
 
   userSubscription : Subscription;
@@ -94,6 +283,7 @@ export class ReportGrnComponent implements OnInit {
     { prop: 'grnid', name : 'Id' },
     { prop: 'grndate', name : 'Date' },
     { prop: 'lotno', name : 'LOT No' },
+    { prop: 'customNo', name : 'KASTAM No' },
     { prop: 'amount', name : 'Raw Mat. Amt' },
     { prop: 'totalFreightCost', name : 'Freight Cost' },
     { prop: 'totalFreightRmcost', name : 'Total Freight  & Raw Mat. Cost' }      
@@ -202,7 +392,8 @@ export class ReportGrnComponent implements OnInit {
         this.dispatchIntent(GRN_SAVE, saveJson);
         
         console.log("strJson",strJson);
-        this.display = false;  
+        this.display = false; 
+        
   } 
 
   testsave(){
@@ -335,6 +526,7 @@ export class ReportGrnComponent implements OnInit {
       this.dataForm.get("totalFreightRmcost").setValue(this.data.totalFreightRmcost);
       this.dataForm.get("currencyAdj").setValue("NA");
 
+      
       for (const field in this.formErrors) {
         // clear previous error message (if any)
         this.formErrors[field] = '';
@@ -552,25 +744,34 @@ export class ReportGrnComponent implements OnInit {
 
   private configureAddForm()
   {
-     this.dataForm = this.fb.group({
-        'grnid': [''],
+      this.setFormValidation(''); 
+      for (const field in this.formErrors) { 
+        this.formErrors[field] = ''; 
+      }   
+   }
+
+
+private setFormValidation(id :any) {
+ 
+    this.dataForm = this.fb.group({
+        'grnid': [id],
         'grndate': ['', [Validators.required, Validators.minLength(1)]], 
-        'lotno': ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]], 
-        'supplierId': ['', [Validators.required, Validators.minLength(1)]], 
-        'rmid': ['', [Validators.required, Validators.minLength(1)]],  
+        'lotno': ['', [Validators.required, Validators.minLength(1)]], 
+        'supplierId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]], 
+        'rmid': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],  
         'height': ['', [Validators.required, Validators.minLength(1)]],
-        'heightUom': ['', [Validators.required, Validators.minLength(1)]],
+        'heightUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
         'width': ['', [Validators.required, Validators.minLength(1)]],
-        'widthUom': ['', [Validators.required, Validators.minLength(1)]],
+        'widthUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
         'thick': ['', [Validators.required, Validators.minLength(1)]],
-        'thickUom': ['', [Validators.required, Validators.minLength(1)]],
+        'thickUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
         'wgt': ['', [Validators.required, Validators.minLength(1)]],
         'roll': ['', [Validators.required, Validators.minLength(1)]],
-        'rollUom': ['', [Validators.required, Validators.minLength(1)]],
+        'rollUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
         'dom': ['', [Validators.required, Validators.minLength(1)]],
         'dono': ['', [Validators.required, Validators.minLength(1)]],
-        'stncustomId': ['', [Validators.required, Validators.minLength(1)]],
-        'componentId': ['', [Validators.required, Validators.minLength(1)]],
+        'stncustomId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
+        'componentId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
         'kaswgt': ['', [Validators.required, Validators.minLength(1)]],
         'dutyImp': ['', [Validators.required, Validators.minLength(1)]],
         'gst': ['', [Validators.required, Validators.minLength(1)]],
@@ -578,7 +779,7 @@ export class ReportGrnComponent implements OnInit {
         'customDate': ['', [Validators.required, Validators.minLength(1)]],
         'customNo': ['', [Validators.required, Validators.minLength(1)]],
         'invoiceNo': ['', [Validators.required, Validators.minLength(1)]],
-        'currencyId': ['', [Validators.required, Validators.minLength(1)]],
+        'currencyId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
         'amountCurrency': ['', [Validators.required, Validators.minLength(1)]],
         'exRate': ['', [Validators.required, Validators.minLength(1)]],
         'amount': ['', [Validators.required, Validators.minLength(1)]],
@@ -590,7 +791,7 @@ export class ReportGrnComponent implements OnInit {
         'docRefNo': ['', [Validators.required, Validators.minLength(1)]],
         'vcarno': ['', [Validators.required, Validators.minLength(1)]],
         'impFreight': ['', [Validators.required, Validators.minLength(1)]],
-        'currencyAdj': ['', [Validators.required, Validators.minLength(1)]],
+        'currencyAdj': [''],
         'termChrg': ['', [Validators.required, Validators.minLength(1)]],
         'aprtTxFee': ['', [Validators.required, Validators.minLength(1)]],
         'delivery': ['', [Validators.required, Validators.minLength(1)]],
@@ -604,65 +805,11 @@ export class ReportGrnComponent implements OnInit {
         'freightGst': ['', [Validators.required, Validators.minLength(1)]],
         'totalFreightCost': ['', [Validators.required, Validators.minLength(1)]],
         'totalFreightRmcost': ['', [Validators.required, Validators.minLength(1)]]
-      });
-   }
-                
-private configureEditForm() {
+      }); 
   
-  this.dataForm = this.fb.group({
-        'grnid': [this.data.grnid],
-        'grndate': [this.data.grndate, [Validators.required, Validators.minLength(1)]], 
-        'lotno': [this.data.lotno, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]], 
-        'supplierId': [this.data.supplierId, [Validators.required, Validators.minLength(1)]], 
-        'rmid': [this.data.rmid, [Validators.required, Validators.minLength(1)]],  
-        'height': [this.data.height, [Validators.required, Validators.minLength(1)]],
-        'heightUom': [this.data.heightUom, [Validators.required, Validators.minLength(1)]],
-        'width': [this.data.width, [Validators.required, Validators.minLength(1)]],
-        'widthUom': [this.data.widthUom, [Validators.required, Validators.minLength(1)]],
-        'thick': [this.data.thick, [Validators.required, Validators.minLength(1)]],
-        'thickUom': [this.data.thickUom, [Validators.required, Validators.minLength(1)]],
-        'wgt': [this.data.wgt, [Validators.required, Validators.minLength(1)]],
-        'roll': [this.data.roll, [Validators.required, Validators.minLength(1)]],
-        'rollUom': [this.data.rollUom, [Validators.required, Validators.minLength(1)]],
-        'dom': [this.data.dom, [Validators.required, Validators.minLength(1)]],
-        'dono': [this.data.dono, [Validators.required, Validators.minLength(1)]],
-        'stncustomId': [this.data.stncustomId, [Validators.required, Validators.minLength(1)]],
-        'componentId': [this.data.componentId, [Validators.required, Validators.minLength(1)]],
-        'kaswgt': [this.data.kaswgt, [Validators.required, Validators.minLength(1)]],
-        'dutyImp': [this.data.dutyImp, [Validators.required, Validators.minLength(1)]],
-        'gst': [this.data.gst, [Validators.required, Validators.minLength(1)]],
-        'cif': [this.data.cif, [Validators.required, Validators.minLength(1)]],
-        'customDate': [this.data.customDate, [Validators.required, Validators.minLength(1)]],
-        'customNo': [this.data.customNo, [Validators.required, Validators.minLength(1)]],
-        'invoiceNo': [this.data.invoiceNo, [Validators.required, Validators.minLength(1)]],
-        'currencyId': [this.data.currencyId, [Validators.required, Validators.minLength(1)]],
-        'amountCurrency': [this.data.amountCurrency, [Validators.required, Validators.minLength(1)]],
-        'exRate': [this.data.exRate, [Validators.required, Validators.minLength(1)]],
-        'amount': [this.data.amount, [Validators.required, Validators.minLength(1)]],
-        'pono': [this.data.pono, [Validators.required, Validators.minLength(1)]],
-        'otdlate': [this.data.otdlate, [Validators.required, Validators.minLength(1)]],
-        'fwdInvNo': [this.data.fwdInvNo, [Validators.required, Validators.minLength(1)]],
-        'amt': [this.data.amt, [Validators.required, Validators.minLength(1)]],
-        'forwarder': [this.data.forwarder, [Validators.required, Validators.minLength(1)]],
-        'docRefNo': [this.data.docRefNo, [Validators.required, Validators.minLength(1)]],
-        'vcarno': [this.data.vcarno, [Validators.required, Validators.minLength(1)]],
-        'impFreight': [this.data.impFreight, [Validators.required, Validators.minLength(1)]],
-        'currencyAdj': [this.data.currencyAdj, [Validators.required, Validators.minLength(1)]],
-        'termChrg': [this.data.termChrg, [Validators.required, Validators.minLength(1)]],
-        'aprtTxFee': [this.data.aprtTxFee, [Validators.required, Validators.minLength(1)]],
-        'delivery': [this.data.delivery, [Validators.required, Validators.minLength(1)]],
-        'handFwd': [this.data.handFwd, [Validators.required, Validators.minLength(1)]],
-        'customExamFee': [this.data.customExamFee, [Validators.required, Validators.minLength(1)]],
-        'collectFee': [this.data.collectFee, [Validators.required, Validators.minLength(1)]],
-        'cargoPrmt': [this.data.cargoPrmt, [Validators.required, Validators.minLength(1)]],
-        'docFee': [this.data.docFee, [Validators.required, Validators.minLength(1)]],
-        'breakBulk': [this.data.breakBulk, [Validators.required, Validators.minLength(1)]],
-        'edifee': [this.data.edifee, [Validators.required, Validators.minLength(1)]],
-        'freightGst': [this.data.freightGst, [Validators.required, Validators.minLength(1)]],
-        'totalFreightCost': [this.data.totalFreightCost, [Validators.required, Validators.minLength(1)]],
-        'totalFreightRmcost': [this.data.totalFreightRmcost, [Validators.required, Validators.minLength(1)]]
-      });
-      
+}
+private configureEditForm() {
+      this.setFormValidation(this.data.grnid); 
       this.dataForm.valueChanges.debounceTime(300)
       .subscribe(data => this.onValueChanged(data));
  }
