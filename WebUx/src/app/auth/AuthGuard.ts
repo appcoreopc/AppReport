@@ -10,7 +10,6 @@ import {AuthService} from "./auth-service.service";
 import { APPLICATION_HOST } from '../sharedObjects/applicationSetup';
 import {  headersJson , LOGIN_SUCCESS, LOGIN_ERR } from '../sharedObjects/sharedMessages';
 
-
 @Injectable()
 export class AuthGuard implements CanActivate {
   
@@ -20,13 +19,13 @@ export class AuthGuard implements CanActivate {
   constructor(private router : Router, private authService : AuthService,
      private http: HttpClient)
   {    
-   
+       
   }  
 
   canActivate(route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot):boolean 
     {       
-      console.log('test');
+     
       if (this.authService.isLogin)
       { 
         return true;

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthService {
   
-  isLogin:boolean = false;   
+  isLogin:boolean = true;   
   
   constructor(private http: HttpClient) {     
     
@@ -33,8 +33,7 @@ export class AuthService {
       headers : headersJson
     })
     .subscribe(res => {      
-      console.log('getting some response from server');
-      console.log(res)
+   
       this.isLogin = true;      
     },  
     err => {
