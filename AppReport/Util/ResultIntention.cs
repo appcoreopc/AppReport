@@ -11,6 +11,8 @@ namespace AppReport.Util
             {
                 case ActionIntent.Get:
                     return new JsonResult(data);
+                case ActionIntent.Login:
+                    return new OkResult();
                 case ActionIntent.Update:
                     return status ? (IActionResult)new OkResult() : new BadRequestResult();
                 case ActionIntent.Save:
@@ -28,8 +30,8 @@ namespace AppReport.Util
         Get,
         Update,
         Save,
-        Delete
-
+        Delete, 
+        Login
     }
 
 }

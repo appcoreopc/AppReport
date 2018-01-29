@@ -8,27 +8,26 @@ import { Observable } from 'rxjs/Observable';
 export class AuthService {
   
   isLogin:boolean = false;   
-
+  
   constructor(private http: HttpClient) {     
-    this.login("miki", "lai");
+    
   }
-
+  
   login(username : string, password : string): boolean
-  {
+  {   
     this.doLogin(username, password);
-    this.isLogin = true;    
-    return true; 
+    return true;
   }
   
   logout()
-  {
-   
+  {    
+    
   }
   
   private doLogin(username : string, password : string)
   {  
     let payload = { 'username' : username , 'password' : password};
-
+    
     this.http.post(APPLICATION_HOST + '/auth/login', payload, 
     { 
       headers : headersJson
@@ -36,17 +35,15 @@ export class AuthService {
     .subscribe(res => {      
       console.log('getting some response from server');
       console.log(res)
-      //return Observable.of({ type: LOGIN_SUCCESS, data: res});
+      this.isLogin = true;      
     },  
     err => {
-        console.log(err);      
+      console.log(err);  
+      this.isLogin = false;    
     }, () => {
-       console.log('completed!!');
+      
     });
-    //.catch(() => { console.log('test');});
-    //.catch(() => { return Observable.of({ type: LOGIN_ERR })});
-
-    //return Observable.of({ type: LOGIN_ERR });
+    
   }
-
+  
 }

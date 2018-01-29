@@ -32,7 +32,7 @@ namespace AppReport.Controllers
             {
                 (var user, var status) = new UserService(_ptsContext).AuthenticateUser(requestUser);
 
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, status, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Login, status, null);
             }
             return new BadRequestResult();
         }

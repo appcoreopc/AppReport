@@ -11,5 +11,7 @@ namespace AppReport.Config
         public const string ReportFilePath = "D:\\PTSFiles\\";
         public const string ReportAuthor = "PTS";
         public const string ReportCreator = "PTS";
+
+        public const string JsonResultOkText = "OK";
     }
 }

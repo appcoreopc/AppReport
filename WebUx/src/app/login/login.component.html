@@ -1,3 +1,35 @@
-<p>
-  login works!
-</p>
+
+<div class="container"> 
+  
+  <form [formGroup]='personForm'>
+    
+    <div>
+      <div class="form-group">
+        <label for="empName">Username</label>
+        <input id="empName" type="text" class="form-control" formControlName="username">         
+        
+        <div *ngIf="formErrors.empName" class="alert alert-danger">
+          {{ formErrors.empName }}
+        </div>
+        
+      </div>
+      
+      <div class="form-group">
+        <label for="empIdno">Password</label>
+        <input id="empIdno" type="password" class="form-control" formControlName="password">         
+        
+        <div *ngIf="formErrors.empIdno" class="alert alert-danger">
+          {{ formErrors.empIdno }}
+        </div>           
+      </div>    
+      
+      <button class="btn btn-primary commandBtn" (click)="login()"> Login </button>
+                  
+      
+    </div>
+    
+  </form>
+  
+</div>
+
+
