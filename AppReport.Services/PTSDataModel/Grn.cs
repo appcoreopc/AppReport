@@ -5,7 +5,7 @@ namespace AppReport.DataServices.PTSDataModel
 {
     public partial class Grn
     {
-        public long Grnid { get; set; }
+        public int Grnid { get; set; }
         public DateTime? Grndate { get; set; }
         public string Lotno { get; set; }
         public int? SupplierId { get; set; }

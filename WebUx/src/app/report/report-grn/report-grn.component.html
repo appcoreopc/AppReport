@@ -1,13 +1,14 @@
- 
  <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
  
+
+<div class="container"> 
+  
+  <p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="display" modal='true'>
+     
 <form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
-<div style="width:100%;padding:5px">
-<div class="panel panel-primary">
-    <div class="panel-heading">GRN</div>
-    <div class="panel-body">
-	
+<div style="width:100%;padding:0px">
+ 
 	  
 		<div class="panel panel-info"> 
 			<div class="panel-body" style="padding:5px; padding-left:30px"> 
@@ -17,7 +18,10 @@
 					   <label for="grndate">Date :</label>
 					  </div> 
 					  <div class="cell c2">   
-							<p-calendar formControlName="grndate" showIcon="true"></p-calendar>
+							<p-calendar formControlName="grndate" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+							<div *ngIf="formErrors.grndate" class="alert alert-danger">
+								{{ formErrors.grndate }}
+							</div>
 					  </div> 
 					  <div class="cell c3"> 
 					  </div> 
@@ -25,8 +29,12 @@
 					   <label for="lotno">LOT No. :</label>
 					  </div> 
 					  <div class="cell c5">
-						<input id="lotno" type="text" formControlName="lotno" class="form-control text-control" maxlength="50" />  
-					  </div>
+							<input id="lotno" type="text" formControlName="lotno" maxlength="50" class="form-control text-control" />  
+						
+							<div *ngIf="formErrors.lotno" class="alert alert-danger">
+								{{ formErrors.lotno }}
+							</div>	
+				   </div>
 				   </div>  
 				   <div class="form-group row">
 					  <div class="cell c1">
@@ -36,6 +44,9 @@
 						<select class="form-control" formControlName="supplierId" style="width:300px">
 							<option *ngFor="let obj of supplierRows" [value]="obj.supplierId">{{obj.supplierName}}</option>
 						  </select>
+							<div *ngIf="formErrors.supplierId" class="alert alert-danger">
+								{{ formErrors.supplierId }}
+							</div>	
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -44,8 +55,11 @@
 					  </div> 
 					  <div class="cell c5"> 
 						<select class="form-control" formControlName="rmid" style="width:300px">
-							<option *ngFor="let obj of rmRows" [value]="obj.Rmid">{{obj.Rmdesc}}</option>
-						  </select>
+							<option *ngFor="let obj of rmRows" [value]="obj.rmid">{{obj.rmdesc}}</option>
+						  </select> 
+							<div *ngIf="formErrors.rmid" class="alert alert-danger">
+								{{ formErrors.rmid }}
+							</div>	
 					  </div>
 				   </div>   
 				   
@@ -62,15 +76,25 @@
 							<div class="input-group-addon">
 							  <span>Height</span>
 							</div>
-							 <input id="height" type="number" formControlName="height" class="form-control decimal-control"  />
+							 <input id="height" type="number" formControlName="height" maxlength="8" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
-								<select class="form-control" formControlName="heightUom" style="width:100px">
-								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-								  </select>
 							 </span>
 						 
+								<select class="form-control" formControlName="heightUom" style="width:100px">
+							  	<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+							  </select>
 						  </div>
-					  </div> 
+						</div> 
+						<div class="cell">
+								<div *ngIf="formErrors.height" class="alert alert-danger">
+									{{ formErrors.height }}	
+								</div>	
+						</div>
+						<div class="cell">
+								<div *ngIf="formErrors.heightUom" class="alert alert-danger">
+								{{ formErrors.heightUom }}
+								</div>	
+						</div>
 					 </div>  
 					
 					 
@@ -87,15 +111,26 @@
 							<div class="input-group-addon">
 							  <span>Width</span>
 							</div>
-							 <input id="height" type="number" formControlName="width" class="form-control decimal-control"  />
-							 <span class="input-group-btn">
+							 <input id="width" type="number" formControlName="width" maxlength="8" class="form-control decimal-control"  />
+							  <span class="input-group-btn">
+							 </span>
+						 
 								<select class="form-control" formControlName="widthUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-								  </select>
-							 </span>
+						  </select>
 						 
 						  </div>
 					  </div> 
+						<div class="cell">
+								<div *ngIf="formErrors.width" class="alert alert-danger">
+									{{ formErrors.width }}	
+								</div>	
+						</div>
+						<div class="cell">
+								<div *ngIf="formErrors.widthUom" class="alert alert-danger">
+								{{ formErrors.widthUom }}
+								</div>	
+						</div>
 					 </div> 
 				    
 					 <div class="form-group row">
@@ -111,15 +146,24 @@
 							<div class="input-group-addon">
 							  <span>Thickness</span>
 							</div>
-							 <input id="height" type="number" formControlName="thick" class="form-control decimal-control"  />
+							 <input id="thick" type="number" formControlName="thick" maxlength="8" class="form-control decimal-control"  />
 							 <span class="input-group-btn">
+							 </span>
 								<select class="form-control" formControlName="thickUom" style="width:100px">
 								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-								  </select>
-							 </span>
-						 
+							  </select> 
 						  </div>
 					  </div> 
+						<div class="cell">
+								<div *ngIf="formErrors.thick" class="alert alert-danger">
+									{{ formErrors.thick }}	
+								</div>	
+						</div>
+						<div class="cell">
+								<div *ngIf="formErrors.thickUom" class="alert alert-danger">
+								{{ formErrors.thickUom }}
+								</div>	
+						</div>
 					 </div> 
 
 					 <div class="form-group row">
@@ -132,11 +176,14 @@
 					  </div> 
 					  <div class="cell c2"> 
 						<div class="input-group">
-							 <input id="wgt" type="number" formControlName="wgt" class="form-control decimal-control"  /> 
+							 <input id="wgt" type="number" formControlName="wgt" maxlength="8" class="form-control decimal-control"  /> 
 							<div class="input-group-addon">
 							  <span>KG</span>
-							</div> 
+							</div> 	
 						  </div>
+							<div *ngIf="formErrors.wgt" class="alert alert-danger">
+							  {{ formErrors.wgt }}
+							</div>
 					  </div> 
 					  <div class="cell c3"> 
 					  </div> 
@@ -149,13 +196,19 @@
 					  </div> 
 					  <div class="cell c5"> 
 						<div class="input-group"> 
-							 <input id="roll" type="number" formControlName="roll" class="form-control decimal-control"  /> 
+							 <input id="roll" type="number" formControlName="roll" maxlength="9" class="form-control decimal-control"  /> 
 							 <span class="input-group-btn">
+							 </span> 
 								<select class="form-control" formControlName="rollUom" style="width:100px">
 									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
 								  </select>
-							 </span> 
 						  </div>
+							<div *ngIf="formErrors.roll" class="alert alert-danger">
+								{{ formErrors.roll }}
+							</div>
+							<div *ngIf="formErrors.rollUom" class="alert alert-danger">
+								{{ formErrors.rollUom }}
+							</div>
 					  </div> 
 				   </div> 
 					 
@@ -164,7 +217,10 @@
 					   <label for="dom">DOM :</label>
 					  </div> 
 					  <div class="cell c2"> 
-							<p-calendar formControlName="dom" showIcon="true"></p-calendar>
+							<p-calendar formControlName="dom" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+							<div *ngIf="formErrors.dom" class="alert alert-danger">
+								{{ formErrors.dom }}
+							</div>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -172,7 +228,10 @@
 					   <label for="dono">INV No. / DO No. :</label>
 					  </div> 
 					  <div class="cell c5">
-						<input id="dono" formControlName='dono' type="text" class="form-control text-control" maxlength="50" />  
+						<input id="dono" formControlName='dono' maxlength="50" type="text" class="form-control text-control" maxlength="50" />  
+							<div *ngIf="formErrors.dono" class="alert alert-danger">
+								{{ formErrors.dono }}
+							</div>
 					  </div>
 				   </div>   
 				   <div class="form-group row">
@@ -182,7 +241,10 @@
 					  <div class="cell c2">
 						<select class="form-control select-control" formControlName="stncustomId">
 						<option *ngFor="let obj of stncustomRows" [value]="obj.stncustomId">{{obj.stncustomName}}</option>
-				 	 </select>
+						</select>
+							<div *ngIf="formErrors.stncustomId" class="alert alert-danger">
+								{{ formErrors.stncustomId }}
+							</div>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -193,6 +255,9 @@
 						<select class="form-control" formControlName="componentId">
 					  	<option *ngFor="let obj of componentRows" [value]="obj.componentId">{{obj.componentName}}</option>
 				 	 </select>
+							<div *ngIf="formErrors.componentId" class="alert alert-danger">
+								{{ formErrors.componentId }}
+							</div>
 					  </div>
 				   </div>  
 			  
@@ -206,11 +271,14 @@
 					  </div> 
 					  <div class="cell c2"> 
 						<div class="input-group">
-							 <input id="kaswgt"formControlName="kaswgt" type="number" class="form-control decimal-control"  /> 
+							 <input id="kaswgt"formControlName="kaswgt" maxlength="8" type="number" class="form-control decimal-control"  /> 
 							<div class="input-group-addon">
 							  <span>KG</span>
 							</div> 
 						  </div>
+							<div *ngIf="formErrors.kaswgt" class="alert alert-danger">
+								{{ formErrors.kaswgt }}
+							</div>
 					  </div> 
 					  <div class="cell c3"> 
 					  </div> 
@@ -223,8 +291,11 @@
 					  </div> 
 					  <div class="cell c5"> 
 						<div class="input-group"> 
-							 <input id="dutyImp" formControlName="dutyImp" type="number" class="form-control decimal-control"  />  
+							 <input id="dutyImp" formControlName="dutyImp" maxlength="16" type="number" class="form-control decimal-control"  />  
 						  </div>
+							<div *ngIf="formErrors.dutyImp" class="alert alert-danger">
+								{{ formErrors.dutyImp }}
+							</div>
 					  </div> 
 				   </div> 
 				    
@@ -241,8 +312,11 @@
 							<div class="input-group-addon">
 							  <span>RM</span>
 							</div>
-							 <input id="gst" formControlName="gst" type="number" class="form-control decimal-control"  />
+							 <input id="gst" formControlName="gst" maxlength="16" type="number" class="form-control decimal-control"  />
 						  </div>
+							<div *ngIf="formErrors.gst" class="alert alert-danger">
+								{{ formErrors.gst }}
+							</div>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -254,9 +328,12 @@
 						  </div>
 					  </div> 
 					  <div class="cell c5">	 
-						<div class="input-group"> 
-							 <input id="cif" formControlName="cif" type="number" class="form-control decimal-control"  />
+					  	<div class="input-group"> 
+							 <input id="cif" formControlName="cif" maxlength="16" type="number" class="form-control decimal-control"  />
 						  </div>
+							<div *ngIf="formErrors.cif" class="alert alert-danger">
+								{{ formErrors.cif }}
+							</div>
 					  </div>
 				   </div> 
 			
@@ -266,7 +343,10 @@
 					   <label for="customDate">Kastam Date :</label>
 					  </div> 
 					  <div class="cell c2">
-							<p-calendar formControlName="customDate" showIcon="true"></p-calendar>
+							<p-calendar formControlName="customDate" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+							<div *ngIf="formErrors.customDate" class="alert alert-danger">
+								{{ formErrors.customDate }}
+							</div>
 					  </div>
 					  <div class="cell c3"> 
 					  </div> 
@@ -274,8 +354,11 @@
 					   <label for="customNo">Kastam No. :</label>
 					  </div> 
 					  <div class="cell c5">	
-						<input id="customNo" formControlName="customNo" type="text" class="form-control decimal-control" />  
-					  </div>
+						<input id="customNo" formControlName="customNo" maxlength="50" type="text" class="form-control decimal-control" />  
+					  	<div *ngIf="formErrors.customNo" class="alert alert-danger">
+								{{ formErrors.customNo }}
+							</div>	
+				  	</div>
 				   </div>
 				   
 		</div>
@@ -291,8 +374,11 @@
 					   <label for="invoiceNo">Invoice No :</label>
 					  </div> 
 					  <div class="cell c2">
-						<input id="invoiceNo" formControlName="invoiceNo" type="text" class="form-control text-control"  />  
-					  </div>
+						<input id="invoiceNo" formControlName="invoiceNo" maxlength="50" type="text" class="form-control text-control"  />  
+					  	<div *ngIf="formErrors.invoiceNo" class="alert alert-danger">
+								{{ formErrors.invoiceNo }}
+							</div>	 
+					 </div>
 					  <div class="cell c3"> 
 					  </div> 
 					  <div class="cell c4">
@@ -301,7 +387,10 @@
 					  <div class="cell c5">	  
 						<select class="form-control" formControlName="currencyId" style="width:100px">
 						<option *ngFor="let obj of currencyRows" [value]="obj.currencyId">{{obj.currencyCode}}</option>
-					   </select>
+						 </select>	
+						 <div *ngIf="formErrors.currencyId" class="alert alert-danger">
+								{{ formErrors.currencyId }}
+							</div>	 
 					  </div> 
 		      </div>
 			  <div class="form-group row">
@@ -317,8 +406,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="amountCurrency" formControlName="amountCurrency" type="number" class="form-control decimal-control"  />
+						 <input id="amountCurrency" formControlName="amountCurrency" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
+						 <div *ngIf="formErrors.amountCurrency" class="alert alert-danger">
+								{{ formErrors.amountCurrency }}
+							</div>
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -330,9 +422,12 @@
 					  </div>
 				  </div> 
 				  <div class="cell c5">	 
-					<div class="input-group"> 
-						 <input id="exRate" formControlName="exRate" type="number" class="form-control decimal-control"  />
+				   	<div class="input-group"> 
+						 <input id="exRate" formControlName="exRate" maxlength="10" type="number" class="form-control decimal-control"  />
 					  </div>
+						 <div *ngIf="formErrors.exRate" class="alert alert-danger">
+								{{ formErrors.exRate }}
+							</div>
 				  </div>
 			   </div>
 		    </div>
@@ -352,8 +447,11 @@
 					<div class="input-group-addon">
 					  <span>RM</span>
 					</div>
-					 <input id="amount" type="number" formControlName="amount"  readonly class="form-control decimal-control" style="width:200px"  /> 
+					 <input id="amount" type="number" formControlName="amount" maxlength="16"  readonly class="form-control decimal-control" style="width:200px"  /> 
 					  </div>    
+				</div>
+				<div *ngIf="formErrors.amount" class="alert alert-danger">
+					{{ formErrors.amount }}
 				</div>
 			  </div> 
 		</div>
@@ -373,9 +471,14 @@
 				  </div> 
 				  <div class="cell c2">	 
 					<div class="input-group"> 
-						 <input id="pono" formControlName="pono" type="text" class="form-control decimal-control"  />
+						 <input id="pono" formControlName="pono" maxlength="50" type="text" class="form-control decimal-control"  />
 					  </div>
-				  </div>
+					</div> 
+				  <div class="cell">
+					<div *ngIf="formErrors.pono" class="alert alert-danger">
+						{{ formErrors.pono }}
+					</div>
+					</div>
 			   </div>
 			   
 			   <div class="form-group row">
@@ -383,16 +486,24 @@
 				   <label for="otdlate">OTD / LATE :</label>
 				  </div> 
 				  <div class="cell c2">
-					<input id="otdlate" formControlName="otdlate" type="text" class="form-control text-control"  />  
-				  </div>
+					<input id="otdlate" formControlName="otdlate" maxlength="10" type="text" class="form-control text-control"  />  
+				 
+					<div *ngIf="formErrors.otdlate" class="alert alert-danger">
+						{{ formErrors.otdlate }}
+					</div> 
+				</div>
 				  <div class="cell c3"> 
 				  </div> 
 				  <div class="cell c4">
 				   <label for="fwdInvNo">Forworder Billing Inv. No. :</label>
 				  </div> 
 				  <div class="cell c5">	
-					<input id="fwdInvNo" formControlName="fwdInvNo" type="text" class="form-control text-control"  />  
-				  </div>
+					<input id="fwdInvNo" formControlName="fwdInvNo" maxlength="50" type="text" class="form-control text-control"  />  
+				
+					<div *ngIf="formErrors.fwdInvNo" class="alert alert-danger">
+						{{ formErrors.fwdInvNo }}
+					</div> 	
+				</div>
 			   </div>
 			   
 			   <div class="form-group row">
@@ -408,8 +519,12 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="amt" formControlName="amt" type="number" class="form-control decimal-control"  />
-					  </div>
+						 <input id="amt" formControlName="amt" maxlength="16" type="number" class="form-control decimal-control"  />
+						 
+						</div>			
+						<div *ngIf="formErrors.amt" class="alert alert-danger">
+							{{ formErrors.amt }}
+						</div> 	
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -422,8 +537,11 @@
 				  </div> 
 				  <div class="cell c5">	 
 					<div class="input-group"> 
-					   <input id="forwarder" formControlName="forwarder" type="text" class="form-control text-control"  /> 
+					   <input id="forwarder" formControlName="forwarder" maxlength="50" type="text" class="form-control text-control"  /> 
 					 </div>
+					<div *ngIf="formErrors.forwarder" class="alert alert-danger">
+						{{ formErrors.forwarder }}
+					</div>
 				  </div>
 			  </div>
 			   
@@ -432,16 +550,24 @@
 				   <label for="docRefNo">DOC. Ref. No. :</label>
 				  </div> 
 				  <div class="cell c2">
-					<input id="docRefNo" formControlName="docRefNo" type="text" class="form-control text-control"  />  
-				  </div>
+					<input id="docRefNo" formControlName="docRefNo" maxlength="50" type="text" class="form-control text-control"  />  
+				
+					<div *ngIf="formErrors.docRefNo" class="alert alert-danger">
+						{{ formErrors.docRefNo }}
+					</div> 
+				</div>
 				  <div class="cell c3"> 
 				  </div> 
 				  <div class="cell c4">
 				   <label for="vcarno">VCAR No. :</label>
 				  </div> 
 				  <div class="cell c5">	
-					<input id="vcarno" formControlName="vcarno" type="text" class="form-control text-control"  />  
-				  </div>
+					<input id="vcarno" formControlName="vcarno" maxlength="50" type="text" class="form-control text-control"  />  
+				
+					<div *ngIf="formErrors.vcarno" class="alert alert-danger">
+						{{ formErrors.vcarno }}
+					</div>  
+				</div>
 			   </div>
 	      </div>
 	 </div>
@@ -464,8 +590,11 @@
 							<div class="input-group-addon">
 								<span>RM</span>
 							</div>
-						   <input id="impFreight" formControlName="impFreight" type="number" class="form-control text-control"  /> 
+						   <input id="impFreight" formControlName="impFreight" maxlength="16" type="number" class="form-control text-control"  /> 
 						</div> 
+						<div *ngIf="formErrors.impFreight" class="alert alert-danger">
+							{{ formErrors.impFreight }}
+						</div>  
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -478,7 +607,7 @@
 				  </div> 
 				  <div class="cell c5">	 
 					<div class="input-group" style="display:none">
-						 <input id="currencyAdj" formControlName="currencyAdj" type="text" class="form-control decimal-control"  />
+						 <input id="currencyAdj" formControlName="currencyAdj" maxlength="50" type="text" class="form-control decimal-control"  />
 					  </div>
 				  </div>
 			  </div>
@@ -497,8 +626,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="termChrg" formControlName="termChrg" type="number" class="form-control decimal-control"  />
+						 <input id="termChrg" formControlName="termChrg" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
+						<div *ngIf="formErrors.termChrg" class="alert alert-danger">
+							{{ formErrors.termChrg }}
+						</div>  
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -514,9 +646,12 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="aprtTxFee" formControlName="aprtTxFee" type="number" class="form-control decimal-control"  />
+						 <input id="aprtTxFee" formControlName="aprtTxFee" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
-				  </div>
+						<div *ngIf="formErrors.aprtTxFee" class="alert alert-danger">
+							{{ formErrors.aprtTxFee }}
+						</div> 
+				  </div> 
 			   </div>
 			   
 			   <div class="form-group row">
@@ -532,8 +667,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="delivery" formControlName="delivery" type="number" class="form-control decimal-control"  />
+						 <input id="delivery" formControlName="delivery" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
+						<div *ngIf="formErrors.delivery" class="alert alert-danger">
+							{{ formErrors.delivery }}
+						</div>  
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -549,9 +687,12 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="handFwd" formControlName="handFwd" type="number" class="form-control decimal-control"  />
+						 <input id="handFwd" formControlName="handFwd" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
-				  </div>
+						<div *ngIf="formErrors.handFwd" class="alert alert-danger">
+							{{ formErrors.handFwd }}
+						</div> 
+				  </div> 
 			   </div> 
 			    
 			   <div class="form-group row">
@@ -567,8 +708,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="customExamFee" formControlName="customExamFee" type="number" class="form-control decimal-control"  />
+						 <input id="customExamFee" formControlName="customExamFee" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
+						<div *ngIf="formErrors.customExamFee" class="alert alert-danger">
+							{{ formErrors.customExamFee }}
+						</div> 
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -584,8 +728,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="collectFee" formControlName="collectFee" type="number" class="form-control decimal-control"  />
-					  </div>
+						 <input id="collectFee" formControlName="collectFee" maxlength="16" type="number" class="form-control decimal-control"  />
+						</div>	
+						<div *ngIf="formErrors.collectFee" class="alert alert-danger">
+							{{ formErrors.collectFee }}
+						</div> 
 				  </div>
 			   </div> 
 			    
@@ -599,8 +746,11 @@
 				  </div> 
 				  <div class="cell c2"> 
 					<div class="input-group"> 
-						 <input id="cargoPrmt" formControlName="cargoPrmt" type="text" class="form-control text-control"  />
-					  </div>
+						 <input id="cargoPrmt" formControlName="cargoPrmt" maxlength="50" type="text" class="form-control text-control"  />
+						</div>		
+							<div *ngIf="formErrors.cargoPrmt" class="alert alert-danger">
+							{{ formErrors.cargoPrmt }}
+						</div> 
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -616,8 +766,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="docFee" formControlName="docFee"  type="number" class="form-control decimal-control"  />
-					  </div>
+						 <input id="docFee" formControlName="docFee" maxlength="16"  type="number" class="form-control decimal-control"  />
+					  </div>	
+							<div *ngIf="formErrors.docFee" class="alert alert-danger">
+							{{ formErrors.docFee }}
+						</div> 
 				  </div>
 			  </div>
 			    
@@ -634,8 +787,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="breakBulk" formControlName="breakBulk" type="number" class="form-control decimal-control"  />
+						 <input id="breakBulk" formControlName="breakBulk" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
+							<div *ngIf="formErrors.breakBulk" class="alert alert-danger">
+							{{ formErrors.breakBulk }}
+						</div> 
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -651,8 +807,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="edifee" formControlName="edifee" type="number" class="form-control decimal-control"  />
+						 <input id="edifee" formControlName="edifee" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
+							<div *ngIf="formErrors.edifee" class="alert alert-danger">
+							{{ formErrors.edifee }}
+						</div> 
 				  </div>
 				</div>
 			   
@@ -669,8 +828,11 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="freightGst" formControlName="freightGst" type="number" class="form-control decimal-control"  />
+						 <input id="freightGst" formControlName="freightGst" maxlength="16" type="number" class="form-control decimal-control"  />
 					  </div>
+							<div *ngIf="formErrors.freightGst" class="alert alert-danger">
+							{{ formErrors.freightGst }}
+						</div> 
 				  </div>
 				  <div class="cell c3"> 
 				  </div> 
@@ -691,7 +853,7 @@
 						<div class="input-group-addon">
 						  <span class="">RM</span>
 						</div>
-						 <input id="totalFreightCost" formControlName="totalFreightCost" readonly type="number" class="form-control decimal-control" style="width:200px"  />
+						 <input id="totalFreightCost" formControlName="totalFreightCost" maxlength="16" readonly type="number" class="form-control decimal-control" style="width:200px"  />
 					  </div>
 				  </div>
 			</div>
@@ -704,7 +866,7 @@
 				<div class="input-group-addon">
 				  <span>RM</span>
 				</div>
-				 <input id="totalFreightRmcost" formControlName="totalFreightRmcost" readonly type="number" class="form-control decimal-control" style="width:200px" />
+				 <input id="totalFreightRmcost" formControlName="totalFreightRmcost" maxlength="16" readonly type="number" class="form-control decimal-control" style="width:200px" />
 			  </div>
           </div>  
        </div>
@@ -732,25 +894,68 @@
           <div class="cell c4"> 
           </div> 
           <div class="cell c5" style="text-align:right">	   
-				    	<button class="btn btn-primary" [disabled]="!dataForm.valid" (click)="save()"> Save </button>
-			 	      	<button class="btn btn-primary"  (click)="testsave()"> Test </button>
+ 
+							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
 			 	</div>
        </div>
 			 <p>Form value: {{ dataForm.value | json }}</p>
-	    
-	</div>
-  </div>
+			<p>Form value: {{ uomRows | json }}</p>
+						<p>Form value: {{ rmDataList | json }}</p>
 	</div> 
 </form>
 
-<div class="container"> 
-<ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
-    [rows]="rows"
-    [limit]="10"
-    (select)="onSelect($event)"
-    [columns]="columns"
-    [headerHeight]="50"  [rowHeight]="'auto'"
-    [footerHeight]="50">
-</ngx-datatable>
+</p-dialog>    
+  
 </div>
 
+<div class="container">   
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>     
+ </div>
+<div style="clear:both; height:10px"></div>
+<div class="container"> 
+  <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
+  [rows]="rows"
+  [limit]="10"
+  (select)="person" 
+  [selectionType]="'single'"
+	(select)="onSelect($event)" 
+  [headerHeight]="30"  [rowHeight]="'auto'"
+	[footerHeight]="30">
+	
+	 <ngx-datatable-column  name="Id" prop="grnid" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Date" prop="grndate"  [width]="100" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+         <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value | date: 'dd/MM/yyyy'}} 
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="KASTAM No" prop="customNo" [width]="150" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+  	</ngx-datatable-column>
+	 <ngx-datatable-column  name="RawMaterial" prop="rmid" [width]="300" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+					<ng-container *ngFor = "let n of rmRows">
+						<div *ngIf="value===n.rmid">{{n.rmdesc}} / {{value}}</div>
+				  </ng-container>
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Amount" prop="amount" [width]="150"  [resizeable]="true" [sortable]="true" [flexGrow]="1">
+       <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value | number:'1.2-2'}}
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Freight Cost" prop="totalFreightCost" [width]="150"  [resizeable]="true" [sortable]="true" [flexGrow]="1">
+       <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value | number:'1.2-2'}}
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Freight & Raw Mat. Cost" prop="totalFreightRmcost"  [width]="150"  [resizeable]="true" [sortable]="true" [flexGrow]="1">
+       <ng-template let-value="value"  ngx-datatable-cell-template>
+          {{value | number:'1.2-2'}}
+        </ng-template>
+		</ngx-datatable-column>
+			
+</ngx-datatable>
+</div>

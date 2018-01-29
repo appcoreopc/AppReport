@@ -56,9 +56,9 @@ import { LesenEffects } from './report/lesen-gudang-component/lesenEffects';
 import { UOMEffects } from './effects/uomEffects';
 import { UOMReducer } from './reducers/uomReducer';
 
-import {CalendarModule} from 'primeng/calendar';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DialogModule} from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
 
 import { AuthGuard } from './auth/AuthGuard';

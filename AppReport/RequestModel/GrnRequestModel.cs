@@ -4,7 +4,7 @@ namespace AppReport.RequestModel
 {
     public class GrnRequestModel
     {
-        public long Grnid { get; set; }
+        public int Grnid { get; set; }
         public DateTime? Grndate { get; set; }
         public string Lotno { get; set; }
         public int? SupplierId { get; set; }

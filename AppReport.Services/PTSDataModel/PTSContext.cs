@@ -17,6 +17,7 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<Module> Module { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<Rmaterial> Rmaterial { get; set; }
+        public virtual DbSet<Rmcat> Rmcat { get; set; }
         public virtual DbSet<RptLg> RptLg { get; set; }
         public virtual DbSet<RptLgYbgt> RptLgYbgt { get; set; }
         public virtual DbSet<RptLgYexp> RptLgYexp { get; set; }
@@ -33,7 +34,12 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
-       
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Component>(entity =>
@@ -155,7 +161,7 @@ namespace AppReport.DataServices.PTSDataModel
 
                 entity.Property(e => e.Dom)
                     .HasColumnName("DOM")
-                    .HasColumnType("datetime");
+                    .HasColumnType("date");
 
                 entity.Property(e => e.Dono)
                     .HasColumnName("DONo")
@@ -282,9 +288,7 @@ namespace AppReport.DataServices.PTSDataModel
 
                 entity.ToTable("RMaterial");
 
-                entity.Property(e => e.Rmid)
-                    .HasColumnName("RMId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Rmid).HasColumnName("RMId");
 
                 entity.Property(e => e.CountryList).HasColumnType("varchar(100)");
 
@@ -315,6 +319,27 @@ namespace AppReport.DataServices.PTSDataModel
                 entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
 
                 entity.Property(e => e.Uomid).HasColumnName("UOMId");
+            });
+
+            modelBuilder.Entity<Rmcat>(entity =>
+            {
+                entity.ToTable("RMCat");
+
+                entity.Property(e => e.RmcatId)
+                    .HasColumnName("RMCatId")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedDt)
+                    .HasColumnName("CreatedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.EditedDt)
+                    .HasColumnName("EditedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.RmcatName)
+                    .HasColumnName("RMCatName")
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<RptLg>(entity =>
