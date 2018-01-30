@@ -1,4 +1,5 @@
 ﻿
+using AppReport.Config;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppReport.Util
@@ -12,13 +13,15 @@ namespace AppReport.Util
                 case ActionIntent.Get:
                     return new JsonResult(data);
                 case ActionIntent.Login:
-                    return new OkResult();
+                    return status ? (IActionResult) new OkResult() : new UnauthorizedResult();
                 case ActionIntent.Update:
-                    return status ? (IActionResult)new OkResult() : new BadRequestResult();
+                    return status ? (IActionResult) new CreatedResult(string.Empty, AppConstant.JsonResultOkText) 
+                        : new NoContentResult();
                 case ActionIntent.Save:
-                    return status ? (IActionResult)new OkResult() : new BadRequestResult();
+                    return status ? (IActionResult) new CreatedResult(string.Empty, AppConstant.JsonResultOkText) : 
+                        new NoContentResult();
                 case ActionIntent.Delete:
-                    return status ? (IActionResult)new OkResult() : new BadRequestResult();
+                    return status ? new StatusCodeResult(204) : new NotFoundResult();
                 default:
                     return new OkResult();
             }

@@ -1,8 +1,13 @@
-version: '2'
-
+version: "3"
 services:
-  appreport:
-    image: appreport
-    build:
-      context: ./AppReport
-      dockerfile: Dockerfile
+    web:
+        build: .
+        ports:
+            - "8000:80"
+        depends_on:
+            - db
+    db:
+        image: "microsoft/mssql-server-linux"
+        environment:
+            SA_PASSWORD: "P@ssword01"
+            ACCEPT_EULA: "Y"
