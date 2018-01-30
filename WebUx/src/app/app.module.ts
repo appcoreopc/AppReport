@@ -42,6 +42,9 @@ import { ReportGrnComponent } from './report/report-grn/report-grn.component';
 import { LampiranM1ComponentComponent } from './report/lampiran-m1-component/lampiran-m1-component.component';
 import { LesenGudangComponentComponent } from './report/lesen-gudang-component/lesen-gudang-component.component';
 import { SkimKhasComponentComponent } from './report/skim-khas-component/skim-khas-component.component';
+import { SkimKhasDataEntryComponent } from './report/skim-khas-component/skim-khas-data-entry';
+
+
 
 import { GrnReducer } from './report/report-grn/grnReducer';
 import { M1LampiranReducer } from './report/lampiran-m1-component/m1Reducer';
@@ -60,6 +63,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
+import {TabViewModule} from 'primeng/tabview';
 
 import { AuthGuard } from './auth/AuthGuard';
 import { AuthService } from './auth/auth-service.service';
@@ -79,7 +83,6 @@ export const ROUTES: Routes = [
   { path: '**', component: LoginComponent }
 ];
 
-
 @NgModule({
   declarations: [
     AppComponent, 
@@ -94,12 +97,12 @@ export const ROUTES: Routes = [
     ReportGrnComponent,
     LampiranM1ComponentComponent,
     LesenGudangComponentComponent,
-    SkimKhasComponentComponent,
+    SkimKhasComponentComponent, SkimKhasDataEntryComponent,
     LoginComponent
   ],
   imports: [
     BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, 
-    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule,
+    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule,TabViewModule,
     
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,

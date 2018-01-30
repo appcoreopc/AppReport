@@ -5,7 +5,16 @@
 <div class="container"> 
   
 <p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="display" modal='true'>
-     
+		 
+	
+		<p-tabView>
+				
+			
+			
+			<p-tabPanel header="Basic Entry">
+
+
+
 <form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
 <div style="width:1000px;padding:0px">
 
@@ -154,6 +163,22 @@
 						<p>Form value: {{ rmDataList | json }}</p>
 	</div> 
 </form>
+
+
+
+  </p-tabPanel>
+
+
+	<p-tabPanel header="Detail Entry">
+		
+   <skim-khas-data-entry-component>
+
+	 </skim-khas-data-entry-component>
+
+	</p-tabPanel>
+
+
+		</p-tabView>
 
 </p-dialog>    
   
