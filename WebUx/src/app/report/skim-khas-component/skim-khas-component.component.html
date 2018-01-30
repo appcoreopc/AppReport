@@ -1,3 +1,187 @@
-<p>
-  skim-khas-component works!
-</p>
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ 
+
+<div class="container"> 
+  
+<p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="display" modal='true'>
+     
+<form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
+<div style="width:1000px;padding:0px">
+
+  <div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+			 
+			  
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="RefNo">Reference No :</label>
+					  </div> 
+					  <div class="cell c2">
+						<input id="RefNo" type="text" class="form-control text-control" /> 
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="LetterDate">Date of Letter :</label>
+					  </div> 
+					  <div class="cell c5"><p-calendar formControlName="letterDate" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+							<div *ngIf="formErrors.letterDate" class="alert alert-danger">
+								{{ formErrors.letterDate }}
+							</div> 
+					  </div>
+				   </div>  
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="RefNo">Report Month/Year :</label>
+					  </div> 
+					  <div class="cell c2">
+				    	<p-calendar formControlName="rptDate" dateFormat="M yy" showIcon="true"></p-calendar>
+							<div *ngIf="formErrors.rptDate" class="alert alert-danger">
+								{{ formErrors.rptDate }}
+							</div>
+					  </div>
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4"> 
+					  </div> 
+					  <div class="cell c5"> 
+					  </div>
+				   </div>   
+				   
+				   <div class="form-group row" style="padding-top:20px"> 
+					   <b>Recipient</b> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="LRcptDept">Department :</label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="LRcptDept" type="text" class="form-control text-control" />  
+					  </div> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="LRcptBr">Branch :</label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="LRcptBr" type="text" class="form-control text-control" /> 
+					  </div> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="LRcptAdd1">Address :</label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="LRcptAdd1" type="text" class="form-control text-control" />  
+					  </div> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="LRcptAdd2"></label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="LRcptAdd2" type="text" class="form-control text-control" /> 
+					  </div> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="LRcptAdd3"></label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="LRcptAdd3" type="text" class="form-control text-control" />  
+					  </div> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="LRcptAdd4"></label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="LRcptAdd4" type="text" class="form-control text-control" /> 
+					  </div> 
+				   </div> 
+				   
+				   
+				   <div class="form-group row" style="padding-top:20px"> 
+					   <b>Signed By</b> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="signedByEmpId">Employee :</label>
+					  </div> 
+					  <div class="cell c2345">
+						 	<select class="form-control" formControlName="signedByEmpId" style="width:300px">
+							<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
+						  </select> 
+					  </div> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="SignedByName">Name :</label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="SignedByName" type="text" class="form-control text-control" />  
+					  </div> 
+				   </div> 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="SignedByPos">Position :</label>
+					  </div> 
+					  <div class="cell c2345">
+						<input id="SignedByPos" type="text" class="form-control text-control" />  
+					  </div> 
+				   </div>    
+			</div> 
+     </div>   
+
+     <div class="form-group row">
+          <div class="cell c1"> 
+          </div> 
+          <div class="cell c2"> 
+          </div>
+          <div class="cell c3"> 
+          </div> 
+          <div class="cell c4"> 
+          </div> 
+          <div class="cell c5" style="text-align:right">	   
+ 
+							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
+			 	</div>
+       </div>
+  
+			 <p>Form value: {{ dataForm.value | json }}</p>
+			<p>Form value: {{ uomRows | json }}</p>
+						<p>Form value: {{ rmDataList | json }}</p>
+	</div> 
+</form>
+
+</p-dialog>    
+  
+</div>
+
+<div class="container">   
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>     
+ </div>
+<div style="clear:both; height:10px"></div>
+<div class="container"> 
+  <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
+  [rows]="rows"
+  [limit]="10"
+  (select)="person" 
+  [selectionType]="'single'"
+	(select)="onSelect($event)" 
+  [headerHeight]="30"  [rowHeight]="'auto'"
+	[footerHeight]="30"> 
+	 <ngx-datatable-column  name="Id" prop="rptId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+	 <ngx-datatable-column  name="Date" prop="rptDate"  [width]="100" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+         <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value | date: 'dd/MM/yyyy'}} 
+        </ng-template>
+		</ngx-datatable-column>
+			
+</ngx-datatable>
+</div>

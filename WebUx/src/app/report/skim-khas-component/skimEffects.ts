@@ -25,7 +25,7 @@ export class SkimKhasEffects {
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/employee/save', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/rptsk/save', payload, {headers : headersJson})      
     )
     .map(res => ({ type: SKIMKHAS_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: SKIMKHAS_SAVE_ERR }));
@@ -43,7 +43,7 @@ export class SkimKhasEffects {
       .map(action => {   
         JSON.stringify(action);
       })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/employee/index')  
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/rptsk/index')  
       .map(res => {       
         return { type: SKIMKHAS_GET_OK, data: res};
       }) 

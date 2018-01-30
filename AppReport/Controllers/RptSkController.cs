@@ -14,10 +14,10 @@ using System.Resources;
 using System.Globalization;
 using AppReport.Resources;
 using AppReport.Util;
+using AppReport.RequestModel;
 
 namespace AppReport.Controllers
 {
-    [Route("api/[controller]")]
     public class RptSkController : Controller
     { 
         private PTSContext _ptsContext; 
@@ -72,6 +72,9 @@ namespace AppReport.Controllers
             }
         }
 
+        //http://localhost:5050/api/rptsk?id=4
+        [Route("api/[controller]")]
+        [HttpGet]
         public IActionResult Index(int id)
         {
             var rptSk = new RptSkService(_ptsContext).Get(id);
@@ -87,6 +90,28 @@ namespace AppReport.Controllers
 
             return View();
         }
+
+
+        //http://localhost:5050/rptsk/index
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var users = new RptSkService(_ptsContext).GetAll();
+            return new JsonResult(users);
+        }
+
+        [HttpPost]
+        public IActionResult Save([FromBody] RptSkRequestModel d)
+        {
+
+            if (d != null)
+            {
+                var result = new RptSkService(_ptsContext).Save(d);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+            }
+            return new BadRequestResult();
+        }
+
 
 
         public class ITextEvents : PdfPageEventHelper

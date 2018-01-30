@@ -1,0 +1,33 @@
+.table {display:block;    
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: .2rem; }
+.row { display:block; padding : 5px;  }
+.cell {display:inline-block; vertical-align:text-top;}
+.c1 { width: 15%}
+.c2 { width: 33%}
+.c3 { width: 1%}
+.c4 { width: 15%}
+.c5 { width: 33%}
+.c2345 { width: 80%}
+.text-control { width: 99%}
+.date-control { width: 99%}
+.number-control { width: 99%}
+.decimal-control { width: 99%} 
+.select-control { width: 99%} 
+.input-group  { width: 99%}
+.form-group {
+     margin-bottom: 0px !important;  
+}  
+select.form-control:not([size]):not([multiple]) {
+    height: 34px !important;
+}
+.nav-item {
+    padding:0px !important; 
+    padding-right: 20px !important; 
+    padding-top: 15px !important;
+}
+.numberCol {
+    text-align: right;
+}
