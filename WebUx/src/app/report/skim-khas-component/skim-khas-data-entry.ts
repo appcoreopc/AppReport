@@ -24,7 +24,6 @@ import {DialogModule} from 'primeng/dialog';
 })
 export class SkimKhasDataEntryComponent implements OnInit {
 
-
   private data: RptSkModel = new RptSkModel(); 
   private dataForm: FormGroup;
   private intention : number = UPDATE;
@@ -34,6 +33,15 @@ export class SkimKhasDataEntryComponent implements OnInit {
   dataList : Array<any> = new Array<any>();  
   empDataList : Array<any> = new Array<any>();  
 
+      cols: any[] =  [
+        { field: 'vin', header: 'Vin' },
+        { field: 'year', header: 'Year' },
+        { field: 'brand', header: 'Brand' },
+        { field: 'color', header: 'Color' }
+    ];
+    
+
+  cars : any[] = [{vin : 'test'}, {vin : 'test2'}, {vin : 'test3'} ];
 
   formErrors = {
     'rptId': '',
@@ -56,7 +64,6 @@ export class SkimKhasDataEntryComponent implements OnInit {
   
   rows = []; 
   empRows = []; 
-
 
   columns = [
     { prop: 'rptId', name : 'Id' },
@@ -82,6 +89,14 @@ export class SkimKhasDataEntryComponent implements OnInit {
     }); 
  
      this.configureEditForm();
+
+     this.cols = [
+      { field: 'vin', header: 'Vin' },
+      { field: 'year', header: 'Year' },
+      { field: 'brand', header: 'Brand' },
+      { field: 'color', header: 'Color' }
+  ];
+  
   }
 
   
@@ -187,12 +202,7 @@ export class SkimKhasDataEntryComponent implements OnInit {
       }  
     }
 
-    onSubmit()
-    {
-
-    }
-
- 
+  
 
   private configureAddForm()
   {

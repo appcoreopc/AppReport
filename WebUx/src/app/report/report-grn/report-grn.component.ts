@@ -329,6 +329,7 @@ export class ReportGrnComponent implements OnInit {
   save()
   {
         var saveJson = new GrnModel();
+
         if (this.intention == ADD)
         {
              saveJson = this.dataForm.value as GrnModel;
@@ -744,7 +745,9 @@ export class ReportGrnComponent implements OnInit {
 
   private configureAddForm()
   {
+
       this.setFormValidation(''); 
+
       for (const field in this.formErrors) { 
         this.formErrors[field] = ''; 
       }   
@@ -809,13 +812,12 @@ private setFormValidation(id :any) {
   
 }
 private configureEditForm() {
+
       this.setFormValidation(this.data.grnid); 
       this.dataForm.valueChanges.debounceTime(300)
       .subscribe(data => this.onValueChanged(data));
- }
-                          
-               
-                          
+ }                          
+                                         
   onSelect(evt : any) {
     
     if (evt && evt.selected && evt.selected.length > 0)

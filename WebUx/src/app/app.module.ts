@@ -63,7 +63,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
-import {TabViewModule} from 'primeng/tabview';
+import { TabViewModule } from 'primeng/tabview';
+import {TableModule} from 'primeng/table';
 
 import { AuthGuard } from './auth/AuthGuard';
 import { AuthService } from './auth/auth-service.service';
@@ -102,7 +103,7 @@ export const ROUTES: Routes = [
   ],
   imports: [
     BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, 
-    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule,TabViewModule,
+    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule,TabViewModule,TableModule,
     
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
