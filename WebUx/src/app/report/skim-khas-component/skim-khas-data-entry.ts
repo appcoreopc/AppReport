@@ -16,6 +16,7 @@ import { CalendarModule } from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import {SpinnerModule} from 'primeng/spinner';
 import {DialogModule} from 'primeng/dialog';
+import {SkimKhasEntryModel} from "../../model/SkimKhasEntryModel";
 
 @Component({
   selector: 'skim-khas-data-entry-component',
@@ -27,6 +28,7 @@ export class SkimKhasDataEntryComponent implements OnInit {
   private data: RptSkModel = new RptSkModel(); 
   private dataForm: FormGroup;
   private intention : number = UPDATE;
+  private skimKhasEntryModel : SkimKhasEntryModel = new SkimKhasEntryModel(); 
   
   display: boolean = false; 
   formTitle: string = "New GRN"; 
@@ -40,7 +42,6 @@ export class SkimKhasDataEntryComponent implements OnInit {
         { field: 'color', header: 'Color' }
     ];
     
-
   cars : any[] = [{vin : 'test'}, {vin : 'test2'}, {vin : 'test3'} ];
 
   formErrors = {
@@ -101,7 +102,9 @@ export class SkimKhasDataEntryComponent implements OnInit {
 
   
   ngAfterViewInit() { 
+
     this.dispatchIntent(SKIMKHAS_GET); 
+    
     this.dispatchIntent(EMPLOYEE_GET);
  }
   

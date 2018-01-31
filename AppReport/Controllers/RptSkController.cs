@@ -9,10 +9,7 @@ using AppReport.DataServices.PTSDataModel;
 using Microsoft.Extensions.Options;
 using AppReport.Config;
 using System.Collections.Generic;
-using Microsoft.Extensions.Localization;
-using System.Resources;
-using System.Globalization;
-using AppReport.Resources;
+using System.Linq;
 using AppReport.Util;
 using AppReport.RequestModel;
 
@@ -96,8 +93,9 @@ namespace AppReport.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var users = new RptSkService(_ptsContext).GetAll();
-            return new JsonResult(users);
+            var reportItem = new RptSkService(_ptsContext).GetAll();
+            var cnt = reportItem?.Count();            
+            return new JsonResult(reportItem);
         }
 
         [HttpPost]
