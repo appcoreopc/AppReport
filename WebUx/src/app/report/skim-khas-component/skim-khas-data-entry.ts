@@ -92,8 +92,8 @@ export class SkimKhasDataEntryComponent implements OnInit {
      this.configureEditForm();
 
      this.cols = [
-      { field: 'vin', header: 'Vin' },
-      { field: 'year', header: 'Year' },
+      { field: 'txnId', header: 'txnId' },
+      { field: 'rptId', header: 'rptId' },
       { field: 'brand', header: 'Brand' },
       { field: 'color', header: 'Color' }
   ];

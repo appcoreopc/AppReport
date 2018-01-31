@@ -185,7 +185,7 @@
 					<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>     
 				</div>
 				
-				<p-table [columns]="cols" [value]="dataList.rptSkMimp">
+				<p-table [value]="data.rptSkMimp">
 					
 					<ng-template pTemplate="header">
 						<tr>
@@ -208,11 +208,86 @@
 										<input type="text">
 									</ng-template>
 									<ng-template pTemplate="output">
-										{{rowData.vin}}
+										{{rowData.txnId}}
+									</ng-template>
+								</p-cellEditor>
+								</td>
+								
+							<td pEditableColumn>
+								<p-cellEditor>
+									<ng-template pTemplate="input">
+										<input type="text">
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData.fImpDate}}
 									</ng-template>
 								</p-cellEditor>
 							</td>
+
+							<td pEditableColumn>
+								<p-cellEditor>
+									<ng-template pTemplate="input">
+										<input type="text">
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData.fCustomNo}}
+									</ng-template>
+								</p-cellEditor>
+							</td>
+
+							<td pEditableColumn>
+								<p-cellEditor>
+									<ng-template pTemplate="input">
+										<input type="text">
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData.fCustomNo}}
+									</ng-template>
+								</p-cellEditor>
+							</td>
+
+							<td pEditableColumn>
+								<p-cellEditor>
+									<ng-template pTemplate="input">
+										<input type="text">
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData.fImpCost}}
+									</ng-template>
+								</p-cellEditor>
+							</td>
+
+
+							<td pEditableColumn>
+								<p-cellEditor>
+									<ng-template pTemplate="input">
+										<input type="text">
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData.fGstcost}}
+									</ng-template>
+								</p-cellEditor>
+							</td>
+
+							<td pEditableColumn>
+								<p-cellEditor>
+									<ng-template pTemplate="input">
+										<input type="text">
+									</ng-template>
+									<ng-template pTemplate="output">
+										{{rowData.note}}
+									</ng-template>
+								</p-cellEditor>
+							</td>
+
+
+							
+
+
+
+
 						</tr>
+
 						
 					</ng-template>		
 					

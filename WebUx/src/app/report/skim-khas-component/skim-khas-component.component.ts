@@ -31,7 +31,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     
     display: boolean = false; 
     formTitle: string = "New GRN"; 
-    dataList : Array<any> = new Array<any>();  
+    dataList : Array<RptSkModel> = new Array<RptSkModel>();  
     empDataList : Array<any> = new Array<any>();
     
     cars : any[] = [{vin : 'test'}, {vin : 'test2'}, {vin : 'test3'} ];
@@ -145,25 +145,13 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     componentMessageHandle(message : any) {
       
       if (message && message.type == SKIMKHAS_GET_OK)
-      {
-        
+      {        
         this.rows.length = 0;
+
         for (var idx in message.data)
         {
           var dataInfo = message.data[idx] as RptSkModel;    
-          this.dataList.push({   
-            rptId : dataInfo.rptId,
-            rptDate : new Date(dataInfo.rptDate),
-            letterDate : new Date(dataInfo.letterDate)  
-          });
-          
-          if (dataInfo.rptSkMimp)
-          {
-            dataInfo.rptSkMimp = new Array<RptSkMimp>();
-            for (var x of dataInfo.rptSkMimp) {
-              dataInfo.rptSkMimp.push(x);
-            }
-          }
+          this.dataList.push(dataInfo);
         }
         
         this.rows = this.dataList;
