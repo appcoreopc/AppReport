@@ -88,13 +88,11 @@ namespace AppReport.Controllers
             return View();
         }
 
-
         //http://localhost:5050/rptsk/index
         [HttpGet]
         public IActionResult Index()
-        {
-            var reportItem = new RptSkService(_ptsContext).GetAll();
-            var cnt = reportItem?.Count();            
+        {        
+            var reportItem = new RptSkService(_ptsContext).GetAllRptDetails();                     
             return new JsonResult(reportItem);
         }
 

@@ -32,7 +32,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     formTitle: string = "New GRN"; 
     dataList : Array<any> = new Array<any>();  
     empDataList : Array<any> = new Array<any>();  
-        
+    cars : any[] = [{vin : 'test'}, {vin : 'test2'}, {vin : 'test3'} ];
+    
     formErrors = {
       'rptId': '',
       'rptDate': '',
@@ -113,8 +114,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       console.log("strJson",strJson);
       this.display = false;         
     } 
-    
-    
+        
     
     onValueChanged(data?: RptSkModel) {
       
@@ -124,8 +124,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       this.data.rptId = data.rptId;
       this.data.rptDate = data.rptDate;
       this.data.letterDate = data.letterDate;  
-      
-      
+            
       for (const field in this.formErrors) {
         // clear previous error message (if any)
         this.formErrors[field] = '';

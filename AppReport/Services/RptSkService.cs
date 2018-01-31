@@ -1,5 +1,6 @@
 ﻿using AppReport.DataServices.PTSDataModel;
 using AppReport.RequestModel;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,11 @@ namespace AppReport.Services
             return _context.RptSk;
         }
 
-
+        public IEnumerable<RptSk> GetAllRptDetails()
+        {
+            return _context.RptSk.Include(x => x.RptSkMimp);
+        }
+        
         public RptSk Get(int id)
         {
             if (_context.RptSk == null || _context.RptSk.Count() == 0)
