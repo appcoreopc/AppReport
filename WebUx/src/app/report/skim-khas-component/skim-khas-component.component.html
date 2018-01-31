@@ -13,8 +13,6 @@
 			
 			<p-tabPanel header="Basic Entry">
 				
-				
-				
 				<form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
 					<div style="width:1000px;padding:0px">
 						
@@ -180,9 +178,9 @@
 			
 			
 			<p-tabPanel header="Detail Entry">
-								
+				
 				<div>   
-					<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>     
+					<p-button (onClick)="addDataEntryForm()" icon="fa fa-fw fa-plus" label="Add Detail"></p-button>     
 				</div>
 				
 				<p-table [value]="data.rptSkMimp">
@@ -211,8 +209,8 @@
 										{{rowData.txnId}}
 									</ng-template>
 								</p-cellEditor>
-								</td>
-								
+							</td>
+							
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
@@ -223,7 +221,7 @@
 									</ng-template>
 								</p-cellEditor>
 							</td>
-
+							
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
@@ -234,7 +232,7 @@
 									</ng-template>
 								</p-cellEditor>
 							</td>
-
+							
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
@@ -245,7 +243,7 @@
 									</ng-template>
 								</p-cellEditor>
 							</td>
-
+							
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
@@ -256,8 +254,8 @@
 									</ng-template>
 								</p-cellEditor>
 							</td>
-
-
+							
+							
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
@@ -268,7 +266,7 @@
 									</ng-template>
 								</p-cellEditor>
 							</td>
-
+							
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
@@ -279,15 +277,15 @@
 									</ng-template>
 								</p-cellEditor>
 							</td>
-
-
 							
-
-
-
-
+							
+							
+							
+							
+							
+							
 						</tr>
-
+						
 						
 					</ng-template>		
 					
@@ -320,7 +318,75 @@
 
 <div class="container">   
 	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>     
+	
+	<p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="displayDataEntry" modal='true'>
+		
+
+
+
+
+
+
+
+		<form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
+			<div style="width:1000px;padding:0px">
+				
+				<div class="panel panel-info"> 
+					<div class="panel-body" style="padding:5px; padding-left:30px"> 
+						
+						
+						
+						<div class="form-group row">
+							<div class="cell c1">
+								<label for="taxid">Tax Id :</label>
+							</div> 
+							<div class="cell c2345">
+								<input id="taxid" type="text" class="form-control text-control" />  
+							</div> 
+						</div> 
+						<div class="form-group row">
+							<div class="cell c1">
+								<label for="rptId">Report Id :</label>
+							</div> 
+							<div class="cell c2345">
+								<input id="rptId" type="text" class="form-control text-control" /> 
+							</div> 
+						</div> 
+						<div class="form-group row">
+							<div class="cell c1">
+								<label for="fImpDate">Date :</label>
+							</div> 
+							<div class="cell c2345">
+								<input id="fImpDate" type="text" class="form-control text-control" />  
+							</div> 
+						</div> 
+						
+						    
+					</div> 
+				</div>   
+				
+				
+				<p>Form value: {{ dataForm.value | json }}</p>
+				<p>Form value: {{ uomRows | json }}</p>
+				<p>Form value: {{ rmDataList | json }}</p>
+			</div> 
+		</form>			
+		
+
+
+
+
+
+
+
+	</p-dialog>
 </div>
+
+
+
+
+
+
 <div style="clear:both; height:10px"></div>
 <div class="container"> 
 	<ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"

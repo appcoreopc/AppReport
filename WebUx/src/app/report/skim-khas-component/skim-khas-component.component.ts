@@ -28,7 +28,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     private data: RptSkModel = new RptSkModel(); 
     private dataForm: FormGroup;
     private intention : number = UPDATE;
-    
+
+    displayDataEntry : boolean = false;
     display: boolean = false; 
     formTitle: string = "New GRN"; 
     dataList : Array<RptSkModel> = new Array<RptSkModel>();  
@@ -246,6 +247,12 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       this.intention = ADD;
       this.configureAddForm();  
     }   
+
+    addDataEntryForm()
+    {
+      console.log('goooood stuf');
+      this.displayDataEntry = true;
+    }
     
     edit() {  
       
