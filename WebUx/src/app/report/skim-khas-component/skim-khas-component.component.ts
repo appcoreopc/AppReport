@@ -32,8 +32,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     formTitle: string = "New GRN"; 
     dataList : Array<any> = new Array<any>();  
     empDataList : Array<any> = new Array<any>();  
-    
-    
+        
     formErrors = {
       'rptId': '',
       'rptDate': '',
@@ -68,7 +67,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       { prop: 'signedByPos', name : 'Position' },
       { prop: 'signedByName', name : 'Name' } 
     ];
-    
+
+
     constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
     
     ngOnInit() {
@@ -194,8 +194,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     {
       
     }
-    
-    
+       
     
     private configureAddForm()
     {
@@ -229,6 +228,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     
     onSelect(evt : any) {
       
+      this.intention = UPDATE;
+
       if (evt && evt.selected && evt.selected.length > 0)
       {
         this.data = evt.selected[0] as RptSkModel;                   
