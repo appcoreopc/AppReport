@@ -1,6 +1,6 @@
 
 // RptSkMimp
-export class RptSkMimp { 
+export class RptSkMimpModel { 
     txnid? : number;
     rptid? : number;
     fimpdate: Date;

@@ -1,4 +1,4 @@
-import { RptSkMimp } from "./RptSkMimpModel";
+import { RptSkMimpModel } from "./RptSkMimpModel";
 
 export class RptSkModel { 
 
@@ -36,5 +36,5 @@ export class RptSkModel {
  signedByNameImp : string;
  signedByIdnoImp : string;
  signedByPosImp : string; 
- rptSkMimp : RptSkMimp[];
+ rptSkMimp : RptSkMimpModel[];
 }

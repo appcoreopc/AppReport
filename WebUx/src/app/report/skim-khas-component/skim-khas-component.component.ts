@@ -16,7 +16,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   import {DropdownModule} from 'primeng/dropdown';
   import {SpinnerModule} from 'primeng/spinner';
   import {DialogModule} from 'primeng/dialog';
-  import { RptSkMimp } from '../../model/RptSkMimpModel';
+  import { RptSkMimpModel } from '../../model/RptSkMimpModel';
   
   @Component({
     selector: 'app-skim-khas-component',
