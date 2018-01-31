@@ -1,3 +1,5 @@
+import { RptSkMimp } from "./RptSkMimpModel";
+
 export class RptSkModel { 
 
  rptId : number;
@@ -34,5 +36,5 @@ export class RptSkModel {
  signedByNameImp : string;
  signedByIdnoImp : string;
  signedByPosImp : string; 
- 
+ rptSkMimp : RptSkMimp[];
 }

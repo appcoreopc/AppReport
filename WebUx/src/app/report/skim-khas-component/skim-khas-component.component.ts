@@ -16,6 +16,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   import {DropdownModule} from 'primeng/dropdown';
   import {SpinnerModule} from 'primeng/spinner';
   import {DialogModule} from 'primeng/dialog';
+  import { RptSkMimp } from '../../model/RptSkMimpModel';
   
   @Component({
     selector: 'app-skim-khas-component',
@@ -31,7 +32,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     display: boolean = false; 
     formTitle: string = "New GRN"; 
     dataList : Array<any> = new Array<any>();  
-    empDataList : Array<any> = new Array<any>();  
+    empDataList : Array<any> = new Array<any>();
+    
     cars : any[] = [{vin : 'test'}, {vin : 'test2'}, {vin : 'test3'} ];
     
     formErrors = {
@@ -55,7 +57,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     
     rows = []; 
     empRows = []; 
-            
+    
     columns = [
       { prop: 'rptId', name : 'Id' },
       { prop: 'rptDate', name : 'Date' },
@@ -68,11 +70,12 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       { prop: 'signedByPos', name : 'Position' },
       { prop: 'signedByName', name : 'Name' } 
     ];
-
-
+    
+    
     constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
     
     ngOnInit() {
+      
       this.userSubscription = this.store.subscribe(appData => {   
         
         this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, SKIMKHAS_SAVE_SUCCESS), SKIMKHAS_SAVE_SUCCESS));
@@ -87,13 +90,13 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     }
     
     ngAfterViewInit() { 
-
+      
       this.dispatchIntent(SKIMKHAS_GET); 
-
+      
       this.dispatchIntent(EMPLOYEE_GET);
     }
     
-
+    
     save()
     {
       var saveJson = new RptSkModel();
@@ -102,7 +105,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         saveJson = this.dataForm.value as RptSkModel;
       }
       else {
-
+        
         saveJson.rptId = this.data.rptId;
         saveJson.rptDate = this.data.rptDate;
         saveJson.letterDate = this.data.letterDate; 
@@ -114,7 +117,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       console.log("strJson",strJson);
       this.display = false;         
     } 
-        
+    
     
     onValueChanged(data?: RptSkModel) {
       
@@ -124,7 +127,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       this.data.rptId = data.rptId;
       this.data.rptDate = data.rptDate;
       this.data.letterDate = data.letterDate;  
-            
+      
       for (const field in this.formErrors) {
         // clear previous error message (if any)
         this.formErrors[field] = '';
@@ -143,6 +146,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
       if (message && message.type == SKIMKHAS_GET_OK)
       {
+        
         this.rows.length = 0;
         for (var idx in message.data)
         {
@@ -150,8 +154,16 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
           this.dataList.push({   
             rptId : dataInfo.rptId,
             rptDate : new Date(dataInfo.rptDate),
-            letterDate : new Date(dataInfo.letterDate)
+            letterDate : new Date(dataInfo.letterDate)  
           });
+          
+          if (dataInfo.rptSkMimp)
+          {
+            dataInfo.rptSkMimp = new Array<RptSkMimp>();
+            for (var x of dataInfo.rptSkMimp) {
+              dataInfo.rptSkMimp.push(x);
+            }
+          }
         }
         
         this.rows = this.dataList;
@@ -193,7 +205,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     {
       
     }
-       
+    
     
     private configureAddForm()
     {
@@ -202,7 +214,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         this.formErrors[field] = ''; 
       }   
     }
-        
+    
     private setFormValidation(id :any) {
       
       this.dataForm = this.fb.group({
@@ -228,7 +240,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     onSelect(evt : any) {
       
       this.intention = UPDATE;
-
+      
       if (evt && evt.selected && evt.selected.length > 0)
       {
         this.data = evt.selected[0] as RptSkModel;                   
