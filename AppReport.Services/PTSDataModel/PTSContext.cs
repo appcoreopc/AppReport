@@ -25,6 +25,7 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<RptLgYrdy> RptLgYrdy { get; set; }
         public virtual DbSet<RptM1> RptM1 { get; set; }
         public virtual DbSet<RptM1Mstk> RptM1Mstk { get; set; }
+        public virtual DbSet<RptM1MstkInv> RptM1MstkInv { get; set; }
         public virtual DbSet<RptSk> RptSk { get; set; }
         public virtual DbSet<RptSkMimp> RptSkMimp { get; set; }
         public virtual DbSet<RptStatus> RptStatus { get; set; }
@@ -34,7 +35,12 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
-      
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Component>(entity =>
@@ -1215,29 +1221,15 @@ namespace AppReport.DataServices.PTSDataModel
 
             modelBuilder.Entity<RptM1Mstk>(entity =>
             {
-                entity.HasKey(e => e.TxnId)
+                entity.HasKey(e => e.MstkId)
                     .HasName("PK_RptM1Trans");
 
                 entity.ToTable("RptM1_MStk");
 
+                entity.Property(e => e.MstkId).HasColumnName("MStkId");
+
                 entity.Property(e => e.FCloseBal)
                     .HasColumnName("F_CloseBal")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FImpFreightCost)
-                    .HasColumnName("F_ImpFreightCost")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FImpWgt)
-                    .HasColumnName("F_ImpWgt")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FLocFreightCost)
-                    .HasColumnName("F_LocFreightCost")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FLocWgt)
-                    .HasColumnName("F_LocWgt")
                     .HasColumnType("decimal");
 
                 entity.Property(e => e.FOpenBal)
@@ -1264,13 +1256,41 @@ namespace AppReport.DataServices.PTSDataModel
                     .HasColumnName("F_UOMCode")
                     .HasMaxLength(10);
 
-                entity.Property(e => e.InvoiceNo).HasColumnType("varchar(50)");
-
                 entity.Property(e => e.Rmid).HasColumnName("RMId");
 
                 entity.Property(e => e.UsedCost).HasColumnType("decimal");
 
                 entity.Property(e => e.WastedCost).HasColumnType("decimal");
+            });
+
+            modelBuilder.Entity<RptM1MstkInv>(entity =>
+            {
+                entity.HasKey(e => e.MstkInvId)
+                    .HasName("PK_RptM1_MStkInv");
+
+                entity.ToTable("RptM1_MStkInv");
+
+                entity.Property(e => e.MstkInvId).HasColumnName("MStkInvId");
+
+                entity.Property(e => e.FImpFreightCost)
+                    .HasColumnName("F_ImpFreightCost")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FImpWgt)
+                    .HasColumnName("F_ImpWgt")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FLocFreightCost)
+                    .HasColumnName("F_LocFreightCost")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FLocWgt)
+                    .HasColumnName("F_LocWgt")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.InvoiceNo).HasColumnType("varchar(50)");
+
+                entity.Property(e => e.MstkId).HasColumnName("MStkId");
             });
 
             modelBuilder.Entity<RptSk>(entity =>
