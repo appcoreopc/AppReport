@@ -29,6 +29,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     private dataForm: FormGroup;
     private intention : number = UPDATE;
     
+    dateValue : Date;
+
     displayDataEntry : boolean = false;
     display: boolean = false; 
     formTitle: string = "New GRN"; 
@@ -39,14 +41,13 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       'rptId': '',
       'rptDate': '',
       'letterDate': '' 
-    }; 
+    };    
     
-
-
+    
     itemSelected : boolean = false;
-
+    
     mainItemSelected : RptSkModel; 
-        
+    
     validationMessages = {    
       'rptDate': {
         'required': 'Report Month/Year is required.' 
@@ -55,7 +56,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         'required': 'Date of Letter is required.' 
       } 
     };
-        
+    
     userSubscription : Subscription;    
     rows = []; 
     empRows = []; 
@@ -72,7 +73,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       { prop: 'signedByPos', name : 'Position' },
       { prop: 'signedByName', name : 'Name' } 
     ];
-
+    
     dataEntryColumns = [
       { field: 'txnId', header: 'Bill' },
       { field: 'fImpDate', header: 'Tarikh' },
@@ -82,20 +83,20 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       { field: 'fGstcost', header: 'GST' },
       { field: 'note', header: 'Catatan' }   
     ];
-
+    
     basicEntryColumns = [
       { field: 'txnId', header: 'Bill' },      
       { field: 'fImpDate', header: 'Tarikh' },
       { field: 'fCustomNo', header: 'No Barang Kastam' },
       { field: 'fImpCost', header: 'Kuantiti Import' }    
     ];
-
+    
     mainColumns  = [
       { field: 'rptId', header: 'Report Id' },      
       { field: 'rptDate', header: 'Report Date' }    
     ];
     
-  constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
+    constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
     
     ngOnInit() {
       
@@ -118,7 +119,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
       this.dispatchIntent(EMPLOYEE_GET);
     }
-       
+    
     
     save()
     {
@@ -216,10 +217,10 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     {
       
     }
-        
+    
     private configureAddForm()
     {
-      this.setFormValidation(''); 
+      // this.setFormValidation(''); 
       for (const field in this.formErrors) { 
         this.formErrors[field] = ''; 
       }   
@@ -227,51 +228,45 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     
     private setFormValidation(id :any) {
       
-      this.dataForm = this.fb.group({
-        'rptId': [id],
-        'rptDate': ['', [Validators.required, Validators.minLength(1)]], 
-        'letterDate': ['', [Validators.required, Validators.minLength(1)]], 
-        'refNo': ['', [Validators.required, Validators.minLength(1)]]  , 
-        'lrcptDept': ['', [Validators.required, Validators.minLength(1)]]  , 
-        'lrcptBr': ['', [Validators.required, Validators.minLength(1)]]  , 
-        'lrcptAdd1': ['', [Validators.required, Validators.minLength(1)]]  , 
-        'signedByEmpId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]  , 
-        'signedByPos': ['', [Validators.required, Validators.minLength(1)]]  , 
-        'signedByName': ['', [Validators.required, Validators.minLength(1)]]  
-      });  
+      // this.dataForm = this.fb.group({
+      //   'rptId': [id],
+      //   'rptDate': ['', [Validators.required, Validators.minLength(1)]], 
+      //   'letterDate': ['', [Validators.required, Validators.minLength(1)]], 
+      //   'refNo': ['', [Validators.required, Validators.minLength(1)]]  , 
+      //   'lrcptDept': ['', [Validators.required, Validators.minLength(1)]]  , 
+      //   'lrcptBr': ['', [Validators.required, Validators.minLength(1)]]  , 
+      //   'lrcptAdd1': ['', [Validators.required, Validators.minLength(1)]]  , 
+      //   'signedByEmpId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]  , 
+      //   'signedByPos': ['', [Validators.required, Validators.minLength(1)]]  , 
+      //   'signedByName': ['', [Validators.required, Validators.minLength(1)]]  
+      // });  
     }
+   
     private configureEditForm() {
       
-      this.setFormValidation(this.data.rptId);
-         
-
+      this.dataForm = this.fb.group({
+        'rptId': [this.data.rptId],
+        'rptDate': [this.data.rptDate, [Validators.required, Validators.minLength(1)]], 
+        'letterDate': [this.data.letterDate, [Validators.required, Validators.minLength(1)]], 
+        'refNo': [this.data.refNo, [Validators.required, Validators.minLength(1)]]  , 
+        'lrcptDept': [this.data.lrcptDept, [Validators.required, Validators.minLength(1)]]  , 
+        'lrcptBr': [this.data.lrcptBr, [Validators.required, Validators.minLength(1)]]  , 
+        'lrcptAdd1': [this.data.lrcptAdd1, [Validators.required, Validators.minLength(1)]]  , 
+        'signedByEmpId': [this.data.signedByEmpId, [Validators.required, Validators.minLength(1), Validators.min(1)]], 
+        'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]]  , 
+        'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]]  
+      });
       
       
       this.dataForm.valueChanges.debounceTime(300).subscribe(
         data => this.onValueChanged(data));
       }
-      
-      
-      onSelect(evt : any) {
-        
-        this.intention = UPDATE;
-        
-        if (evt && evt.selected && evt.selected.length > 0)
-        {
-          this.data = evt.selected[0] as RptSkModel;                   
-          this.itemSelected = true;   
-        }
-        else 
-        this.itemSelected = false;
-        this.edit();
-      }
-      
+   
       addForm() {        
         
         this.formTitle = "New Report SKIM Khas"; 
         this.display = true;                          
         this.intention = ADD;
-        
         this.configureAddForm();  
       }   
       
@@ -284,15 +279,16 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         
         this.formTitle = "Edit Report SKIM Khas"; 
         this.intention = UPDATE;                            
-        this.configureEditForm();        
-    
-        if (this.data)
-        {                                  
-          this.dataForm.get("rptId").setValue(this.data.rptId);
-          this.dataForm.get("rptDate").setValue(new Date(this.data.rptDate));
-          this.dataForm.get("letterDate").setValue(new Date(this.data.letterDate)); 
-          this.display = true;
-        }       
+        this.display = true;
+       this.configureEditForm(); 
+        
+        // if (this.data)
+        // {                                  
+        //   this.dataForm.get("rptId").setValue(this.data.rptId);
+        //   this.dataForm.get("rptDate").setValue(new Date(this.data.rptDate));
+        //   this.dataForm.get("letterDate").setValue(new Date(this.data.letterDate)); 
+        //   this.display = true;
+        // }       
       }                          
       
       cancel() 
@@ -311,27 +307,28 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
             data : data 
           });  
         } 
-
+        
         onEditComplete(evt)
         {
           console.log(evt);
         }
-
+        
         onRowSelect(evt)
-        {
+        { 
           console.log('onrowselect');
           console.log(evt);
-
+          
           this.intention = UPDATE;
-        
-          if (evt && evt.selected && evt.selected.length > 0)
+          
+          if (evt && evt.data)
           {
-            this.data = evt.selected[0] as RptSkModel;                   
+            this.data = evt.data as RptSkModel;                   
             this.itemSelected = true;   
           }
           else 
-          this.itemSelected = false;
-          this.edit();
+            this.itemSelected = false;
+          
+           this.edit();
           
         }
       }

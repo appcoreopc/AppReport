@@ -7,288 +7,201 @@
 		
 		<p-tabView>			
 			
-			<p-tabPanel header="Basic Entry">
-				
-				<form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
-					<div style="width:1000px;padding:0px">
-						
-						<div class="panel panel-info"> 
-							<div class="panel-body" style="padding:5px; padding-left:30px"> 
-								
-								
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="RefNo">Reference No :</label>
-									</div> 
-									<div class="cell c2">
-										<input id="RefNo" type="text" class="form-control text-control" /> 
-									</div>
-									<div class="cell c3"> 
-									</div> 
-									<div class="cell c4">
-										<label for="LetterDate">Date of Letter :</label>
-									</div> 
-									<div class="cell c5"><p-calendar formControlName="letterDate" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
-										<div *ngIf="formErrors.letterDate" class="alert alert-danger">
-											{{ formErrors.letterDate }}
-										</div> 
-									</div>
-								</div>  
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="RefNo">Report Month/Year :</label>
-									</div> 
-									<div class="cell c2">
-										<p-calendar formControlName="rptDate" dateFormat="M yy" showIcon="true"></p-calendar>
-										<div *ngIf="formErrors.rptDate" class="alert alert-danger">
-											{{ formErrors.rptDate }}
-										</div>
-									</div>
-									<div class="cell c3"> 
-									</div> 
-									<div class="cell c4"> 
-									</div> 
-									<div class="cell c5"> 
-									</div>
-								</div>   
-								
-								<div class="form-group row" style="padding-top:20px"> 
-									<b>Recipient</b> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="LRcptDept">Department :</label>
-									</div> 
-									<div class="cell c2345">
-										<input id="LRcptDept" type="text" class="form-control text-control" />  
-									</div> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="LRcptBr">Branch :</label>
-									</div> 
-									<div class="cell c2345">
-										<input id="LRcptBr" type="text" class="form-control text-control" /> 
-									</div> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="LRcptAdd1">Address :</label>
-									</div> 
-									<div class="cell c2345">
-										<input id="LRcptAdd1" type="text" class="form-control text-control" />  
-									</div> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="LRcptAdd2"></label>
-									</div> 
-									<div class="cell c2345">
-										<input id="LRcptAdd2" type="text" class="form-control text-control" /> 
-									</div> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="LRcptAdd3"></label>
-									</div> 
-									<div class="cell c2345">
-										<input id="LRcptAdd3" type="text" class="form-control text-control" />  
-									</div> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="LRcptAdd4"></label>
-									</div> 
-									<div class="cell c2345">
-										<input id="LRcptAdd4" type="text" class="form-control text-control" /> 
-									</div> 
-								</div> 
-								
-								
-								<div class="form-group row" style="padding-top:20px"> 
-									<b>Signed By</b> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="signedByEmpId">Employee :</label>
-									</div> 
-									<div class="cell c2345">
-										<select class="form-control" formControlName="signedByEmpId" style="width:300px">
-											<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
-										</select> 
-									</div> 
-								</div> 
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="SignedByName">Name :</label>
-									</div> 
-									<div class="cell c2345">
-										<input id="SignedByName" type="text" class="form-control text-control" />  
-									</div> 
-								</div> 
-								
-								
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="icno">IC <Noscript></Noscript> :</label>
-									</div> 
-									<div class="cell c2345">
-										<input id="icno" type="text" class="form-control text-control" />  
-									</div> 
-								</div> 
-								
-								<div class="form-group row">
-									<div class="cell c1">
-										<label for="SignedByPos">Position :</label>
-									</div> 
-									<div class="cell c2345">
-										<input id="SignedByPos" type="text" class="form-control text-control" />  
-									</div> 
-								</div>    
-							</div> 
-						</div>   
-						
-						<div class="form-group row">
-							<div class="cell c1"> 
-							</div> 
-							<div class="cell c2"> 
-							</div>
-							<div class="cell c3"> 
-							</div> 
-							<div class="cell c4"> 
-							</div> 
-							<div class="cell c5" style="text-align:right">	   
-								
-								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
-							</div>
-						</div>
-						
-						<p>Form value: {{ dataForm.value | json }}</p>
-						<p>Form value: {{ uomRows | json }}</p>
-						<p>Form value: {{ rmDataList | json }}</p>
-					</div> 
-				</form>			
-				
-				
-			</p-tabPanel>
-			
-			<p-tabPanel  header="Detail Entry">				
-				
-				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp"
-				[paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect($event)" (onEditComplete)="onEditComplete($event)">
-				
-				<ng-template pTemplate="header" let-dataEntryColumns>
-					<tr>
-						<th style="width: 2.25em"></th>
-						<th *ngFor="let col of dataEntryColumns">
-							{{col.header}}															
-						</th>
-					</tr>
-				</ng-template>
-				
-				<ng-template pTemplate="caption">
-					
+			 <p-tabPanel header="Basic Entry">
+
 					<form [formGroup]='dataForm'> 
-						<div style="width:1000px;padding:0px">							
+
+						<div style="width:1000px;padding:0px">
+							
 							<div class="panel panel-info"> 
 								<div class="panel-body" style="padding:5px; padding-left:30px"> 
 									
+									
 									<div class="form-group row">
 										<div class="cell c1">
-											<label for="taxid">Bill</label>
+											<label for="RefNo">Reference No :</label>
+										</div> 
+										<div class="cell c2">
+											<input id="rptId" type="text" class="form-control text-control" formControlName="rptId" /> 
+										</div>
+										<div class="cell c3"> 
+										</div> 
+										<div class="cell c4">
+											<label for="LetterDate">Date of Letter :</label>
+										</div> 
+										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" showIcon="true"  [monthNavigator]="true"></p-calendar>
+											<div *ngIf="formErrors.letterDate" class="alert alert-danger">
+												{{ formErrors.letterDate }}
+											</div> 
+										</div>
+									</div>  
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="RefNo">Report Month/Year :</label>
+										</div> 
+										<div class="cell c2">
+											<p-calendar dateFormat="M yy" showIcon="true"></p-calendar>
+											<div *ngIf="formErrors.rptDate" class="alert alert-danger">
+												{{ formErrors.rptDate }}
+											</div>
+										</div>
+										<div class="cell c3"> 
+										</div> 
+										<div class="cell c4"> 
+										</div> 
+										<div class="cell c5"> 
+										</div>
+									</div>   
+									
+									<div class="form-group row" style="padding-top:20px"> 
+										<b>Recipient</b> 
+									</div> 
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="LRcptDept">Department :</label>
 										</div> 
 										<div class="cell c2345">
-											<input id="taxid" type="text" class="form-control text-control" />  
+											<input id="LRcptDept" type="text" class="form-control text-control" formControlName="lrcptDept" />  
 										</div> 
 									</div> 
 									<div class="form-group row">
 										<div class="cell c1">
-											<label for="tarikh">Tarikh</label>
+											<label for="LRcptBr">Branch :</label>
 										</div> 
 										<div class="cell c2345">
-											<input id="tarikh" type="text" class="form-control text-control" /> 
+											<input id="LRcptBr" type="text" class="form-control text-control" formControlName="lrcptBr" /> 
 										</div> 
 									</div> 
 									<div class="form-group row">
 										<div class="cell c1">
-											<label for="nobarang">No Barang</label>
+											<label for="LRcptAdd1">Address :</label>
 										</div> 
 										<div class="cell c2345">
-											<input id="nobarang" type="text" class="form-control text-control" />  
+											<input id="LRcptAdd1" type="text" class="form-control text-control" formControlName="lrcptAdd1" />  
 										</div> 
-									</div> 			
-									
+									</div> 
 									<div class="form-group row">
 										<div class="cell c1">
-											<label for="kuantitiImport">Kuantiti Import</label>
+											<label for="LRcptAdd2"></label>
 										</div> 
 										<div class="cell c2345">
-											<input id="kuantitiImport" type="text" class="form-control text-control" />  
+											<input id="LRcptAdd2" type="text" class="form-control text-control" /> 
 										</div> 
-									</div> 			
-									
+									</div> 
 									<div class="form-group row">
 										<div class="cell c1">
-											<label for="nilaiImport">Nilai Import</label>
+											<label for="LRcptAdd3"></label>
 										</div> 
 										<div class="cell c2345">
-											<input id="nilaiImport" type="text" class="form-control text-control" />  
+											<input id="LRcptAdd3" type="text" class="form-control text-control" />  
 										</div> 
-									</div> 		
-									
+									</div> 
 									<div class="form-group row">
 										<div class="cell c1">
-											<label for="catatan">Catatan</label>
+											<label for="LRcptAdd4"></label>
 										</div> 
 										<div class="cell c2345">
-											<input id="catatan" type="text" class="form-control text-control" />  
+											<input id="LRcptAdd4" type="text" class="form-control text-control" /> 
 										</div> 
 									</div> 
 									
-									<div class="cell c5" style="text-align:right">	   
-										
-										<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
-									</div>
 									
+									<div class="form-group row" style="padding-top:20px"> 
+										<b>Signed By</b> 
+									</div> 
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="signedByEmpId">Employee :</label>
+										</div> 
+										<div class="cell c2345">
+											<select class="form-control" formControlName="signedByEmpId" style="width:300px">
+												<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
+											</select> 
+										</div> 
+									</div> 
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="SignedByName">Name :</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="SignedByName" type="text" class="form-control text-control" />  
+										</div> 
+									</div> 
+									
+									
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="icno">IC <Noscript></Noscript> :</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="icno" type="text" class="form-control text-control" />  
+										</div> 
+									</div> 
+									
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="SignedByPos">Position :</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="SignedByPos" type="text" class="form-control text-control" />  
+										</div> 
+									</div>    
 								</div> 
-							</div>   	
-						</div> 
-					</form>							
-					
-				</ng-template>
-				
-				
-				<ng-template pTemplate="body" let-rowData let-columns="columns"  let-expanded="expanded" columns="columns">
-					<tr>												
-						<td>
-							<div [pRowToggler]="rowData">
-								<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
-							</div>
-						</td>
-						
-						<td *ngFor="let col of columns">
-							{{rowData[col.field]}}
-						</td>
-					</tr>					
-					
-				</ng-template>		
-				
-				
-				<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-					
-					<tr>						
-						<td [attr.colspan]="columns.length + 1">
+							</div>   
 							
+							<div class="form-group row">
+								<div class="cell c1"> 
+								</div> 
+								<div class="cell c2"> 
+								</div>
+								<div class="cell c3"> 
+								</div> 
+								<div class="cell c4"> 
+								</div> 
+								<div class="cell c5" style="text-align:right">	   
+									
+									<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
+								</div>
+							</div>
+							
+							<p>Form value: {{ dataForm.value | json }}</p>
+							<p>Form value: {{ uomRows | json }}</p>
+							<p>Form value: {{ rmDataList | json }}</p>
+						</div> 
+					
+					
+					</form>			
+		
+				</p-tabPanel>
+				
+				<p-tabPanel header="Detail Entry">				
+					
+					<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp"
+					[paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect($event)">
+					
+					<ng-template pTemplate="header" let-dataEntryColumns>
+						<tr>
+							<th style="width: 2.25em"></th>
+							<th *ngFor="let col of dataEntryColumns">
+								{{col.header}}															
+							</th>
+						</tr>
+					</ng-template>
+					
+					<ng-template pTemplate="caption">
+						
+						<form [formGroup]='dataForm'> 
+
 							<div style="width:1000px;padding:0px">							
 								<div class="panel panel-info"> 
 									<div class="panel-body" style="padding:5px; padding-left:30px"> 
 										
 										<div class="form-group row">
 											<div class="cell c1">
-												<label for="txnId">Bill</label>
+												<label for="taxid">Bill</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="txnId" type="text" value="{{rowData.txnId}}"  class="form-control text-control" />  
+												<input id="taxid" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 
 										<div class="form-group row">
@@ -296,7 +209,7 @@
 												<label for="tarikh">Tarikh</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="tarikh" type="text" value="{{rowData.fImpDate}}"  class="form-control text-control" /> 
+												<input id="tarikh" type="text" class="form-control text-control" /> 
 											</div> 
 										</div> 
 										<div class="form-group row">
@@ -304,7 +217,7 @@
 												<label for="nobarang">No Barang</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="nobarang" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />  
+												<input id="nobarang" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 			
 										
@@ -313,7 +226,7 @@
 												<label for="kuantitiImport">Kuantiti Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="kuantitiImport" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />  
+												<input id="kuantitiImport" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 			
 										
@@ -322,7 +235,7 @@
 												<label for="nilaiImport">Nilai Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="nilaiImport" value="{{rowData.fImpCost}}" type="text" class="form-control text-control" />  
+												<input id="nilaiImport" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 		
 										
@@ -331,46 +244,135 @@
 												<label for="catatan">Catatan</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="catatan" type="text" value="{{rowData.note}}" class="form-control text-control" />  
+												<input id="catatan" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 
 										
-										<div class="cell c5">	   											
+										<div class="cell c5" style="text-align:right">	   
+											
 											<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
 										</div>
 										
 									</div> 
 								</div>   	
 							</div> 
-							
-							
-						</td>			
-					</tr>
+						</form>							
+						
+					</ng-template>
 					
-				</ng-template>
-				
-			</p-table>
-			
-			<div>
+					
+					<ng-template pTemplate="body" let-rowData let-columns="columns"  let-expanded="expanded" columns="columns">
+						<tr>												
+							<td>
+								<div [pRowToggler]="rowData">
+									<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+								</div>
+							</td>
+							
+							<td *ngFor="let col of columns">
+								{{rowData[col.field]}}
+							</td>
+						</tr>					
+						
+					</ng-template>		
+					
+					
+					<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+						
+						<tr>						
+							<td [attr.colspan]="columns.length + 1">
+								
+								<div style="width:1000px;padding:0px">							
+									<div class="panel panel-info"> 
+										<div class="panel-body" style="padding:5px; padding-left:30px"> 
+											
+											<div class="form-group row">
+												<div class="cell c1">
+													<label for="txnId">Bill</label>
+												</div> 
+												<div class="cell c2345">
+													<input id="txnId" type="text" value="{{rowData.txnId}}"  class="form-control text-control" />  
+												</div> 
+											</div> 
+											<div class="form-group row">
+												<div class="cell c1">
+													<label for="tarikh">Tarikh</label>
+												</div> 
+												<div class="cell c2345">
+													<input id="tarikh" type="text" value="{{rowData.fImpDate}}"  class="form-control text-control" /> 
+												</div> 
+											</div> 
+											<div class="form-group row">
+												<div class="cell c1">
+													<label for="nobarang">No Barang</label>
+												</div> 
+												<div class="cell c2345">
+													<input id="nobarang" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />  
+												</div> 
+											</div> 			
+											
+											<div class="form-group row">
+												<div class="cell c1">
+													<label for="kuantitiImport">Kuantiti Import</label>
+												</div> 
+												<div class="cell c2345">
+													<input id="kuantitiImport" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />  
+												</div> 
+											</div> 			
+											
+											<div class="form-group row">
+												<div class="cell c1">
+													<label for="nilaiImport">Nilai Import</label>
+												</div> 
+												<div class="cell c2345">
+													<input id="nilaiImport" value="{{rowData.fImpCost}}" type="text" class="form-control text-control" />  
+												</div> 
+											</div> 		
+											
+											<div class="form-group row">
+												<div class="cell c1">
+													<label for="catatan">Catatan</label>
+												</div> 
+												<div class="cell c2345">
+													<input id="catatan" type="text" value="{{rowData.note}}" class="form-control text-control" />  
+												</div> 
+											</div> 
+											
+											<div class="cell c5">	   											
+												<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
+											</div>
+											
+										</div> 
+									</div>   	
+								</div> 
+								
+								
+							</td>			
+						</tr>
+						
+					</ng-template>
+					
+				</p-table>
 				
 				<div>
 					
-					<p>Form value: {{ dataForm.value | json }}</p>
-					<p>Form value: {{ uomRows | json }}</p>
-					<p>Form value: {{ rmDataList | json }}</p>
-				</div> 
+					<div>
+						
+						<p>Form value: {{ dataForm.value | json }}</p>
+						<p>Form value: {{ uomRows | json }}</p>
+						<p>Form value: {{ rmDataList | json }}</p>
+					</div> 
+					
+				</div>
 				
-			</div>
+				<div class="container">   
+					<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Save"></p-button>     
+				</div>
+				
+				
+			</p-tabPanel>
 			
-			<div class="container">   
-				<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Save"></p-button>     
-			</div>
-			
-			
-		</p-tabPanel>
-		
-		
-	</p-tabView>
+		</p-tabView>
 	
 </p-dialog>    
 
