@@ -29,7 +29,7 @@
 										<div class="cell c4">
 											<label for="LetterDate">Date of Letter :</label>
 										</div> 
-										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" showIcon="true"  [monthNavigator]="true"></p-calendar>
+										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" showIcon="true" [monthNavigator]="true"></p-calendar>
 											<div *ngIf="formErrors.letterDate" class="alert alert-danger">
 												{{ formErrors.letterDate }}
 											</div> 
@@ -85,7 +85,7 @@
 											<label for="LRcptAdd2"></label>
 										</div> 
 										<div class="cell c2345">
-											<input id="LRcptAdd2" type="text" class="form-control text-control" /> 
+											<input id="LRcptAdd2" type="text" class="form-control text-control" formControlName="lrcptAdd2"/> 
 										</div> 
 									</div> 
 									<div class="form-group row">
@@ -93,7 +93,7 @@
 											<label for="LRcptAdd3"></label>
 										</div> 
 										<div class="cell c2345">
-											<input id="LRcptAdd3" type="text" class="form-control text-control" />  
+											<input id="LRcptAdd3" type="text" class="form-control text-control" formControlName="lrcptAdd3" />  
 										</div> 
 									</div> 
 									<div class="form-group row">
@@ -101,7 +101,7 @@
 											<label for="LRcptAdd4"></label>
 										</div> 
 										<div class="cell c2345">
-											<input id="LRcptAdd4" type="text" class="form-control text-control" /> 
+											<input id="LRcptAdd4" type="text" class="form-control text-control" formControlName="lrcptAdd4" /> 
 										</div> 
 									</div> 
 									
@@ -124,7 +124,7 @@
 											<label for="SignedByName">Name :</label>
 										</div> 
 										<div class="cell c2345">
-											<input id="SignedByName" type="text" class="form-control text-control" />  
+											<input id="SignedByName" type="text" class="form-control text-control" formControlName="signedByName" />  
 										</div> 
 									</div> 
 									
@@ -134,7 +134,7 @@
 											<label for="icno">IC <Noscript></Noscript> :</label>
 										</div> 
 										<div class="cell c2345">
-											<input id="icno" type="text" class="form-control text-control" />  
+											<input id="icno" type="text" class="form-control text-control" formControlName="signedByIdno" />  
 										</div> 
 									</div> 
 									
@@ -143,7 +143,7 @@
 											<label for="SignedByPos">Position :</label>
 										</div> 
 										<div class="cell c2345">
-											<input id="SignedByPos" type="text" class="form-control text-control" />  
+											<input id="SignedByPos" type="text" class="form-control text-control" formControlName="signedByPos"/>  
 										</div> 
 									</div>    
 								</div> 

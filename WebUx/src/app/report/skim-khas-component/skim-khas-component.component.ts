@@ -29,7 +29,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     private dataForm: FormGroup;
     private intention : number = UPDATE;
     
-    dateValue : Date;
+    dateValue = new Date().getDate();
 
     displayDataEntry : boolean = false;
     display: boolean = false; 
@@ -42,8 +42,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       'rptDate': '',
       'letterDate': '' 
     };    
-    
-    
+        
     itemSelected : boolean = false;
     
     mainItemSelected : RptSkModel; 
@@ -251,10 +250,15 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         'refNo': [this.data.refNo, [Validators.required, Validators.minLength(1)]]  , 
         'lrcptDept': [this.data.lrcptDept, [Validators.required, Validators.minLength(1)]]  , 
         'lrcptBr': [this.data.lrcptBr, [Validators.required, Validators.minLength(1)]]  , 
-        'lrcptAdd1': [this.data.lrcptAdd1, [Validators.required, Validators.minLength(1)]]  , 
+        'lrcptAdd1': [this.data.lrcptAdd1, [Validators.required, Validators.minLength(1)]],
+        'lrcptAdd2': [this.data.lrcptAdd2, [Validators.required, Validators.minLength(1)]],
+        'lrcptAdd3': [this.data.lrcptAdd3, [Validators.required, Validators.minLength(1)]],
+        'lrcptAdd4': [this.data.lrcptAdd4, [Validators.required, Validators.minLength(1)]],
         'signedByEmpId': [this.data.signedByEmpId, [Validators.required, Validators.minLength(1), Validators.min(1)]], 
-        'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]]  , 
-        'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]]  
+        'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]], 
+        'signedByIdno': [this.data.signedByIdno, [Validators.required, Validators.minLength(1)]],
+        'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]],
+        'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]]  
       });
       
       
@@ -280,7 +284,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         this.formTitle = "Edit Report SKIM Khas"; 
         this.intention = UPDATE;                            
         this.display = true;
-       this.configureEditForm(); 
+        this.configureEditForm(); 
         
         // if (this.data)
         // {                                  
