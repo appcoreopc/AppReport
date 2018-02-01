@@ -175,38 +175,109 @@
 				
 				
 			</p-tabPanel>
-			
-			
-			<p-tabPanel header="Detail Entry">
-				
+						
+			<p-tabPanel  header="Detail Entry">				
 				<div>   
 					<p-button (onClick)="addDataEntryForm()" icon="fa fa-fw fa-plus" label="Add Detail"></p-button>     
 				</div>
 				
-				<p-table [value]="data.rptSkMimp">
+				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp"
+				 [paginator]="true" [rows]="10" (onRowSelect)="onRowSelect" (onEditComplete)="onEditComplete($event)">
 					
-					<ng-template pTemplate="header">
+					<ng-template pTemplate="header" let-dataEntryColumns>
 						<tr>
-							<th>Bill</th>
-							<th>Tarikh</th>
-							<th>No Barang Kastam</th>
-							<th>Kuantiti Import</th>
-							<th>Nilai Import</th>
-							<th>GST</th>
-							<th>Catatan</th>
+							<th *ngFor="let col of dataEntryColumns">
+								{{col.header}}															
+							</th>
 						</tr>
 					</ng-template>
 					
-					<ng-template pTemplate="body" let-rowData let-columns="columns">
+					
+					<ng-template pTemplate="caption">
+						
+						<form [formGroup]='dataForm'> 
+							<div style="width:1000px;padding:0px">
+								
+								<div class="panel panel-info"> 
+									<div class="panel-body" style="padding:5px; padding-left:30px"> 
+										
+										
+										<div class="form-group row">
+											<div class="cell c1">
+												<label for="taxid">Bill</label>
+											</div> 
+											<div class="cell c2345">
+												<input id="taxid" type="text" class="form-control text-control" />  
+											</div> 
+										</div> 
+										<div class="form-group row">
+											<div class="cell c1">
+												<label for="tarikh">Tarikh</label>
+											</div> 
+											<div class="cell c2345">
+												<input id="tarikh" type="text" class="form-control text-control" /> 
+											</div> 
+										</div> 
+										<div class="form-group row">
+											<div class="cell c1">
+												<label for="nobarang">No Barang</label>
+											</div> 
+											<div class="cell c2345">
+												<input id="nobarang" type="text" class="form-control text-control" />  
+											</div> 
+										</div> 			
+										
+										<div class="form-group row">
+											<div class="cell c1">
+												<label for="kuantitiImport">Kuantiti Import</label>
+											</div> 
+											<div class="cell c2345">
+												<input id="kuantitiImport" type="text" class="form-control text-control" />  
+											</div> 
+										</div> 			
+										
+										<div class="form-group row">
+											<div class="cell c1">
+												<label for="nilaiImport">Nilai Import</label>
+											</div> 
+											<div class="cell c2345">
+												<input id="nilaiImport" type="text" class="form-control text-control" />  
+											</div> 
+										</div> 		
+										
+										<div class="form-group row">
+											<div class="cell c1">
+												<label for="catatan">Catatan</label>
+											</div> 
+											<div class="cell c2345">
+												<input id="catatan" type="text" class="form-control text-control" />  
+											</div> 
+										</div> 
+										
+										<div class="cell c5" style="text-align:right">	   
+											
+											<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
+										</div>
+										
+									</div> 
+								</div>   	
+							</div> 
+						</form>			
+						
+						
+					</ng-template>
+					
+					
+					<ng-template pTemplate="body" let-rowData columns="columns">
 						
 						<tr>
-							<td pEditableColumn>
+							<td pEditableColumn='{{rowData.txnId}}' pEditableColumnField='txnId'>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
-										<input type="text">
+										<input type="text" ([ngModel])="rowData.txnId">
 									</ng-template>
 									<ng-template pTemplate="output">
-										{{rowData.txnId}}
+										<i>	{{rowData.txnId}}</i>
 									</ng-template>
 								</p-cellEditor>
 							</td>
@@ -214,7 +285,7 @@
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
-										<input type="text">
+										<input type="text" ([ngModel])="rowData.fImpDate">
 									</ng-template>
 									<ng-template pTemplate="output">
 										{{rowData.fImpDate}}
@@ -225,7 +296,7 @@
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
-										<input type="text">
+										<input type="text" ([ngModel])="rowData.fCustomNo">
 									</ng-template>
 									<ng-template pTemplate="output">
 										{{rowData.fCustomNo}}
@@ -236,9 +307,9 @@
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
-										<input type="text">
+										<input type="text" ([ngModel])="rowData.fCustomNo">
 									</ng-template>
-									<ng-template pTemplate="output">
+									<ng-template pTemplate="output" >
 										{{rowData.fCustomNo}}
 									</ng-template>
 								</p-cellEditor>
@@ -247,19 +318,18 @@
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
-										<input type="text">
+										<input type="text" ([ngModel])="rowData.fImpCost">
 									</ng-template>
 									<ng-template pTemplate="output">
 										{{rowData.fImpCost}}
 									</ng-template>
 								</p-cellEditor>
-							</td>
-							
+							</td>							
 							
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
-										<input type="text">
+										<input type="text" ([ngModel])="rowData.fGstcost">
 									</ng-template>
 									<ng-template pTemplate="output">
 										{{rowData.fGstcost}}
@@ -270,7 +340,7 @@
 							<td pEditableColumn>
 								<p-cellEditor>
 									<ng-template pTemplate="input">
-										<input type="text">
+										<input type="text" ([ngModel])="rowData.note">
 									</ng-template>
 									<ng-template pTemplate="output">
 										{{rowData.note}}
@@ -321,69 +391,11 @@
 	
 	<p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="displayDataEntry" modal='true'>
 		
-
-
-
-
-
-
-
-		<form [formGroup]='dataForm' (ngSubmit)="onSubmit()"> 
-			<div style="width:1000px;padding:0px">
-				
-				<div class="panel panel-info"> 
-					<div class="panel-body" style="padding:5px; padding-left:30px"> 
-						
-						
-						
-						<div class="form-group row">
-							<div class="cell c1">
-								<label for="taxid">Tax Id :</label>
-							</div> 
-							<div class="cell c2345">
-								<input id="taxid" type="text" class="form-control text-control" />  
-							</div> 
-						</div> 
-						<div class="form-group row">
-							<div class="cell c1">
-								<label for="rptId">Report Id :</label>
-							</div> 
-							<div class="cell c2345">
-								<input id="rptId" type="text" class="form-control text-control" /> 
-							</div> 
-						</div> 
-						<div class="form-group row">
-							<div class="cell c1">
-								<label for="fImpDate">Date :</label>
-							</div> 
-							<div class="cell c2345">
-								<input id="fImpDate" type="text" class="form-control text-control" />  
-							</div> 
-						</div> 
-						
-						    
-					</div> 
-				</div>   
-				
-				
-				<p>Form value: {{ dataForm.value | json }}</p>
-				<p>Form value: {{ uomRows | json }}</p>
-				<p>Form value: {{ rmDataList | json }}</p>
-			</div> 
-		</form>			
 		
-
-
-
-
-
-
-
+		
+		
 	</p-dialog>
 </div>
-
-
-
 
 
 

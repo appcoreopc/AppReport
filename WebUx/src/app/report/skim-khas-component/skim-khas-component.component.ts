@@ -28,14 +28,12 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     private data: RptSkModel = new RptSkModel(); 
     private dataForm: FormGroup;
     private intention : number = UPDATE;
-
+    
     displayDataEntry : boolean = false;
     display: boolean = false; 
     formTitle: string = "New GRN"; 
     dataList : Array<RptSkModel> = new Array<RptSkModel>();  
     empDataList : Array<any> = new Array<any>();
-    
-    cars : any[] = [{vin : 'test'}, {vin : 'test2'}, {vin : 'test3'} ];
     
     formErrors = {
       'rptId': '',
@@ -71,6 +69,16 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       { prop: 'signedByPos', name : 'Position' },
       { prop: 'signedByName', name : 'Name' } 
     ];
+
+    dataEntryColumns = [
+      { field: 'txnId', header: 'Bill' },
+      { field: 'fImpDate', header: 'Tarikh' },
+      { field: 'fCustomNo', header: 'No Barang Kastam' },
+      { field: 'fImpCost', header: 'Kuantiti Import' },
+      { field: 'fImpCost', header: 'Nilai Import' },
+      { field: 'fGstcost', header: 'GST' },
+      { field: 'note', header: 'Catatan' }   
+    ];
     
     
     constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
@@ -96,7 +104,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
       this.dispatchIntent(EMPLOYEE_GET);
     }
-    
+       
     
     save()
     {
@@ -148,7 +156,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       if (message && message.type == SKIMKHAS_GET_OK)
       {        
         this.rows.length = 0;
-
+        
         for (var idx in message.data)
         {
           var dataInfo = message.data[idx] as RptSkModel;    
@@ -194,8 +202,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     {
       
     }
-    
-    
+        
     private configureAddForm()
     {
       this.setFormValidation(''); 
@@ -220,71 +227,87 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       });  
     }
     private configureEditForm() {
+      
       this.setFormValidation(this.data.rptId); 
-      this.dataForm.valueChanges.debounceTime(300)
-      .subscribe(data => this.onValueChanged(data));
-    }
-    
-    
-    onSelect(evt : any) {
       
-      this.intention = UPDATE;
-      
-      if (evt && evt.selected && evt.selected.length > 0)
-      {
-        this.data = evt.selected[0] as RptSkModel;                   
-        this.itemSelected = true;   
+      this.dataForm.valueChanges.debounceTime(300).subscribe(
+        data => this.onValueChanged(data));
       }
-      else 
-      this.itemSelected = false;
-      this.edit();
-    }
-    
-    addForm() {        
       
-      this.formTitle = "New Report SKIM Khas"; 
-      this.display = true;                          
-      this.intention = ADD;
-      this.configureAddForm();  
-    }   
+      
+      onSelect(evt : any) {
+        
+        this.intention = UPDATE;
+        
+        if (evt && evt.selected && evt.selected.length > 0)
+        {
+          this.data = evt.selected[0] as RptSkModel;                   
+          this.itemSelected = true;   
+        }
+        else 
+        this.itemSelected = false;
+        this.edit();
+      }
+      
+      addForm() {        
+        
+        this.formTitle = "New Report SKIM Khas"; 
+        this.display = true;                          
+        this.intention = ADD;
+        
+        this.configureAddForm();  
+      }   
+      
+      addDataEntryForm()
+      {
+        console.log('goooood stuf');
+        this.displayDataEntry = true;
+      }
+      
+      edit() {  
+        
+        this.formTitle = "Edit Report SKIM Khas"; 
+        this.intention = UPDATE;                            
+        this.configureEditForm();
+        
+        console.log("edit data",this.data);
+        if (this.data)
+        {                                  
+          this.dataForm.get("rptId").setValue(this.data.rptId);
+          this.dataForm.get("rptDate").setValue(new Date(this.data.rptDate));
+          this.dataForm.get("letterDate").setValue(new Date(this.data.letterDate)); 
+          this.display = true;
+        }       
+      }                          
+      
+      cancel() 
+      {
+        this.display = false;     
+        this.itemSelected = false;          
+      }    
+      
+      dispatchIntent(messageType : string, data? : any)
+      {   
+        console.log(messageType);
+        
+        this.store.dispatch(
+          {     
+            type: messageType,
+            data : data 
+          });  
+        } 
 
-    addDataEntryForm()
-    {
-      console.log('goooood stuf');
-      this.displayDataEntry = true;
-    }
-    
-    edit() {  
+
+        onEditComplete(evt)
+        {
+          console.log(evt);
+        }
+
+
+        onRowSelect(evt)
+        {
+          console.log('onrowselect');
+          console.log(evt);
+        }
+      }
       
-      this.formTitle = "Edit Report SKIM Khas"; 
-      this.intention = UPDATE;                            
-      this.configureEditForm();
-      
-      console.log("edit data",this.data);
-      if (this.data)
-      {                                  
-        this.dataForm.get("rptId").setValue(this.data.rptId);
-        this.dataForm.get("rptDate").setValue(new Date(this.data.rptDate));
-        this.dataForm.get("letterDate").setValue(new Date(this.data.letterDate)); 
-        this.display = true;
-      }       
-    }                          
-    
-    cancel() 
-    {
-      this.display = false;     
-      this.itemSelected = false;          
-    }    
-    
-    dispatchIntent(messageType : string, data? : any)
-    {   
-      console.log(messageType);
-      
-      this.store.dispatch(
-        {     
-          type: messageType,
-          data : data 
-        });  
-      } 
-    }
-    

@@ -36,7 +36,7 @@ import { HttpClientModule }  from '@angular/common/http';
 
 import { ReportEffects } from './reporting/reporting-component//reportingEffects';
 import { ReportReducer} from './reporting/reporting-component/reportingReducer';
-import { ReactiveFormsModule }          from '@angular/forms';
+import { ReactiveFormsModule, FormsModule }          from '@angular/forms';
 
 import { ReportGrnComponent } from './report/report-grn/report-grn.component';
 import { LampiranM1ComponentComponent } from './report/lampiran-m1-component/lampiran-m1-component.component';
@@ -103,7 +103,7 @@ export const ROUTES: Routes = [
   ],
   imports: [
     BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, 
-    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule,TabViewModule,TableModule,
+    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
     
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
