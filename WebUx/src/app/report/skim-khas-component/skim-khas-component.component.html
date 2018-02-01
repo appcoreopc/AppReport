@@ -1,15 +1,11 @@
  <!-- Latest compiled and minified CSS -->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
  
- 
  <div class="container"> 
 	
 	<p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="display" modal='true'>
 		
-		
-		<p-tabView>
-			
-			
+		<p-tabView>			
 			
 			<p-tabPanel header="Basic Entry">
 				
@@ -175,39 +171,124 @@
 				
 				
 			</p-tabPanel>
-						
+			
 			<p-tabPanel  header="Detail Entry">				
-				<div>   
-					<p-button (onClick)="addDataEntryForm()" icon="fa fa-fw fa-plus" label="Add Detail"></p-button>     
-				</div>
 				
 				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp"
-				 [paginator]="true" [rows]="10" (onRowSelect)="onRowSelect" (onEditComplete)="onEditComplete($event)">
+				[paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect" (onEditComplete)="onEditComplete($event)">
+				
+				<ng-template pTemplate="header" let-dataEntryColumns>
+					<tr>
+						<th style="width: 2.25em"></th>
+						<th *ngFor="let col of dataEntryColumns">
+							{{col.header}}															
+						</th>
+					</tr>
+				</ng-template>
+				
+				<ng-template pTemplate="caption">
 					
-					<ng-template pTemplate="header" let-dataEntryColumns>
-						<tr>
-							<th *ngFor="let col of dataEntryColumns">
-								{{col.header}}															
-							</th>
-						</tr>
-					</ng-template>
+					<form [formGroup]='dataForm'> 
+						<div style="width:1000px;padding:0px">							
+							<div class="panel panel-info"> 
+								<div class="panel-body" style="padding:5px; padding-left:30px"> 
+									
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="taxid">Bill</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="taxid" type="text" class="form-control text-control" />  
+										</div> 
+									</div> 
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="tarikh">Tarikh</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="tarikh" type="text" class="form-control text-control" /> 
+										</div> 
+									</div> 
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="nobarang">No Barang</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="nobarang" type="text" class="form-control text-control" />  
+										</div> 
+									</div> 			
+									
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="kuantitiImport">Kuantiti Import</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="kuantitiImport" type="text" class="form-control text-control" />  
+										</div> 
+									</div> 			
+									
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="nilaiImport">Nilai Import</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="nilaiImport" type="text" class="form-control text-control" />  
+										</div> 
+									</div> 		
+									
+									<div class="form-group row">
+										<div class="cell c1">
+											<label for="catatan">Catatan</label>
+										</div> 
+										<div class="cell c2345">
+											<input id="catatan" type="text" class="form-control text-control" />  
+										</div> 
+									</div> 
+									
+									<div class="cell c5" style="text-align:right">	   
+										
+										<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
+									</div>
+									
+								</div> 
+							</div>   	
+						</div> 
+					</form>							
 					
-					
-					<ng-template pTemplate="caption">
+				</ng-template>
+				
+				
+				<ng-template pTemplate="body" let-rowData let-columns="columns"  let-expanded="expanded" columns="columns">
+					<tr>												
+						<td>
+							<div [pRowToggler]="rowData">
+								<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+							</div>
+						</td>
 						
-						<form [formGroup]='dataForm'> 
-							<div style="width:1000px;padding:0px">
-								
+						<td *ngFor="let col of columns">
+							{{rowData[col.field]}}
+						</td>
+					</tr>					
+					
+				</ng-template>		
+				
+				
+				<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+					
+					<tr>						
+						<td [attr.colspan]="columns.length + 1">
+							
+							<div style="width:1000px;padding:0px">							
 								<div class="panel panel-info"> 
 									<div class="panel-body" style="padding:5px; padding-left:30px"> 
 										
-										
 										<div class="form-group row">
 											<div class="cell c1">
-												<label for="taxid">Bill</label>
+												<label for="txnId">Bill</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="taxid" type="text" class="form-control text-control" />  
+												<input id="txnId" type="text" value="{{rowData.txnId}}"  class="form-control text-control" />  
 											</div> 
 										</div> 
 										<div class="form-group row">
@@ -215,7 +296,7 @@
 												<label for="tarikh">Tarikh</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="tarikh" type="text" class="form-control text-control" /> 
+												<input id="tarikh" type="text" value="{{rowData.fImpDate}}"  class="form-control text-control" /> 
 											</div> 
 										</div> 
 										<div class="form-group row">
@@ -223,7 +304,7 @@
 												<label for="nobarang">No Barang</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="nobarang" type="text" class="form-control text-control" />  
+												<input id="nobarang" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 			
 										
@@ -232,7 +313,7 @@
 												<label for="kuantitiImport">Kuantiti Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="kuantitiImport" type="text" class="form-control text-control" />  
+												<input id="kuantitiImport" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 			
 										
@@ -241,7 +322,7 @@
 												<label for="nilaiImport">Nilai Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="nilaiImport" type="text" class="form-control text-control" />  
+												<input id="nilaiImport" value="{{rowData.fImpCost}}" type="text" class="form-control text-control" />  
 											</div> 
 										</div> 		
 										
@@ -250,140 +331,49 @@
 												<label for="catatan">Catatan</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="catatan" type="text" class="form-control text-control" />  
+												<input id="catatan" type="text" value="{{rowData.note}}" class="form-control text-control" />  
 											</div> 
 										</div> 
 										
-										<div class="cell c5" style="text-align:right">	   
-											
+										<div class="cell c5">	   											
 											<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
 										</div>
 										
 									</div> 
 								</div>   	
 							</div> 
-						</form>			
-						
-						
-					</ng-template>
+							
+							
+						</td>			
+					</tr>
 					
-					
-					<ng-template pTemplate="body" let-rowData columns="columns">
-						
-						<tr>
-							<td pEditableColumn='{{rowData.txnId}}' pEditableColumnField='txnId'>
-								<p-cellEditor>
-									<ng-template pTemplate="input">
-										<input type="text" ([ngModel])="rowData.txnId" />
-									</ng-template>
-									<ng-template pTemplate="output">
-										<i>	{{rowData.txnId}}</i>
-									</ng-template>
-								</p-cellEditor>
-							</td>
-							
-							<td pEditableColumn>
-								<p-cellEditor>
-									<ng-template pTemplate="input">
-										<input type="text" ([ngModel])="rowData.fImpDate" />
-									</ng-template>
-									<ng-template pTemplate="output">
-										{{rowData.fImpDate}}
-									</ng-template>
-								</p-cellEditor>
-							</td>
-							
-							<td pEditableColumn>
-								<p-cellEditor>
-									<ng-template pTemplate="input">
-										<input type="text" ([ngModel])="rowData.fCustomNo" />
-									</ng-template>
-									<ng-template pTemplate="output">
-										{{rowData.fCustomNo}}
-									</ng-template>
-								</p-cellEditor>
-							</td>
-							
-							<td pEditableColumn>
-								<p-cellEditor>
-									<ng-template pTemplate="input">
-										<input type="text" ([ngModel])="rowData.fCustomNo"/>
-									</ng-template>
-									<ng-template pTemplate="output" >
-										{{rowData.fCustomNo}}
-									</ng-template>
-								</p-cellEditor>
-							</td>
-							
-							<td pEditableColumn>
-								<p-cellEditor>
-									<ng-template pTemplate="input">
-										<input type="text" ([ngModel])="rowData.fImpCost" />
-									</ng-template>
-									<ng-template pTemplate="output">
-										{{rowData.fImpCost}}
-									</ng-template>
-								</p-cellEditor>
-							</td>							
-							
-							<td pEditableColumn>
-								<p-cellEditor>
-									<ng-template pTemplate="input">
-										<input type="text" ([ngModel])="rowData.fGstcost" />
-									</ng-template>
-									<ng-template pTemplate="output">
-										{{rowData.fGstcost}}
-									</ng-template>
-								</p-cellEditor>
-							</td>
-							
-							<td pEditableColumn>
-								<p-cellEditor>
-									<ng-template pTemplate="input">
-										<input type="text" ([ngModel])="rowData.note" />
-									</ng-template>
-									<ng-template pTemplate="output">
-										{{rowData.note}}
-									</ng-template>
-								</p-cellEditor>
-							</td>
-							
-							
-							
-							
-							
-							
-							
-						</tr>
-						
-						
-					</ng-template>		
-					
-				</p-table>
+				</ng-template>
+				
+			</p-table>
+			
+			<div>
 				
 				<div>
 					
-					<div>
-						
-						<p>Form value: {{ dataForm.value | json }}</p>
-						<p>Form value: {{ uomRows | json }}</p>
-						<p>Form value: {{ rmDataList | json }}</p>
-					</div> 
-					
-				</div>
+					<p>Form value: {{ dataForm.value | json }}</p>
+					<p>Form value: {{ uomRows | json }}</p>
+					<p>Form value: {{ rmDataList | json }}</p>
+				</div> 
 				
-				<div class="container">   
-					<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Save"></p-button>     
-				</div>
-				
-				
-			</p-tabPanel>
+			</div>
+			
+			<div class="container">   
+				<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Save"></p-button>     
+			</div>
 			
 			
-		</p-tabView>
+		</p-tabPanel>
 		
-	</p-dialog>    
+		
+	</p-tabView>
 	
+</p-dialog>    
+
 </div>
 
 <div class="container">   
@@ -399,26 +389,41 @@
 
 
 
+
+
+
+
+
+
 <div style="clear:both; height:10px"></div>
+
+
 <div class="container"> 
-	<ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
-	[rows]="rows"
-	[limit]="10"
-	(select)="person" 
-	[selectionType]="'single'"
-	(select)="onSelect($event)" 
-	[headerHeight]="30"  [rowHeight]="'auto'"
-	[footerHeight]="30"> 
-	<ngx-datatable-column  name="Id" prop="rptId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-		<ng-template let-value="value" ngx-datatable-cell-template>
-			{{value}}
+
+		<p-table [columns]="mainColumns" [value]="rows" selectionMode="single" 
+		[paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect">
+		
+		<ng-template pTemplate="header" let-dataEntryColumns>
+			<tr>
+				
+				<th *ngFor="let col of dataEntryColumns">
+					{{col.header}}															
+				</th>
+			</tr>
 		</ng-template>
-	</ngx-datatable-column>
-	<ngx-datatable-column  name="Date" prop="rptDate"  [width]="100" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-		<ng-template let-value="value" ngx-datatable-cell-template>
-			{{value | date: 'dd/MM/yyyy'}} 
-		</ng-template>
-	</ngx-datatable-column>
+		
+		<ng-template pTemplate="body" let-rowData let-columns="columns"  let-expanded="expanded" columns="columns">
+				<tr>
+					<td *ngFor="let col of columns">
+						{{rowData[col.field]}}
+					</td>
+				</tr>					
+				
+			</ng-template>		
+
+		</p-table>
 	
-</ngx-datatable>
+
+
 </div>
+
