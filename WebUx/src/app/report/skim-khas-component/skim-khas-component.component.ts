@@ -42,7 +42,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     }; 
     
     itemSelected : boolean = false;
-    
+        
     validationMessages = {    
       'rptDate': {
         'required': 'Report Month/Year is required.' 
@@ -51,9 +51,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         'required': 'Date of Letter is required.' 
       } 
     };
-    
-    userSubscription : Subscription;
-    
+        
+    userSubscription : Subscription;    
     rows = []; 
     empRows = []; 
     
@@ -79,9 +78,20 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       { field: 'fGstcost', header: 'GST' },
       { field: 'note', header: 'Catatan' }   
     ];
+
+    basicEntryColumns = [
+      { field: 'txnId', header: 'Bill' },      
+      { field: 'fImpDate', header: 'Tarikh' },
+      { field: 'fCustomNo', header: 'No Barang Kastam' },
+      { field: 'fImpCost', header: 'Kuantiti Import' }    
+    ];
+
+    mainColumns  = [
+      { field: 'rptId', header: 'Report Id' },      
+      { field: 'rptDate', header: 'Report Date' }    
+    ];
     
-    
-    constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
+  constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
     
     ngOnInit() {
       
@@ -228,7 +238,10 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     }
     private configureEditForm() {
       
-      this.setFormValidation(this.data.rptId); 
+      this.setFormValidation(this.data.rptId);
+         
+
+      
       
       this.dataForm.valueChanges.debounceTime(300).subscribe(
         data => this.onValueChanged(data));
@@ -259,8 +272,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       }   
       
       addDataEntryForm()
-      {
-        console.log('goooood stuf');
+      {      
         this.displayDataEntry = true;
       }
       
@@ -268,9 +280,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         
         this.formTitle = "Edit Report SKIM Khas"; 
         this.intention = UPDATE;                            
-        this.configureEditForm();
-        
-        console.log("edit data",this.data);
+        this.configureEditForm();        
+    
         if (this.data)
         {                                  
           this.dataForm.get("rptId").setValue(this.data.rptId);
