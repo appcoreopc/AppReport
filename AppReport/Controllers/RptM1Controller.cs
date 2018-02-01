@@ -58,10 +58,14 @@ namespace AppReport.Controllers
             IEnumerable<RptM1Mstk> rptM1Mstk = new RptM1MstkService(_ptsContext).Get(id);
             List<RptM1Mstk> rptM1MstkList = (rptM1Mstk != null) ? rptM1Mstk.ToList() : new List<RptM1Mstk>();
 
+
+            IEnumerable<RptM1MstkInv> RptM1MstkInv = new RptM1MstkInvService(_ptsContext).Get(id);
+            List<RptM1MstkInv> RptM1MstkInvList = (RptM1MstkInv != null) ? RptM1MstkInv.ToList() : new List<RptM1MstkInv>();
+
             if (rptM1 != null)
             {
                 PrintLetter(rptM1);
-                PrintMonthlyRpt(rptM1, rptM1MstkList);
+                PrintMonthlyRpt(rptM1, rptM1MstkList, RptM1MstkInvList);
                 PrintMonthlySummary(rptM1);
 
             }
@@ -836,9 +840,8 @@ Website: {rptM1.FCoWebsite}", f2));
             }
         }
          
-        private void PrintMonthlyRpt(RptM1 rptM1, List<RptM1Mstk> rptList)
-        { 
-
+        private void PrintMonthlyRpt(RptM1 rptM1, List<RptM1Mstk> rptList, List<RptM1MstkInv> rptInvList)
+        {
             using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Monthly_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
             {
                 Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 40f, 10f);
@@ -1060,81 +1063,202 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     tbl.AddCell(cell);
 
-                    int i = 0;
-                    int lastRmId = -1;
+                    int i = 0; 
                     foreach (var d in rptList)
                     { 
-                        if (lastRmId != d.Rmid) i++;
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? i.ToString() : string.Empty, f3));
+                        i++;
+                        cell = new PdfPCell(new Phrase(i.ToString(), f3));
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.PaddingBottom = 5f; 
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? d.FRmdesc : string.Empty, f3)); 
+                        cell = new PdfPCell(new Phrase(d.FRmdesc, f3)); 
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? d.FUomcode : string.Empty, f3)); 
+                        cell = new PdfPCell(new Phrase(d.FUomcode, f3)); 
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell);
                          
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? d.FTariffCode : string.Empty, f3));
+                        cell = new PdfPCell(new Phrase(d.FTariffCode, f3));
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? @String.Format("{0:N}", d.FOpenBal) : string.Empty, f3));
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FOpenBal), f3));
                         cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase(d.InvoiceNo, f3));
-                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                        cell.PaddingBottom = 5f;
-                        tbl.AddCell(cell);
+                        bool isInvFound = false;
+                        foreach (var ri in rptInvList)
+                        {
+                            if (ri.MstkId == d.MstkId)
+                            {
 
-                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FImpWgt), f3));
-                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                        cell.PaddingBottom = 5f;
-                        tbl.AddCell(cell);
+                                cell = new PdfPCell(new Phrase(ri.InvoiceNo, f3));
+                                cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                                cell.PaddingBottom = 5f;
+                                tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FImpFreightCost), f3));
-                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                        cell.PaddingBottom = 5f;
-                        tbl.AddCell(cell);
+                                cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FImpWgt), f3));
+                                cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                cell.PaddingBottom = 5f;
+                                tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FLocWgt), f3));
-                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                        cell.PaddingBottom = 5f;
-                        tbl.AddCell(cell);
+                                cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FImpFreightCost), f3));
+                                cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                cell.PaddingBottom = 5f;
+                                tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FLocFreightCost), f3));
-                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                        cell.PaddingBottom = 5f;
-                        tbl.AddCell(cell);
+                                cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FLocWgt), f3));
+                                cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                cell.PaddingBottom = 5f;
+                                tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? @String.Format("{0:N}", d.FTotalRm) : string.Empty, f3)); 
+                                cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FLocFreightCost), f3));
+                                cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                cell.PaddingBottom = 5f;
+                                tbl.AddCell(cell);
+                                isInvFound = true;
+                            }
+
+                            break;
+                        }
+
+                        if (!isInvFound)
+                        {
+
+                            cell = new PdfPCell(new Phrase(string.Empty, f3));
+                            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.PaddingBottom = 5f;
+                            tbl.AddCell(cell);
+
+                            cell = new PdfPCell(new Phrase(string.Empty, f3));
+                            cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                            cell.PaddingBottom = 5f;
+                            tbl.AddCell(cell);
+
+                            cell = new PdfPCell(new Phrase(string.Empty, f3));
+                            cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                            cell.PaddingBottom = 5f;
+                            tbl.AddCell(cell);
+
+                            cell = new PdfPCell(new Phrase(string.Empty, f3));
+                            cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                            cell.PaddingBottom = 5f;
+                            tbl.AddCell(cell);
+
+                            cell = new PdfPCell(new Phrase(string.Empty, f3));
+                            cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                            cell.PaddingBottom = 5f;
+                            tbl.AddCell(cell);
+                        }
+
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FTotalRm), f3)); 
                         cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell);
                          
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? @String.Format("{0:N}", d.UsedCost) : string.Empty, f3));
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.UsedCost), f3));
                         cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell);
 
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? @String.Format("{0:N}", d.WastedCost) : string.Empty, f3)); 
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.WastedCost), f3)); 
                         cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell); 
 
-                        cell = new PdfPCell(new Phrase((lastRmId != d.Rmid) ? @String.Format("{0:N}", d.FCloseBal) : string.Empty, f3));
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FCloseBal), f3));
                         cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                         cell.PaddingBottom = 5f;
                         tbl.AddCell(cell);
 
-                        lastRmId = (int)d.Rmid;
+                        int iv = 0;
+                        foreach (var ri in rptInvList)
+                        {
+                            if (ri.MstkId == d.MstkId)
+                            {
+                                if (iv > 0) {
+
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(ri.InvoiceNo, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FImpWgt), f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FImpFreightCost), f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FLocWgt), f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", ri.FLocFreightCost), f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+                                    isInvFound = true;
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+
+                                    cell = new PdfPCell(new Phrase(string.Empty, f3));
+                                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                                    cell.PaddingBottom = 5f;
+                                    tbl.AddCell(cell);
+                                }
+
+                                iv++;
+                            }
+                             
+                        }
 
                     }
 

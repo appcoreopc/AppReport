@@ -23,7 +23,7 @@ namespace AppReport.Services
             if (_context.RptM1Mstk == null ||  _context.RptM1Mstk.Count() == 0)
                 return null;
 
-            return _context.RptM1Mstk.Where(i => i.RptId == id).OrderBy(i => i.FRmdesc).OrderBy(i => i.InvoiceNo).ToList();
+            return _context.RptM1Mstk.Where(i => i.RptId == id).OrderBy(i => i.FRmdesc).ToList();
         }
 
         public bool Delete(int id)
