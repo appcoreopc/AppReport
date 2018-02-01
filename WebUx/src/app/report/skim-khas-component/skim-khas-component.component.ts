@@ -41,7 +41,11 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       'letterDate': '' 
     }; 
     
+
+
     itemSelected : boolean = false;
+
+    mainItemSelected : RptSkModel; 
         
     validationMessages = {    
       'rptDate': {
@@ -308,17 +312,27 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
           });  
         } 
 
-
         onEditComplete(evt)
         {
           console.log(evt);
         }
 
-
         onRowSelect(evt)
         {
           console.log('onrowselect');
           console.log(evt);
+
+          this.intention = UPDATE;
+        
+          if (evt && evt.selected && evt.selected.length > 0)
+          {
+            this.data = evt.selected[0] as RptSkModel;                   
+            this.itemSelected = true;   
+          }
+          else 
+          this.itemSelected = false;
+          this.edit();
+          
         }
       }
       

@@ -175,7 +175,7 @@
 			<p-tabPanel  header="Detail Entry">				
 				
 				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp"
-				[paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect" (onEditComplete)="onEditComplete($event)">
+				[paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect($event)" (onEditComplete)="onEditComplete($event)">
 				
 				<ng-template pTemplate="header" let-dataEntryColumns>
 					<tr>
@@ -380,49 +380,39 @@
 	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>     
 	
 	<p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="displayDataEntry" modal='true'>
-		
-		
-		
+					
 		
 	</p-dialog>
 </div>
-
-
-
-
-
-
-
 
 
 <div style="clear:both; height:10px"></div>
 
 
 <div class="container"> 
-
-		<p-table [columns]="mainColumns" [value]="rows" selectionMode="single" 
-		[paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect">
-		
-		<ng-template pTemplate="header" let-dataEntryColumns>
-			<tr>
-				
-				<th *ngFor="let col of dataEntryColumns">
-					{{col.header}}															
-				</th>
-			</tr>
-		</ng-template>
-		
-		<ng-template pTemplate="body" let-rowData let-columns="columns"  let-expanded="expanded" columns="columns">
-				<tr>
-					<td *ngFor="let col of columns">
-						{{rowData[col.field]}}
-					</td>
-				</tr>					
-				
-			</ng-template>		
-
-		</p-table>
 	
+	<p-table [columns]="mainColumns" [value]="rows" 
+	selectionMode="single" [paginator]="true" 
+	[rows]="10" (onRowSelect)="onRowSelect($event)">
+	
+	<ng-template pTemplate="header" let-dataEntryColumns>
+		<tr>			
+			<th *ngFor="let col of dataEntryColumns">
+				{{col.header}}															
+			</th>
+		</tr>
+	</ng-template>
+	
+	<ng-template pTemplate="body" let-rowData let-columns="columns"  let-expanded="expanded" columns="columns">
+		<tr [pSelectableRow]="rowData">
+			<td *ngFor="let col of columns">
+				{{rowData[col.field]}}
+			</td>
+		</tr>	
+	</ng-template>		
+	
+</p-table>
+
 
 
 </div>
