@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
   EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_GET, EMPLOYEE_GET_ERR,
-  EMPLOYEE_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
+  EMPLOYEE_GET_OK, JOBTITLE_GET, JOBTITLE_GET_OK,  CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
   
@@ -20,7 +20,7 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
     @Effect() citySave$ = this.actions$    
     .ofType(EMPLOYEE_SAVE)   
     .map(action => {  
-      
+      console.log("save action",action);
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
@@ -45,6 +45,18 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/employee/index')  
       .map(res => {       
         return { type: EMPLOYEE_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
+    ); 
+
+     @Effect() GrnGetJobTitle$ = this.actions$    
+      .ofType(JOBTITLE_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/JobTitle/index')  
+      .map(res => {       
+        return { type: JOBTITLE_GET_OK, data: res};
       }) 
       .catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
     ); 

@@ -24,16 +24,9 @@ import { CityAppState, SUPPLIER_GET,
       'supplierName' : ''
     };
     
-    validationMessages = {    
-      'supplierId': {
-        'required': 'Supplier Id is required.',
-        'minlength': 'Supplier Id must be at least 4 characters long.',
-        'maxlength': 'Supplier Id cannot be more than 24 characters long.'
-      },
+    validationMessages = {     
       'supplierName': {
-        'required': 'Supplier Name is required.',
-        'minlength': 'Supplier Name must be at least 4 characters long.',
-        'maxlength': 'Supplier Name cannot be more than 24 characters long.'
+        'required': 'Supplier Name is required.' 
       }
     };
     
@@ -41,7 +34,8 @@ import { CityAppState, SUPPLIER_GET,
     
     columns = [
       { prop: 'supplierId' },
-      { name: 'supplierName' }   
+      { name: 'supplierName' } ,
+      { name: 'isLocal' }   
     ];
     
     userSubscription : Subscription;
@@ -49,6 +43,7 @@ import { CityAppState, SUPPLIER_GET,
     
     display: boolean = false;
     itemSelected : boolean = false;
+    formTitle: string = "New Supplier"; 
     
     private supplierModel: SupplierModel = new SupplierModel();
     
@@ -115,15 +110,14 @@ import { CityAppState, SUPPLIER_GET,
           
           var strJson = JSON.stringify(saveJson);           
           this.dispatchIntent(SUPPLIER_SAVE, saveJson);
+          this.display = false; 
           
         }  
         
         private configureAddForm() {
           this.personForm = this.fb.group({
-            'supplierId': ['', [Validators.minLength(1),
-              Validators.maxLength(24)]],
-              'supplierName': ['', [Validators.required, Validators.minLength(1),
-                Validators.maxLength(24)]]
+            'supplierId': ['', [Validators.minLength(1)]],
+              'supplierName': ['', [Validators.required, Validators.minLength(1)]]
               });
               
               this.personForm.valueChanges.debounceTime(500)
@@ -132,10 +126,8 @@ import { CityAppState, SUPPLIER_GET,
             
             private configureUpdateForm() {
               this.personForm = this.fb.group({
-                'supplierId': [this.supplier.supplierId, [Validators.minLength(1),
-                  Validators.maxLength(24)]],
-                  'supplierName': [this.supplier.supplierName, [Validators.required, Validators.minLength(1),
-                    Validators.maxLength(24)]]
+                'supplierId': [this.supplier.supplierId, [Validators.minLength(1)]],
+                  'supplierName': [this.supplier.supplierName, [Validators.required, Validators.minLength(1)]]
                   });
                   
                   this.personForm.valueChanges.debounceTime(500)
@@ -175,6 +167,7 @@ import { CityAppState, SUPPLIER_GET,
                   
                   addForm() {              
                     
+                    this.formTitle = "New Supplier"; 
                     this.display = true;                          
                     this.intention = ADD;
                     this.configureAddForm();  
@@ -186,10 +179,15 @@ import { CityAppState, SUPPLIER_GET,
                     {
                       this.supplierModel = evt.selected[0] as SupplierModel; 
                       this.itemSelected = true;   
-                    }
+                    } 
+                    else 
+                      this.itemSelected = false;
+                      
+                    this.edit();
                   }          
                   
                   edit() {  
+                    this.formTitle = "Edit Supplier"; 
                     this.intention = UPDATE;                            
                     this.configureUpdateForm();
                     

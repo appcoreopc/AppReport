@@ -31,6 +31,9 @@ import { MaterialCategoryReducer} from './material/material-category-component/m
 
 import { RawMaterialEffects } from './material/raw-material-component/rawMaterialEffects';
 import { RawMaterialReducer} from './material/raw-material-component/rawMaterialReducer';
+ 
+import { StnCustomEffects } from './material/stn-custom-component/stnCustomEffects';
+import { StnCustomReducer} from './material/stn-custom-component/stnCustomReducer';
 
 import { HttpClientModule }  from '@angular/common/http';
 
@@ -76,6 +79,7 @@ export const ROUTES: Routes = [
   { path: 'supplier', component  : SupplierComponentComponent, canActivate: [AuthGuard]  },
   { path: 'materialCategory', component  : MaterialCategoryComponentComponent },
   { path: 'rawMaterial', component  : RawMaterialComponentComponent },
+  { path: 'stnCustom', component  : StnCustomComponentComponent },
   { path: 'grn', component  : ReportGrnComponent },
   { path: 'm1', component  : LampiranM1ComponentComponent },
   { path: 'lesen', component  : LesenGudangComponentComponent },
@@ -107,12 +111,12 @@ export const ROUTES: Routes = [
     
     StoreModule.forRoot([EmployeeReducer, UserReducer, ReportReducer,
       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
-      M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer]),
+      M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer, StnCustomReducer]),
       
       EffectsModule.forRoot([EmployeeEffects, UserEffects, 
         ReportEffects, SupplierEffects, MaterialCategoryEffects, 
         RawMaterialEffects, GrnEffects, M1LampiranEffects, 
-        SkimKhasEffects, LesenEffects, UOMEffects]), 
+        SkimKhasEffects, LesenEffects, UOMEffects, StnCustomEffects]), 
         RouterModule.forRoot(ROUTES)
       ],
       providers: [AuthGuard, AuthService],

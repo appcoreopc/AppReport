@@ -10,7 +10,6 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<Config> Config { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
-        public virtual DbSet<EmpJobTitle> EmpJobTitle { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Grn> Grn { get; set; }
         public virtual DbSet<JobTitle> JobTitle { get; set; }
@@ -35,6 +34,11 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -248,8 +252,6 @@ namespace AppReport.DataServices.PTSDataModel
 
             modelBuilder.Entity<JobTitle>(entity =>
             {
-                entity.Property(e => e.JobTitleId).ValueGeneratedNever();
-
                 entity.Property(e => e.CreatedDt)
                     .HasColumnName("CreatedDT")
                     .HasColumnType("datetime");
@@ -321,9 +323,7 @@ namespace AppReport.DataServices.PTSDataModel
             {
                 entity.ToTable("RMCat");
 
-                entity.Property(e => e.RmcatId)
-                    .HasColumnName("RMCatId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.RmcatId).HasColumnName("RMCatId");
 
                 entity.Property(e => e.CreatedDt)
                     .HasColumnName("CreatedDT")

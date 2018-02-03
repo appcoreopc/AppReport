@@ -5,6 +5,7 @@ export class EmployeeModel {
     empAd1 : string;
     empAd2 : string;
     empAd3 : string;
+    jobTitleId : number;
     createdByUserId : number;
     createdDt : Date; 
     editedByUserId : number;

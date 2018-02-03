@@ -16,6 +16,8 @@ namespace AppReport.RequestModel
 
         public string EmpAd3 { get; set; }
 
+        public int? JobTitleId { get; set; }
+
         public int? CreatedByUserId { get; set; }
 
         public DateTime? CreatedDt { get; set; }

@@ -1,58 +1,107 @@
-<h1>Material Category</h1>
-
 <div class="container"> 
-  <p-dialog header="Add Employee" [(visible)]="display" modal='true'>
+  <p-dialog header="{{formTitle}}" [(visible)]="display" modal='true'>
+  <form [formGroup]='personForm'>
     
-    <form [formGroup]='personForm'>
-      
-      <div>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input id="name" type="text" class="form-control" formControlName="name">         
-          
-          <div *ngIf="formErrors.name" class="alert alert-danger">
-            {{ formErrors.name }}
-          </div>
-          
+
+    <div style="width:100%;padding:0px"> 
+		<div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="stncustomName">STN KASTAM Name :</label>
+					  </div> 
+					  <div class="cell c2345">   
+              <input id="stncustomName" type="text" maxlength="50" class="form-control text-control" formControlName="stncustomName">         
+              
+              <div *ngIf="formErrors.stncustomName" class="alert alert-danger">
+                {{ formErrors.stncustomName }}
+              </div>
+					  </div>  
+           </div>   
+
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="isLocal">Local / Imported :</label>
+					  </div> 
+					  <div class="cell c2345">    
+              
+              <input type="radio" formControlName="isLocal" [value]="true">
+              Local
+              <input type="radio" formControlName="isLocal" [value]="false">
+              Imported
+
+              <div *ngIf="formErrors.isLocal" class="alert alert-danger">
+                {{ formErrors.isLocal }}
+              </div>
+					  </div>  
+           </div>  
+
+			  </div>     
+      </div>        
+    </div>
+    
+     <div class="form-group row">
+        <div class="cell c1"> 
+        </div> 
+        <div class="cell c2"> 
         </div>
-        
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input id="username" type="text" class="form-control" formControlName="username">         
-          
-          <div *ngIf="formErrors.username" class="alert alert-danger">
-            {{ formErrors.username }}
-          </div>           
-        </div>    
+        <div class="cell c3"> 
+        </div> 
+        <div class="cell c4"> 
+        </div> 
+        <div class="cell c5" style="text-align:right">	   
+
+            <p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
+        </div>
       </div>
-      
-      <button class="btn btn-primary commandBtn" [disabled]="!personForm.valid" (click)="save()"> Save </button>
-      <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
-      
-      <p>Form value: {{ personForm.value | json }}</p>
-      
-    </form>
+        
+    <p style="width:800px">Form value: {{ personForm.value | json }}</p>
     
+  </form>
+  
   </p-dialog>
-  
-  
+
 </div>
 
 
 <div class="container">       
-  <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
-  <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
 </div>
+<div style="clear:both; height:10px"></div>
+ 
 
+<div class="container"> 
+  
+  <ngx-datatable class="material striped" 
+  [loadingIndicator]="loadingIndicator"
+  [rows]="rows"
+  [limit]="10"
+  [selectionType]="'single'"
+  (select)="onSelect($event)"
+  [columns]="columns" [headerHeight]="30"  [rowHeight]="'auto'"
+  [footerHeight]="50">
+ 
+	 <ngx-datatable-column  name="Id" prop="stncustomId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+  
+	 <ngx-datatable-column  name="STN KASTAM Name" prop="stncustomName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+  
+	 <ngx-datatable-column  name="Local / Imported" prop="isLocal" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+       
+						<div *ngIf="value===true">Local</div>
+						<div *ngIf="value===false">Imported</div>
+        </ng-template>
+    </ngx-datatable-column>
 
-<ngx-datatable class="material striped" 
-[loadingIndicator]="loadingIndicator"
-[rows]="rows"
-[limit]="10"
-[selectionType]="'single'"
-(select)="onSelect($event)"
-[columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
-[footerHeight]="50">
 </ngx-datatable>
 
-
+</div>

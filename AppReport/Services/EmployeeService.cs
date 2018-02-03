@@ -28,18 +28,19 @@ namespace AppReport.Services
         {
             return Remove<User>(id);
         }
-        
+
         public bool Save(EmployeeRequestModel requestUser)
         {
             if (!requestUser.EmpId.HasValue)
             {
                 var user = new Employee()
-                {                  
+                {
                     EmpName = requestUser.EmpName,
                     EmpAd1 = requestUser.EmpAd1,
                     EmpAd2 = requestUser.EmpAd2,
                     EmpAd3 = requestUser.EmpAd3,
-                    EmpIdno = requestUser.EmpIdno
+                    EmpIdno = requestUser.EmpIdno,
+                    JobTitleId = requestUser.JobTitleId
                 };
                 return base.Save<Employee>(user, null);
             }
@@ -53,14 +54,15 @@ namespace AppReport.Services
                     employee.EmpAd1 = requestUser.EmpAd1;
                     employee.EmpAd2 = requestUser.EmpAd2;
                     employee.EmpAd3 = requestUser.EmpAd3;
-                    employee.EmpIdno = requestUser.EmpIdno;                   
+                    employee.EmpIdno = requestUser.EmpIdno;
+                    employee.JobTitleId = requestUser.JobTitleId;
                 }
 
                 return base.Save<Employee>(employee, employee.EmpId);
 
-            }               
+            }
         }
 
-      
+
     }
 }

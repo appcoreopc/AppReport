@@ -1,66 +1,121 @@
-
+ 
 <div class="container"> 
   
-  <p-dialog header="Add Employee" [(visible)]="display" modal='true'>
-    
-    <h1>Employee</h1>
-    
+  <p-dialog header="{{formTitle}}" [(visible)]="display" modal='true'>
+     
     <form [formGroup]='personForm'>
       
-      <div>
-        <div class="form-group">
-          <label for="empName">Employee Name </label>
-          <input id="empName" type="text" class="form-control" formControlName="empName">         
+<div style="width:100%;padding:0px">
+ 
+	  
+		<div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+			 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="empName">Employee Name :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="empName" type="text" maxlength="50" class="form-control text-control" formControlName="empName">         
+              
+              <div *ngIf="formErrors.empName" class="alert alert-danger">
+                {{ formErrors.empName }}
+              </div>
+					  </div> 
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="empIdno">IC No. :</label>
+					  </div> 
+					  <div class="cell c5">
+              <input id="empIdno" type="text" maxlength="20" class="form-control text-control" formControlName="empIdno">         
+              
+              <div *ngIf="formErrors.empIdno" class="alert alert-danger">
+                {{ formErrors.empIdno }}
+              </div>  
+				   </div>
+           </div>   
+
+           
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="jobTitleId">Job Title :</label>
+					  </div> 
+					  <div class="cell c2345">
+						<select class="form-control" formControlName="jobTitleId" style="width:300px">
+							<option *ngFor="let obj of jobTitleRows" [value]="obj.jobTitleId">{{obj.jobTitleName}}</option>
+						  </select>
+							<div *ngIf="formErrors.jobTitleId" class="alert alert-danger">
+								{{ formErrors.jobTitleId }}
+							</div>	
+					  </div> 
+				   </div> 
+             
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="empAd1">Address :</label>
+					  </div> 
+					  <div class="cell c2345">   
+              <input id="empAd1" type="text" maxlength="100" class="form-control text-control" formControlName="empAd1">         
+              
+              <div *ngIf="formErrors.empAd1" class="alert alert-danger">
+                {{ formErrors.empAd1 }}
+              </div>
+					  </div>  
+           </div>  
+              
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="empName"></label>
+					  </div> 
+					  <div class="cell c2345">   
+              <input id="empAd2" type="text" maxlength="100" class="form-control text-control" formControlName="empAd2">         
+              
+              <div *ngIf="formErrors.empAd2" class="alert alert-danger">
+                {{ formErrors.empAd2 }}
+              </div>
+					  </div>  
+           </div>  
+              
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="empAd3"></label>
+					  </div> 
+					  <div class="cell c2345">   
+              <input id="empAd3" type="text" maxlength="100" class="form-control text-control" formControlName="empAd3">         
           
-          <div *ngIf="formErrors.empName" class="alert alert-danger">
-            {{ formErrors.empName }}
-          </div>
-          
-        </div>
-        
-        <div class="form-group">
-          <label for="empIdno">Employee No Id</label>
-          <input id="empIdno" type="text" class="form-control" formControlName="empIdno">         
-          
-          <div *ngIf="formErrors.empIdno" class="alert alert-danger">
-            {{ formErrors.empIdno }}
-          </div>           
-        </div>    
-        
-        <div class="form-group">
-          <label for="empAd1">Address</label>
-          <input id="empAd1" type="text" class="form-control" formControlName="empAd1">         
-          
-          <div *ngIf="formErrors.empAd1" class="alert alert-danger">
-            {{ formErrors.empAd1 }}
-          </div>           
-        </div>    
-        
-        <div class="form-group">
-          <label for="empAd2">Address 2</label>
-          <input id="empAd2" type="text" class="form-control" formControlName="empAd2">         
-          
-          <div *ngIf="formErrors.empAd2" class="alert alert-danger">
-            {{ formErrors.empAd2 }}
-          </div>           
-        </div>    
-        
-        <div class="form-group">
-          <label for="empAd3">Address 3</label>
-          <input id="empAd3" type="text" class="form-control" formControlName="empAd3">         
-          
-          <div *ngIf="formErrors.empAd3" class="alert alert-danger">
-            {{ formErrors.empAd3 }}
-          </div>           
-        </div>            
+              <div *ngIf="formErrors.empAd3" class="alert alert-danger">
+                {{ formErrors.empAd3 }}
+              </div>
+					  </div>  
+           </div>  
+             
+  
+         
+				  </div>
+        </div>  
+      </div>       
+  <div>
+                      
         
       </div>
-      
-      <button class="btn btn-primary commandBtn" [disabled]="!personForm.valid" (click)="save()"> Save </button>
-      
-      <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
-      
-      <p>Form value: {{ personForm.value | json }}</p>
+       
+       <div class="form-group row">
+          <div class="cell c1"> 
+          </div> 
+          <div class="cell c2"> 
+          </div>
+          <div class="cell c3"> 
+          </div> 
+          <div class="cell c4"> 
+          </div> 
+          <div class="cell c5" style="text-align:right">	   
+ 
+							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
+			 	  </div>
+       </div>
+
+      <p style="width:800px">Form value: {{ personForm.value | json }}</p>
       
     </form>
     
@@ -69,9 +124,9 @@
 </div>
 
 <div class="container">       
-  <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
-  <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
 </div>
+<div style="clear:both; height:10px"></div>
 
 <div class="container"> 
   <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
@@ -81,8 +136,36 @@
   [columns]="columns"
   [selectionType]="'single'"
   (select)="onSelect($event)"
-  [headerHeight]="50"  [rowHeight]="'auto'"
+  [headerHeight]="30"  [rowHeight]="'auto'"
   [footerHeight]="50">
+
+  
+	 <ngx-datatable-column  name="Id" prop="empId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+  
+	 <ngx-datatable-column  name="Employee Name" prop="empName" [width]="250" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+      
+	 <ngx-datatable-column  name="JobTitle" prop="jobTitleId" [width]="200" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+					<ng-container *ngFor = "let n of jobTitleRows">
+						<div *ngIf="value===n.jobTitleId">{{n.jobTitleName}}</div>
+				  </ng-container>
+        </ng-template>
+		</ngx-datatable-column> 
+      
+	 <ngx-datatable-column  name="Address" [resizeable]="false" [width]="500" [sortable]="true" [flexGrow]="1">
+     <ng-template let-row="row" ngx-datatable-cell-template>
+           {{row.empAd1}} {{row.empAd2}} {{row.empAd3}}
+        </ng-template>
+    </ngx-datatable-column>
+
 </ngx-datatable>
 </div>
 

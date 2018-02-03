@@ -18,21 +18,21 @@ namespace AppReport.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var suppliers = new MaterialCategoryService(_ptsContext).GetAll();
-            return new JsonResult(suppliers);
+            var d = new MaterialCategoryService(_ptsContext).GetAll();
+            return new JsonResult(d);
         }
 
         [HttpGet]
         public IActionResult Get(int start, int size)
         {
-            var suppliers = new MaterialCategoryService(_ptsContext).GetAll(start, size);
-            return new JsonResult(suppliers);
+            var d = new MaterialCategoryService(_ptsContext).GetAll(start, size);
+            return new JsonResult(d);
         }
 
         [HttpPost]
         public IActionResult Save([FromBody] MaterialCategoryRequestModel materialCategory)
         {
-            if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.RmCode))
+            if (materialCategory != null && !string.IsNullOrEmpty(materialCategory.RmcatName))
             {
                 var result = new MaterialCategoryService(_ptsContext).Save(materialCategory);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
@@ -42,13 +42,7 @@ namespace AppReport.Controllers
 
         [HttpDelete]
         public IActionResult Delete(MaterialCategoryRequestModel requestData)
-        {            
-            if (requestData.RMCatId.HasValue)
-            {
-                var result = new MaterialCategoryService(_ptsContext).Delete(requestData.RMCatId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
-            }
-            else
+        {        
                 return new BadRequestResult();
         }
     }

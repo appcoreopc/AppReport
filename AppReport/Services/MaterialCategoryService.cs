@@ -13,42 +13,39 @@ namespace AppReport.Services
         {
             _context = context;
         }
-        public IEnumerable<Rmaterial> GetAll()
+        public IEnumerable<Rmcat> GetAll()
         {
-            return _context.Rmaterial;
+            return _context.Rmcat;
         }
 
-        public IEnumerable<Rmaterial> GetAll(int skipAmount, int takeAmount)
+        public IEnumerable<Rmcat> GetAll(int skipAmount, int takeAmount)
         {
-            return _context.Rmaterial.Skip(skipAmount).Take(takeAmount);
+            return _context.Rmcat.Skip(skipAmount).Take(takeAmount);
         }
 
-        public bool Save(MaterialCategoryRequestModel materialCategory)
+        public bool Save(MaterialCategoryRequestModel d)
         {
-            if (!materialCategory.RMCatId.HasValue)
+
+            if (!d.RmcatId.HasValue)
             {
                 var rmcat = new Rmcat()
-                {
-                    RmcatId = materialCategory.RMCatId.HasValue ? materialCategory.RMCatId.Value : 0,
-                    RmcatName = materialCategory.RmCode,                                        
-                    CreatedByUserId = materialCategory.CreatedByUserId,
-                    EditedByUserId = materialCategory.EditedByUserId
+                { 
+                    RmcatName = d.RmcatName
                 };
                 return base.Save<Rmcat>(rmcat, null);
             }
             else
             {
-                var rmcat = FindById<Rmcat>(materialCategory.RMCatId.Value);
-                
+                var rmcat = FindById<Rmcat>(d.RmcatId.Value);
+
                 if (rmcat != null)
                 {
-                    rmcat.RmcatId = materialCategory.RMCatId.Value;
-                    rmcat.RmcatName = materialCategory.RmCode;
-                    rmcat.CreatedByUserId = materialCategory.CreatedByUserId;
-                    rmcat.EditedByUserId = materialCategory.EditedByUserId;
+                    rmcat.RmcatId = d.RmcatId.Value;
+                    rmcat.RmcatName = d.RmcatName; 
                     return base.Save<Rmcat>(rmcat, rmcat.RmcatId);
-                }                
-            }
+                }
+
+            } 
 
             return false;
             

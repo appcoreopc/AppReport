@@ -257,8 +257,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         'signedByEmpId': [this.data.signedByEmpId, [Validators.required, Validators.minLength(1), Validators.min(1)]], 
         'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]], 
         'signedByIdno': [this.data.signedByIdno, [Validators.required, Validators.minLength(1)]],
-        'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]],
-        'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]]  
+        'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]]   
       });
       
       

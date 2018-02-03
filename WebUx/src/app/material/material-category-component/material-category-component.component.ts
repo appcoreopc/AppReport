@@ -20,206 +20,186 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class MaterialCategoryComponentComponent implements OnInit {
   
   private person: MaterialCategoryModel = new MaterialCategoryModel();
-  private personForm: FormGroup;
-  
-  display: boolean = false;
-  itemSelected : boolean = false;
-  private intention : number = UPDATE;
-  
-  
-  formErrors = {
-    'rmCatName': ''
-  };
-  
-  validationMessages = {    
-    'rmcatId': {
-      'required': 'Material category Id is required.',
-      'minlength': 'Material category Id must be at least 4 characters long.',
-      'maxlength': 'Material category Id cannot be more than 24 characters long.'
-    }, 
-    'rmcode': {
-      'required': 'Material category code is required.',
-      'minlength': 'Material category code must be at least 4 characters long.',
-      'maxlength': 'Material category code cannot be more than 24 characters long.'
-    },
-    'rmdesc': {
-      'required': 'Material category description is required.',
-      'minlength': 'Material category description must be at least 4 characters long.',
-      'maxlength': 'Material category description cannot be more than 24 characters long.'
-    }
-  };
-  
-  rows = [];
-  
-  columns = [
-    { prop: 'rmid', name : 'Category Id' },
-    { prop: 'rmcode',  name : 'Code', width : 250 },
-    { prop: 'rmdesc', name : 'Description',  width : 350 }   
-  ];
-  
-  userSubscription : Subscription;
-  dataList : Array<any> = new Array<any>(); 
-  
-  constructor(private store : Store<CityAppState>, 
-    private fb: FormBuilder) { 
-    }
+    private personForm: FormGroup;
+    private intention : number = UPDATE;
     
-    ngOnInit() {   
-      
-      this.userSubscription = this.store.subscribe(appData => {           
-        this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
-          [MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE_SUCCESS]));
-        }); 
-        this.initUpdateForm();  
+    formErrors = {
+      'rmcatId': '',
+      'rmcatName' : ''
+    };
+    
+    validationMessages = {     
+      'rmcatName': {
+        'required': 'Material Category Name is required.' 
       }
+    };
+    
+    rows = [];
+    
+    columns = [
+      { prop: 'rmcatId' },
+      { name: 'rmcatName' }   
+    ];
+    
+    userSubscription : Subscription;
+    dataList : Array<any> = new Array<any>(); 
+    
+    display: boolean = false;
+    itemSelected : boolean = false;
+    formTitle: string = "New Material Category"; 
+    
+    private rmcatModel: MaterialCategoryModel = new MaterialCategoryModel();
+    
+    constructor(private store : Store<CityAppState>, 
+      private fb: FormBuilder) { }
       
-      ngAfterViewInit() {     
-        this.dispatchIntent(MATERIAL_CATEGORY_GET);      
-      }
-      
-      save() { 
-        
-        let saveJson = new MaterialCategoryModel();
-        
-        if (this.intention == ADD)
-        {
-          saveJson = this.personForm.value as MaterialCategoryModel;
+      ngOnInit() {
+        this.userSubscription = this.store.subscribe(appData => {     
+          
+          this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
+            [ MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE_SUCCESS]));    
+          }); 
+          
+          this.configureUpdateForm();      
         }
-        else 
-        {       
-          saveJson.rmid = this.person.rmid;
-          saveJson.rmcatid = this.person.rmcatid;
-          saveJson.rmcode = this.person.rmcode;
-          saveJson.rmdesc = this.person.rmdesc;   
+        
+        ngAfterViewInit() {
+          this.dispatchIntent(MATERIAL_CATEGORY_GET);
+        }
+        
+        componentMessageHandle(messageAll : Array<any>) {
+                  
+          messageAll.map(message => { 
+            
+            if (message && message.type == MATERIAL_CATEGORY_GET_OK)
+            {
+              this.rows.length = 0;
+              for (var rmcatInfo of message.data.data.data)
+              {                
+                this.dataList.push({                   
+                  rmcatId : rmcatInfo.rmcatId, 
+                  rmcatName : rmcatInfo.rmcatName 
+                });  
+
+              this.rows = this.dataList;
+            }
+          }
+            
+            if (message && message.type == MATERIAL_CATEGORY_SAVE_SUCCESS)
+            {
+              this.display = false;             
+            }
+          });    
+        }
+        
+        save() {    
+          
+          var saveJson = new MaterialCategoryModel();
+          if (this.intention == ADD)
+          {
+            saveJson = this.personForm.value as MaterialCategoryModel;
+          }
+          else {
+            
+            saveJson.rmcatName = this.rmcatModel.rmcatName; 
+            saveJson.rmcatId = this.rmcatModel.rmcatId;        
+          }
+          
+          var strJson = JSON.stringify(saveJson);           
+          this.dispatchIntent(MATERIAL_CATEGORY_SAVE, saveJson);
+          this.display = false; 
+          
         }  
         
-        this.dispatchIntent(MATERIAL_CATEGORY_SAVE, saveJson);
-        this.personForm.reset();        
-      }  
-      
-      componentMessageHandle(messageAll : Array<any>) {
-        
-        messageAll.map(message => { 
-          
-          if (message && message.type == MATERIAL_CATEGORY_GET_OK)
-          {
-            this.rows.length = 0;
-            for (var materialCategory of message.data.data.data)
-            {             
-              this.dataList.push({ 
-                rmid : materialCategory.rmid,
-                rmcatid : materialCategory.rmcatId, 
-                rmcode : materialCategory.rmcode,
-                rmdesc : materialCategory.rmdesc
+        private configureAddForm() {
+          this.personForm = this.fb.group({
+            'rmcatId': ['', [Validators.minLength(1),
+              Validators.maxLength(24)]],
+              'rmcatName': ['', [Validators.required, Validators.minLength(1)]]
               });
+              
+              this.personForm.valueChanges.debounceTime(500)
+              .subscribe(data => this.onValueChanged(data));
             }
-            this.rows = this.dataList;
-          }
-          
-          if (message && message.type == MATERIAL_CATEGORY_SAVE_SUCCESS)
-          {
-            this.display = false;
-            this.itemSelected = false;
-          }
-        });
-      }
-      
-      private initUpdateForm() {
-        this.personForm = this.fb.group({
-          'rmcatid': [this.person.rmcatid], 
-          'rmcode': [this.person.rmcode, [Validators.required, Validators.minLength(1),
-            Validators.maxLength(24)]],
-            'rmdesc': [this.person.rmdesc, [Validators.required, Validators.minLength(1),
-              Validators.maxLength(24)]]
-            });
             
-            this.personForm.valueChanges.debounceTime(500)
-            .subscribe(data => this.onValueChanged(data));
-          }
-          
-          private initAddForm() {
-            this.personForm = this.fb.group({
-              'rmcatid': [''], 
-              'rmcode': ['', [Validators.required, Validators.minLength(1),
-                Validators.maxLength(24)]],
-                'rmdesc': ['', [Validators.required, Validators.minLength(1),
-                  Validators.maxLength(24)]]
-                }); 
-                
-              }
-              
-              onValueChanged(data?: MaterialCategoryModel) {
-                
-                if (!this.personForm) { return; }
-                
-                const form = this.personForm;
-                this.person.rmcatid = data.rmcatid;
-                this.person.rmcode = data.rmcode;
-                this.person.rmdesc = data.rmdesc;
-                
-                for (const field in this.formErrors) {
-                  // clear previous error message (if any)
-                  this.formErrors[field] = '';
-                  const control = form.get(field);
+            private configureUpdateForm() {
+              this.personForm = this.fb.group({
+                'rmcatId': [this.rmcatModel.rmcatId, [Validators.minLength(1)]],
+                  'rmcatName': [this.rmcatModel.rmcatName, [Validators.required, Validators.minLength(1)]]
+                  });
                   
-                  if (control && control.dirty && !control.valid) {
-                    const messages = this.validationMessages[field];
-                    for (const key in control.errors) {
-                      this.formErrors[field] += messages[key] + ' ';
+                  this.personForm.valueChanges.debounceTime(500)
+                  .subscribe(data => this.onValueChanged(data));
+                }
+                
+                onValueChanged(data?: MaterialCategoryModel) {
+                  
+                  if (!this.personForm) { return; }
+                  
+                  const form = this.personForm;
+                  this.rmcatModel.rmcatId = data.rmcatId;
+                  this.rmcatModel.rmcatName = data.rmcatName;
+                  
+                  for (const field in this.formErrors) {
+                    // clear previous error message (if any)
+                    this.formErrors[field] = '';
+                    const control = form.get(field);
+                    
+                    if (control && control.dirty && !control.valid) {
+                      const messages = this.validationMessages[field];
+                      for (const key in control.errors) {
+                        this.formErrors[field] += messages[key] + ' ';
+                      }
                     }
+                  }   
+                }
+                
+                dispatchIntent(messageType : string, data? : any)
+                {   
+                  this.store.dispatch(
+                    {     
+                      type: messageType,
+                      data : data
+                    });      
+                  }          
+                  
+                  addForm() {              
+                    
+                    this.formTitle = "New Material Category"; 
+                    this.display = true;                          
+                    this.intention = ADD;
+                    this.configureAddForm();  
+                  }            
+                  
+                  onSelect(evt : any) {
+                    
+                    if (evt && evt.selected && evt.selected.length > 0)
+                    {
+                      this.rmcatModel = evt.selected[0] as MaterialCategoryModel; 
+                      this.itemSelected = true;   
+                    } 
+                    else 
+                      this.itemSelected = false;
+                      
+                    this.edit();
+                  }          
+                  
+                  edit() {  
+                    this.formTitle = "Edit Material Category"; 
+                    this.intention = UPDATE;                            
+                    this.configureUpdateForm();
+                    
+                    if (this.rmcatModel)
+                    {
+                      this.personForm.get("rmcatId").setValue(this.rmcatModel.rmcatId);
+                      this.personForm.get("rmcatName").setValue(this.rmcatModel.rmcatName);         
+                      this.display = true;
+                    }       
                   }
-                }   
-              }
-              
-              addForm() {              
-                this.display = true;       
-                this.intention = ADD;
-                this.initAddForm();      
-              }   
-              
-              onSelect(evt : any) {        
-                if (evt && evt.selected && evt.selected.length > 0)
-                {
-                  this.person = evt.selected[0] as MaterialCategoryModel; 
-                  this.itemSelected = true;   
+                  
+                  cancel() 
+                  {
+                    this.display = false;
+                    this.itemSelected = false;
+                  }
                 }
-              }
-              
-              showDialog() { 
-                this.display = true;
-              }   
-              
-              edit() {  
-                
-                this.intention = UPDATE;   
-                if (this.person)
-                {      
-                  this.personForm.get("rmcode").setValue(this.person.rmcode);
-                  this.personForm.get("rmdesc").setValue(this.person.rmdesc);    
-                  this.display = true;
-                }       
-              }
-              
-              resetForm() {        
-                let emptySpace = "";
-                this.personForm.get("rmcode").setValue(emptySpace);   
-                this.personForm.get("rmdesc").setValue(emptySpace);   
-              }
-              
-              cancel() 
-              {
-                this.display = false;
-                this.itemSelected = false;
-              }
-              
-              dispatchIntent(messageType : string, data? : any)
-              {   
-                
-                this.store.dispatch(
-                  {     
-                    type: messageType,
-                    data : data
-                  });      
-                }
-              }
-              

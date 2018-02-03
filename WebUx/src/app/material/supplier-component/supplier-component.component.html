@@ -1,24 +1,45 @@
-
 <div class="container"> 
-    <h1>Supplier</h1>
-    <p-dialog header="Add Employee" [(visible)]="display" modal='true'>
+  <p-dialog header="{{formTitle}}" [(visible)]="display" modal='true'>
   <form [formGroup]='personForm'>
     
-    <div>
-      <div class="form-group">
-        <label for="name">Supplier Name</label>
-        <input id="name" type="text" class="form-control" formControlName="supplierName">         
-        
-        <div *ngIf="formErrors.supplierName" class="alert alert-danger">
-          {{ formErrors.supplierName }}
-        </div>     
+
+    <div style="width:100%;padding:0px"> 
+		<div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="supplierName">Supplier Name :</label>
+					  </div> 
+					  <div class="cell c2345">   
+              <input id="supplierName" type="text" maxlength="50" class="form-control text-control" formControlName="supplierName">         
+              
+              <div *ngIf="formErrors.supplierName" class="alert alert-danger">
+                {{ formErrors.supplierName }}
+              </div>
+					  </div>  
+           </div>   
+
+			  </div>     
       </div>        
     </div>
-        
-    <button class="btn btn-primary commandBtn" [disabled]="!personForm.valid" (click)="save()"> Save </button>
-    <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
+    
+     <div class="form-group row">
+        <div class="cell c1"> 
+        </div> 
+        <div class="cell c2"> 
+        </div>
+        <div class="cell c3"> 
+        </div> 
+        <div class="cell c4"> 
+        </div> 
+        <div class="cell c5" style="text-align:right">	   
 
-    <p>Form value: {{ personForm.value | json }}</p>
+            <p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
+        </div>
+      </div>
+        
+    <p style="width:800px">Form value: {{ personForm.value | json }}</p>
     
   </form>
   
@@ -26,10 +47,12 @@
 
 </div>
 
+
 <div class="container">       
-  <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
-  <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
 </div>
+<div style="clear:both; height:10px"></div>
+ 
 
 <div class="container"> 
   
@@ -39,8 +62,21 @@
   [limit]="10"
   [selectionType]="'single'"
   (select)="onSelect($event)"
-  [columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
+  [columns]="columns" [headerHeight]="30"  [rowHeight]="'auto'"
   [footerHeight]="50">
+ 
+	 <ngx-datatable-column  name="Id" prop="supplierId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+  
+	 <ngx-datatable-column  name="Supplier Name" prop="supplierName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+
 </ngx-datatable>
 
 </div>

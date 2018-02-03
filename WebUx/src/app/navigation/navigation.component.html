@@ -5,11 +5,23 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <ul class="navbar-nav">  
           <li class="navbar-brand">PTS Reporting</li>
-          <li class="nav-item nav-link" routerLink="/employee" routerLinkActive="active"> Employee </li>
-          <li class="nav-item nav-link" routerLink="/user" routerLinkActive="active"> User </li>
-          <li class="nav-item nav-link" routerLink="/supplier" routerLinkActive="active"> Supplier </li>
-          <li class="nav-item nav-link" routerLink="/materialCategory" routerLinkActive="active"> Material Category </li>
-          <li class="nav-item nav-link" routerLink="/rawMaterial" routerLinkActive="active">Raw Material</li>
+          <!--<li class="nav-item nav-link" routerLink="/employee" routerLinkActive="active"> Employee </li>-->
+          
+         <li class="nav-item dropdown">          
+          
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Material Setup 
+            </a>
+
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+                <a class="dropdown-item" routerLink="/materialCategory" routerLinkActive="active"> Material Category </a>
+                <a class="dropdown-item" routerLink="/rawMaterial" routerLinkActive="active"> Raw Material </a>
+                <a class="dropdown-item" routerLink="/stnCustom" routerLinkActive="active"> STN KASTAM </a>
+                <a class="dropdown-item" routerLink="/supplier" routerLinkActive="active"> Supplier </a> 
+                <a class="dropdown-item" routerLink="/employee" routerLinkActive="active"> Employee </a> 
+                <a class="dropdown-item" routerLink="/user" routerLinkActive="active"> User </a> 
+              </div>
+          </li>
           <li class="nav-item dropdown">          
           
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
