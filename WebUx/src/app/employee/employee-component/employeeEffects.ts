@@ -22,32 +22,44 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
     .map(action => {  
       console.log("save action",action);
       return JSON.stringify(action.data);
-    })
-    .switchMap(payload =>   
-      {
-        
-        return Observable.of(payload)
-        .map(action => {
-          
-          this.http.post(APPLICATION_HOST + '/employee/save', payload, {headers : headersJson})
-          .subscribe(res => {      
-            console.log('employee test');
-          },  
-          err => {
-            console.log(err);  
-          }, () => {
-            console.log('completed');
-          });
-          
-        })
-        .catch(error => {
-          // You could also return an 'Error' action here instead
-          return Observable.empty();
-        });
-        
+    }).switchMap(payload =>    
+
+        this.http.post(APPLICATION_HOST +  '/employee/save', payload, 
+        { headers : headersJson})        
+        .catch(err =>  {
+          console.log('internal error taken care!!!')
+          return Observable.of({ type: EMPLOYEE_SAVE_ERR });})     
+      )
+      .map(res => { 
+        console.log(res);
+        return res;
       })
-      .map(res => ({ type: EMPLOYEE_SAVE_SUCCESS, data: res }))
       .catch(() => Observable.of({ type: EMPLOYEE_SAVE_ERR }));
+
+    // .switchMap(payload =>
+    // {     
+    //     console.log('switchMap psu');   
+
+    //      return this.http.post(APPLICATION_HOST + '/employee/save', 
+    //      payload, {headers : headersJson})
+    //       .subscribe(res => {      
+    //         console.log('response');
+    //         console.log(res);
+    //         return Observable.of({ type: EMPLOYEE_SAVE_SUCCESS, data: res });
+
+    //       },  
+    //       err => {
+    //         console.log(err);  
+    //         return Observable.of({ type: EMPLOYEE_SAVE_ERR });
+    //       });         
+         
+    //     // .catch(error => {
+    //     //   // You could also return an 'Error' action here instead
+    //     //   return Observable.of({ type: EMPLOYEE_SAVE_ERR });
+    //     // });
+        
+    //   })     
+    //   .catch(() => Observable.of({ type: EMPLOYEE_SAVE_ERR }));
       
       
       @Effect() cityReset$ = this.actions$  
@@ -56,13 +68,14 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
         {
           return ({ type: EMPLOYEE_CANCEL_OK});
         }); 
-        
+                
         @Effect() cityGet$ = this.actions$    
         .ofType(EMPLOYEE_GET)     
         .map(action => {   
           JSON.stringify(action);
         })
-        .switchMap(payload => this.http.get(APPLICATION_HOST + '/employee/index')  
+        .switchMap(payload => 
+          this.http.get(APPLICATION_HOST + '/employee/index')
         .map(res => {       
           return { type: EMPLOYEE_GET_OK, data: res};
         }) 
