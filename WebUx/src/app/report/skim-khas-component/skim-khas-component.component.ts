@@ -28,9 +28,11 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     private data: RptSkModel = new RptSkModel(); 
     private dataForm: FormGroup;
     private intention : number = UPDATE;
+
+    private date1:Date = new Date();
     
     dateValue = new Date().getDate();
-
+    
     displayDataEntry : boolean = false;
     display: boolean = false; 
     formTitle: string = "New GRN"; 
@@ -42,7 +44,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       'rptDate': '',
       'letterDate': '' 
     };    
-        
+    
     itemSelected : boolean = false;
     
     mainItemSelected : RptSkModel; 
@@ -122,6 +124,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     
     save()
     {
+      debugger;
       var saveJson = new RptSkModel();
       if (this.intention == ADD)
       {
@@ -217,30 +220,35 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
     }
     
-    private configureAddForm()
+    private setupAddForm()
     {
-      // this.setFormValidation(''); 
+      this.configureAddForms(''); 
       for (const field in this.formErrors) { 
         this.formErrors[field] = ''; 
       }   
     }
     
-    private setFormValidation(id :any) {
+    private configureAddForms(id :any) {
       
-      // this.dataForm = this.fb.group({
-      //   'rptId': [id],
-      //   'rptDate': ['', [Validators.required, Validators.minLength(1)]], 
-      //   'letterDate': ['', [Validators.required, Validators.minLength(1)]], 
-      //   'refNo': ['', [Validators.required, Validators.minLength(1)]]  , 
-      //   'lrcptDept': ['', [Validators.required, Validators.minLength(1)]]  , 
-      //   'lrcptBr': ['', [Validators.required, Validators.minLength(1)]]  , 
-      //   'lrcptAdd1': ['', [Validators.required, Validators.minLength(1)]]  , 
-      //   'signedByEmpId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]  , 
-      //   'signedByPos': ['', [Validators.required, Validators.minLength(1)]]  , 
-      //   'signedByName': ['', [Validators.required, Validators.minLength(1)]]  
-      // });  
+      this.dataForm = this.fb.group({
+        'rptId': [id],
+        'rptDate': ['', [Validators.required, Validators.minLength(1)]], 
+        'letterDate': ['', [Validators.required, Validators.minLength(1)]], 
+        'refNo': ['', [Validators.required, Validators.minLength(1)]]  , 
+        'lrcptDept': ['', [Validators.required, Validators.minLength(1)]]  , 
+        'lrcptBr': ['', [Validators.required, Validators.minLength(1)]]  , 
+        'lrcptAdd1': ['', [Validators.required, Validators.minLength(1)]],
+        'lrcptAdd2': ['', [Validators.required, Validators.minLength(1)]],
+        'lrcptAdd3': ['', [Validators.required, Validators.minLength(1)]],
+        'lrcptAdd4': ['', [Validators.required, Validators.minLength(1)]],
+        'signedByEmpId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]], 
+        'signedByPos': ['', [Validators.required, Validators.minLength(1)]], 
+        'signedByIdno': ['', [Validators.required, Validators.minLength(1)]],
+        'signedByName': ['', [Validators.required, Validators.minLength(1)]]   
+      });
+      
     }
-   
+    
     private configureEditForm() {
       
       this.dataForm = this.fb.group({
@@ -264,13 +272,13 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       this.dataForm.valueChanges.debounceTime(300).subscribe(
         data => this.onValueChanged(data));
       }
-   
+      
       addForm() {        
         
         this.formTitle = "New Report SKIM Khas"; 
         this.display = true;                          
         this.intention = ADD;
-        this.configureAddForm();  
+        this.setupAddForm();  
       }   
       
       addDataEntryForm()
@@ -329,9 +337,9 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
             this.itemSelected = true;   
           }
           else 
-            this.itemSelected = false;
+          this.itemSelected = false;
           
-           this.edit();
+          this.edit();
           
         }
       }

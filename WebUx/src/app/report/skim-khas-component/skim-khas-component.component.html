@@ -22,14 +22,14 @@
 											<label for="RefNo">Reference No :</label>
 										</div> 
 										<div class="cell c2">
-											<input id="rptId" type="text" class="form-control text-control" formControlName="rptId" /> 
+											<input id="rptId" type="text" class="form-control text-control" formControlName="refNo" /> 
 										</div>
 										<div class="cell c3"> 
 										</div> 
 										<div class="cell c4">
 											<label for="LetterDate">Date of Letter :</label>
 										</div> 
-										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" showIcon="true" [monthNavigator]="true"></p-calendar>
+										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" formControlName="letterDate" [defaultDate]="date1" [showIcon]="true" [monthNavigator]="true"></p-calendar>
 											<div *ngIf="formErrors.letterDate" class="alert alert-danger">
 												{{ formErrors.letterDate }}
 											</div> 
@@ -40,7 +40,7 @@
 											<label for="RefNo">Report Month/Year :</label>
 										</div> 
 										<div class="cell c2">
-											<p-calendar dateFormat="M yy" showIcon="true"></p-calendar>
+											<p-calendar dateFormat="M yy" formControlName="rptDate" showIcon="true"></p-calendar>
 											<div *ngIf="formErrors.rptDate" class="alert alert-danger">
 												{{ formErrors.rptDate }}
 											</div>
