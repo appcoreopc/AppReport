@@ -15,7 +15,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 export class RawMaterialComponentComponent implements OnInit {
   
   private currentModel: RawMaterialModel = new RawMaterialModel();
-  private personForm: FormGroup;
+  personForm: FormGroup;
   
   countries : string[] = ['malaysia', 'new zeland', 'australia'];
   

@@ -29,7 +29,7 @@
 										<div class="cell c4">
 											<label for="letterDate">Date of Letter :</label>
 										</div> 
-										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" formControlName="letterDate" [defaultDate]="date1" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" formControlName="letterDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
 											<div *ngIf="formErrors.letterDate" class="alert alert-danger">
 												{{ formErrors.letterDate }}
 											</div> 
@@ -165,8 +165,7 @@
 							</div>
 							
 							<p>Form value: {{ dataForm.value | json }}</p>
-							<p>Form value: {{ uomRows | json }}</p>
-							<p>Form value: {{ rmDataList | json }}</p>
+							
 						</div> 
 					
 					
@@ -359,8 +358,6 @@
 					<div>
 						
 						<p>Form value: {{ dataForm.value | json }}</p>
-						<p>Form value: {{ uomRows | json }}</p>
-						<p>Form value: {{ rmDataList | json }}</p>
 					</div> 
 					
 				</div>

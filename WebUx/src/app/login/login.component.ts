@@ -13,7 +13,7 @@ import {AuthService} from '../auth/auth-service.service';
 export class LoginComponent implements OnInit {
 
   private person:UserModel = new UserModel();
-  private personForm: FormGroup;
+  personForm: FormGroup;
   private intention : number = UPDATE;
 
   formErrors = {

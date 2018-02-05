@@ -22,7 +22,8 @@ import { CityAppState,
     
     private person: UserModel = new UserModel();
     private intention : number = UPDATE;
-    private personForm: FormGroup;
+    
+    personForm: FormGroup;
     
     formErrors = {
       'name': '',
@@ -53,8 +54,8 @@ import { CityAppState,
     userSubscription : Subscription;
     dataList : Array<any> = new Array<any>(); 
     
-    private display: boolean = false;
-    private itemSelected : boolean = false; 
+    display: boolean = false;
+    itemSelected : boolean = false; 
     
     constructor(private store : Store<CityAppState>, 
       private fb: FormBuilder, private http:HttpClient) { 

@@ -25,12 +25,10 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   })
   export class SkimKhasComponentComponent implements OnInit {
     
-    private data: RptSkModel = new RptSkModel(); 
-    private dataForm: FormGroup;
+    data: RptSkModel = new RptSkModel(); 
+    dataForm: FormGroup;
     private intention : number = UPDATE;
-
-    private date1:Date = new Date();
-    
+ 
     dateValue = new Date().getDate();
     
     displayDataEntry : boolean = false;

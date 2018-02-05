@@ -17,10 +17,10 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" type="text" class="form-control" formControlName="password">         
+                    <label for="name">Password</label>
+                    <input id="name" type="text" class="form-control" formControlName="password">         
                     
-                    <div *ngIf="formErrors.password" class="alert alert-danger">
+                    <div *ngIf="formErrors.name" class="alert alert-danger">
                         {{ formErrors.password }}
                     </div>          
                 </div>  
@@ -49,7 +49,7 @@
 
 
 <div class="container"> 
-    <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
+    <ngx-datatable class="material striped" 
     [rows]="rows"
     [limit]="10"
     (select)="onSelect($event)"

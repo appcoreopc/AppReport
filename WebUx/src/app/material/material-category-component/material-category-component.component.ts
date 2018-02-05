@@ -19,9 +19,9 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 })
 export class MaterialCategoryComponentComponent implements OnInit {
   
-  private person: MaterialCategoryModel = new MaterialCategoryModel();
-    private personForm: FormGroup;
-    private intention : number = UPDATE;
+  person: MaterialCategoryModel = new MaterialCategoryModel();
+  personForm: FormGroup;
+  private intention : number = UPDATE;
     
     formErrors = {
       'rmcatId': '',

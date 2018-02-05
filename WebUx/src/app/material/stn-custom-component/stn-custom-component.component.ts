@@ -17,8 +17,8 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
 })
 export class StnCustomComponentComponent implements OnInit {
   
-  private person: StncustomModel = new StncustomModel();
-  private personForm: FormGroup;
+  person: StncustomModel = new StncustomModel();
+  personForm: FormGroup;
   private intention : number = UPDATE;
     
     formErrors = {

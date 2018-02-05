@@ -18,9 +18,9 @@ import {DialogModule} from 'primeng/dialog';
   
   export class EmployeeComponentComponent implements OnInit {
     
-    private person: EmployeeModel = new EmployeeModel();
+    person: EmployeeModel = new EmployeeModel();
     private stncustomData: JobTitleModel = new JobTitleModel();
-    private personForm: FormGroup;
+    personForm: FormGroup;
     private intention : number = UPDATE;
     
     display: boolean = false;

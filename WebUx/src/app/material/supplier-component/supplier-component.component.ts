@@ -16,7 +16,7 @@ import { CityAppState, SUPPLIER_GET,
   export class SupplierComponentComponent implements OnInit {
     
     private supplier: SupplierModel = new SupplierModel();
-    private personForm: FormGroup;
+    personForm: FormGroup;
     private intention : number = UPDATE;
     
     formErrors = {

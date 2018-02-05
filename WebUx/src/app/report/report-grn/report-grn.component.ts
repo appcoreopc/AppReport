@@ -40,7 +40,7 @@ export class ReportGrnComponent implements OnInit {
   private stncustomData: StncustomModel = new StncustomModel();
   private supplierData: SupplierModel = new SupplierModel();
   private rmData: RawMaterialModel = new RawMaterialModel();
-  private dataForm: FormGroup;
+  dataForm: FormGroup;
   private intention : number = UPDATE;
   
   display: boolean = false; 
