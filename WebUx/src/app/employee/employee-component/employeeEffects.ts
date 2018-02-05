@@ -33,42 +33,26 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
           .map(action => {
             
             this.http.post(APPLICATION_HOST + '/employee/save', payload, {headers : headersJson})
-            .subscribe(res => {      
-              // force execution //
-              console.log('executing....');
-              //return ({ type: EMPLOYEE_SAVE_SUCCESS, data: res }); 
-              messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_ERR, null);  
-              return Observable.of({ type: EMPLOYEE_SAVE_SUCCESS, data: res });
-  
+            .subscribe(res => {                   
+              messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_ERR, null);
             },  
-            err => {         
-              
+            err => {                       
               if (err && err.status == 201)
               {
                 messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);                
               } 
               else 
-              {
-              console.log(err); 
-              console.log('returns error.');              
-              messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_ERR, null);
-              return Observable.of({ type: EMPLOYEE_SAVE_ERR });
-              }
-              //throw new Error(EMPLOYEE_SAVE_ERR);  
-            }, () => {
-              // completion            
-              console.log('completed!');  
-            });
-  
+              {                    
+                 messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_ERR, null);             
+              }         
+            });  
           });          
           //return Observable.of({ type: EMPLOYEE_SAVE_ERR });
-          ///////////EXTRA CODE ENDS ///////////////////////////
-          
+          ///////////EXTRA CODE ENDS ///////////////////////////          
         })
         .concatMap(res => {         
           return Observable.of({ type: EMPLOYEE_WAIT_PENDING });
-        });
-        
+        });       
     
     
     @Effect() cityReset$ = this.actions$  
