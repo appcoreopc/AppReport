@@ -47,7 +47,7 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
               }         
             });  
           });          
-          //return Observable.of({ type: EMPLOYEE_SAVE_ERR });
+        
           ///////////EXTRA CODE ENDS ///////////////////////////          
         })
         .concatMap(res => {         
@@ -58,23 +58,21 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
     @Effect() cityReset$ = this.actions$  
     .ofType(EMPLOYEE_CANCEL)  
     .map(action => 
-      {
+    {
         return ({ type: EMPLOYEE_CANCEL_OK});
-      }); 
-      
-      
-      
-      @Effect() cityGet$ = this.actions$    
+    }); 
+                  
+    @Effect() cityGet$ = this.actions$    
       .ofType(EMPLOYEE_GET)     
       .map(action => {   
         JSON.stringify(action);
       })
       .switchMap(
         
-        payload => this.http.get(APPLICATION_HOST + '/employee/index').map(res => {       
-          return { type: EMPLOYEE_GET_OK, data: res};
-        }).catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
-        
+            payload => this.http.get(APPLICATION_HOST + '/employee/index').map(res => {       
+              return { type: EMPLOYEE_GET_OK, data: res};
+            }).catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
+            
       ); 
       
       @Effect() GrnGetJobTitle$ = this.actions$    
@@ -82,11 +80,13 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
       .map(action => {   
         JSON.stringify(action);
       })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/JobTitle/index')  
-      .map(res => {       
-        return { type: JOBTITLE_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
+      .switchMap(payload => 
+        
+          this.http.get(APPLICATION_HOST + '/JobTitle/index')  
+          .map(res => {       
+            return { type: JOBTITLE_GET_OK, data: res};
+          }) 
+          .catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
     ); 
     
   }
