@@ -53,7 +53,7 @@ namespace AppReport.Services
             }
             else
             {
-                var rawMaterial = base.FindById<Rmaterial>(requestModel.RmcatId.Value);
+                var rawMaterial = base.FindById<Rmaterial>(requestModel.Rmid.Value);
 
                 if (rawMaterial != null)
                 {

@@ -1,127 +1,229 @@
-
-
+ 
 <div class="container"> 
-  <p-dialog header="Add Employee" [(visible)]="display" modal='true'>
-    
-    <h1>Raw Material</h1>
-    
+  
+  <p-dialog header="{{formTitle}}" [(visible)]="display" modal='true'>
+     
     <form [formGroup]='personForm'>
       
-      <div>
-        <div class="form-group">
-          <label for="rmcode">Code</label>
-          <input id="Rmcode" type="text" class="form-control" formControlName="Rmcode">         
+<div style="width:100%;padding:0px">
+ 
+	  
+		<div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+			 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="rmcode">Material Code :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="rmcode" type="text" maxlength="50" class="form-control text-control" formControlName="rmcode">         
+              
+              <div *ngIf="formErrors.rmcode" class="alert alert-danger">
+                {{ formErrors.rmcode }}
+              </div>
+					  </div> 
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="rmdesc">Material Description :</label>
+					  </div> 
+					  <div class="cell c5">
+              <input id="rmdesc" type="text" maxlength="500" class="form-control text-control" formControlName="rmdesc">         
+              
+              <div *ngIf="formErrors.rmdesc" class="alert alert-danger">
+                {{ formErrors.rmdesc }}
+              </div>  
+				   </div>
+           </div>   
+
+           
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="rmcatId">Category :</label>
+					  </div> 
+					  <div class="cell c2">
+						<select class="form-control" formControlName="rmcatId" style="width:300px">
+							<option *ngFor="let obj of rmcatRows" [value]="obj.rmcatId">{{obj.rmcatName}}</option>
+						  </select>
+							<div *ngIf="formErrors.rmcatId" class="alert alert-danger">
+								{{ formErrors.rmcatId }}
+							</div>	
+					  </div> 
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="uomid">UOM :</label>
+					  </div> 
+					  <div class="cell c5">
+						<select class="form-control" formControlName="uomid" style="width:300px">
+							<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+						  </select>
+              <div *ngIf="formErrors.uomid" class="alert alert-danger">
+                {{ formErrors.uomid }}
+              </div>  
+				   </div>
+				   </div> 
+              
+  
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="tariffCode">Tariff Code :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="tariffCode" type="text" maxlength="50" class="form-control text-control" formControlName="tariffCode">         
+              
+              <div *ngIf="formErrors.tariffCode" class="alert alert-danger">
+                {{ formErrors.tariffCode }}
+              </div>
+					  </div> 
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="countryList">Country :</label>
+					  </div> 
+					  <div class="cell c5">  
+            <input id="countryList" type="text" style="display:none" maxlength="50" class="form-control text-control" formControlName="countryList">         
+              
+            <div class="form-check" *ngFor="let country of countries; let i = index;">
+              <label style="float:left; padding-right:10px;" 
+              for="country{{country.value}}">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="tag{{country.value}}"
+                  name="tagOptions"
+                  (change)="changeCountryCheckbox(i)"
+                  [checked]="country.checked">
+                 &nbsp; &nbsp; {{country.name}}
+              </label>
+            </div>
+  
+ 
+              <div *ngIf="formErrors.countryList" class="alert alert-danger">
+                {{ formErrors.countryList }}
+              </div>  
+				   </div>
+           </div>  
           
-          <div *ngIf="formErrors.Rmcode" class="alert alert-danger">
-            {{ formErrors.Rmcode }}
-          </div>
-          
-        </div>
-        
-        
-        <div class="form-group">
-          <label for="Rmdesc">Description</label>
-          <input id="Rmdesc" type="text" class="form-control" formControlName="Rmdesc">         
-          
-          <div *ngIf="formErrors.Rmdesc" class="alert alert-danger">
-            {{ formErrors.Rmdesc }}
-          </div>
-          
-        </div>
-        
-        
-        <div class="form-group">
-          <label for="uomid">OUM Id </label>
-          
-          <select formControlName="Uomid" class="form-control">
-            <option *ngFor="let obj of uomlist" [value]="obj.uomId">{{obj.uomCode}}</option>
-          </select>
-          
-          <div *ngIf="formErrors.Uomid" class="alert alert-danger">
-            {{ formErrors.Uomid }}
-          </div>
-          
-        </div>
-        
-        
-        <div class="form-group">
-          <label for="TariffCode">Tariff Code</label>
-          <input id="TariffCode" type="text" class="form-control" >         
-          
-          <div *ngIf="formErrors.TariffCode" class="alert alert-danger">
-            {{ formErrors.TariffCode }}
-          </div>      
-        </div>
-        
-        <div class="form-group">
-          <label for="CountryList">Country List</label>
-          
-          <div>
-            <select formControlName="CountryList" class="form-control">
-              <option *ngFor="let obj of countries" [value]="obj">{{obj}}</option>
-            </select>
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="dutyImpRate">Duty Import Rate :</label>
+            </div> 
+              
             
-          </div>
-          
-          <div *ngIf="formErrors.CountryList" class="alert alert-danger" formControlName="CountryList">
-            {{ formErrors.CountryList }}
-          </div>
-          
-        </div>
-        
-        
-        <div class="form-group">
-          <label for="DutyImpRate">Duty Rate</label>
-          <input id="DutyImpRate" type="text" class="form-control" formControlName="DutyImpRate">         
-          
-          <div *ngIf="formErrors.DutyImpRate" class="alert alert-danger">
-            {{ formErrors.DutyImpRate }}
-          </div>
-          
-        </div>
-        
-        
-        <div class="form-group">
-          <label for="Gstrate">Gst Rate</label>
-          <input id="Gstrate" type="text" class="form-control" formControlName="Gstrate">         
-          
-          <div *ngIf="formErrors.Gstrate" class="alert alert-danger">
-            {{ formErrors.Gstrate }}
-          </div>
-          
-        </div>               
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="dutyImpRate" formControlName="dutyImpRate" maxlength="16" type="number" class="form-control decimal-control"  />
+					  </div>
+							<div *ngIf="formErrors.dutyImpRate" class="alert alert-danger">
+							{{ formErrors.dutyImpRate }}
+						</div> 
+          </div> 
+
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="gstrate">GST Rate :</label>
+					  </div> 
+					 	<div class="cell c5"> 
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <span>RM</span>
+                </div>
+                <input id="gstrate" formControlName="gstrate" maxlength="16" type="number" class="form-control decimal-control"  />
+                </div>
+                  <div *ngIf="formErrors.gstrate" class="alert alert-danger">
+                  {{ formErrors.gstrate }}
+                </div> 
+              </div> 
+
+           </div>  
+
+
+				  </div>
+        </div>  
+      </div>       
+  <div>
+                      
         
       </div>
-      
-      <button class="btn btn-primary commandBtn" [disabled]="!personForm.valid" (click)="save()"> Save </button>
-      <button class="btn btn-primary commandBtn" (click)="cancel()"> Cancel </button>
+       
+       <div class="form-group row">
+          <div class="cell c1"> 
+          </div> 
+          <div class="cell c2"> 
+          </div>
+          <div class="cell c3"> 
+          </div> 
+          <div class="cell c4"> 
+          </div> 
+          <div class="cell c5" style="text-align:right">	   
  
-      <p>Form value: {{ personForm.value | json }}</p>
+							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
+			 	  </div>
+       </div>
+
+      <p style="width:800px">Form value: {{ personForm.value | json }}</p>
       
     </form>
     
-  </p-dialog>
+  </p-dialog>    
   
 </div>
-
 
 <div class="container">       
-    <button class="btn btn-primary commandGridSpacer" (click)="addForm()"> Add </button>
-    <button class="btn btn-primary commandGridSpacer" [disabled]="!itemSelected" (click)="edit()"> Edit </button>
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
 </div>
+<div style="clear:both; height:10px"></div>
 
 <div class="container"> 
-
-<ngx-datatable class="material striped"
+  <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
   [rows]="rows"
-  [limit]="10"  
+  [limit]="10"
+  (select)="person"
+  [columns]="columns"
   [selectionType]="'single'"
   (select)="onSelect($event)"
-  [columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
+  [headerHeight]="30"  [rowHeight]="'auto'"
   [footerHeight]="50">
+
   
+	 <ngx-datatable-column  name="Id" prop="rmid" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+  
+	 <ngx-datatable-column  name="Code" prop="rmcode" [width]="250" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+
+	 <ngx-datatable-column  name="Description" prop="rmdesc" [width]="250" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+
+    
+	 <ngx-datatable-column  name="Tariff Code" prop="tariffCode" [width]="250" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+      
+	 <ngx-datatable-column  name="Category" prop="rmcatId" [width]="200" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+					<ng-container *ngFor = "let n of rmcatRows">
+						<div *ngIf="value===n.rmcatId">{{n.rmcatName}}</div>
+				  </ng-container>
+        </ng-template>
+		</ngx-datatable-column>  
+
 </ngx-datatable>
-
 </div>
-
 

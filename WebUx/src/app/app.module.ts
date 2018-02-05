@@ -65,6 +65,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
 import { TabViewModule } from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 import { AuthGuard } from './auth/AuthGuard';
 import { AuthService } from './auth/auth-service.service';
@@ -104,7 +105,7 @@ export const ROUTES: Routes = [
   ],
   imports: [
     BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, 
-    BrowserAnimationsModule, DialogModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
+    BrowserAnimationsModule, DialogModule, MultiSelectModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
     
     StoreModule.forRoot([EmployeeReducer, UserReducer, 
       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,

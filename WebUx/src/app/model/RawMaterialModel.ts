@@ -1,17 +1,17 @@
 
 export class RawMaterialModel { 
-    Rmid : string;
-    Rmcode : string;
-    RmcatId? : number; 
-    Rmdesc : string; 
-    Uomid? : number;
-    TariffCode : string; 
-    CountryList : number;
-    DutyImpRate : string;
-    Gstrate : number; 
-    CreatedByUserId : number; 
-    CreatedDt : Date;
-    EditedByUserId : number;
-    EditedDt : Date;
+    rmid? : number;
+    rmcode : string;
+    rmcatId? : number; 
+    rmdesc : string; 
+    uomid? : number;
+    tariffCode : string; 
+    countryList : string;
+    dutyImpRate : string;
+    gstrate : number; 
+    createdByUserId : number; 
+    createdDt : Date;
+    editedByUserId : number;
+    editedDt : Date;
 
 }

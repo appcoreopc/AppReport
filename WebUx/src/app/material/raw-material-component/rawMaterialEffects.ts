@@ -4,8 +4,10 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
 import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
-  RAW_MATERIAL_MESSAGE_END, RAW_MATERIAL_SAVE_ERR, RAW_MATERIAL_CANCEL_OK, RAW_MATERIAL_GET, RAW_MATERIAL_GET_ERR,
-  RAW_MATERIAL_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
+  RAW_MATERIAL_MESSAGE_END, RAW_MATERIAL_SAVE_ERR, RAW_MATERIAL_CANCEL_OK, 
+  RAW_MATERIAL_GET, RAW_MATERIAL_GET_ERR,
+  RAW_MATERIAL_GET_OK, UOM_GET, UOM_GET_OK, COUNTRY_GET,  COUNTRY_GET_OK,
+  CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
   
@@ -50,6 +52,30 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
       .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }))
     ); 
     
+
+      @Effect() GrnGetUom$ = this.actions$    
+      .ofType(UOM_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/uom/index')  
+      .map(res => {       
+        return { type: UOM_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }))
+    ); 
+    
+      @Effect() GrnGetCountry$ = this.actions$    
+      .ofType(COUNTRY_GET)     
+      .map(action => {   
+        JSON.stringify(action);
+      })
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/country/index')  
+      .map(res => {       
+        return { type: COUNTRY_GET_OK, data: res};
+      }) 
+      .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }))
+    ); 
   }
   
   

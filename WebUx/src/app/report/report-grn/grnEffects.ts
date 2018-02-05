@@ -105,31 +105,8 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
       }) 
       .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
     ); 
-
-     @Effect() GrnGetMaterial$ = this.actions$    
-      .ofType(RAW_MATERIAL_GET)     
-      .map(action => {   
-        JSON.stringify(action);
-      })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/material/index')  
-      .map(res => {       
-        console.log("material",res);
-        return { type: RAW_MATERIAL_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
-    ); 
-
-     @Effect() GrnGetSupplier$ = this.actions$    
-      .ofType(SUPPLIER_GET)     
-      .map(action => {   
-        JSON.stringify(action);
-      })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/supplier/index')  
-      .map(res => {       
-        return { type: SUPPLIER_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
-    ); 
+ 
+ 
 
   }
   
