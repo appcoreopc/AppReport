@@ -22,12 +22,12 @@
 											<label for="RefNo">Reference No :</label>
 										</div> 
 										<div class="cell c2">
-											<input id="rptId" type="text" class="form-control text-control" formControlName="refNo" /> 
+											<input id="refNo" type="text" class="form-control text-control" formControlName="refNo" /> 
 										</div>
 										<div class="cell c3"> 
 										</div> 
 										<div class="cell c4">
-											<label for="LetterDate">Date of Letter :</label>
+											<label for="letterDate">Date of Letter :</label>
 										</div> 
 										<div class="cell c5"><p-calendar dateFormat="dd/mm/yy" formControlName="letterDate" [defaultDate]="date1" [showIcon]="true" [monthNavigator]="true"></p-calendar>
 											<div *ngIf="formErrors.letterDate" class="alert alert-danger">
