@@ -1,7 +1,7 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 
-import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
+import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_WAIT_PENDING,
 	 EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_GET, EMPLOYEE_GET_ERR,
 	  EMPLOYEE_GET_OK, JOBTITLE_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 
@@ -22,7 +22,10 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
 			console.log(EMPLOYEE_SAVE_ERR);
 			return  { status : 5, data : action, type: EMPLOYEE_MESSAGE_END };
 		case JOBTITLE_GET_OK: 
-		  return  { status : 6, data : action, type: JOBTITLE_GET_OK };
+			return  { status : 6, data : action, type: JOBTITLE_GET_OK };
+		case EMPLOYEE_WAIT_PENDING:	
+		  console.log('employee pending');	  
+		  return  { status : 2, data : action, type: EMPLOYEE_WAIT_PENDING };	
 		default:
 			return status;						
 		}					

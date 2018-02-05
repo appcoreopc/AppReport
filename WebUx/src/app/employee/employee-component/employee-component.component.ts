@@ -197,7 +197,12 @@ import {DialogModule} from 'primeng/dialog';
                 });
               }                
               this.rows = this.dataList;
-            }    
+            }  
+            
+            if (message && message.type == EMPLOYEE_SAVE_SUCCESS)
+            {
+                console.log('save success!!!');
+            }
             
             if (message && message.type == EMPLOYEE_SAVE_SUCCESS)
             {                  

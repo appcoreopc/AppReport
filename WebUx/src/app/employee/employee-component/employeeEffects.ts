@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
-  EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_SAVE_PENDING, EMPLOYEE_GET, EMPLOYEE_GET_ERR,
+  EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_WAIT_PENDING, EMPLOYEE_GET, EMPLOYEE_GET_ERR,
   EMPLOYEE_GET_OK, JOBTITLE_GET, JOBTITLE_GET_OK,  CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
@@ -60,14 +60,13 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
               console.log('completed!');  
             });
   
-          });
-          
-          return Observable.of({ type: EMPLOYEE_SAVE_ERR });
+          });          
+          //return Observable.of({ type: EMPLOYEE_SAVE_ERR });
           ///////////EXTRA CODE ENDS ///////////////////////////
           
         })
         .concatMap(res => {         
-          return Observable.of({ type: EMPLOYEE_SAVE_PENDING });
+          return Observable.of({ type: EMPLOYEE_WAIT_PENDING });
         });
         
     
