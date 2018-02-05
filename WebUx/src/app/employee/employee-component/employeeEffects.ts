@@ -60,19 +60,13 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
               console.log('completed!');  
             });
   
-          })
-          .catch(error => {
-            // You could also return an 'Error' action here instead
-            console.log('here error starts!');
-            return Observable.of({ type: EMPLOYEE_SAVE_ERR });
           });
-  
+          
+          return Observable.of({ type: EMPLOYEE_SAVE_ERR });
           ///////////EXTRA CODE ENDS ///////////////////////////
           
         })
-        .concatMap(res => {
-          console.log('concat map');
-          console.log(res);
+        .concatMap(res => {         
           return Observable.of({ type: EMPLOYEE_SAVE_PENDING });
         });
         
