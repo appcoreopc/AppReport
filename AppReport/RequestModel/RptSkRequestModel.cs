@@ -4,7 +4,7 @@ namespace AppReport.RequestModel
 {
     public class RptSkRequestModel
     {
-        public int RptId { get; set; }
+        public int? RptId { get; set; }
         public int? RptStatusId { get; set; }
         public string FCoName { get; set; }
         public string FCoRegNo { get; set; }

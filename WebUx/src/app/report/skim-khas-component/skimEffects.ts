@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
-
 import {SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS,
   SKIMKHAS_MESSAGE_END, SKIMKHAS_SAVE_ERR, SKIMKHAS_CANCEL_OK, EMPLOYEE_WAIT_PENDING, SKIMKHAS_GET, SKIMKHAS_GET_ERR,
   SKIMKHAS_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
@@ -24,20 +23,21 @@ import {SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS,
     .ofType(SKIMKHAS_SAVE)   
     .map(action => {  
       console.log('saving skim khas');
-      return JSON.stringify(action.data);
+      return action.data;
     })
     .switchMap(payload =>   
       {
-        
+       
         return Observable.of(payload)
         .map(action => {
 
           console.log('effect payload');
           console.log(payload);
-          
+                    
           this.http.post(APPLICATION_HOST + '/rptsk/save', payload, {headers : headersJson})
-          .subscribe(res => {                   
-            messageUtil.dispatchIntent(this.store, SKIMKHAS_SAVE_ERR, null);
+          .subscribe
+          (res => {                   
+            messageUtil.dispatchIntent(this.store, SKIMKHAS_SAVE_SUCCESS, null);
           },  
           err => {                       
             if (err && err.status == 201)

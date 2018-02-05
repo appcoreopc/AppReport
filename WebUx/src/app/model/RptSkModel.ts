@@ -17,9 +17,9 @@ export class RptSkModel {
  fCoLogo : string;
  fCoSplno : string;
  fCoGstno : string;
- rptDate : Date;
+ rptDate : string;
  refNo : string;
- letterDate : Date;
+ letterDate : string;
  lrcptDept : string;
  lrcptBr : string;
  lrcptAdd1 : string;
@@ -30,7 +30,7 @@ export class RptSkModel {
  signedByPos : string;
  signedByName : string;
  signedByIdno : string;
- signedDate : Date;
+ signedDate : string;
  fImpCost : number;
  fGstcost : number;
  signedByNameImp : string;

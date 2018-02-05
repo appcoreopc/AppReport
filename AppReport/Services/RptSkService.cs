@@ -22,7 +22,7 @@ namespace AppReport.Services
 
         public IEnumerable<RptSk> GetAllRptDetails()
         {
-            return _context.RptSk.Include(x => x.RptSkMimp);
+            return _context.RptSk.Include(x => x.RptSkMimp).ToList();
         }
         
         public RptSk Get(int id)
@@ -55,7 +55,7 @@ namespace AppReport.Services
             }
             else
             {
-                var data = base.FindById<RptSk>(d.RptId);
+                var data = base.FindById<RptSk>(d.RptId.Value);
                 if (data != null)
                 { 
                 }

@@ -129,6 +129,10 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       if (this.intention == ADD)
       {
         saveJson = this.dataForm.value as RptSkModel;
+        saveJson.rptId = 99999;
+        saveJson.rptDate = "2017-01-20";
+        saveJson.letterDate = "2017-01-20";
+        saveJson.signedDate = "2017-01-20";
       }
       else {
         
@@ -139,8 +143,6 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
       var strJson = JSON.stringify(saveJson);   
       this.dispatchIntent(SKIMKHAS_SAVE, saveJson);
-      
-      console.log("strJson",strJson);
       this.display = false;         
     } 
     
