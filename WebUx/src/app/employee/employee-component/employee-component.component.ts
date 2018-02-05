@@ -18,9 +18,8 @@ import {DialogModule} from 'primeng/dialog';
   
   export class EmployeeComponentComponent implements OnInit {
     
-    person: EmployeeModel = new EmployeeModel();
-    private stncustomData: JobTitleModel = new JobTitleModel();
-    personForm: FormGroup;
+    private person: EmployeeModel = new EmployeeModel(); 
+    private personForm: FormGroup;
     private intention : number = UPDATE;
     
     display: boolean = false;
@@ -137,7 +136,7 @@ import {DialogModule} from 'primeng/dialog';
       private configureAddForm()
       {
         this.setFormValidation(''); 
-
+ 
         for (const field in this.formErrors) { 
           this.formErrors[field] = ''; 
         } 
@@ -197,12 +196,7 @@ import {DialogModule} from 'primeng/dialog';
                 });
               }                
               this.rows = this.dataList;
-            }  
-            
-            if (message && message.type == EMPLOYEE_SAVE_SUCCESS)
-            {
-                console.log('save success!!!');
-            }
+            }    
             
             if (message && message.type == EMPLOYEE_SAVE_SUCCESS)
             {                  
