@@ -150,9 +150,9 @@ export const ADD = 2;
 export const DELETE = 4;
 
 export interface CityAppState {
-	status: number;	
-	type : string; 
-	data  : CityData; 	
+	status?: number;	
+	type? : string; 
+	data?  : CityData; 	
 }
 
 export interface CityData {

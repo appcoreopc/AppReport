@@ -1,3 +1,6 @@
+    import { Store } from '@ngrx/store';
+    import { CityAppState } from '../sharedObjects/sharedMessages';
+    
     export function getMessage(store : any , targetMessageType : string)
     {          
         try {                 
@@ -53,7 +56,7 @@
     export function extraMessageFromStore(store : Array<any> , messagesTypeToListen : string[]): Array<any>
     {         
         let messageList = new Array<any>();
-      
+        
         try {                 
             
             for (var idx in store)
@@ -75,4 +78,14 @@
         }   
     }
     
-   
+    export function dispatchIntent(store : Store<CityAppState>, messageType : string, data? : any)
+    {   
+        store.dispatch(
+            {     
+                type: messageType,
+                data : data
+            });      
+        }  
+        
+        
+        
