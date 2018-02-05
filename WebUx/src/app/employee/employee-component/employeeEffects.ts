@@ -5,9 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
-
 import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
-  EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_GET, EMPLOYEE_GET_ERR,
+  EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_SAVE_PENDING, EMPLOYEE_GET, EMPLOYEE_GET_ERR,
   EMPLOYEE_GET_OK, JOBTITLE_GET, JOBTITLE_GET_OK,  CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
@@ -42,11 +41,19 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
               return Observable.of({ type: EMPLOYEE_SAVE_SUCCESS, data: res });
   
             },  
-            err => {            
+            err => {         
+              
+              if (err && err.status == 201)
+              {
+                messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);                
+              } 
+              else 
+              {
               console.log(err); 
               console.log('returns error.');              
               messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_ERR, null);
               return Observable.of({ type: EMPLOYEE_SAVE_ERR });
+              }
               //throw new Error(EMPLOYEE_SAVE_ERR);  
             }, () => {
               // completion            
@@ -66,7 +73,7 @@ import {EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
         .concatMap(res => {
           console.log('concat map');
           console.log(res);
-          return Observable.of({ type: EMPLOYEE_SAVE_ERR });
+          return Observable.of({ type: EMPLOYEE_SAVE_PENDING });
         });
         
     
