@@ -88,7 +88,7 @@ export class SkimKhasComponentComponent implements OnInit {
     { field: 'txnId', header: 'Bill' },
     { field: 'fImpDate', header: 'Tarikh' },
     { field: 'fCustomNo', header: 'No Barang Kastam' },
-    { field: 'fImpCost', header: 'Kuantiti Import' },
+    { field: 'fImpWgt', header: 'Kuantiti Import' },
     { field: 'fImpCost', header: 'Nilai Import' },
     { field: 'fGstcost', header: 'GST' },
     { field: 'note', header: 'Catatan' }
@@ -345,16 +345,16 @@ export class SkimKhasComponentComponent implements OnInit {
   // adding entries into the main module //
   createEntry() {
 
+    // init array if prtSkMimp is null 
     if (this.data && !this.data.rptSkMimp) {
       this.data.rptSkMimp = new Array<RptSkMimpModel>();
     }
 
-    if (this.entryDetailForm) {
-
-
+    if (this.entryDetailForm.valid) {
+          this.data.rptSkMimp.push(this.itemEntryModel);      
     }
 
-    this.data.rptSkMimp.push(this.itemEntryModel);
+    
   }
 
   setupDetailEntryForm() {
@@ -365,17 +365,17 @@ export class SkimKhasComponentComponent implements OnInit {
     }
 
     this.entryDetailForm = this.fb.group({
-      'txnid': [this.itemEntryModel.txnid, [Validators.required, Validators.minLength(1)]],
-      'rptid': [this.itemEntryModel.rptid],
-      'fimpdate': [this.itemEntryModel.fimpdate, [Validators.required, Validators.minLength(1)]],
-      'fcustomno': [this.itemEntryModel.fcustomno, [Validators.required, Validators.minLength(1)]],
-      'fimpwgt': [this.itemEntryModel.fimpwgt, [Validators.required, Validators.minLength(1)]],
-      'fimpcost': [this.itemEntryModel.fimpcost, [Validators.required, Validators.minLength(1)]],
-      'fgstcost': [this.itemEntryModel.fgstcost, [Validators.required, Validators.minLength(1)]],
+      'txnId': [this.itemEntryModel.txnId, [Validators.required, Validators.minLength(1)]],
+      'rptId': [this.itemEntryModel.rptId],
+      'fImpDate': [this.itemEntryModel.fImpDate, [Validators.required, Validators.minLength(1)]],
+      'fCustomNo': [this.itemEntryModel.fCustomNo, [Validators.required, Validators.minLength(1)]],
+      'fImpWgt': [this.itemEntryModel.fImpWgt, [Validators.required, Validators.minLength(1)]],
+      'fImpCost': [this.itemEntryModel.fImpCost, [Validators.required, Validators.minLength(1)]],
+      'fGstcost': [this.itemEntryModel.fGstcost, [Validators.required, Validators.minLength(1)]],
       'note': [this.itemEntryModel.note, [Validators.required, Validators.minLength(1)]]
     });
 
-    this.entryDetailForm.get("fimpdate").setValue('');
+    this.entryDetailForm.get("fImpDate").setValue('');
 
     this.entryDetailForm.valueChanges.debounceTime(300).subscribe(
       data => this.onEntryDetailValueChanged(data));
@@ -388,13 +388,13 @@ export class SkimKhasComponentComponent implements OnInit {
 
     const form = this.entryDetailForm;
 
-    this.itemEntryModel.txnid = data.txnid;
-    this.itemEntryModel.rptid = this.data.rptId;
-    this.itemEntryModel.fimpdate = data.fimpdate;
-    this.itemEntryModel.fcustomno = data.fcustomno;
-    this.itemEntryModel.fimpwgt = data.fimpwgt;
-    this.itemEntryModel.fimpcost = data.fimpcost;
-    this.itemEntryModel.fgstcost = data.fgstcost;
+    this.itemEntryModel.txnId = data.txnId;
+    this.itemEntryModel.rptId = this.data.rptId;
+    this.itemEntryModel.fImpDate = data.fImpDate;
+    this.itemEntryModel.fCustomNo = data.fCustomNo;
+    this.itemEntryModel.fImpWgt = data.fImpWgt;
+    this.itemEntryModel.fImpCost = data.fImpCost;
+    this.itemEntryModel.fGstcost = data.fGstcost;
     this.itemEntryModel.note = data.note;
 
     for (const field in this.formErrors) {
@@ -410,7 +410,6 @@ export class SkimKhasComponentComponent implements OnInit {
       }
     }
   }
-
 
 }
 
