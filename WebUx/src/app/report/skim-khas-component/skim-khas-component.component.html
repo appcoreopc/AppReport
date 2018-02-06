@@ -230,8 +230,12 @@
 												<label for="kuantitiImport">Kuantiti Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="kuantitiImport" type="text" formControlName="fImpWgt" class="form-control text-control" />  
+												<input id="kuantitiImport" type="number" formControlName="fImpWgt" class="form-control text-control" />  
 											</div> 
+											
+											<div *ngIf="detailFormError.fImpWgt" class="alert alert-danger">
+													{{ detailFormError.fImpWgt }}
+										    </div> 
 										</div> 			
 										
 										<div class="form-group row">
@@ -239,7 +243,7 @@
 												<label for="nilaiImport">Nilai Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="nilaiImport" type="text" formControlName="fImpCost" class="form-control text-control" />  
+												<input id="nilaiImport" type="number" formControlName="fImpCost" class="form-control text-control" />  
 											</div> 
 										</div> 		
 
@@ -249,7 +253,7 @@
 													<label for="nilaiImport">GST </label>
 												</div> 
 												<div class="cell c2345">
-													<input id="nilaiImport" type="text" formControlName="fGstcost" class="form-control text-control" />  
+													<input id="nilaiImport" type="number" formControlName="fGstcost" class="form-control text-control" />  
 												</div> 
 											</div> 		
 										
@@ -260,6 +264,10 @@
 											<div class="cell c2345">
 												<input id="catatan" type="text" formControlName="note" class="form-control text-control" />  
 											</div> 
+
+											<div *ngIf="detailFormError.note" class="alert alert-danger">
+													{{ detailFormError.note }}
+										    </div> 
 										</div> 
 										
 										<div class="cell c5" style="text-align:right">	   
@@ -357,11 +365,7 @@
 													<input id="catatan" type="text" value="{{rowData.note}}" class="form-control text-control" />  
 												</div> 
 											</div> 
-											
-											<div class="cell c5">	   											
-												<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
-											</div>
-
+										
 											
 										</div> 
 									</div>   	
@@ -385,7 +389,8 @@
 				</div>
 				
 				<div class="container">   
-					<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Save"></p-button>     
+
+					<p-button icon="fa fa-fw fa-plus" label="Save Skim Khas" (click)="save()"></p-button>     
 				</div>
 				
 				

@@ -53,10 +53,39 @@ export class SkimKhasComponentComponent implements OnInit {
     'rptDate': '',
     'letterDate': ''
   };
+ 
+  detailFormError = { 
+    'txnId': '',
+    'fImpDate': '',
+    'fCustomNo': '',   
+    'fImpWgt': '',
+    'fImpCost': '',
+    'fGstcost': '',
+    'note': ''
+  }
+
+  detailEntryValidationMessages = {
+    'txnId': {
+      'required': 'Please enter bill no'
+    },
+    'fImpDate': {
+      'required': 'Date is required.'
+    },    
+    'fCustomNo': {
+      'required': 'Custom No is required.'
+    },
+    'fImpWgt': {
+      'required': 'Date is required.'
+    },
+      'note': {
+      'required': 'note is required.'
+    }
+
+  };
+
+
 
   itemSelected: boolean = false;
-
-
 
   validationMessages = {
     'rptDate': {
@@ -375,7 +404,7 @@ export class SkimKhasComponentComponent implements OnInit {
       'note': [this.itemEntryModel.note, [Validators.required, Validators.minLength(1)]]
     });
 
-    this.entryDetailForm.get("fImpDate").setValue('');
+    // this.entryDetailForm.get("fImpDate").setValue('');
 
     this.entryDetailForm.valueChanges.debounceTime(300).subscribe(
       data => this.onEntryDetailValueChanged(data));
@@ -397,15 +426,15 @@ export class SkimKhasComponentComponent implements OnInit {
     this.itemEntryModel.fGstcost = data.fGstcost;
     this.itemEntryModel.note = data.note;
 
-    for (const field in this.formErrors) {
+    for (const field in this.detailFormError) {
       // clear previous error message (if any)
-      this.formErrors[field] = '';
+      this.detailFormError[field] = '';
       const control = form.get(field);
 
       if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
+        const messages = this.detailEntryValidationMessages[field];
         for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
+          this.detailFormError[field] += messages[key] + ' ';
         }
       }
     }
