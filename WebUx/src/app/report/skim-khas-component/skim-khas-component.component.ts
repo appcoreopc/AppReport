@@ -18,20 +18,19 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   import {SpinnerModule} from 'primeng/spinner';
   import {DialogModule} from 'primeng/dialog';
   import { RptSkMimpModel } from '../../model/RptSkMimpModel';
-  
-
+    
   @Component({
     selector: 'app-skim-khas-component',
     templateUrl: './skim-khas-component.component.html',
     styleUrls: ['./skim-khas-component.component.css']
   })
-
+  
   export class SkimKhasComponentComponent implements OnInit {
     
     data: RptSkModel = new RptSkModel(); 
     dataForm: FormGroup;
     private intention : number = UPDATE;
- 
+    
     dateValue = new Date().getDate();
     
     displayDataEntry : boolean = false;
@@ -121,11 +120,11 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
       this.dispatchIntent(EMPLOYEE_GET);
     }
-        
+    
     save()
     {     
       var saveJson = new RptSkModel();
-
+      
       if (this.intention == ADD)
       {
         saveJson = this.dataForm.value as RptSkModel;        
@@ -295,20 +294,12 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         this.intention = UPDATE;  
         this.configureEditForm(); 
         this.display = true;
-        
+                
         let dftDate = new Date(this.data.rptDate);   
         let letterDate = new Date(this.data.letterDate);   
-       
+
         this.dataForm.get("rptDate").setValue(dftDate);
-        this.dataForm.get("letterDate").setValue(letterDate);
-                
-        // if (this.data)
-        // {                                  
-        //   this.dataForm.get("rptId").setValue(this.data.rptId);
-        //   this.dataForm.get("rptDate").setValue(new Date(this.data.rptDate));
-        //   this.dataForm.get("letterDate").setValue(new Date(this.data.letterDate)); 
-        //   this.display = true;
-        // }       
+        this.dataForm.get("letterDate").setValue(letterDate);            
       }                          
       
       cancel() 
