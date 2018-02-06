@@ -185,7 +185,7 @@ export class SkimKhasComponentComponent implements OnInit {
     this.data.signedByName = mainFormModel.signedByName;
     this.data.signedByPos = mainFormModel.signedByPos;
 
-    // Dates handling 
+    // Dates handling     
     this.data.letterDate = util.getTargetDate(new Date(mainFormModel.letterDate));
     this.data.rptDate  = util.getTargetDate(new Date(mainFormModel.rptDate));
  
@@ -202,8 +202,9 @@ export class SkimKhasComponentComponent implements OnInit {
       mainFormModel.letterDate = this.data.letterDate;
     }
 
-    var strJson = JSON.stringify(this.data);
-    this.dispatchIntent(SKIMKHAS_SAVE, mainFormModel);
+    var strJson = JSON.stringify(this.data);   
+    console.log(strJson);
+    this.dispatchIntent(SKIMKHAS_SAVE, strJson);
     this.display = false;
   }
 

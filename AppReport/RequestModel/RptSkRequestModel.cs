@@ -42,6 +42,12 @@ namespace AppReport.RequestModel
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }
         public DateTime? EditedDt { get; set; }
+        
+        public RptSkMimpModel RptSkMimp { get; set; }
+
+
+
+
 
     }
 }
