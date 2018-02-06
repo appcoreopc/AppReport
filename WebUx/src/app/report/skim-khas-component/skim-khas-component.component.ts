@@ -163,25 +163,47 @@ export class SkimKhasComponentComponent implements OnInit {
   }
 
   save() {
-    var saveJson = new RptSkModel();
+    
+    debugger;    
+    let mainFormModel = this.dataForm.value as RptSkModel;
 
+    // bind main form control fields //
+
+    this.data.rptId = mainFormModel.rptId;
+    this.data.refNo = mainFormModel.refNo;
+
+    this.data.lrcptBr = mainFormModel.lrcptBr;
+    this.data.lrcptDept = mainFormModel.lrcptDept;
+
+    this.data.lrcptAdd1 = mainFormModel.lrcptAdd1;
+    this.data.lrcptAdd2 = mainFormModel.lrcptAdd2;
+    this.data.lrcptAdd3 = mainFormModel.lrcptAdd3;
+    this.data.lrcptAdd4 = mainFormModel.lrcptAdd4;
+
+    this.data.signedByEmpId = mainFormModel.signedByEmpId;
+    this.data.signedByIdno = mainFormModel.signedByIdno;
+    this.data.signedByName = mainFormModel.signedByName;
+    this.data.signedByPos = mainFormModel.signedByPos;
+
+    // Dates handling 
+    this.data.letterDate = util.getTargetDate(new Date(mainFormModel.letterDate));
+    this.data.rptDate  = util.getTargetDate(new Date(mainFormModel.rptDate));
+ 
     if (this.intention == ADD) {
-      saveJson = this.dataForm.value as RptSkModel;
 
       //saveJson.rptDate = util.getTargetDate(this.data.rptDate);                
       //saveJson.letterDate = util.getTargetDate(this.data.rptDate);  
       //saveJson.signedDate =util.getTargetDate(this.data.rptDate);  
-
     }
     else {
 
-      saveJson.rptId = this.data.rptId;
-      saveJson.rptDate = this.data.rptDate;
-      saveJson.letterDate = this.data.letterDate;
+      mainFormModel.rptId = this.data.rptId;
+      mainFormModel.rptDate = this.data.rptDate;
+      mainFormModel.letterDate = this.data.letterDate;
     }
 
-    var strJson = JSON.stringify(saveJson);
-    this.dispatchIntent(SKIMKHAS_SAVE, saveJson);
+    var strJson = JSON.stringify(this.data);
+    this.dispatchIntent(SKIMKHAS_SAVE, mainFormModel);
     this.display = false;
   }
 
@@ -251,11 +273,7 @@ export class SkimKhasComponentComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-
-  }
-
-  private setupAddForm() {
+    private setupAddForm() {
     this.configureAddForms('');
     for (const field in this.formErrors) {
       this.formErrors[field] = '';
@@ -312,6 +330,7 @@ export class SkimKhasComponentComponent implements OnInit {
     this.formTitle = "New Report SKIM Khas";
     this.display = true;
     this.intention = ADD;
+    debugger;
     this.setupAddForm();
   }
 
@@ -332,7 +351,6 @@ export class SkimKhasComponentComponent implements OnInit {
     this.dataForm.get("rptDate").setValue(dftDate);
     this.dataForm.get("letterDate").setValue(letterDate);
     this.display = true;
-
   }
 
   cancel() {
