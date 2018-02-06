@@ -18,7 +18,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   import {SpinnerModule} from 'primeng/spinner';
   import {DialogModule} from 'primeng/dialog';
   import { RptSkMimpModel } from '../../model/RptSkMimpModel';
-    
+  
   @Component({
     selector: 'app-skim-khas-component',
     templateUrl: './skim-khas-component.component.html',
@@ -27,10 +27,17 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   
   export class SkimKhasComponentComponent implements OnInit {
     
+    // form model 
     data: RptSkModel = new RptSkModel(); 
-    dataForm: FormGroup;
-    private intention : number = UPDATE;
-    
+    mainItemSelected : RptSkModel; 
+
+    itemEntryModel : RptSkMimpModel = new RptSkMimpModel();
+
+
+    dataForm: FormGroup; // main entry form 
+    entryDetailForm : FormGroup; // for detail entry form 
+
+    private intention : number = UPDATE;    
     dateValue = new Date().getDate();
     
     displayDataEntry : boolean = false;
@@ -47,7 +54,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
     
     itemSelected : boolean = false;
     
-    mainItemSelected : RptSkModel; 
+    
     
     validationMessages = {    
       'rptDate': {
@@ -110,9 +117,12 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, EMPLOYEE_GET_OK), EMPLOYEE_GET_OK));    
         
       }); 
-      
+            
       this.configureEditForm();
+
+      this.setupDetailEntryForm();
     }
+
     
     ngAfterViewInit() { 
       
@@ -128,7 +138,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       if (this.intention == ADD)
       {
         saveJson = this.dataForm.value as RptSkModel;        
-        
+
         //saveJson.rptDate = util.getTargetDate(this.data.rptDate);                
         //saveJson.letterDate = util.getTargetDate(this.data.rptDate);  
         //saveJson.signedDate =util.getTargetDate(this.data.rptDate);  
@@ -288,18 +298,20 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         this.displayDataEntry = true;
       }
       
-      edit() {  
+      setupMainFormForEdit() {  
         
-        this.formTitle = "Edit Report SKIM Khas"; 
-        this.intention = UPDATE;  
+        this.formTitle = "Edit Report SKIM Khas";         
+        this.intention = UPDATE; 
+
         this.configureEditForm(); 
-        this.display = true;
-                
+        
         let dftDate = new Date(this.data.rptDate);   
         let letterDate = new Date(this.data.letterDate);   
-
+        
         this.dataForm.get("rptDate").setValue(dftDate);
-        this.dataForm.get("letterDate").setValue(letterDate);            
+        this.dataForm.get("letterDate").setValue(letterDate);  
+        this.display = true;
+        
       }                          
       
       cancel() 
@@ -323,24 +335,62 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
         {
           console.log(evt);
         }
-        
+                
         onRowSelect(evt)
         { 
           console.log('onrowselect');
           console.log(evt);
-          
+
           this.intention = UPDATE;
-          
+
           if (evt && evt.data)
           {
             this.data = evt.data as RptSkModel;                   
             this.itemSelected = true;   
           }
-          else 
-          this.itemSelected = false;
+          else           
+            this.itemSelected = false;
           
-          this.edit();
+          this.setupMainFormForEdit();
+
+
           
+                    
         }
+                
+        // adding entries into the main module //
+         createEntry() { 
+          if (this.data && !this.data.rptSkMimp)
+          {
+            this.data.rptSkMimp = new Array<RptSkMimpModel>();            
+          }
+          let rptSkMimpModel = new RptSkMimpModel();                   
+        }        
+
+        setupDetailEntryForm()
+        {       
+          
+          if (!this.data.rptSkMimp)
+          {
+            this.data.rptSkMimp = new Array<RptSkMimpModel>();            
+          }
+
+
+           this.entryDetailForm = this.fb.group({
+            'txnid': [this.itemEntryModel.txnid, [Validators.required, Validators.minLength(1)]],
+            'rptid': [this.itemEntryModel.rptid], 
+            'fimpdate': [this.itemEntryModel.fimpdate, [Validators.required, Validators.minLength(1)]], 
+            'fcustomno': [this.itemEntryModel.fcustomno, [Validators.required, Validators.minLength(1)]]  , 
+            'fimpwgt': [this.itemEntryModel.fimpwgt, [Validators.required, Validators.minLength(1)]]  , 
+            'fimpcost': [this.itemEntryModel.fimpcost, [Validators.required, Validators.minLength(1)]]  , 
+            'fgstcost': [this.itemEntryModel.fgstcost, [Validators.required, Validators.minLength(1)]],
+            'note': [this.itemEntryModel.note, [Validators.required, Validators.minLength(1)]]         
+          });   
+                     
+        this.entryDetailForm.get("fimpdate").setValue('');
+         
+
+        }
+        
       }
       

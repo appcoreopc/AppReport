@@ -194,7 +194,7 @@
 					
 					<ng-template pTemplate="caption">
 						
-						<form [formGroup]='dataForm'> 
+						<form [formGroup]='entryDetailForm'> 
 
 							<div style="width:1000px;padding:0px">							
 								<div class="panel panel-info"> 
@@ -205,7 +205,7 @@
 												<label for="taxid">Bill</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="taxid" type="text" class="form-control text-control" />  
+												<input id="taxid" type="text" formControlName="txnid" class="form-control text-control" />  
 											</div> 
 										</div> 
 										<div class="form-group row">
@@ -213,7 +213,7 @@
 												<label for="tarikh">Tarikh</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="tarikh" type="text" class="form-control text-control" /> 
+												<input id="tarikh"  type="text"  formControlName="fimpdate" class="form-control text-control" /> 
 											</div> 
 										</div> 
 										<div class="form-group row">
@@ -221,7 +221,7 @@
 												<label for="nobarang">No Barang</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="nobarang" type="text" class="form-control text-control" />  
+												<input id="nobarang" type="text" formControlName="fcustomno" class="form-control text-control" />  
 											</div> 
 										</div> 			
 										
@@ -230,7 +230,7 @@
 												<label for="kuantitiImport">Kuantiti Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="kuantitiImport" type="text" class="form-control text-control" />  
+												<input id="kuantitiImport" type="text" formControlName="fimpwgt" class="form-control text-control" />  
 											</div> 
 										</div> 			
 										
@@ -239,23 +239,39 @@
 												<label for="nilaiImport">Nilai Import</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="nilaiImport" type="text" class="form-control text-control" />  
+												<input id="nilaiImport" type="text" formControlName="fimpcost" class="form-control text-control" />  
 											</div> 
 										</div> 		
+
+
+										<div class="form-group row">
+												<div class="cell c1">
+													<label for="nilaiImport">GST </label>
+												</div> 
+												<div class="cell c2345">
+													<input id="nilaiImport" type="text" formControlName="fgstcost" class="form-control text-control" />  
+												</div> 
+											</div> 		
 										
 										<div class="form-group row">
 											<div class="cell c1">
 												<label for="catatan">Catatan</label>
 											</div> 
 											<div class="cell c2345">
-												<input id="catatan" type="text" class="form-control text-control" />  
+												<input id="catatan" type="text" formControlName="note" class="form-control text-control" />  
 											</div> 
 										</div> 
 										
 										<div class="cell c5" style="text-align:right">	   
 											
-											<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
+											<p-button icon="fa fa-fw fa-save" label="Create Entry" [disabled]="!entryDetailForm.valid" (click)="createEntry()"></p-button>   
 										</div>
+
+
+										<div>						
+												<p>Form value: {{ entryDetailForm.value | json }}</p>
+											</div> 
+										
 										
 									</div> 
 								</div>   	
@@ -345,6 +361,7 @@
 											<div class="cell c5">	   											
 												<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
 											</div>
+
 											
 										</div> 
 									</div>   	

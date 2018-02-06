@@ -1,10 +1,11 @@
 
-// RptSkMimp
+// RptSkMimpModel
+
 export class RptSkMimpModel { 
     txnid? : number;
     rptid? : number;
-    fimpdate: Date;
-    fcustomno : Date;
+    fimpdate?: Date;
+    fcustomno : string;
     fimpwgt : number;
     fimpcost : number;
     fgstcost : number;
