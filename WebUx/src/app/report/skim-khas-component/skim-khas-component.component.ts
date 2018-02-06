@@ -6,6 +6,7 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
   import { Subscription } from 'rxjs/Subscription'
   import * as messageUtil from "../../sharedObjects/storeMessageUtil";
+  import * as util from "../../sharedObjects/util";
   import { UomModel } from "../../model/UomModel";
   import { StncustomModel } from "../../model/StncustomModel"; 
   import { CurrencyModel } from "../../model/CurrencyModel";  
@@ -18,11 +19,13 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
   import {DialogModule} from 'primeng/dialog';
   import { RptSkMimpModel } from '../../model/RptSkMimpModel';
   
+
   @Component({
     selector: 'app-skim-khas-component',
     templateUrl: './skim-khas-component.component.html',
     styleUrls: ['./skim-khas-component.component.css']
   })
+
   export class SkimKhasComponentComponent implements OnInit {
     
     data: RptSkModel = new RptSkModel(); 
@@ -118,19 +121,19 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
       this.dispatchIntent(EMPLOYEE_GET);
     }
-    
-    
+        
     save()
-    {
-      debugger;
+    {     
       var saveJson = new RptSkModel();
+
       if (this.intention == ADD)
       {
-        saveJson = this.dataForm.value as RptSkModel;
-        saveJson.rptId = 99999;
-        saveJson.rptDate = "2017-01-20";
-        saveJson.letterDate = "2017-01-20";
-        saveJson.signedDate = "2017-01-20";
+        saveJson = this.dataForm.value as RptSkModel;        
+        
+        //saveJson.rptDate = util.getTargetDate(this.data.rptDate);                
+        //saveJson.letterDate = util.getTargetDate(this.data.rptDate);  
+        //saveJson.signedDate =util.getTargetDate(this.data.rptDate);  
+        
       }
       else {
         
@@ -253,8 +256,8 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       
       this.dataForm = this.fb.group({
         'rptId': [this.data.rptId],
-        'rptDate': [this.data.rptDate, [Validators.required, Validators.minLength(1)]], 
-        'letterDate': [this.data.letterDate, [Validators.required, Validators.minLength(1)]], 
+        'rptDate': ['', [Validators.required, Validators.minLength(1)]], 
+        'letterDate': ['', [Validators.required, Validators.minLength(1)]], 
         'refNo': [this.data.refNo, [Validators.required, Validators.minLength(1)]]  , 
         'lrcptDept': [this.data.lrcptDept, [Validators.required, Validators.minLength(1)]]  , 
         'lrcptBr': [this.data.lrcptBr, [Validators.required, Validators.minLength(1)]]  , 
@@ -289,10 +292,16 @@ import { CityAppState,  ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GE
       edit() {  
         
         this.formTitle = "Edit Report SKIM Khas"; 
-        this.intention = UPDATE;                            
-        this.display = true;
+        this.intention = UPDATE;  
         this.configureEditForm(); 
+        this.display = true;
         
+        let dftDate = new Date(this.data.rptDate);   
+        let letterDate = new Date(this.data.letterDate);   
+       
+        this.dataForm.get("rptDate").setValue(dftDate);
+        this.dataForm.get("letterDate").setValue(letterDate);
+                
         // if (this.data)
         // {                                  
         //   this.dataForm.get("rptId").setValue(this.data.rptId);
