@@ -424,7 +424,7 @@ export class SkimKhasComponentComponent implements OnInit {
     }
 
     this.entryDetailForm = this.fb.group({
-      'txnId': [this.itemEntryModel.txnId, [Validators.required, Validators.minLength(1)]],
+      //'txnId': [this.itemEntryModel.txnId, [Validators.required, Validators.minLength(1)]],
       'rptId': [this.itemEntryModel.rptId],
       'fImpDate': [this.itemEntryModel.fImpDate, [Validators.required, Validators.minLength(1)]],
       'fCustomNo': [this.itemEntryModel.fCustomNo, [Validators.required, Validators.minLength(1)]],
