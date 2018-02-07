@@ -34,6 +34,7 @@ export class SkimKhasComponentComponent implements OnInit {
   mainItemSelected: RptSkModel;
   itemEntryModel: RptSkMimpModel = new RptSkMimpModel();
 
+  expandedRows : any;
   // forms 
   dataForm: FormGroup; // main entry form 
   entryDetailForm: FormGroup; // for detail entry form 
@@ -386,6 +387,8 @@ export class SkimKhasComponentComponent implements OnInit {
 
   onRowSelect(evt) {
 
+    debugger;
+
     this.intention = UPDATE;
 
     if (evt && evt.data) {
@@ -396,6 +399,9 @@ export class SkimKhasComponentComponent implements OnInit {
       this.itemSelected = false;
 
     this.setupMainFormForEdit();
+
+
+    
 
   }
 
@@ -475,5 +481,14 @@ export class SkimKhasComponentComponent implements OnInit {
     this.displayDataEntry = true;
   }
 
+  onEntryRowSelect(evt) {
+    debugger; 
+    console.log(evt);
+  }
+
+  onRowSave(evt) {
+    debugger;
+    console.log(this.expandedRows);
+  }
 }
 

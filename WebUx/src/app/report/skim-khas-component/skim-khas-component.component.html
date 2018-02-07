@@ -206,7 +206,7 @@
 				</p-button>
 
 
-				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp" [paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect($event)">
+				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp" selectionMode="single" [paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onEntryRowSelect($event)">
 
 					<ng-template pTemplate="header" let-dataEntryColumns>
 						<tr>
@@ -217,8 +217,8 @@
 						</tr>
 					</ng-template>
 
-					<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
-						<tr>
+					<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns" >
+						<tr [pSelectableRow]="rowData">
 							<td>
 								<div [pRowToggler]="rowData">
 									<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
@@ -291,6 +291,18 @@
 												</div>
 												<div class="cell c2345">
 													<input id="catatan" type="text" value="{{rowData.note}}" class="form-control text-control" />
+												</div>
+											</div>
+
+											<div class="form-group row">
+												<div class="cell c1">
+													<label for="catatan"></label>
+												</div>
+												<div class="cell c2345">
+													
+													<p-button icon="fa fa-fw fa-plus" label="Save" [pRowToggler]="rowData"></p-button>
+													<p-button icon="fa fa-fw fa-plus" label="Cancel" (click)="onRowCancel(evt)"></p-button>
+
 												</div>
 											</div>
 
