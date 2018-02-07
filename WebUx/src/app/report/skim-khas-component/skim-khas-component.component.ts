@@ -486,7 +486,7 @@ export class SkimKhasComponentComponent implements OnInit {
       rowData.fImpWgt = this.gridEditRow.fImpWgt;
       rowData.note = this.gridEditRow.note;
     }
-    //dt.toggleRow(prevDataRow);   
+    dt.toggleRow(prevDataRow);   
   }
 
   onGridRowCancel(rowData: any, dt: any) {
