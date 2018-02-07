@@ -29,18 +29,16 @@ import { RptSkMimpModel } from '../../model/RptSkMimpModel';
 
 export class SkimKhasComponentComponent implements OnInit {
 
-  // form model 
+  // model 
   data: RptSkModel = new RptSkModel();
   mainItemSelected: RptSkModel;
-
   itemEntryModel: RptSkMimpModel = new RptSkMimpModel();
 
-
+  // forms 
   dataForm: FormGroup; // main entry form 
   entryDetailForm: FormGroup; // for detail entry form 
 
   private intention: number = UPDATE;
-  dateValue = new Date().getDate();
 
   displayDataEntry: boolean = false;
   display: boolean = false;
@@ -53,11 +51,11 @@ export class SkimKhasComponentComponent implements OnInit {
     'rptDate': '',
     'letterDate': ''
   };
- 
-  detailFormError = { 
+
+  detailFormError = {
     'txnId': '',
     'fImpDate': '',
-    'fCustomNo': '',   
+    'fCustomNo': '',
     'fImpWgt': '',
     'fImpCost': '',
     'fGstcost': '',
@@ -70,20 +68,23 @@ export class SkimKhasComponentComponent implements OnInit {
     },
     'fImpDate': {
       'required': 'Date is required.'
-    },    
+    },
     'fCustomNo': {
       'required': 'Custom No is required.'
     },
     'fImpWgt': {
-      'required': 'Date is required.'
+      'required': 'Import weight is required.'
     },
-      'note': {
-      'required': 'note is required.'
+    'fImpCost': {
+      'required': 'Import cost is required.'
+    },
+    'fGstcost': {
+      'required': 'Gst cost is required.'
+    },
+    'note': {
+      'required': 'Note is required.'
     }
-
   };
-
-
 
   itemSelected: boolean = false;
 
@@ -149,7 +150,9 @@ export class SkimKhasComponentComponent implements OnInit {
 
     });
 
-    this.configureEditForm();
+    //this.configureEditForm();
+
+    this.setupAddForm();
 
     this.setupDetailEntryForm();
   }
@@ -163,8 +166,9 @@ export class SkimKhasComponentComponent implements OnInit {
   }
 
   save() {
-    
-    debugger;    
+
+    debugger;
+
     let mainFormModel = this.dataForm.value as RptSkModel;
 
     // bind main form control fields //
@@ -187,8 +191,8 @@ export class SkimKhasComponentComponent implements OnInit {
 
     // Dates handling     
     this.data.letterDate = util.getTargetDate(new Date(mainFormModel.letterDate));
-    this.data.rptDate  = util.getTargetDate(new Date(mainFormModel.rptDate));
- 
+    this.data.rptDate = util.getTargetDate(new Date(mainFormModel.rptDate));
+
     if (this.intention == ADD) {
 
       //saveJson.rptDate = util.getTargetDate(this.data.rptDate);                
@@ -202,7 +206,7 @@ export class SkimKhasComponentComponent implements OnInit {
       mainFormModel.letterDate = this.data.letterDate;
     }
 
-    var strJson = JSON.stringify(this.data);   
+    var strJson = JSON.stringify(this.data);
     console.log(strJson);
     this.dispatchIntent(SKIMKHAS_SAVE, strJson);
     this.display = false;
@@ -274,17 +278,19 @@ export class SkimKhasComponentComponent implements OnInit {
     }
   }
 
-    private setupAddForm() {
-    this.configureAddForms('');
+  private setupAddForm() {
+
+    this.configureAddForms();
+
     for (const field in this.formErrors) {
       this.formErrors[field] = '';
     }
   }
 
-  private configureAddForms(id: any) {
+  private configureAddForms() {
 
     this.dataForm = this.fb.group({
-      'rptId': [id],
+      'rptId': [],
       'rptDate': ['', [Validators.required, Validators.minLength(1)]],
       'letterDate': ['', [Validators.required, Validators.minLength(1)]],
       'refNo': ['', [Validators.required, Validators.minLength(1)]],
@@ -331,7 +337,6 @@ export class SkimKhasComponentComponent implements OnInit {
     this.formTitle = "New Report SKIM Khas";
     this.display = true;
     this.intention = ADD;
-    debugger;
     this.setupAddForm();
   }
 
@@ -374,8 +379,6 @@ export class SkimKhasComponentComponent implements OnInit {
   }
 
   onRowSelect(evt) {
-    console.log('onrowselect');
-    console.log(evt);
 
     this.intention = UPDATE;
 
@@ -391,6 +394,7 @@ export class SkimKhasComponentComponent implements OnInit {
   }
 
   // adding entries into the main module //
+
   createEntry() {
 
     // init array if prtSkMimp is null 
@@ -399,13 +403,13 @@ export class SkimKhasComponentComponent implements OnInit {
     }
 
     if (this.entryDetailForm.valid) {
-      
+
       this.itemEntryModel.fImpDate = util.getTargetDate(new Date(this.itemEntryModel.fImpDate));
-      this.data.rptSkMimp.push(this.itemEntryModel);     
-           
+      this.data.rptSkMimp.push(this.itemEntryModel);
+
     }
 
-    
+
   }
 
   setupDetailEntryForm() {
@@ -426,8 +430,6 @@ export class SkimKhasComponentComponent implements OnInit {
       'fGstcost': [this.itemEntryModel.fGstcost, [Validators.required, Validators.minLength(1)]],
       'note': [this.itemEntryModel.note, [Validators.required, Validators.minLength(1)]]
     });
-
-    // this.entryDetailForm.get("fImpDate").setValue('');
 
     this.entryDetailForm.valueChanges.debounceTime(300).subscribe(
       data => this.onEntryDetailValueChanged(data));
