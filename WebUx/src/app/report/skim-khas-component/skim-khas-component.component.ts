@@ -46,7 +46,7 @@ export class SkimKhasComponentComponent implements OnInit {
 
   formTitle: string = "New GRN";
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
-  gridEditRow : RptSkMimpModel = new RptSkMimpModel();
+  gridEditRow: RptSkMimpModel = new RptSkMimpModel();
   empDataList: Array<any> = new Array<any>();
 
   formErrors = {
@@ -341,7 +341,7 @@ export class SkimKhasComponentComponent implements OnInit {
     this.intention = ADD;
 
     this.setupAddForm();
- 
+
     // reinit form entires //
     this.data.rptSkMimp = new Array<RptSkMimpModel>();
 
@@ -399,12 +399,7 @@ export class SkimKhasComponentComponent implements OnInit {
       this.itemSelected = false;
 
     this.setupMainFormForEdit();
-
-
-    
-
   }
-
   // adding entries into the main module //
 
   createEntry() {
@@ -418,14 +413,10 @@ export class SkimKhasComponentComponent implements OnInit {
 
       this.itemEntryModel.fImpDate = util.getTargetDate(new Date(this.itemEntryModel.fImpDate));
       this.data.rptSkMimp.push(this.itemEntryModel);
-
     }
-
-
   }
 
   setupDetailEntryForm() {
-
     this.itemEntryModel = new RptSkMimpModel();
 
     if (!this.data.rptSkMimp) {
@@ -443,9 +434,8 @@ export class SkimKhasComponentComponent implements OnInit {
       'note': [this.itemEntryModel.note, [Validators.required, Validators.minLength(1)]]
     });
 
-    this.entryDetailForm.valueChanges.debounceTime(300).subscribe(
+    this.entryDetailForm.valueChanges.debounceTime(100).subscribe(
       data => this.onEntryDetailValueChanged(data));
-
   }
 
   onEntryDetailValueChanged(data?: RptSkMimpModel) {
@@ -481,43 +471,31 @@ export class SkimKhasComponentComponent implements OnInit {
     this.displayDataEntry = true;
   }
 
-  onEntryRowSelect(evt) {
-    
+  onGridRowSave(rowData: RptSkMimpModel, dt: any) {
+    const prevDataRow = { ...rowData };
+    if (rowData) {
+      rowData.txnId = this.gridEditRow.txnId;
+      rowData.rptId = this.gridEditRow.rptId;
+      rowData.fCustomNo = this.gridEditRow.fCustomNo;
+      rowData.fGstcost = this.gridEditRow.fGstcost;
+      rowData.fImpCost = this.gridEditRow.fImpCost;
+      rowData.fImpDate = this.gridEditRow.fImpDate;
+      rowData.fImpWgt = this.gridEditRow.fImpWgt;
+      rowData.note = this.gridEditRow.note;
+    }
+    //dt.toggleRow(prevDataRow);   
   }
 
-  onRowSave(rowData:RptSkMimpModel, dt:any) 
-  {  
-      const prevDataRow = {...rowData};
-      if (rowData)
-      {
-            
-        rowData.txnId = this.gridEditRow.txnId;
-        rowData.rptId = this.gridEditRow.rptId;
-        rowData.fCustomNo = this.gridEditRow.fCustomNo;
-        rowData.fGstcost = this.gridEditRow.fGstcost;
-        rowData.fImpCost = this.gridEditRow.fImpCost;
-        rowData.fImpDate = this.gridEditRow.fImpDate;
-        rowData.fImpWgt = this.gridEditRow.fImpWgt;
-        rowData.note = this.gridEditRow.note;
-
-        console.log(rowData);
-           
-      }      
-     
-      //dt.toggleRow(prevDataRow);   
+  onGridRowCancel(rowData: any, dt: any) {
+    dt.toggleRow(rowData);
   }
 
-  onRowCancel(rowData:any, dt:any) {
-    dt.toggleRow(rowData);   
-  }
-
-  onRowExpanded(rowdata)
-  {        
-    const row  = rowdata.data as RptSkMimpModel;
+  onRowExpanded(rowdata) {
+    const row = rowdata.data as RptSkMimpModel;
     // shorthand copy and then used to display on 
-    // form //
+    // grid //
     this.gridEditRow = new RptSkMimpModel();
-    this.gridEditRow = { ...rowdata.data};    
+    this.gridEditRow = { ...rowdata.data };
   }
 }
 
