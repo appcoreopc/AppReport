@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AppReport.RequestModel
 {
@@ -43,7 +44,8 @@ namespace AppReport.RequestModel
         public int? EditedByUserId { get; set; }
         public DateTime? EditedDt { get; set; }
         
-        public RptSkMimpModel[] RptSkMimp { get; set; }
+        public IEnumerable<RptSkMimpModel> RptSkMimp { get; set; }
+
                
     }
 }
