@@ -399,13 +399,17 @@ export class SkimKhasComponentComponent implements OnInit {
     }
 
     if (this.entryDetailForm.valid) {
-          this.data.rptSkMimp.push(this.itemEntryModel);      
+      
+      this.itemEntryModel.fImpDate = util.getTargetDate(new Date(this.itemEntryModel.fImpDate));
+      this.data.rptSkMimp.push(this.itemEntryModel);     
+           
     }
 
     
   }
 
   setupDetailEntryForm() {
+
     this.itemEntryModel = new RptSkMimpModel();
 
     if (!this.data.rptSkMimp) {

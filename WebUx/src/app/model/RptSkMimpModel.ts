@@ -6,7 +6,7 @@
 export class RptSkMimpModel {
     txnId?: number;
     rptId?: number;
-    fImpDate?: Date;
+    fImpDate?: string;
     fCustomNo: string;
     fImpWgt: number;
     fImpCost: number;
