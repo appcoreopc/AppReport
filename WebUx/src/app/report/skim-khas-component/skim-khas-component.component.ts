@@ -42,6 +42,8 @@ export class SkimKhasComponentComponent implements OnInit {
 
   displayDataEntry: boolean = false;
   display: boolean = false;
+  displayEntryForm: boolean = false;
+
   formTitle: string = "New GRN";
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
   empDataList: Array<any> = new Array<any>();
@@ -327,7 +329,6 @@ export class SkimKhasComponentComponent implements OnInit {
       'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]]
     });
 
-
     this.dataForm.valueChanges.debounceTime(300).subscribe(
       data => this.onValueChanged(data));
   }
@@ -337,7 +338,12 @@ export class SkimKhasComponentComponent implements OnInit {
     this.formTitle = "New Report SKIM Khas";
     this.display = true;
     this.intention = ADD;
+
     this.setupAddForm();
+ 
+    // reinit form entires //
+    this.data.rptSkMimp = new Array<RptSkMimpModel>();
+
   }
 
   addDataEntryForm() {
@@ -463,6 +469,10 @@ export class SkimKhasComponentComponent implements OnInit {
         }
       }
     }
+  }
+  showEntryForm() {
+
+    this.displayDataEntry = true;
   }
 
 }

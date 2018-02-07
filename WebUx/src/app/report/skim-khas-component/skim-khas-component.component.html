@@ -4,7 +4,17 @@
 
 <div class="container">
 
+
+
+
+	
+	
+	
+	
+	
 	<p-dialog id="formAction" header="{{formTitle}}" [(visible)]="display" modal='true'>
+
+
 
 		<p-tabView>
 
@@ -183,6 +193,19 @@
 
 			<p-tabPanel header="Detail Entry">
 
+
+					
+			
+
+
+
+
+
+
+				<p-button icon="fa fa-fw fa-save" label="Add new entry" (click)="showEntryForm()">															
+				</p-button>
+
+
 				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp" [paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onRowSelect($event)">
 
 					<ng-template pTemplate="header" let-dataEntryColumns>
@@ -193,106 +216,6 @@
 							</th>
 						</tr>
 					</ng-template>
-
-					<ng-template pTemplate="caption">
-
-						<form [formGroup]='entryDetailForm'>
-
-							<div style="width:1000px;padding:0px">
-								<div class="panel panel-info">
-									<div class="panel-body" style="padding:5px; padding-left:30px">
-
-										<div class="form-group row">
-											<div class="cell c1">
-												<label for="taxid">Bill</label>
-											</div>
-											<div class="cell c2345">
-												<input id="taxid" type="number" formControlName="txnId" class="form-control text-control" />
-											</div>
-										</div>
-										<div class="form-group row">
-											<div class="cell c1">
-												<label for="tarikh">Tarikh</label>
-											</div>
-											<div class="cell c2345">
-												<input id="tarikh" type="text" formControlName="fImpDate" class="form-control text-control" />
-											</div>
-										</div>
-										<div class="form-group row">
-											<div class="cell c1">
-												<label for="nobarang">No Barang</label>
-											</div>
-											<div class="cell c2345">
-												<input id="nobarang" type="text" formControlName="fCustomNo" class="form-control text-control" />
-											</div>
-										</div>
-
-										<div class="form-group row">
-											<div class="cell c1">
-												<label for="kuantitiImport">Kuantiti Import</label>
-											</div>
-											<div class="cell c2345">
-												<input id="kuantitiImport" type="number" formControlName="fImpWgt" class="form-control text-control" />
-											</div>
-
-											<div *ngIf="detailFormError.fImpWgt" class="alert alert-danger">
-												{{ detailFormError.fImpWgt }}
-											</div>
-										</div>
-
-										<div class="form-group row">
-											<div class="cell c1">
-												<label for="nilaiImport">Nilai Import</label>
-											</div>
-											<div class="cell c2345">
-												<input id="nilaiImport" type="number" formControlName="fImpCost" class="form-control text-control" />
-											</div>
-										</div>
-
-
-										<div class="form-group row">
-											<div class="cell c1">
-												<label for="nilaiImport">GST </label>
-											</div>
-											<div class="cell c2345">
-												<input id="nilaiImport" type="number" formControlName="fGstcost" class="form-control text-control" />
-											</div>
-										</div>
-
-										<div class="form-group row">
-											<div class="cell c1">
-												<label for="catatan">Catatan</label>
-											</div>
-											<div class="cell c2345">
-												<input id="catatan" type="text" formControlName="note" class="form-control text-control" />
-											</div>
-
-											<div *ngIf="detailFormError.note" class="alert alert-danger">
-												{{ detailFormError.note }}
-											</div>
-										</div>
-
-										<div class="form-group row">
-												<div class="cell c1">													
-												</div>
-												<div class="cell c2345">
-												<p-button icon="fa fa-fw fa-save" label="Create Entry" [disabled]="!entryDetailForm.valid" (click)="createEntry()">															
-														</p-button>
-												</div>	
-										</div>
-
-										<div>
-											<p>Form value: {{ entryDetailForm.value | json }}</p>
-										</div>
-
-
-									</div>
-								</div>
-							</div>
-						</form>
-
-					</ng-template>
-
 
 					<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
 						<tr>
@@ -401,20 +324,23 @@
 
 			</p-tabPanel>
 
+		
+		
 		</p-tabView>
 
 	</p-dialog>
 
 </div>
 
+
 <div class="container">
+
 	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>
 
-	<p-dialog id="formAction" header="{{formTitle}}" [(visible)]="displayDataEntry" modal='true'>
-
-
-	</p-dialog>
+	
+	
 </div>
+
 
 
 <div style="clear:both; height:10px"></div>
@@ -445,3 +371,109 @@
 
 
 </div>
+
+
+<p-dialog id="formAction" header="{{formTitle}}" [(visible)]="displayDataEntry" modal='true'>
+
+ 
+		<form [formGroup]='entryDetailForm'>
+
+				<div style="width:1000px;padding:0px">
+					<div class="panel panel-info">
+						<div class="panel-body" style="padding:5px; padding-left:30px">
+
+							<div class="form-group row">
+								<div class="cell c1">
+									<label for="taxid">Bill</label>
+								</div>
+								<div class="cell c2345">
+									<input id="taxid" type="number" formControlName="txnId" class="form-control text-control" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="cell c1">
+									<label for="tarikh">Tarikh</label>
+								</div>
+								<div class="cell c2345">
+									<input id="tarikh" type="text" formControlName="fImpDate" class="form-control text-control" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="cell c1">
+									<label for="nobarang">No Barang</label>
+								</div>
+								<div class="cell c2345">
+									<input id="nobarang" type="text" formControlName="fCustomNo" class="form-control text-control" />
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="cell c1">
+									<label for="kuantitiImport">Kuantiti Import</label>
+								</div>
+								<div class="cell c2345">
+									<input id="kuantitiImport" type="number" formControlName="fImpWgt" class="form-control text-control" />
+								</div>
+
+								<div *ngIf="detailFormError.fImpWgt" class="alert alert-danger">
+									{{ detailFormError.fImpWgt }}
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="cell c1">
+									<label for="nilaiImport">Nilai Import</label>
+								</div>
+								<div class="cell c2345">
+									<input id="nilaiImport" type="number" formControlName="fImpCost" class="form-control text-control" />
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="cell c1">
+									<label for="nilaiImport">GST </label>
+								</div>
+								<div class="cell c2345">
+									<input id="nilaiImport" type="number" formControlName="fGstcost" class="form-control text-control" />
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<div class="cell c1">
+									<label for="catatan">Catatan</label>
+								</div>
+								<div class="cell c2345">
+									<input id="catatan" type="text" formControlName="note" class="form-control text-control" />
+								</div>
+
+								<div *ngIf="detailFormError.note" class="alert alert-danger">
+									{{ detailFormError.note }}
+								</div>
+							</div>
+
+							<div class="form-group row">
+									<div class="cell c1">													
+									</div>
+									<div class="cell c2345">
+									<p-button icon="fa fa-fw fa-save" label="Create Entry" [disabled]="!entryDetailForm.valid" (click)="createEntry()">															
+											</p-button>
+									</div>	
+							</div>
+
+							<div>
+								<p>Form value: {{ entryDetailForm.value | json }}</p>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</form>
+
+
+
+
+
+
+
+
+</p-dialog>
