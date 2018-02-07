@@ -240,7 +240,7 @@
 													<label for="txnId">Bill</label>
 												</div>
 												<div class="cell c2345">
-													<input id="txnId" type="text" [(value)]="rowData.txnId" class="form-control text-control" />
+													<input id="txnId" type="text" [(ngModel)]="gridEditRow.txnId" class="form-control text-control" />
 												</div>
 											</div>
 											<div class="form-group row">
@@ -248,7 +248,7 @@
 													<label for="tarikh">Tarikh</label>
 												</div>
 												<div class="cell c2345">
-													<input id="tarikh" type="text" [(value)]="rowData.fImpDate" class="form-control text-control" />
+													<input id="tarikh" type="text" [(ngModel)]="gridEditRow.fImpDate" class="form-control text-control" />
 												</div>
 											</div>
 											<div class="form-group row">
@@ -256,7 +256,7 @@
 													<label for="nobarang">No Barang</label>
 												</div>
 												<div class="cell c2345">
-													<input id="nobarang" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />
+													<input id="nobarang" [(ngModel)]="gridEditRow.fCustomNo" type="text" class="form-control text-control" />
 												</div>
 											</div>
 
@@ -265,7 +265,7 @@
 													<label for="kuantitiImport">Kuantiti Import</label>
 												</div>
 												<div class="cell c2345">
-													<input id="kuantitiImport" value="{{rowData.fCustomNo}}" type="text" class="form-control text-control" />
+													<input id="kuantitiImport" [(ngModel)]="gridEditRow.fCustomNo" type="text" class="form-control text-control" />
 												</div>
 											</div>
 
@@ -274,7 +274,7 @@
 													<label for="nilaiImport">Nilai Import</label>
 												</div>
 												<div class="cell c2345">
-													<input id="nilaiImport" value="{{rowData.fImpCost}}" type="text" class="form-control text-control" />
+													<input id="nilaiImport" [(ngModel)]="gridEditRow.fImpCost" type="text" class="form-control text-control" />
 												</div>
 											</div>
 
@@ -283,7 +283,7 @@
 													<label for="catatan">Catatan</label>
 												</div>
 												<div class="cell c2345">
-													<input id="catatan" type="text" value="{{rowData.note}}" class="form-control text-control" />
+													<input id="catatan" type="text" [(ngModel)]="gridEditRow.note" class="form-control text-control" />
 												</div>
 											</div>
 
@@ -294,8 +294,7 @@
 												<div class="cell c2345">
 													
 													<p-button icon="fa fa-fw fa-plus" label="Save" (click)="onRowSave(rowData, dtEntry)"></p-button>
-													
-													<p-button icon="fa fa-fw fa-plus" label="Cancel" (click)="onRowCancel(evt)"></p-button>
+										     		<p-button icon="fa fa-fw fa-plus" label="Cancel" (click)="onRowCancel(rowData, dtEntry)"></p-button>
 
 												</div>
 											</div>

@@ -46,6 +46,7 @@ export class SkimKhasComponentComponent implements OnInit {
 
   formTitle: string = "New GRN";
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
+  gridEditRow : RptSkMimpModel = new RptSkMimpModel();
   empDataList: Array<any> = new Array<any>();
 
   formErrors = {
@@ -484,18 +485,39 @@ export class SkimKhasComponentComponent implements OnInit {
     
   }
 
-  onRowSave(rowData:any, evt:any) {  
+  onRowSave(rowData:RptSkMimpModel, dt:any) 
+  {  
+      const prevDataRow = {...rowData};
+      if (rowData)
+      {
+            
+        rowData.txnId = this.gridEditRow.txnId;
+        rowData.rptId = this.gridEditRow.rptId;
+        rowData.fCustomNo = this.gridEditRow.fCustomNo;
+        rowData.fGstcost = this.gridEditRow.fGstcost;
+        rowData.fImpCost = this.gridEditRow.fImpCost;
+        rowData.fImpDate = this.gridEditRow.fImpDate;
+        rowData.fImpWgt = this.gridEditRow.fImpWgt;
+        rowData.note = this.gridEditRow.note;
 
-      debugger;
-      
-      evt.toggleRow(rowData);   
+        console.log(rowData);
+           
+      }      
+     
+      //dt.toggleRow(prevDataRow);   
   }
 
-  onRowExpanded(rowdata, evt)
-  {
-    debugger;
-    console.log(evt);
-    console.log(rowdata);
+  onRowCancel(rowData:any, dt:any) {
+    dt.toggleRow(rowData);   
+  }
+
+  onRowExpanded(rowdata)
+  {        
+    const row  = rowdata.data as RptSkMimpModel;
+    // shorthand copy and then used to display on 
+    // form //
+    this.gridEditRow = new RptSkMimpModel();
+    this.gridEditRow = { ...rowdata.data};    
   }
 }
 
