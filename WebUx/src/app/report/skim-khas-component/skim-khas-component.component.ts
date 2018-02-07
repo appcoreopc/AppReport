@@ -413,7 +413,9 @@ export class SkimKhasComponentComponent implements OnInit {
 
       this.itemEntryModel.fImpDate = util.getTargetDate(new Date(this.itemEntryModel.fImpDate));
       this.data.rptSkMimp.push(this.itemEntryModel);
+      this.displayDataEntry = false;
     }
+
   }
 
   setupDetailEntryForm() {
@@ -467,6 +469,7 @@ export class SkimKhasComponentComponent implements OnInit {
     }
   }
 
+  
   showEntryForm() {
     this.displayDataEntry = true;
   }
