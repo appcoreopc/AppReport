@@ -193,20 +193,13 @@
 
 			<p-tabPanel header="Detail Entry">
 
-
 					
-			
-
-
-
-
-
-
 				<p-button icon="fa fa-fw fa-save" label="Add new entry" (click)="showEntryForm()">															
 				</p-button>
 
-
-				<p-table [columns]="dataEntryColumns" [value]="data.rptSkMimp" selectionMode="single" [paginator]="true" [rows]="10" dataKey="txnId" (onRowSelect)="onEntryRowSelect($event)">
+				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" 
+				[columns]="dataEntryColumns" [value]="data.rptSkMimp" 
+				selectionMode="single" [paginator]="true" [rows]="10" dataKey="txnId">
 
 					<ng-template pTemplate="header" let-dataEntryColumns>
 						<tr>
@@ -247,7 +240,7 @@
 													<label for="txnId">Bill</label>
 												</div>
 												<div class="cell c2345">
-													<input id="txnId" type="text" value="{{rowData.txnId}}" class="form-control text-control" />
+													<input id="txnId" type="text" [(value)]="rowData.txnId" class="form-control text-control" />
 												</div>
 											</div>
 											<div class="form-group row">
@@ -255,7 +248,7 @@
 													<label for="tarikh">Tarikh</label>
 												</div>
 												<div class="cell c2345">
-													<input id="tarikh" type="text" value="{{rowData.fImpDate}}" class="form-control text-control" />
+													<input id="tarikh" type="text" [(value)]="rowData.fImpDate" class="form-control text-control" />
 												</div>
 											</div>
 											<div class="form-group row">
@@ -300,7 +293,8 @@
 												</div>
 												<div class="cell c2345">
 													
-													<p-button icon="fa fa-fw fa-plus" label="Save" [pRowToggler]="rowData"></p-button>
+													<p-button icon="fa fa-fw fa-plus" label="Save" (click)="onRowSave(rowData, dtEntry)"></p-button>
+													
 													<p-button icon="fa fa-fw fa-plus" label="Cancel" (click)="onRowCancel(evt)"></p-button>
 
 												</div>
