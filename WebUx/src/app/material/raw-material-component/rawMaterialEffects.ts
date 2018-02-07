@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
   RAW_MATERIAL_MESSAGE_END, RAW_MATERIAL_SAVE_ERR, RAW_MATERIAL_CANCEL_OK, 
-  RAW_MATERIAL_GET, RAW_MATERIAL_GET_ERR,
+  RAW_MATERIAL_GET, RAW_MATERIAL_GET_ERR, RAW_MATERIAL_WAIT_PENDING, 
   RAW_MATERIAL_GET_OK, UOM_GET, UOM_GET_OK, COUNTRY_GET,  COUNTRY_GET_OK,
   CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -14,22 +16,42 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
   @Injectable()
   export class RawMaterialEffects {   
            
-    constructor(
+   constructor(
       private http: HttpClient,
-      private actions$: Actions<CityAppState>
+      private actions$: Actions<CityAppState>, private store : Store<CityAppState>,
     ) { }
     
+
     @Effect() rawMaterialSave$ = this.actions$    
-    .ofType(RAW_MATERIAL_SAVE)   
+    .ofType(RAW_MATERIAL_SAVE)
     .map(action => {  
-      console.log('sending request out!'); 
+      console.log("save action",action);
       return JSON.stringify(action.data);
-    })
-    .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/rawmaterial/save', payload, {headers : headersJson})      
-    )
-    .map(res => ({ type: RAW_MATERIAL_SAVE_SUCCESS, data: res }))
-    .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }));
+    }).switchMap(payload =>   
+    { 
+          return Observable.of(payload)
+          .map(action => {
+            
+            this.http.post(APPLICATION_HOST + '/rawmaterial/save', payload, {headers : headersJson})
+            .subscribe(res => {                   
+              messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_ERR, null);
+            },  
+            err => {                       
+              if (err && err.status == 201)
+              {
+                messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_SUCCESS, null);                
+              } 
+              else 
+              {                    
+                 messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_ERR, null);             
+              }         
+            });  
+          });          
+            
+        })
+        .concatMap(res => {         
+          return Observable.of({ type: RAW_MATERIAL_WAIT_PENDING });
+        });       
     
     
     @Effect() rawMaterialReset$ = this.actions$  

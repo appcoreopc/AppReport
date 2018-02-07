@@ -2,7 +2,7 @@ import { ActionReducer, Action } from '@ngrx/store';
 
 import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE_SUCCESS,
 	 MATERIAL_CATEGORY_MESSAGE_END, MATERIAL_CATEGORY_SAVE_ERR, MATERIAL_CATEGORY_CANCEL_OK, MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_ERR,
-	  MATERIAL_CATEGORY_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
+	  MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_WAIT_PENDING, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 
 		export function MaterialCategoryReducer(status: CityAppState, action: Action) {
 	switch (action.type) {
@@ -18,7 +18,10 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
 			return { status : 4, type: MATERIAL_CATEGORY_SAVE_SUCCESS }
 		case MATERIAL_CATEGORY_SAVE_ERR:
 			console.log(MATERIAL_CATEGORY_SAVE_ERR);
-			return  { status : 5, type: MATERIAL_CATEGORY_MESSAGE_END };			
+			return  { status : 5, type: MATERIAL_CATEGORY_MESSAGE_END };		
+		case MATERIAL_CATEGORY_WAIT_PENDING:	
+		  console.log('MATERIAL_CATEGORY pending');	  
+			return  { status : 6, data : action, type: MATERIAL_CATEGORY_WAIT_PENDING };	 
 		default:
 			return status;						
 		}					

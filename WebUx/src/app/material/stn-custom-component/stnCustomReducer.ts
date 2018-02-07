@@ -1,7 +1,7 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 
-import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL, STN_CUSTOM_SAVE_SUCCESS,
+import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL, STN_CUSTOM_SAVE_SUCCESS, STN_CUSTOM_WAIT_PENDING,
 	 STN_CUSTOM_MESSAGE_END, STN_CUSTOM_SAVE_ERR, STN_CUSTOM_CANCEL_OK, STN_CUSTOM_GET, STN_CUSTOM_GET_ERR,
 	  STN_CUSTOM_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 		
@@ -16,7 +16,10 @@ import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL, STN_CUSTOM_SAVE_SUCCESS,
 		case STN_CUSTOM_SAVE_SUCCESS:		
 			return { status : 4, data : action, type: STN_CUSTOM_SAVE_SUCCESS }
 		case STN_CUSTOM_SAVE_ERR:		
-			return  { status : 5, data : action, type: STN_CUSTOM_MESSAGE_END };			
+			return  { status : 5, data : action, type: STN_CUSTOM_MESSAGE_END };	 
+		case STN_CUSTOM_WAIT_PENDING:	
+		  console.log('STN_CUSTOM pending');	  
+		  return  { status : 6, data : action, type: STN_CUSTOM_WAIT_PENDING };			
 		default:
 			return status;						
 		}					

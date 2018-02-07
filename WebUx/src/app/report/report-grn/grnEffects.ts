@@ -4,7 +4,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 
 import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
-  GRN_MESSAGE_END, GRN_SAVE_ERR, GRN_CANCEL_OK, GRN_GET, 
+  GRN_MESSAGE_END, GRN_SAVE_ERR, GRN_CANCEL_OK, GRN_GET, GRN_WAIT_PENDING, 
   SUPPLIER_GET, SUPPLIER_GET_OK,  
   RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK,  
   UOM_GET, UOM_GET_OK, 
@@ -14,26 +14,50 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
   GRN_GET_ERR, GRN_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
+  import { Store } from '@ngrx/store';
+  import * as messageUtil from "../../sharedObjects/storeMessageUtil";
   
   @Injectable()
-  export class GrnEffects {   
-           
-    constructor(
+  export class GrnEffects {  
+
+ constructor(
       private http: HttpClient,
-      private actions$: Actions<CityAppState>
+      private actions$: Actions<CityAppState>, private store : Store<CityAppState>,
     ) { }
     
+     
+
     @Effect() GrnSave$ = this.actions$    
-    .ofType(GRN_SAVE)   
+    .ofType(GRN_SAVE)
     .map(action => {  
-      
+      console.log("save action",action);
       return JSON.stringify(action.data);
-    })
-    .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/grn/save', payload, {headers : headersJson})      
-    )
-    .map(res => ({ type: GRN_SAVE_SUCCESS, data: res }))
-    .catch(() => Observable.of({ type: GRN_SAVE_ERR }));
+    }).switchMap(payload =>   
+    { 
+          return Observable.of(payload)
+          .map(action => {
+            
+            this.http.post(APPLICATION_HOST + '/grn/save', payload, {headers : headersJson})
+            .subscribe(res => {                   
+              messageUtil.dispatchIntent(this.store, GRN_SAVE_ERR, null);
+            },  
+            err => {                       
+              if (err && err.status == 201)
+              {
+                messageUtil.dispatchIntent(this.store, GRN_SAVE_SUCCESS, null);                
+              } 
+              else 
+              {                    
+                 messageUtil.dispatchIntent(this.store, GRN_SAVE_ERR, null);             
+              }         
+            });  
+          });          
+            
+        })
+        .concatMap(res => {         
+          return Observable.of({ type: GRN_WAIT_PENDING });
+        });       
+
     
     
     @Effect() GrnReset$ = this.actions$  

@@ -1,7 +1,7 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 
-import {SUPPLIER_SAVE, SUPPLIER_CANCEL, SUPPLIER_SAVE_SUCCESS,
+import {SUPPLIER_SAVE, SUPPLIER_CANCEL, SUPPLIER_SAVE_SUCCESS, SUPPLIER_WAIT_PENDING, 
 	 SUPPLIER_MESSAGE_END, SUPPLIER_SAVE_ERR, SUPPLIER_CANCEL_OK, SUPPLIER_GET, SUPPLIER_GET_ERR,
 	  SUPPLIER_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 		
@@ -16,7 +16,10 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL, SUPPLIER_SAVE_SUCCESS,
 		case SUPPLIER_SAVE_SUCCESS:		
 			return { status : 4, data : action, type: SUPPLIER_SAVE_SUCCESS }
 		case SUPPLIER_SAVE_ERR:		
-			return  { status : 5, data : action, type: SUPPLIER_MESSAGE_END };			
+			return  { status : 5, data : action, type: SUPPLIER_MESSAGE_END }; 
+		case SUPPLIER_WAIT_PENDING:	
+		  console.log('SUPPLIER pending');	  
+		  return  { status : 6, data : action, type: SUPPLIER_WAIT_PENDING };				
 		default:
 			return status;						
 		}					
