@@ -240,8 +240,11 @@
 													<label for="tarikh">Tarikh</label>
 												</div>
 												<div class="cell c2345">
-													<input id="tarikh" type="text" [(ngModel)]="gridEditRow.fImpDate" class="form-control text-control" />
+
+													<ng-datepicker [(ngModel)]="gridEditRow.fImpDate">
+													</ng-datepicker>
 												</div>
+										
 											</div>
 											<div class="form-group row">
 												<div class="cell c1">
@@ -257,7 +260,7 @@
 													<label for="kuantitiImport">Kuantiti Import</label>
 												</div>
 												<div class="cell c2345">
-													<input id="kuantitiImport" [(ngModel)]="gridEditRow.fImpWgt" type="text" class="form-control text-control" />
+													<input id="kuantitiImport" [(ngModel)]="gridEditRow.fImpWgt" type="number" class="form-control text-control" />
 												</div>
 											</div>
 
@@ -266,7 +269,7 @@
 													<label for="nilaiImport">Nilai Import</label>
 												</div>
 												<div class="cell c2345">
-													<input id="nilaiImport" [(ngModel)]="gridEditRow.fImpCost" type="text" class="form-control text-control" />
+													<input id="nilaiImport" [(ngModel)]="gridEditRow.fImpCost" type="number" class="form-control text-control" />
 												</div>
 											</div>
 
@@ -290,11 +293,10 @@
 
 												</div>
 											</div>
-
-
 										</div>
 									</div>
 								</div>
+
 
 
 							</td>
@@ -367,11 +369,9 @@
 
 </div>
 
-
 <p-dialog id="formAction" header="{{formTitle}}" [(visible)]="displayDataEntry" modal='true'>
 
- 
-		<form [formGroup]='entryDetailForm'>
+ 		<form [formGroup]='entryDetailForm'>
 
 				<div style="width:1000px;padding:0px">
 					<div class="panel panel-info">
@@ -381,9 +381,14 @@
 								<div class="cell c1">
 									<label for="tarikh">Tarikh</label>
 								</div>
-								<div class="cell c2345">
-									<input id="tarikh" type="text" formControlName="fImpDate" class="form-control text-control" />
+								<div class="cell c2345">																
+								   <p-calendar dateFormat="dd/mm/yy" formControlName="fImpDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
 								</div>
+
+								<div *ngIf="detailFormError.fImpDate" class="alert alert-danger">
+										{{ detailFormError.fImpDate }}
+								</div>
+
 							</div>
 							<div class="form-group row">
 								<div class="cell c1">

@@ -27,10 +27,11 @@
     "@swimlane/ngx-datatable": "^11.1.7",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
+    "ng2-datepicker": "^2.2.5",
     "primeng": "^5.2.0-rc.1",
     "rxjs": "^5.5.2",
-    "zone.js": "^0.8.14",
-    "font-awesome": "^4.7.0"
+    "zone.js": "^0.8.14"
   },
   "devDependencies": {
     "@angular-devkit/core": "^0.2.0",

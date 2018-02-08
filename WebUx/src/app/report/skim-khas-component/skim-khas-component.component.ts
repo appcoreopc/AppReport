@@ -20,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SpinnerModule } from 'primeng/spinner';
 import { DialogModule } from 'primeng/dialog';
 import { RptSkMimpModel } from '../../model/RptSkMimpModel';
+import { Data } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-skim-khas-component',
@@ -48,6 +49,8 @@ export class SkimKhasComponentComponent implements OnInit {
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
   gridEditRow: RptSkMimpModel = new RptSkMimpModel();
   empDataList: Array<any> = new Array<any>();
+
+  pCalendarEditEntryValue : Date;
 
   formErrors = {
     'rptId': '',
@@ -428,7 +431,7 @@ export class SkimKhasComponentComponent implements OnInit {
     this.entryDetailForm = this.fb.group({
       //'txnId': [this.itemEntryModel.txnId, [Validators.required, Validators.minLength(1)]],
       'rptId': [this.itemEntryModel.rptId],
-      'fImpDate': [this.itemEntryModel.fImpDate, [Validators.required, Validators.minLength(1)]],
+        'fImpDate': [this.itemEntryModel.fImpDate, [Validators.required, Validators.minLength(1)]],
       'fCustomNo': [this.itemEntryModel.fCustomNo, [Validators.required, Validators.minLength(1)]],
       'fImpWgt': [this.itemEntryModel.fImpWgt, [Validators.required, Validators.minLength(1)]],
       'fImpCost': [this.itemEntryModel.fImpCost, [Validators.required, Validators.minLength(1)]],
@@ -468,7 +471,6 @@ export class SkimKhasComponentComponent implements OnInit {
       }
     }
   }
-
   
   showEntryForm() {
     this.displayDataEntry = true;
@@ -494,11 +496,16 @@ export class SkimKhasComponentComponent implements OnInit {
   }
 
   onRowExpanded(rowdata) {
+
     const row = rowdata.data as RptSkMimpModel;
     // shorthand copy and then used to display on 
     // grid //
     this.gridEditRow = new RptSkMimpModel();
     this.gridEditRow = { ...rowdata.data };
+
+    //this.pCalendarEditEntryValue = new Date(rowdata.fImpDate);
+    // converting date to a valida Date // 
+    // this.gridEditRow.fImpDate = new Date(rowdata.fImpDate);
   }
 }
 

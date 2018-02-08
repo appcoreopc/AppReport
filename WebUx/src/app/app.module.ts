@@ -60,6 +60,7 @@ import { UOMEffects } from './effects/uomEffects';
 import { UOMReducer } from './reducers/uomReducer';
 
 import { CalendarModule } from 'primeng/calendar';
+import { NgDatepickerModule } from 'ng2-datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
@@ -104,7 +105,7 @@ export const ROUTES: Routes = [
     LoginComponent
   ],
   imports: [
-    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, 
+    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, NgDatepickerModule,
     BrowserAnimationsModule, DialogModule, MultiSelectModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
     
     StoreModule.forRoot([EmployeeReducer, UserReducer, 
