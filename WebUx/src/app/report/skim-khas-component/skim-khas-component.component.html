@@ -7,11 +7,11 @@
 
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	<p-dialog id="formAction" header="{{formTitle}}" [(visible)]="display" modal='true'>
 
 
@@ -53,6 +53,7 @@
 									</div>
 									<div class="cell c2">
 										<p-calendar dateFormat="M yy" formControlName="rptDate" showIcon="true"></p-calendar>
+
 										<div *ngIf="formErrors.rptDate" class="alert alert-danger">
 											{{ formErrors.rptDate }}
 										</div>
@@ -193,13 +194,12 @@
 
 			<p-tabPanel header="Detail Entry">
 
-					
-				<p-button icon="fa fa-fw fa-save" label="Add new entry" (click)="showEntryForm()">															
+
+				<p-button icon="fa fa-fw fa-save" label="Add new entry" (click)="showEntryForm()">
 				</p-button>
 
-				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" 
-				[columns]="dataEntryColumns" [value]="data.rptSkMimp" 
-				selectionMode="single" [paginator]="true" [rows]="10" dataKey="txnId">
+				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" [columns]="dataEntryColumns" [value]="data.rptSkMimp" selectionMode="single"
+				 [paginator]="true" [rows]="10" dataKey="txnId">
 
 					<ng-template pTemplate="header" let-dataEntryColumns>
 						<tr>
@@ -210,7 +210,7 @@
 						</tr>
 					</ng-template>
 
-					<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns" >
+					<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
 						<tr [pSelectableRow]="rowData">
 							<td>
 								<div [pRowToggler]="rowData">
@@ -229,77 +229,81 @@
 					<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
 
 						<tr>
-							<td [attr.colspan]="columns.length + 1">
 
-								<div style="width:1000px;padding:0px">
-									<div class="panel panel-info">
-										<div class="panel-body" style="padding:5px; padding-left:30px">
+							<form [formGroup]='expandEditForm'>
 
-											<div class="form-group row">
-												<div class="cell c1">
-													<label for="tarikh">Tarikh</label>
-												</div>
-												<div class="cell c2345">
+								<td [attr.colspan]="columns.length + 1">
 
-													<ng-datepicker [(ngModel)]="gridEditRow.fImpDate">
-													</ng-datepicker>
-												</div>
-										
-											</div>
-											<div class="form-group row">
-												<div class="cell c1">
-													<label for="nobarang">No Barang</label>
-												</div>
-												<div class="cell c2345">
-													<input id="nobarang" [(ngModel)]="gridEditRow.fCustomNo" type="text" class="form-control text-control" />
-												</div>
-											</div>
+									<div style="width:1000px;padding:0px">
+										<div class="panel panel-info">
+											<div class="panel-body" style="padding:5px; padding-left:30px">
 
-											<div class="form-group row">
-												<div class="cell c1">
-													<label for="kuantitiImport">Kuantiti Import</label>
-												</div>
-												<div class="cell c2345">
-													<input id="kuantitiImport" [(ngModel)]="gridEditRow.fImpWgt" type="number" class="form-control text-control" />
-												</div>
-											</div>
+												<div class="form-group row">
+													<div class="cell c1">
+														<label for="tarikh">Tarikh</label>
+													</div>
+													<div class="cell c2345">
+															<p-calendar dateFormat="dd/mm/yy" formControlName="fImpDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+													</div>
 
-											<div class="form-group row">
-												<div class="cell c1">
-													<label for="nilaiImport">Nilai Import</label>
 												</div>
-												<div class="cell c2345">
-													<input id="nilaiImport" [(ngModel)]="gridEditRow.fImpCost" type="number" class="form-control text-control" />
+												<div class="form-group row">
+													<div class="cell c1">
+														<label for="nobarang">No Barang</label>
+													</div>
+													<div class="cell c2345">
+														<input id="nobarang" formControlName="fCustomNo" type="text" class="form-control text-control" />
+													</div>
 												</div>
-											</div>
 
-											<div class="form-group row">
-												<div class="cell c1">
-													<label for="catatan">Catatan</label>
+												<div class="form-group row">
+													<div class="cell c1">
+														<label for="kuantitiImport">Kuantiti Import</label>
+													</div>
+													<div class="cell c2345">
+														<input id="kuantitiImport" formControlName="fImpWgt" type="number" class="form-control text-control" />
+													</div>
 												</div>
-												<div class="cell c2345">
-													<input id="catatan" type="text" [(ngModel)]="gridEditRow.note" class="form-control text-control" />
-												</div>
-											</div>
 
-											<div class="form-group row">
-												<div class="cell c1">
-													<label for="catatan"></label>
+												<div class="form-group row">
+													<div class="cell c1">
+														<label for="nilaiImport">Nilai Import</label>
+													</div>
+													<div class="cell c2345">
+														<input id="nilaiImport" formControlName="fImpCost" type="number" class="form-control text-control" />
+													</div>
 												</div>
-												<div class="cell c2345">
-													
-													<p-button icon="fa fa-fw fa-plus" label="Save" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
-										     		<p-button icon="fa fa-fw fa-plus" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
 
+												<div class="form-group row">
+													<div class="cell c1">
+														<label for="catatan">Catatan</label>
+													</div>
+													<div class="cell c2345">
+														<input id="catatan" type="text" formControlName="note" class="form-control text-control" />
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<div class="cell c1">
+														<label for="catatan"></label>
+													</div>
+													<div class="cell c2345">
+
+														<p-button icon="fa fa-fw fa-plus" label="Save" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
+														<p-button icon="fa fa-fw fa-plus" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
+
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 
 
 
-							</td>
+								</td>
+
+							</form>
+
 						</tr>
 
 					</ng-template>
@@ -323,8 +327,8 @@
 
 			</p-tabPanel>
 
-		
-		
+
+
 		</p-tabView>
 
 	</p-dialog>
@@ -336,8 +340,8 @@
 
 	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>
 
-	
-	
+
+
 </div>
 
 
@@ -371,95 +375,95 @@
 
 <p-dialog id="formAction" header="{{formTitle}}" [(visible)]="displayDataEntry" modal='true'>
 
- 		<form [formGroup]='entryDetailForm'>
+	<form [formGroup]='entryDetailForm'>
 
-				<div style="width:1000px;padding:0px">
-					<div class="panel panel-info">
-						<div class="panel-body" style="padding:5px; padding-left:30px">
-							
-							<div class="form-group row">
-								<div class="cell c1">
-									<label for="tarikh">Tarikh</label>
-								</div>
-								<div class="cell c2345">																
-								   <p-calendar dateFormat="dd/mm/yy" formControlName="fImpDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
-								</div>
+		<div style="width:1000px;padding:0px">
+			<div class="panel panel-info">
+				<div class="panel-body" style="padding:5px; padding-left:30px">
 
-								<div *ngIf="detailFormError.fImpDate" class="alert alert-danger">
-										{{ detailFormError.fImpDate }}
-								</div>
+					<div class="form-group row">
+						<div class="cell c1">
+							<label for="tarikh">Tarikh</label>
+						</div>
+						<div class="cell c2345">
+							<p-calendar dateFormat="dd/mm/yy" formControlName="fImpDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+						</div>
 
-							</div>
-							<div class="form-group row">
-								<div class="cell c1">
-									<label for="nobarang">No Barang</label>
-								</div>
-								<div class="cell c2345">
-									<input id="nobarang" type="text" formControlName="fCustomNo" class="form-control text-control" />
-								</div>
-							</div>
+						<div *ngIf="detailFormError.fImpDate" class="alert alert-danger">
+							{{ detailFormError.fImpDate }}
+						</div>
 
-							<div class="form-group row">
-								<div class="cell c1">
-									<label for="kuantitiImport">Kuantiti Import</label>
-								</div>
-								<div class="cell c2345">
-									<input id="kuantitiImport" type="number" formControlName="fImpWgt" class="form-control text-control" />
-								</div>
-
-								<div *ngIf="detailFormError.fImpWgt" class="alert alert-danger">
-									{{ detailFormError.fImpWgt }}
-								</div>
-							</div>
-
-							<div class="form-group row">
-								<div class="cell c1">
-									<label for="nilaiImport">Nilai Import</label>
-								</div>
-								<div class="cell c2345">
-									<input id="nilaiImport" type="number" formControlName="fImpCost" class="form-control text-control" />
-								</div>
-							</div>
-
-							<div class="form-group row">
-								<div class="cell c1">
-									<label for="nilaiImport">GST </label>
-								</div>
-								<div class="cell c2345">
-									<input id="nilaiImport" type="number" formControlName="fGstcost" class="form-control text-control" />
-								</div>
-							</div>
-
-							<div class="form-group row">
-								<div class="cell c1">
-									<label for="catatan">Catatan</label>
-								</div>
-								<div class="cell c2345">
-									<input id="catatan" type="text" formControlName="note" class="form-control text-control" />
-								</div>
-
-								<div *ngIf="detailFormError.note" class="alert alert-danger">
-									{{ detailFormError.note }}
-								</div>
-							</div>
-
-							<div class="form-group row">
-									<div class="cell c1">													
-									</div>
-									<div class="cell c2345">
-									<p-button icon="fa fa-fw fa-save" label="Create Entry" [disabled]="!entryDetailForm.valid" (click)="createEntry()">															
-											</p-button>
-									</div>	
-							</div>
-
-							<div>
-								<p>Form value: {{ entryDetailForm.value | json }}</p>
-							</div>
-
+					</div>
+					<div class="form-group row">
+						<div class="cell c1">
+							<label for="nobarang">No Barang</label>
+						</div>
+						<div class="cell c2345">
+							<input id="nobarang" type="text" formControlName="fCustomNo" class="form-control text-control" />
 						</div>
 					</div>
+
+					<div class="form-group row">
+						<div class="cell c1">
+							<label for="kuantitiImport">Kuantiti Import</label>
+						</div>
+						<div class="cell c2345">
+							<input id="kuantitiImport" type="number" formControlName="fImpWgt" class="form-control text-control" />
+						</div>
+
+						<div *ngIf="detailFormError.fImpWgt" class="alert alert-danger">
+							{{ detailFormError.fImpWgt }}
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="cell c1">
+							<label for="nilaiImport">Nilai Import</label>
+						</div>
+						<div class="cell c2345">
+							<input id="nilaiImport" type="number" formControlName="fImpCost" class="form-control text-control" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="cell c1">
+							<label for="gstImport">GST </label>
+						</div>
+						<div class="cell c2345">
+							<input id="gstImport" type="number" formControlName="fGstcost" class="form-control text-control" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="cell c1">
+							<label for="catatan">Catatan</label>
+						</div>
+						<div class="cell c2345">
+							<input id="catatan" type="text" formControlName="note" class="form-control text-control" />
+						</div>
+
+						<div *ngIf="detailFormError.note" class="alert alert-danger">
+							{{ detailFormError.note }}
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="cell c1">
+						</div>
+						<div class="cell c2345">
+							<p-button icon="fa fa-fw fa-save" label="Create Entry" [disabled]="!entryDetailForm.valid" (click)="createEntry()">
+							</p-button>
+						</div>
+					</div>
+
+					<div>
+						<p>Form value: {{ entryDetailForm.value | json }}</p>
+					</div>
+
 				</div>
-			</form>
+			</div>
+		</div>
+	</form>
 
 
 

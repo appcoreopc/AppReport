@@ -31,7 +31,7 @@ import { MaterialCategoryReducer} from './material/material-category-component/m
 
 import { RawMaterialEffects } from './material/raw-material-component/rawMaterialEffects';
 import { RawMaterialReducer} from './material/raw-material-component/rawMaterialReducer';
- 
+
 import { StnCustomEffects } from './material/stn-custom-component/stnCustomEffects';
 import { StnCustomReducer} from './material/stn-custom-component/stnCustomReducer';
 
@@ -60,7 +60,6 @@ import { UOMEffects } from './effects/uomEffects';
 import { UOMReducer } from './reducers/uomReducer';
 
 import { CalendarModule } from 'primeng/calendar';
-import { NgDatepickerModule } from 'ng2-datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
@@ -105,7 +104,7 @@ export const ROUTES: Routes = [
     LoginComponent
   ],
   imports: [
-    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, NgDatepickerModule,
+    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule,
     BrowserAnimationsModule, DialogModule, MultiSelectModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
     
     StoreModule.forRoot([EmployeeReducer, UserReducer, 
