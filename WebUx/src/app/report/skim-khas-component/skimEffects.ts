@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {
-  SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS,
+  SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS, SKIMKHAS_PRINT,SKIMKHAS_PRINT_OK, 
   SKIMKHAS_MESSAGE_END, SKIMKHAS_SAVE_ERR, SKIMKHAS_CANCEL_OK, EMPLOYEE_WAIT_PENDING, SKIMKHAS_GET, SKIMKHAS_GET_ERR,
   SKIMKHAS_GET_OK, CityAppState, CityData, headersJson
 } from '../../sharedObjects/sharedMessages';
@@ -58,6 +58,12 @@ export class SkimKhasEffects {
     .ofType(SKIMKHAS_CANCEL)
     .map(action => {
       return ({ type: SKIMKHAS_CANCEL_OK });
+    });
+
+     @Effect() SkimKhasPrint$ = this.actions$
+    .ofType(SKIMKHAS_PRINT)
+    .map(action => {
+      return ({ type: SKIMKHAS_PRINT_OK });
     });
 
   @Effect() SkimKhasGet$ = this.actions$

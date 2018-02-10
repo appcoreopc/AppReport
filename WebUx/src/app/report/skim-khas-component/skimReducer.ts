@@ -1,6 +1,6 @@
 import { ActionReducer, Action } from '@ngrx/store';
 
-import {SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS,
+import {SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS, SKIMKHAS_PRINT,SKIMKHAS_PRINT_OK, 
 	 SKIMKHAS_MESSAGE_END, SKIMKHAS_SAVE_ERR, SKIMKHAS_CANCEL_OK, SKIMKHAS_GET, SKIMKHAS_GET_ERR,
 	  SKIMKHAS_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 
@@ -18,7 +18,10 @@ export function SkimKhasReducer(status: CityAppState, action: Action) {
 			return { status : 4, type: SKIMKHAS_SAVE_SUCCESS }
 		case SKIMKHAS_SAVE_ERR:
 			console.log(SKIMKHAS_SAVE_ERR);
-			return  { status : 5, type: SKIMKHAS_MESSAGE_END };			
+			return  { status : 5, type: SKIMKHAS_MESSAGE_END };		
+		case SKIMKHAS_PRINT:
+			console.log(SKIMKHAS_PRINT_OK);
+			return { status : 6, type: SKIMKHAS_PRINT_OK }	
 		default:
 			return status;						
 		}					

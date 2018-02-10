@@ -46,13 +46,14 @@ export class SkimKhasComponentComponent implements OnInit {
   displayDataEntry: boolean = false;
   display: boolean = false;
   displayEntryForm: boolean = false;
+  displayPrintReport: boolean = false;
   
   formTitle: string = "New GRN";
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
   gridEditRow: RptSkMimpModel = new RptSkMimpModel();
   empDataList: Array<any> = new Array<any>();
   
-  pCalendarEditEntryValue : Date;
+  pCalendarEditEntryValue : Date; 
   
   formErrors = {
     'rptId': '',
@@ -139,9 +140,9 @@ export class SkimKhasComponentComponent implements OnInit {
     { field: 'fImpCost', header: 'Kuantiti Import' }
   ];
   
-  mainColumns = [
+  mainColumns = [ 
     { field: 'rptId', header: 'Report Id' },
-    { field: 'rptDate', header: 'Report Date' }
+    { field: 'rptDate', header: 'Report Date' } 
   ];
   
   constructor(private store: Store<CityAppState>, private fb: FormBuilder) { }
@@ -389,7 +390,16 @@ export class SkimKhasComponentComponent implements OnInit {
       onEditComplete(evt) {
         console.log(evt);
       }
-      
+
+      editForm(){
+
+        this.setupMainFormForEdit();
+      }
+ 
+      printReport(){
+        this.displayPrintReport = true;
+      }
+
       onRowSelect(evt) {
         
         debugger;
@@ -403,7 +413,6 @@ export class SkimKhasComponentComponent implements OnInit {
         else
         this.itemSelected = false;
         
-        this.setupMainFormForEdit();
       }
       // adding entries into the main module //
       

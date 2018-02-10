@@ -12,13 +12,15 @@ using System.Collections.Generic;
 using System.Linq;
 using AppReport.Util;
 using AppReport.RequestModel;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace AppReport.Controllers
 {
     public partial class RptSkController : Controller
     { 
         private PTSContext _ptsContext; 
-        private IHostingEnvironment _env;
+        private IHostingEnvironment _env; 
         const string _rptFileName = "PTS Skim Khas";
         string _rptFileDT;
         
@@ -29,22 +31,68 @@ namespace AppReport.Controllers
         }
         
         [HttpGet]
-        public IActionResult GetById(int id)
+        public List<string> GetById(int id)
         {
             var rptSk = new RptSkService(_ptsContext).Get(id);
             var rptSkMimp = new RptSkMimpService(_ptsContext).Get(id);
 
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
 
+            var myList = new List<string>(); 
+
+            // Convert to array
+            var myArray = myList.ToArray();
             if (rptSk != null)
-            { 
-                PrintLetter(rptSk);
-                PrintReport(rptSk, rptSkMimp);
+            {
+                string rpt = PrintLetter(rptSk);
+                myList.Add(rpt);
+                rpt = PrintReport(rptSk, rptSkMimp);
+                myList.Add(rpt);
             }
 
-            return View();
+            return myList;
+
+            //return View();
         }
-        
+         
+
+        [HttpGet]
+        public FileResult Download(string fileName)
+        { 
+            string filepath = Path.Combine(AppConstant.ReportFilePath, fileName); 
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
+            return File(fileBytes, "application/pdf", fileName);
+        }
+
+        [HttpGet]
+        public FileResult DownloadLetter(int id)
+        {
+            var rptSk = new RptSkService(_ptsContext).Get(id);
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptSk != null)
+            {
+                 rpt = PrintLetter(rptSk); 
+            } 
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadReport(int id)
+        {
+            var rptSk = new RptSkService(_ptsContext).Get(id);
+            var rptSkMimp = new RptSkMimpService(_ptsContext).Get(id);
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptSk != null)
+            {
+                rpt = PrintReport(rptSk, rptSkMimp);
+            }
+            return Download(rpt);
+        }
+
+
+
         [HttpGet]
         public IActionResult Index()
         {        
@@ -68,10 +116,13 @@ namespace AppReport.Controllers
         }
 
 
-        private void PrintLetter(RptSk rptSk)
+        private string PrintLetter(RptSk rptSk)
         {
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + "_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
 
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
             {
                 string strRDate = string.Empty;
                 DateTime dtReport = rptSk.RptDate.HasValue ? (DateTime)rptSk.RptDate : DateTime.Today;
@@ -404,12 +455,16 @@ Website: {rptSk.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
          
-        private void PrintReport(RptSk rptSk, IEnumerable<RptSkMimp> rptSkMimp)
-        {
+        private string PrintReport(RptSk rptSk, IEnumerable<RptSkMimp> rptSkMimp)
+        { 
+            string rptPath = string.Empty;
+            string rptName  = _rptFileName + " - Monthly" + "_" + _rptFileDT + ".pdf"; ;
+            rptPath = AppConstant.ReportFilePath + rptName;
 
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Monthly" +  "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
             { 
                 string strRDate = string.Empty;
                 DateTime dtReport = rptSk.RptDate.HasValue ? (DateTime)rptSk.RptDate : DateTime.Today;
@@ -813,6 +868,7 @@ Website: {rptSk.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
 
 

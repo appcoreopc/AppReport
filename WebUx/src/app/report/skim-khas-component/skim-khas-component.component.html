@@ -1,16 +1,8 @@
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
- crossorigin="anonymous">
+ 
 
 <div class="container">
 
-
-
-
-
-
-
-
+ 
 
 	<p-dialog id="formAction" header="{{formTitle}}" [(visible)]="display" modal='true'>
 
@@ -340,8 +332,10 @@
 
 	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>
 
+	<p-button (onClick)="editForm()" icon="fa fa-fw fa-edit" label="Edit"></p-button>
 
-
+	<p-button (onClick)="printReport()" icon="fa fa-fw fa-print" label="Print"></p-button>
+ 
 </div>
 
 
@@ -464,12 +458,12 @@
 			</div>
 		</div>
 	</form>
+ 
+</p-dialog>
 
-
-
-
-
-
-
-
+<p-dialog id="formPrintReport" header="Print SKIM Khas" [(visible)]="displayPrintReport" modal='true'> 
+	 
+	<a target="_self" class="btn btn-success" role="button" href="http://localhost:5050/rptsk/DownloadLetter/{{data.rptId}}">SKIM Khas Letter</a>
+	&nbsp;
+	<a target="_self" class="btn btn-primary" role="button"  href="http://localhost:5050/rptsk/DownloadReport/{{data.rptId}}">SKIM Khas Report</a>
 </p-dialog>
