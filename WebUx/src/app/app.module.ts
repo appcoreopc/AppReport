@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { UserComponentComponent } from './user/user-component/user-component.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
+import { ConfigComponentComponent } from './config/config-component/config-component.component';
 import { EmployeeComponentComponent } from './employee/employee-component/employee-component.component';
 import { RawMaterialComponentComponent } from './material/raw-material-component/raw-material-component.component';
 import { MaterialCategoryComponentComponent } from './material/material-category-component/material-category-component.component';
@@ -17,8 +18,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+import { ConfigEffects } from './config/config-component/configEffects';
+import { ConfigReducer} from './config/config-component/configReducer';
+
 import { EmployeeEffects } from './employee/employee-component/employeeEffects';
-import {EmployeeReducer} from './employee/employee-component/employeeReducer';
+import { EmployeeReducer} from './employee/employee-component/employeeReducer';
 
 import { UserEffects } from './user/user-component/userEffects';
 import { UserReducer} from './user/user-component/userReducer';
@@ -72,6 +76,7 @@ import { AuthService } from './auth/auth-service.service';
 import { LoginComponent } from './login/login.component';
 
 export const ROUTES: Routes = [
+  { path: 'config', component  : ConfigComponentComponent },
   { path: 'employee', component: EmployeeComponentComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponentComponent, canActivate: [AuthGuard] }, 
   { path: 'supplier', component  : SupplierComponentComponent, canActivate: [AuthGuard]  },
@@ -90,6 +95,7 @@ export const ROUTES: Routes = [
   declarations: [
     AppComponent, 
     UserComponentComponent,
+    ConfigComponentComponent,
     EmployeeComponentComponent,
     NavigationComponent,
     RawMaterialComponentComponent,
@@ -107,11 +113,11 @@ export const ROUTES: Routes = [
     BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule,
     BrowserAnimationsModule, DialogModule, MultiSelectModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
     
-    StoreModule.forRoot([EmployeeReducer, UserReducer, 
+    StoreModule.forRoot([ConfigReducer, EmployeeReducer, UserReducer, 
       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
       M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer, StnCustomReducer]),
       
-      EffectsModule.forRoot([EmployeeEffects, UserEffects, 
+      EffectsModule.forRoot([ConfigEffects, EmployeeEffects, UserEffects, 
         SupplierEffects, MaterialCategoryEffects, 
         RawMaterialEffects, GrnEffects, M1LampiranEffects, 
         SkimKhasEffects, LesenEffects, UOMEffects, StnCustomEffects]), 

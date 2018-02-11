@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CityAppState, ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GET,
-  SKIMKHAS_SAVE_SUCCESS, EMPLOYEE_GET, EMPLOYEE_GET_OK
+  SKIMKHAS_SAVE_SUCCESS, EMPLOYEE_GET, EMPLOYEE_GET_OK, CONFIG_GET, CONFIG_GET_OK
 } from '../../sharedObjects/sharedMessages';
 import { RptSkModel } from "../../model/RptSkModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -15,6 +15,7 @@ import { CurrencyModel } from "../../model/CurrencyModel";
 import { ComponentModel } from "../../model/ComponentModel";
 import { SupplierModel } from "../../model/SupplierModel";
 import { RawMaterialModel } from "../../model/RawMaterialModel";
+import { ConfigModel } from "../../model/ConfigModel";
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { SpinnerModule } from 'primeng/spinner';
@@ -35,6 +36,7 @@ export class SkimKhasComponentComponent implements OnInit {
   mainItemSelected: RptSkModel;
   itemEntryModel: RptSkMimpModel = new RptSkMimpModel();
   expandSelectedRowItem : RptSkMimpModel; 
+  configData: ConfigModel = new ConfigModel();
   
   // forms 
   dataForm: FormGroup; // main entry form 
@@ -52,6 +54,7 @@ export class SkimKhasComponentComponent implements OnInit {
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
   gridEditRow: RptSkMimpModel = new RptSkMimpModel();
   empDataList: Array<any> = new Array<any>();
+  configDataList : Array<any> = new Array<any>(); 
   
   pCalendarEditEntryValue : Date; 
   
@@ -109,6 +112,7 @@ export class SkimKhasComponentComponent implements OnInit {
   userSubscription: Subscription;
   rows = [];
   empRows = [];
+  configRows = [];
   
   columns = [
     { prop: 'rptId', name: 'Id' },
@@ -156,6 +160,8 @@ export class SkimKhasComponentComponent implements OnInit {
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, SKIMKHAS_GET_OK), SKIMKHAS_GET_OK));
       
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, EMPLOYEE_GET_OK), EMPLOYEE_GET_OK));
+
+      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, CONFIG_GET_OK), CONFIG_GET_OK));
       
     });
     
@@ -169,9 +175,9 @@ export class SkimKhasComponentComponent implements OnInit {
   
   ngAfterViewInit() {
     
-    this.dispatchIntent(SKIMKHAS_GET);
-    
+    this.dispatchIntent(SKIMKHAS_GET); 
     this.dispatchIntent(EMPLOYEE_GET);
+    this.dispatchIntent(CONFIG_GET);
   }
   
   save() {
@@ -285,6 +291,27 @@ export class SkimKhasComponentComponent implements OnInit {
     else if (message && message.type == SKIMKHAS_SAVE_SUCCESS) {
       this.display = false;
     }
+     else if (message && message.type == CONFIG_GET_OK)
+      { 
+        this.configRows.length = 0; 
+        let configDataList = new Array<any>(); 
+        
+       
+        for (var idx in message.data)
+        {
+          var configDataInfo = message.data[idx] as ConfigModel;    
+
+           if(! (configDataInfo.moduleId == 1 && configDataInfo.id == 3)) continue;
+
+          configDataList.push({   
+            configId : configDataInfo.configId,
+            configKey : configDataInfo.configKey,
+            configData : configDataInfo.configData 
+          }); 
+        } 
+
+        this.configRows = configDataList; 
+      }   
   }
   
   private setupAddForm() {
@@ -294,6 +321,33 @@ export class SkimKhasComponentComponent implements OnInit {
     for (const field in this.formErrors) {
       this.formErrors[field] = '';
     }
+
+        
+      for (var cRow in this.configRows)
+      {
+        console.log("this.configRows[cRow]",this.configRows[cRow]);
+ 
+        if(this.configRows[cRow].configKey == "LetterRcptAdd1") 
+            this.data.lrcptAdd1 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "LetterRcptAdd2") 
+            this.data.lrcptAdd2 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "LetterRcptAdd3") 
+            this.data.lrcptAdd3 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "LetterRcptAdd4") 
+            this.data.lrcptAdd4 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "LetterRcptDept") 
+            this.data.lrcptDept = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "LetterRcptBr") 
+            this.data.lrcptBr = this.configRows[cRow].configData;
+ 
+      }
+
+      this.dataForm.get("lrcptAdd1").setValue(this.data.lrcptAdd1); 
+      this.dataForm.get("lrcptAdd2").setValue(this.data.lrcptAdd2); 
+      this.dataForm.get("lrcptAdd3").setValue(this.data.lrcptAdd3); 
+      this.dataForm.get("lrcptAdd4").setValue(this.data.lrcptAdd4); 
+      this.dataForm.get("lrcptDept").setValue(this.data.lrcptDept);
+      this.dataForm.get("lrcptBr").setValue(this.data.lrcptBr);
   }
   
   private configureAddForms() {
@@ -492,13 +546,13 @@ export class SkimKhasComponentComponent implements OnInit {
           const gridEditItem = this.expandEditForm.value as RptSkMimpModel;
           
           if (gridEditItem) {
-            rowData.txnId = gridEditItem.txnId;
+            /*rowData.txnId = gridEditItem.txnId;
             rowData.rptId = gridEditItem.rptId;
             rowData.fCustomNo = gridEditItem.fCustomNo;
             rowData.fGstcost = gridEditItem.fGstcost;
             rowData.fImpCost = gridEditItem.fImpCost;
             rowData.fImpDate = gridEditItem.fImpDate;
-            rowData.fImpWgt = gridEditItem.fImpWgt;
+            rowData.fImpWgt = gridEditItem.fImpWgt;*/
             rowData.note = gridEditItem.note;
           }
           

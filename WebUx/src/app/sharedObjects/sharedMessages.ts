@@ -1,6 +1,18 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { HttpHeaders } from '@angular/common/http';
 
+
+export const CONFIG_SAVE = 'CONFIG_SAVE';
+export const CONFIG_CANCEL = 'CONFIG_CANCEL';
+export const CONFIG_SAVE_SUCCESS = 'CONFIG_SAVE_SUCCESS';
+export const CONFIG_MESSAGE_END = 'CONFIG_MESSAGE_END';
+export const CONFIG_SAVE_ERR = 'CONFIG_SAVE_ERR';
+export const CONFIG_CANCEL_OK = 'CONFIG_CANCEL_OK';
+export const CONFIG_GET = 'CONFIG_GET';
+export const CONFIG_GET_ERR = 'CONFIG_GET_ERR';
+export const CONFIG_GET_OK = 'CONFIG_GET_OK';
+export const CONFIG_WAIT_PENDING = 'CONFIG_WAIT_PENDING';
+
 export const EMPLOYEE_SAVE = 'EMPLOYEE_SAVE';
 export const EMPLOYEE_CANCEL = 'EMPLOYEE_CANCEL';
 export const EMPLOYEE_SAVE_SUCCESS = 'EMPLOYEE_SAVE_SUCCESS';

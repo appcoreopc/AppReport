@@ -158,7 +158,7 @@ namespace AppReport.Controllers
                     PdfPTable t1b = new PdfPTable(2);
                     t1b.SetWidths(new float[] { 12f, 2f });
 
-                    PdfPCell cell = new PdfPCell(new Phrase(rptSk.FCoName, f1));
+                    PdfPCell cell = new PdfPCell(new Phrase(rptSk.FCoName.ToUpper(), f1));
                     cell.Padding = 0;
                     cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                     cell.Border = PdfCell.NO_BORDER;
@@ -555,7 +555,7 @@ Website: {rptSk.FCoWebsite}", f2));
                     cell.Border = PdfCell.NO_BORDER;
                     t6.AddCell(cell); 
 
-                    cell = new PdfPCell(new Phrase(rptSk.FCoName, f4));
+                    cell = new PdfPCell(new Phrase(rptSk.FCoName.ToUpper(), f4));
                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
                     cell.Border = PdfCell.NO_BORDER;
                     t6.AddCell(cell);

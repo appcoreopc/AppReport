@@ -52,6 +52,7 @@ namespace AppReport.Services
                     RefNo = requestModel.RefNo,
                     RptDate = requestModel.RptDate,
 
+                    LetterDate = requestModel.LetterDate,
                     LrcptBr = requestModel.LrcptBr,
                     LrcptDept = requestModel.LrcptDept,
 

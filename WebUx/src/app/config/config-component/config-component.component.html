@@ -1,0 +1,109 @@
+ 
+<div class="container"> 
+  
+  <p-dialog header="{{formTitle}}" [(visible)]="display" modal='true'>
+     
+    <form [formGroup]='personForm'>
+      
+<div style="width:100%;padding:0px">
+ 
+	  
+		<div class="panel panel-info"> 
+			<div class="panel-body" style="padding:5px; padding-left:30px"> 
+			 
+				   <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="configKey">Key :</label>
+					  </div> 
+					  <div class="cell c2345">   
+						  <input id="configKey" readonly type="text" maxlength="50" class="form-control text-control" formControlName="configKey">         
+						  
+						  <div *ngIf="formErrors.configKey" class="alert alert-danger">
+							{{ formErrors.configKey }}
+						  </div>
+					  </div>  
+           </div>   
+
+           
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="configData">Content :</label>
+					  </div> 
+					  <div class="cell c2345">
+						 <input id="configData" type="text" maxlength="1000" class="form-control text-control" formControlName="configData">          
+						  <div *ngIf="formErrors.configData" class="alert alert-danger">
+							{{ formErrors.configData }}
+						  </div>
+					  </div> 
+				   </div> 
+             
+          
+				  </div>
+        </div>  
+      </div>       
+  <div>
+                      
+        
+      </div>
+       
+       <div class="form-group row">
+          <div class="cell c1"> 
+          </div> 
+          <div class="cell c2"> 
+          </div>
+          <div class="cell c3"> 
+          </div> 
+          <div class="cell c4"> 
+          </div> 
+          <div class="cell c5" style="text-align:right">	   
+ 
+							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
+			 	  </div>
+       </div>
+
+      <p style="width:800px">Form value: {{ personForm.value | json }}</p>
+      
+    </form>
+    
+  </p-dialog>    
+  
+</div>
+
+<div class="container" style="display:none">       
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+</div>
+<div style="clear:both; height:10px"></div>
+
+<div class="container"> 
+  <ngx-datatable class="material striped"
+  [rows]="rows"
+  [limit]="10"
+  (select)="person"
+  [columns]="columns"
+  [selectionType]="'single'"
+  (select)="onSelect($event)"
+  [headerHeight]="30"  [rowHeight]="'auto'"
+  [footerHeight]="50">
+
+  
+	 <ngx-datatable-column  name="Id" prop="configId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+		</ngx-datatable-column>
+  
+	 <ngx-datatable-column  name="Key" prop="configKey" [width]="250" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+      
+	 <ngx-datatable-column  name="Content" prop="configData" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+
+</ngx-datatable>
+</div>
+
