@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, EMPLOYEE_WAIT_PENDING,  EMPLOYEE_WAIT_OK } from '../sharedObjects/sharedMessages';
+import { CityAppState, PROGRESS_WAIT_HIDE,  PROGRESS_WAIT_SHOW } from '../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../sharedObjects/storeMessageUtil";
 import {DialogModule} from 'primeng/dialog';
@@ -23,7 +23,7 @@ export class AppProgressSpinnerComponent implements OnInit {
     this.userSubscription = this.store.subscribe(appData => { 
         
       this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
-        [ EMPLOYEE_WAIT_PENDING, EMPLOYEE_WAIT_OK]));
+        [ PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE]));
       }); 
   }
 
@@ -31,13 +31,13 @@ export class AppProgressSpinnerComponent implements OnInit {
           
     messageAll.map(message => {  
       
-      if (message && message.type == EMPLOYEE_WAIT_PENDING)
+      if (message && message.type == PROGRESS_WAIT_SHOW)
       {                  
         console.log('employee wait pending');
         this.display = true;                
       }
       
-      if (message && message.type == EMPLOYEE_WAIT_OK)
+      if (message && message.type == PROGRESS_WAIT_HIDE)
       {                  
         this.display = false;                
       }

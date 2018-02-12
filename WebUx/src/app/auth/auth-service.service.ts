@@ -1,15 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import {
   CityAppState,
   headersJson,
-  EMPLOYEE_WAIT_OK,
-  EMPLOYEE_WAIT_PENDING,
   LOGIN_SUCCESS,
   LOGIN_ERR,
-  PROGRESS_WAIT_PENDING,
-  PROGRESS_WAIT_OK
+  PROGRESS_WAIT_SHOW,
+  PROGRESS_WAIT_HIDE
 } from '../sharedObjects/sharedMessages';
 
 import {APPLICATION_HOST} from '../sharedObjects/applicationSetup';
@@ -24,32 +22,37 @@ import {  Router }  from '@angular/router';
 @Injectable()
 export class AuthService {
 
-  isLogin : boolean = false;
-
+  private  _isLogin : boolean = false;
   targetRedirectUrl : string;
   router : Router; 
 
-  constructor(private http : HttpClient, private store : Store < CityAppState >) {}
+  constructor(private http : HttpClient, private store : Store < CityAppState >) {
+
+  }
+
+  public get isLogin():boolean {
+    return this._isLogin;    
+  }
 
   login(username : string, password : string)
   {
 
-    messageUtil.dispatchIntent(this.store, EMPLOYEE_WAIT_PENDING);
+    messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_SHOW);
 
     this
       .doLogin(username, password)
       .subscribe(res => {
         console.log(res);
-        this.isLogin = true;
-        messageUtil.dispatchIntent(this.store, EMPLOYEE_WAIT_OK);
+        this._isLogin = true;
+        messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE);
 
         if (this.router && this.targetRedirectUrl)
             this.router.navigateByUrl(this.targetRedirectUrl);
 
       }, err => {
         console.log(err);
-        this.isLogin = false;
-        messageUtil.dispatchIntent(this.store, EMPLOYEE_WAIT_OK);
+        this._isLogin = false;
+        messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE);
 
       }, () => {});
   }
@@ -62,9 +65,8 @@ export class AuthService {
 
   logout()
   {
-
+    this._isLogin = false;
   }
-
 
   /// Map function for Http Post //
   private doLogin(username : string, password : string)
