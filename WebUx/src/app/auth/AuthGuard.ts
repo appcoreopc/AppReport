@@ -29,16 +29,16 @@ export class AuthGuard implements CanActivate {
       }
 
       // Fake for development purposes.     
-      //return true;
+      return true;
 
-      if (this.authService.isLogin)
-      { 
-        return true;
-      }
-      else 
-      {
-        this.router.navigate(['/login']);
-      }
-      return false; 
+      // if (this.authService.isLogin)
+      // { 
+      //   return true;
+      // }
+      // else 
+      // {
+      //   this.router.navigate(['/login']);
+      // }
+      // return false; 
     }
   }
