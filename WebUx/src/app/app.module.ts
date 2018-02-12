@@ -27,6 +27,8 @@ import { EmployeeReducer} from './employee/employee-component/employeeReducer';
 import { UserEffects } from './user/user-component/userEffects';
 import { UserReducer} from './user/user-component/userReducer';
 
+import { AppProgressSpinnerReducer } from './app-progress-spinner/app-progress-spinner.reducer';
+
 import { SupplierEffects } from './material/supplier-component/supplierEffects';
 import { SupplierReducer} from './material/supplier-component/supplierReducer';
 
@@ -38,6 +40,7 @@ import { RawMaterialReducer} from './material/raw-material-component/rawMaterial
 
 import { StnCustomEffects } from './material/stn-custom-component/stnCustomEffects';
 import { StnCustomReducer} from './material/stn-custom-component/stnCustomReducer';
+
 
 import { HttpClientModule }  from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -68,10 +71,12 @@ import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/
 import { TabViewModule } from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 import { AuthGuard } from './auth/AuthGuard';
 import { AuthService } from './auth/auth-service.service';
 import { LoginComponent } from './login/login.component';
+import { AppProgressSpinnerComponent } from './app-progress-spinner/app-progress-spinner.component';
 
 export const ROUTES: Routes = [
   { path: 'config', component  : ConfigComponentComponent },
@@ -105,13 +110,14 @@ export const ROUTES: Routes = [
     LampiranM1ComponentComponent,
     LesenGudangComponentComponent,
     SkimKhasComponentComponent, SkimKhasDataEntryComponent,
-    LoginComponent
+    LoginComponent,
+    AppProgressSpinnerComponent
   ],
   imports: [
-    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule,
+    BrowserModule, NgxDatatableModule, ReactiveFormsModule, HttpClientModule, CalendarModule, ProgressSpinnerModule,
     BrowserAnimationsModule, DialogModule, MultiSelectModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
     
-    StoreModule.forRoot([ConfigReducer, EmployeeReducer, UserReducer, 
+    StoreModule.forRoot([ConfigReducer, EmployeeReducer, UserReducer, AppProgressSpinnerReducer,
       SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
       M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer, StnCustomReducer]),
       
