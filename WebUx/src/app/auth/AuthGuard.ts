@@ -21,22 +21,25 @@ export class AuthGuard implements CanActivate {
   }  
 
   canActivate(route: ActivatedRouteSnapshot, 
-    state: RouterStateSnapshot):boolean 
+    state: RouterStateSnapshot):boolean   
     { 
       if (state.url)
       {
         this.authService.setRedirectUrl(this.router, state.url);
       }
 
+      // Fake for development purposes.
       
-      if (this.authService.isLogin)
-      { 
-        return true;
-      }
-      else 
-      {
-        this.router.navigate(['/login']);
-      }
-      return false; 
+      return true;
+
+      // if (this.authService.isLogin)
+      // { 
+      //   return true;
+      // }
+      // else 
+      // {
+      //   this.router.navigate(['/login']);
+      // }
+      // return false; 
     }
   }
