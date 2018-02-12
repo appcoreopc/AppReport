@@ -3,24 +3,45 @@ import { HttpClient } from '@angular/common/http';
 import {  headersJson , LOGIN_SUCCESS, LOGIN_ERR } from '../sharedObjects/sharedMessages';
 import { APPLICATION_HOST } from '../sharedObjects/applicationSetup';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/toPromise';
+import { Subscription } from 'rxjs/Subscription';
+import { ISubscription } from "rxjs/Subscription";
 
 @Injectable()
 export class AuthService {
   
-  isLogin:boolean = true;   
+  isLogin:boolean = false;   
   
   constructor(private http: HttpClient) {     
     
   }
   
-  login(username : string, password : string): boolean
+  login(username : string, password : string)
   {   
-    this.doLogin(username, password);
-    return true;
+
+    this.doLogin(username, password).subscribe(res => {      
+        //return true;
+        console.log(res);
+        this.isLogin = true;      
+      },  
+      err => {
+        //return false; 
+        console.log(err);  
+        this.isLogin = false;    
+      }, () => {            
+      });
+
+    
+    // return new Promise<boolean>(function(val) { 
+    //   console.log(val);
+    //   this.doLogin(username, password);
+    // });    
   }
+  
   
   logout()
   {    
+    
     
   }
   
@@ -28,21 +49,29 @@ export class AuthService {
   {  
     let payload = { 'username' : username , 'password' : password};
     
-    this.http.post(APPLICATION_HOST + '/auth/login', payload, 
+    // var result =  this.http.post(APPLICATION_HOST + '/auth/login', payload, 
+    // { 
+    //   headers : headersJson
+    // })
+    // .subscribe(res => {      
+    //   return true;
+    //   this.isLogin = true;      
+    // },  
+    // err => {
+    //   return false; 
+    //   //console.log(err);  
+    //   this.isLogin = false;    
+    // }, () => {            
+    // });
+    
+    return this.http.post(APPLICATION_HOST + '/auth/login', payload, 
     { 
       headers : headersJson
-    })
-    .subscribe(res => {      
-   
-      this.isLogin = true;      
-    },  
-    err => {
-      console.log(err);  
-      this.isLogin = false;    
-    }, () => {
-      
-    });
-    
+    }).map(res => 
+      {
+        console.log(res);
+        return res;
+      });    
+    }
   }
   
-}

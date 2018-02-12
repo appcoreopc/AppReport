@@ -3,7 +3,7 @@ import { CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
   ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS } from '../sharedObjects/sharedMessages';
 import { UserModel } from "../model/UserModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {AuthService} from '../auth/auth-service.service';
+import { AuthService } from '../auth/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       'password': [this.person.password, [Validators.required]]              
       });
 
-      this.personForm.valueChanges.debounceTime(300)
+      this.personForm.valueChanges.debounceTime(100)
       .subscribe(data => this.onValueChanged(data));
     }
 
@@ -74,11 +74,12 @@ export class LoginComponent implements OnInit {
       }   
     }    
 
-  login()
+  async login()
   {
+    console.log('test');
     if (!this.authService.isLogin)
-    { 
-      this.authService.login(this.person.username, this.person.password);    
+    {   
+      await this.authService.login(this.person.username, this.person.password);    
     }
     // else redirect to requested route url //        
     // console.log('login starts here!');

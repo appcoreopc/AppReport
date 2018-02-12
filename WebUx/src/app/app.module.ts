@@ -48,8 +48,6 @@ import { LesenGudangComponentComponent } from './report/lesen-gudang-component/l
 import { SkimKhasComponentComponent } from './report/skim-khas-component/skim-khas-component.component';
 import { SkimKhasDataEntryComponent } from './report/skim-khas-component/skim-khas-data-entry';
 
-
-
 import { GrnReducer } from './report/report-grn/grnReducer';
 import { M1LampiranReducer } from './report/lampiran-m1-component/m1Reducer';
 import { LesenReducer } from './report/lesen-gudang-component/lesenReducer';
@@ -88,7 +86,7 @@ export const ROUTES: Routes = [
   { path: 'lesen', component  : LesenGudangComponentComponent },
   { path: 'skim', component  : SkimKhasComponentComponent },
   { path: 'login', component  : LoginComponent },
-  { path: '**', component: LoginComponent }
+  { path: '**', component: LoginComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
