@@ -29,7 +29,7 @@ export class EmployeeComponentComponent implements OnInit {
   display: boolean = false;
   formTitle: string = "New Employee";
   dataList: Array<any> = new Array<any>();
-  jobTitleDataList: Array<any> = new Array<any>();
+
 
   jobListMap = {};
 
@@ -202,15 +202,14 @@ export class EmployeeComponentComponent implements OnInit {
       if (message && message.type == JOBTITLE_GET_OK) {
 
         this.jobTitleRows.length = 0;
-
+        let jobTitleDataList = [];
         for (var d of message.data.data.data) {          
-          this.jobTitleDataList.push({
+          jobTitleDataList.push({
             jobTitleId: d.jobTitleId,
             jobTitleName: d.jobTitleName
           });
-        }
-      
-        this.jobTitleRows = this.jobTitleDataList;
+        }      
+        this.jobTitleRows = jobTitleDataList;
         this.mapJobToTitle(this.jobTitleRows);
       }
     });
