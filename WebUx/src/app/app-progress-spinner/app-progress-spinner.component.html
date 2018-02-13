@@ -1,5 +1,5 @@
 
-  <p-dialog header="Please wait" [(visible)]="display" modal='true'>
+  <p-dialog header="Please wait" [visible]="display" [modal]='true' [closable]="false" [responsive]="true">
     <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" animationDuration="3s"></p-progressSpinner>
-       Loading...
+       {{message}}
   </p-dialog>

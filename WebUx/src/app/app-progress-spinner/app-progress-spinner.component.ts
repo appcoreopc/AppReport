@@ -14,7 +14,7 @@ export class AppProgressSpinnerComponent implements OnInit {
 
   display : boolean = false; 
   userSubscription : Subscription;
-
+  message : string = "Loading...";
   
   constructor(private store : Store<CityAppState>) { }
   
