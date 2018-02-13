@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
@@ -20,15 +20,18 @@ import { DialogModule } from 'primeng/dialog';
 
 export class EmployeeComponentComponent implements OnInit {
 
+  @ViewChild('myDataTable') editTmpl: TemplateRef<any>;
+
   private person: EmployeeModel = new EmployeeModel();
   private personForm: FormGroup;
   private intention: number = UPDATE;
 
   display: boolean = false;
-
   formTitle: string = "New Employee";
   dataList: Array<any> = new Array<any>();
   jobTitleDataList: Array<any> = new Array<any>();
+
+  jobListMap = {};
 
   formErrors = {
     'empName': '',
@@ -53,10 +56,10 @@ export class EmployeeComponentComponent implements OnInit {
       'required': 'Address 1 is required.'
     },
     'empAd2': {
-      'required': 'Address 2 is required.'
+      'required': 'Address 2 must be more than 1 character long.'
     },
     'empAd3': {
-      'required': 'Address3 is required.'
+      'required': 'Address 3 must be more than 1 character long.'
     },
     'jobTitleId': {
       'required': 'Job Title is required.'
@@ -68,14 +71,6 @@ export class EmployeeComponentComponent implements OnInit {
   rows = [];
   jobTitleRows = [];
 
-  columns = [
-    { prop: 'empName', name: 'Name' },
-    { prop: 'empIdno', name: 'Employee No' },
-    { prop: 'empAd1', name: 'Address', width: 350 },
-    { prop: 'empAd2', name: 'Address 2', width: 350 },
-    { prop: 'empAd3', name: 'Address 3', width: 350 }
-  ];
-
   constructor(private store: Store<CityAppState>, private fb: FormBuilder) { }
 
   name: string;
@@ -85,37 +80,43 @@ export class EmployeeComponentComponent implements OnInit {
 
     this.userSubscription = this.store.subscribe(appData => {
 
-      this.componentMessageHandle(messageUtil.getMultiMessage(appData,
+      this.componentMessageHandle(messageUtil.getMultiMessage(appData,        
         [EMPLOYEE_GET_OK, EMPLOYEE_SAVE_SUCCESS, JOBTITLE_GET_OK]));
     });
 
     this.configureEditForm();
   }
 
-  ngAfterViewInit() {
-    this.dispatchIntent(EMPLOYEE_GET);
+  ngAfterViewInit() {    
+
     this.dispatchIntent(JOBTITLE_GET);
+
+    this.dispatchIntent(EMPLOYEE_GET);    
   }
 
-  save() {
-
+  save() {    
+        
     var saveJson = new EmployeeModel();
+  
     if (this.intention == ADD) {
       saveJson = this.personForm.value as EmployeeModel;
+      this.person.jobTitle = this.mapJobToTitle[this.person.jobTitleId];
+    
     }
     else {
 
+      this.person.jobTitle = this.mapJobToTitle[this.person.jobTitleId];
       saveJson.empId = this.person.empId;
       saveJson.empName = this.person.empName;
       saveJson.empIdno = this.person.empIdno;
       saveJson.empAd1 = this.person.empAd1;
       saveJson.empAd2 = this.person.empAd2;
       saveJson.empAd3 = this.person.empAd3;
-      saveJson.jobTitleId = this.person.jobTitleId;
+      saveJson.jobTitleId = this.person.jobTitleId;      
     }
-
+   
     var strJson = JSON.stringify(saveJson);
-    this.dispatchIntent(EMPLOYEE_SAVE, saveJson);
+    this.dispatchIntent(EMPLOYEE_SAVE, saveJson);    
     this.display = false;
   }
 
@@ -126,14 +127,15 @@ export class EmployeeComponentComponent implements OnInit {
       'empName': ['', [Validators.required, Validators.minLength(1)]],
       'empIdno': ['', [Validators.required, Validators.minLength(1)]],
       'empAd1': ['', [Validators.required, Validators.minLength(1)]],
-      'empAd2': ['', [Validators.required, Validators.minLength(1)]],
-      'empAd3': ['', [Validators.required, Validators.minLength(1)]],
-      'jobTitleId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]
+      'empAd2': ['', [Validators.minLength(1)]],
+      'empAd3': ['', [Validators.minLength(1)]],
+      'jobTitleId': ['', [Validators.required, Validators.minLength(1),
+         Validators.min(1)]]
     });
-
   }
 
   private configureAddForm() {
+
     this.setFormValidation('');
 
     for (const field in this.formErrors) {
@@ -180,42 +182,67 @@ export class EmployeeComponentComponent implements OnInit {
     messageAll.map(message => {
 
       if (message && message.type == EMPLOYEE_GET_OK) {
-        this.rows.length = 0;
+
+        this.rows.length = 0;     
+
         for (var userInfo of message.data.data.data) {
-          this.dataList.push({
-            empId: userInfo.empId,
-            empName: userInfo.empName,
-            empIdno: userInfo.empIdno,
-            empAd1: userInfo.empAd1,
-            empAd2: userInfo.empAd2,
-            empAd3: userInfo.empAd3,
-            jobTitleId: userInfo.jobTitleId
-          });
+
+          let model = new EmployeeModel();
+          model = {...userInfo};        
+          this.dataList.push(model);
         }
+        
         this.rows = this.dataList;
       }
 
-      if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {
-        this.display = false;
+      if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {       
+        this.display = false;      
       }
 
       if (message && message.type == JOBTITLE_GET_OK) {
+
         this.jobTitleRows.length = 0;
-        for (var d of message.data.data.data) {
-          console.log(d);
+
+        for (var d of message.data.data.data) {          
           this.jobTitleDataList.push({
             jobTitleId: d.jobTitleId,
             jobTitleName: d.jobTitleName
           });
         }
-
+      
         this.jobTitleRows = this.jobTitleDataList;
+        this.mapJobToTitle(this.jobTitleRows);
       }
     });
+
+    this.rebindJobTitleToRows();
+
   }
 
-  onSelect(evt: any) {
+  rebindJobTitleToRows()
+  {
+    let dataRows = this.rows;
+    if (this.jobListMap && dataRows)
+    {    
+      
+      for (let dataRowItem of dataRows)
+      {
+        dataRowItem.jobTitle = this.jobListMap[dataRowItem.jobTitleId];
+      }
+    }    
+  }
 
+  mapJobToTitle(jobList : Array<JobTitleModel>)
+  {
+    for(let item of jobList)
+    {    
+      this.jobListMap[item.jobTitleId] = item.jobTitleName;
+    }
+   
+  }
+
+  onSelect(evt: any) 
+  {    
     if (evt && evt.selected && evt.selected.length > 0) {
       this.person = evt.selected[0] as EmployeeModel;
       this.itemSelected = true;
@@ -260,5 +287,5 @@ export class EmployeeComponentComponent implements OnInit {
   dispatchIntent(messageType: string, data?: any) {
     messageUtil.dispatchIntent(this.store, messageType, data);
   }
-
+  
 }

@@ -129,7 +129,7 @@
 <div style="clear:both; height:10px"></div>
 
 <div class="container"> 
-  <ngx-datatable class="material striped"
+  <ngx-datatable class="material striped" #myDataTable
   [rows]="rows"
   [limit]="10"
   (select)="person"
@@ -152,11 +152,9 @@
         </ng-template>
     </ngx-datatable-column>
       
-	 <ngx-datatable-column  name="JobTitle" prop="jobTitleId" [width]="200" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+	 <ngx-datatable-column name="JobTitle" prop="jobTitle" [width]="200" [resizeable]="true" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
-					<ng-container *ngFor = "let n of jobTitleRows">
-						<div *ngIf="value===n.jobTitleId">{{n.jobTitleName}}</div>
-				  </ng-container>
+				{{value}}
         </ng-template>
 		</ngx-datatable-column> 
       
