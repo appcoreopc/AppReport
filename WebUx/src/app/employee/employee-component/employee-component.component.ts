@@ -80,28 +80,28 @@ export class EmployeeComponentComponent implements OnInit {
 
     this.userSubscription = this.store.subscribe(appData => {
 
-      this.componentMessageHandle(messageUtil.getMultiMessage(appData,        
+      this.componentMessageHandle(messageUtil.getMultiMessage(appData,
         [EMPLOYEE_GET_OK, EMPLOYEE_SAVE_SUCCESS, JOBTITLE_GET_OK]));
     });
 
     this.configureEditForm();
   }
 
-  ngAfterViewInit() {    
+  ngAfterViewInit() {
 
     this.dispatchIntent(JOBTITLE_GET);
 
-    this.dispatchIntent(EMPLOYEE_GET);    
+    this.dispatchIntent(EMPLOYEE_GET);
   }
 
-  save() {    
-        
+  save() {
+
     var saveJson = new EmployeeModel();
-  
+
     if (this.intention == ADD) {
       saveJson = this.personForm.value as EmployeeModel;
       this.person.jobTitle = this.mapJobToTitle[this.person.jobTitleId];
-    
+
     }
     else {
 
@@ -112,11 +112,11 @@ export class EmployeeComponentComponent implements OnInit {
       saveJson.empAd1 = this.person.empAd1;
       saveJson.empAd2 = this.person.empAd2;
       saveJson.empAd3 = this.person.empAd3;
-      saveJson.jobTitleId = this.person.jobTitleId;      
+      saveJson.jobTitleId = this.person.jobTitleId;
     }
-   
+
     var strJson = JSON.stringify(saveJson);
-    this.dispatchIntent(EMPLOYEE_SAVE, saveJson);    
+    this.dispatchIntent(EMPLOYEE_SAVE, saveJson);
     this.display = false;
   }
 
@@ -130,7 +130,7 @@ export class EmployeeComponentComponent implements OnInit {
       'empAd2': ['', [Validators.minLength(1)]],
       'empAd3': ['', [Validators.minLength(1)]],
       'jobTitleId': ['', [Validators.required, Validators.minLength(1),
-         Validators.min(1)]]
+      Validators.min(1)]]
     });
   }
 
@@ -183,32 +183,32 @@ export class EmployeeComponentComponent implements OnInit {
 
       if (message && message.type == EMPLOYEE_GET_OK) {
 
-        this.rows.length = 0;     
+        this.rows.length = 0;
 
         for (var userInfo of message.data.data.data) {
 
           let model = new EmployeeModel();
-          model = {...userInfo};        
+          model = { ...userInfo };
           this.dataList.push(model);
         }
-        
+
         this.rows = this.dataList;
       }
 
-      if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {       
-        this.display = false;      
+      if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {
+        this.display = false;
       }
 
       if (message && message.type == JOBTITLE_GET_OK) {
 
         this.jobTitleRows.length = 0;
         let jobTitleDataList = [];
-        for (var d of message.data.data.data) {          
+        for (var d of message.data.data.data) {
           jobTitleDataList.push({
             jobTitleId: d.jobTitleId,
             jobTitleName: d.jobTitleName
           });
-        }      
+        }
         this.jobTitleRows = jobTitleDataList;
         this.mapJobToTitle(this.jobTitleRows);
       }
@@ -218,30 +218,24 @@ export class EmployeeComponentComponent implements OnInit {
 
   }
 
-  rebindJobTitleToRows()
-  {
+  rebindJobTitleToRows() {
     let dataRows = this.rows;
-    if (this.jobListMap && dataRows)
-    {    
-      
-      for (let dataRowItem of dataRows)
-      {
+    if (this.jobListMap && dataRows) {
+
+      for (let dataRowItem of dataRows) {
         dataRowItem.jobTitle = this.jobListMap[dataRowItem.jobTitleId];
       }
-    }    
+    }
   }
 
-  mapJobToTitle(jobList : Array<JobTitleModel>)
-  {
-    for(let item of jobList)
-    {    
+  mapJobToTitle(jobList: Array<JobTitleModel>) {
+    for (let item of jobList) {
       this.jobListMap[item.jobTitleId] = item.jobTitleName;
     }
-   
+
   }
 
-  onSelect(evt: any) 
-  {    
+  onSelect(evt: any) {
     if (evt && evt.selected && evt.selected.length > 0) {
       this.person = evt.selected[0] as EmployeeModel;
       this.itemSelected = true;
@@ -286,5 +280,5 @@ export class EmployeeComponentComponent implements OnInit {
   dispatchIntent(messageType: string, data?: any) {
     messageUtil.dispatchIntent(this.store, messageType, data);
   }
-  
+
 }
