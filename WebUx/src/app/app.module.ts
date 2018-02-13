@@ -91,7 +91,7 @@ export const ROUTES: Routes = [
   { path: 'lesen', component  : LesenGudangComponentComponent },
   { path: 'skim', component  : SkimKhasComponentComponent },
   { path: 'login', component  : LoginComponent },
-  { path: '**', component: LoginComponent, canActivate: [AuthGuard]}
+  { path: '**', component: EmployeeComponentComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

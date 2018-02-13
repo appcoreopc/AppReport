@@ -27,7 +27,6 @@ export class EmployeeEffects {
   @Effect() citySave$ = this.actions$
     .ofType(EMPLOYEE_SAVE)
     .map(action => {
-      console.log("save action", action);
       return JSON.stringify(action.data);
     }).switchMap(payload => {
       /////////EXTRA CODE /////////////////////////////
@@ -38,18 +37,18 @@ export class EmployeeEffects {
           this.http.post(APPLICATION_HOST + '/employee/save', payload, { headers: headersJson })
             .subscribe(res => {
               messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);
-              //messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
 
             },
             err => {
               if (err && err.status == 201) {
                 messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);
-                //messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+                messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
 
               }
               else {
                 messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_ERR, null);
-                //messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+                messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
               }
             });
         });
@@ -57,7 +56,7 @@ export class EmployeeEffects {
       ///////////EXTRA CODE ENDS ///////////////////////////          
     })
     .concatMap(res => {
-      return Observable.of({ type: EMPLOYEE_SAVE_SUCCESS });
+      return Observable.of({ type: PROGRESS_WAIT_SHOW });
     });
 
 

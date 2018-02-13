@@ -129,8 +129,7 @@ export class EmployeeComponentComponent implements OnInit {
       'empAd1': ['', [Validators.required, Validators.minLength(1)]],
       'empAd2': ['', [Validators.minLength(1)]],
       'empAd3': ['', [Validators.minLength(1)]],
-      'jobTitleId': ['', [Validators.required, Validators.minLength(1),
-      Validators.min(1)]]
+      'jobTitleId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]
     });
   }
 
@@ -141,11 +140,19 @@ export class EmployeeComponentComponent implements OnInit {
     for (const field in this.formErrors) {
       this.formErrors[field] = '';
     }
+
+    this.configureValidationMessage();
   }
 
   private configureEditForm() {
 
     this.setFormValidation(this.person.empId);
+    this.configureValidationMessage();
+    
+  }
+
+  private configureValidationMessage()
+  {
     this.personForm.valueChanges.debounceTime(300)
       .subscribe(data => this.onValueChanged(data));
   }
@@ -247,7 +254,7 @@ export class EmployeeComponentComponent implements OnInit {
   }
 
   addForm() {
-
+    console.log("add form");
     this.formTitle = "New Employee";
     this.display = true;
     this.intention = ADD;
