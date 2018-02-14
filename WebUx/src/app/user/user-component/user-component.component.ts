@@ -10,9 +10,10 @@ import {
   USER_SAVE,
   USER_SAVE_SUCCESS
 } from '../../sharedObjects/sharedMessages';
-import {Subscription} from 'rxjs/Subscription'
+import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
-import {UserModel} from "../../model/UserModel";
+import {FormUtil} from "../../sharedObjects/formUtil";
+import { UserModel } from "../../model/UserModel";
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 import {APPLICATION_HOST} from '../../sharedObjects/applicationSetup';
@@ -199,12 +200,28 @@ export class UserComponentComponent implements OnInit {
     }
   }
 
+  formValidators = {
+    'username' : [Validators.required, Validators.minLength(1),
+      Validators.maxLength(24)],
+    'password' : [Validators.required, Validators.minLength(1),
+    Validators.maxLength(24)]
+  }  
+
   onSelect(evt : any) {
 
     if (evt && evt.selected && evt.selected.length > 0) {
       this.person = evt.selected[0]as UserModel;
+
       this.itemSelected = true;
-      this.edit();
+      let form = new FormUtil(this.person, this.formValidators);
+      let userform = form.createForm(false);
+      this.personForm = userform;
+
+      this.personForm.valueChanges.debounceTime(500)
+      .subscribe(data => this.onValueChanged(data));
+    
+      this.display = true; 
+      //this.edit();
     }
   }
 
