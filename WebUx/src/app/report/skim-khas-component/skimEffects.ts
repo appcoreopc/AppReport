@@ -8,7 +8,8 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import {
   SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS, SKIMKHAS_PRINT,SKIMKHAS_PRINT_OK, 
   SKIMKHAS_MESSAGE_END, SKIMKHAS_SAVE_ERR, SKIMKHAS_CANCEL_OK, EMPLOYEE_WAIT_PENDING, SKIMKHAS_GET, SKIMKHAS_GET_ERR,
-  SKIMKHAS_GET_OK, CityAppState, CityData, headersJson
+  SKIMKHAS_GET_OK, JOBTITLE_GET, JOBTITLE_GET_OK,
+  CityAppState, CityData, headersJson
 } from '../../sharedObjects/sharedMessages';
 import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
 import 'rxjs/Rx';
@@ -77,5 +78,20 @@ export class SkimKhasEffects {
       })
       .catch(() => Observable.of({ type: SKIMKHAS_SAVE_ERR }))
     );
+
+    @Effect() GrnGetJobTitle$ = this.actions$    
+      .ofType(JOBTITLE_GET)     
+      .map(action => {   
+      console.log('GrnGetJobTitle');
+        JSON.stringify(action);
+      })
+      .switchMap(payload => 
+        
+          this.http.get(APPLICATION_HOST + '/JobTitle/index')  
+          .map(res => {       
+            return { type: JOBTITLE_GET_OK, data: res};
+          }) 
+          .catch(() => Observable.of({ type: SKIMKHAS_GET_ERR }))
+    ); 
 }
 

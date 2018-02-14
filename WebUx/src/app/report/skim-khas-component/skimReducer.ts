@@ -2,6 +2,7 @@ import { ActionReducer, Action } from '@ngrx/store';
 
 import {SKIMKHAS_SAVE, SKIMKHAS_CANCEL, SKIMKHAS_SAVE_SUCCESS, SKIMKHAS_PRINT,SKIMKHAS_PRINT_OK, 
 	 SKIMKHAS_MESSAGE_END, SKIMKHAS_SAVE_ERR, SKIMKHAS_CANCEL_OK, SKIMKHAS_GET, SKIMKHAS_GET_ERR,
+	 JOBTITLE_GET, JOBTITLE_GET_OK,
 	  SKIMKHAS_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 
 export function SkimKhasReducer(status: CityAppState, action: Action) {
@@ -22,6 +23,9 @@ export function SkimKhasReducer(status: CityAppState, action: Action) {
 		case SKIMKHAS_PRINT:
 			console.log(SKIMKHAS_PRINT_OK);
 			return { status : 6, type: SKIMKHAS_PRINT_OK }	
+		case JOBTITLE_GET_OK:
+			console.log(JOBTITLE_GET_OK);
+			return { status : 7, type: JOBTITLE_GET_OK }	
 		default:
 			return status;						
 		}					

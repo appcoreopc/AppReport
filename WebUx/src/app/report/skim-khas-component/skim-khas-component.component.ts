@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CityAppState, ADD, UPDATE, SKIMKHAS_SAVE, SKIMKHAS_GET_OK, SKIMKHAS_GET,
-  SKIMKHAS_SAVE_SUCCESS, EMPLOYEE_GET, EMPLOYEE_GET_OK, CONFIG_GET, CONFIG_GET_OK
+  SKIMKHAS_SAVE_SUCCESS, EMPLOYEE_GET, EMPLOYEE_GET_OK, CONFIG_GET, CONFIG_GET_OK,
+  JOBTITLE_GET_OK, JOBTITLE_GET
 } from '../../sharedObjects/sharedMessages';
 import { RptSkModel } from "../../model/RptSkModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -22,6 +23,7 @@ import { SpinnerModule } from 'primeng/spinner';
 import { DialogModule } from 'primeng/dialog';
 import { RptSkMimpModel } from '../../model/RptSkMimpModel';
 import { Data } from '@angular/router/src/config';
+import { JobTitleModel } from "../../model/JobTitleModel"; 
 
 @Component({
   selector: 'app-skim-khas-component',
@@ -49,12 +51,16 @@ export class SkimKhasComponentComponent implements OnInit {
   display: boolean = false;
   displayEntryForm: boolean = false;
   displayPrintReport: boolean = false;
+  enabledDetailEntry: boolean = false;
+  selectedDetailEntry: boolean = false;
+  tabIndex:number = 0;
   
   formTitle: string = "New GRN";
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
   gridEditRow: RptSkMimpModel = new RptSkMimpModel();
   empDataList: Array<any> = new Array<any>();
   configDataList : Array<any> = new Array<any>(); 
+  jobTitleDataList : Array<any> = new Array<any>(); 
   
   pCalendarEditEntryValue : Date; 
   
@@ -113,6 +119,7 @@ export class SkimKhasComponentComponent implements OnInit {
   rows = [];
   empRows = [];
   configRows = [];
+  jobTitleRows = [];
   
   columns = [
     { prop: 'rptId', name: 'Id' },
@@ -162,6 +169,8 @@ export class SkimKhasComponentComponent implements OnInit {
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, EMPLOYEE_GET_OK), EMPLOYEE_GET_OK));
 
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, CONFIG_GET_OK), CONFIG_GET_OK));
+       
+      this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, JOBTITLE_GET_OK), JOBTITLE_GET_OK));
       
     });
     
@@ -178,6 +187,7 @@ export class SkimKhasComponentComponent implements OnInit {
     this.dispatchIntent(SKIMKHAS_GET); 
     this.dispatchIntent(EMPLOYEE_GET);
     this.dispatchIntent(CONFIG_GET);
+    this.dispatchIntent(JOBTITLE_GET);
   }
   
   save() {
@@ -221,8 +231,7 @@ export class SkimKhasComponentComponent implements OnInit {
       mainFormModel.letterDate = this.data.letterDate;
     }
     
-    var strJson = JSON.stringify(this.data);
-    console.log(strJson);
+    var strJson = JSON.stringify(this.data); 
     this.dispatchIntent(SKIMKHAS_SAVE, strJson);
     this.display = false;
   }
@@ -271,7 +280,8 @@ export class SkimKhasComponentComponent implements OnInit {
         empIdno: '',
         empAd1: '',
         empAd2: '',
-        empAd3: ''
+        empAd3: '',
+        jobTitleId: 0
       });
       
       for (var idx in message.data) {
@@ -282,7 +292,8 @@ export class SkimKhasComponentComponent implements OnInit {
           empIdno: empDataInfo.empIdno,
           empAd1: empDataInfo.empAd1,
           empAd2: empDataInfo.empAd2,
-          empAd3: empDataInfo.empAd3,
+          empAd3: empDataInfo.empAd3, 
+          jobTitleId: empDataInfo.jobTitleId
         });
       }
       
@@ -312,6 +323,20 @@ export class SkimKhasComponentComponent implements OnInit {
 
         this.configRows = configDataList; 
       }   
+      else if (message && message.type == JOBTITLE_GET_OK)
+      {
+        this.jobTitleRows.length = 0;  
+        for (var d of message.data)
+        {    
+          this.jobTitleDataList.push({   
+              jobTitleId : d.jobTitleId,
+              jobTitleName : d.jobTitleName 
+          });
+        }
+        
+
+        this.jobTitleRows = this.jobTitleDataList;
+      } 
   }
   
   private setupAddForm() {
@@ -324,9 +349,7 @@ export class SkimKhasComponentComponent implements OnInit {
 
         
       for (var cRow in this.configRows)
-      {
-        console.log("this.configRows[cRow]",this.configRows[cRow]);
- 
+      { 
         if(this.configRows[cRow].configKey == "LetterRcptAdd1") 
             this.data.lrcptAdd1 = this.configRows[cRow].configData;
         else if(this.configRows[cRow].configKey == "LetterRcptAdd2") 
@@ -349,8 +372,16 @@ export class SkimKhasComponentComponent implements OnInit {
       this.dataForm.get("lrcptDept").setValue(this.data.lrcptDept);
       this.dataForm.get("lrcptBr").setValue(this.data.lrcptBr);
   }
+
   
+   changeTab(index: number): void {
+          this.tabIndex = index;
+   }
+        
   private configureAddForms() {
+    this.enabledDetailEntry = true;
+    this.tabIndex = 0;
+    console.log("configureAddForms");
     
     this.dataForm = this.fb.group({
       'rptId': [],
@@ -372,7 +403,9 @@ export class SkimKhasComponentComponent implements OnInit {
   }
   
   private configureEditForm() {
-    
+    this.enabledDetailEntry = false;
+    this.tabIndex = 0;
+
     this.dataForm = this.fb.group({
       'rptId': [this.data.rptId],
       'rptDate': ['', [Validators.required, Validators.minLength(1)]],
@@ -432,7 +465,6 @@ export class SkimKhasComponentComponent implements OnInit {
     }
     
     dispatchIntent(messageType: string, data?: any) {
-      console.log(messageType);
       
       this.store.dispatch(
         {
@@ -614,6 +646,34 @@ export class SkimKhasComponentComponent implements OnInit {
           
         }
         
+
+        onEmpChange(id){ 
+
+          for (var cRow in this.empRows)
+          { 
+            if(this.empRows[cRow].empId == id){
+              this.data.signedByName = this.empRows[cRow].empName;
+              this.data.signedByIdno = this.empRows[cRow].empIdno;
+
+              for (var jRow in this.jobTitleRows)
+              {
+                if(this.empRows[cRow].jobTitleId == this.jobTitleRows[jRow].jobTitleId)
+                {
+                   this.data.signedByPos = this.jobTitleRows[jRow].jobTitleName;
+                   break; 
+                }
+
+              }
+              
+              break;
+            }
+    
+          }
+
+          this.dataForm.get("signedByName").setValue(this.data.signedByName); 
+          this.dataForm.get("signedByIdno").setValue(this.data.signedByIdno); 
+          this.dataForm.get("signedByPos").setValue(this.data.signedByPos);  
+        }
         
       }
       

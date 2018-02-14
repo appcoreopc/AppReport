@@ -8,9 +8,9 @@
 
 
 
-		<p-tabView>
+		<p-tabView [activeIndex]="tabIndex" >
 
-			<p-tabPanel header="Basic Entry">
+			<p-tabPanel header="Basic Entry" (click)="changeTab(0)">
 
 				<form [formGroup]='dataForm'>
 
@@ -121,7 +121,7 @@
 										<label for="signedByEmpId">Employee :</label>
 									</div>
 									<div class="cell c2345">
-										<select class="form-control" formControlName="signedByEmpId" style="width:300px">
+										<select class="form-control" formControlName="signedByEmpId" style="width:300px" (change)="onEmpChange($event.target.value)">
 											<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
 										</select>
 									</div>
@@ -184,7 +184,7 @@
 
 			</p-tabPanel>
 
-			<p-tabPanel header="Detail Entry">
+			<p-tabPanel header="Detail Entry" [(disabled)]="enabledDetailEntry" (click)="changeTab(0)">
 
 
 				<p-button icon="fa fa-fw fa-save" label="Add new entry" (click)="showEntryForm()">

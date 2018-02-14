@@ -44,62 +44,48 @@ namespace AppReport.Services
         }
 
         public bool Save(RptSkRequestModel requestModel)
-        {
-            if (!requestModel.RptId.HasValue)
+        { 
+            var newData = new RptSk()
             {
-                var newData = new RptSk()
-                {
-                    RefNo = requestModel.RefNo,
-                    RptDate = requestModel.RptDate,
+                RefNo = requestModel.RefNo,
+                RptDate = requestModel.RptDate,
 
-                    LetterDate = requestModel.LetterDate,
-                    LrcptBr = requestModel.LrcptBr,
-                    LrcptDept = requestModel.LrcptDept,
+                LetterDate = requestModel.LetterDate,
+                LrcptBr = requestModel.LrcptBr,
+                LrcptDept = requestModel.LrcptDept,
 
-                    LrcptAdd1 = requestModel.LrcptAdd1,
-                    LrcptAdd2 = requestModel.LrcptAdd2,
-                    LrcptAdd3 = requestModel.LrcptAdd3,
-                    LrcptAdd4 = requestModel.LrcptAdd4,
+                LrcptAdd1 = requestModel.LrcptAdd1,
+                LrcptAdd2 = requestModel.LrcptAdd2,
+                LrcptAdd3 = requestModel.LrcptAdd3,
+                LrcptAdd4 = requestModel.LrcptAdd4,
 
-                    SignedByEmpId = requestModel.SignedByEmpId,
-                    SignedByName = requestModel.SignedByName,
-                    SignedByIdno = requestModel.SignedByIdno,
-                    SignedByPos = requestModel.SignedByPos
-                };
-
-                if (base.Save<RptSk>(newData, null))
-                {
-                    if (requestModel?.RptSkMimp != null)
-                    {
-                        foreach (var item in requestModel.RptSkMimp)
-                        {
-                            var newEntryItem = new RptSkMimp
-                            {
-                                FCustomNo = item.FCustomNo,
-                                FGstcost = item.FGstcost,
-                                FImpCost = item.FImpCost,
-                                FImpDate = item.FImpDate,
-                                FImpWgt = item.FImpWgt,
-                                Note = item.Note,
-                                RptId = newData.RptId,
-                                TxnId = item.TxnId.HasValue ? item.TxnId.Value : 0
-                            };
-
-                            Save<RptSkMimp>(newEntryItem, null);
-                        }                       
-                    }
-                }
-                return base.Save<RptSk>(newData, null);
+                SignedByEmpId = requestModel.SignedByEmpId,
+                SignedByName = requestModel.SignedByName,
+                SignedByIdno = requestModel.SignedByIdno,
+                SignedByPos = requestModel.SignedByPos
+            };
+ 
+            if (requestModel.RptId.HasValue)
+            {
+                newData.RptId = (int)requestModel.RptId;
             }
             else
-            { 
-                var itemDetails = base.FindById<RptSk>(requestModel.RptId.Value);
-
-                if (itemDetails != null)
-                    HandleChildUpdateItems(requestModel.RptSkMimp);
-
-                return base.Save<RptSk>(itemDetails, requestModel.RptId);
+            {
+                newData.RptId = 0;
             }
+
+            var result = (base.Save<RptSk>(newData, requestModel.RptId));
+
+            if (result)
+            {
+                if (requestModel?.RptSkMimp != null)
+                {
+                    HandleChildUpdateItems(requestModel.RptSkMimp);
+                }
+            }
+
+            return result;
+
         }
 
         private void HandleChildUpdateItems(IEnumerable<RptSkMimpModel> requestItemDetails)
