@@ -10,10 +10,10 @@ Purpose : Handle form data binding
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
-export class FormUtil {
+export class FormUtil<T> {
 
     _model : any; 
-    _originalModel : any; 
+    _originalModel : T; 
     _form : FormGroup; 
     _formValidators : any;
         // pass in a model 
@@ -33,14 +33,38 @@ export class FormUtil {
     
     createForm(blankForm : boolean):FormGroup
     {           
-        debugger;
-        this._form = new FormGroup({
-           randomUniqueId: new FormControl()
-         });
-       
-        if (this._model) {
+        let model = { ...this._model};
+    
+        if (model) {
+
+            this.setFormWithModelValue(model, blankForm);
             
-            for (let objPropValue of Object.entries(this._model))
+            // for (let objPropValue of Object.entries(this._model))
+            // {
+            //     let key = objPropValue[0];
+            //     let value = objPropValue[1];   
+            //     if (blankForm)
+            //         this._form.addControl(key, new FormControl('')); 
+            //     else 
+            //     {
+            //         let controlValidators = this._formValidators[key];
+            //         if (controlValidators)
+            //         this._form.addControl(key, new FormControl(value, controlValidators)); 
+            //     }
+            // }   
+        }
+
+        return this._form;
+    }
+
+    private setFormWithModelValue(model : T, blankForm? : boolean)
+    {
+
+        this._form = new FormGroup({
+            randomUniqueId: new FormControl()
+          });
+    
+        for (let objPropValue of Object.entries(model))
             {
                 let key = objPropValue[0];
                 let value = objPropValue[1];   
@@ -52,19 +76,18 @@ export class FormUtil {
                     if (controlValidators)
                     this._form.addControl(key, new FormControl(value, controlValidators)); 
                 }
-            }   
-        }
+            }
 
-        return this._form;
     }
 
-    commit():any {
-
-        return this._form.value;
+    commit():T {
+        return this._form.value as T;
     }
 
-    cancel():any
+    rollback():T
     {
+        this._model = this._originalModel;
+        this.setFormWithModelValue(this._originalModel, false);
         return this._originalModel;
     }
 }
