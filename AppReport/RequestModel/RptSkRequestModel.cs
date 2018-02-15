@@ -36,6 +36,7 @@ namespace AppReport.RequestModel
         public DateTime? SignedDate { get; set; }
         public decimal? FImpCost { get; set; }
         public decimal? FGstcost { get; set; }
+        public int? SignedByEmpIdImp { get; set; }
         public string SignedByNameImp { get; set; }
         public string SignedByIdnoImp { get; set; }
         public string SignedByPosImp { get; set; }

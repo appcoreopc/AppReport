@@ -7,7 +7,6 @@ namespace AppReport.PTSDataModel
     {
         public int TxnId { get; set; }
         public int? RptId { get; set; }
-        public int? RptY { get; set; }
         public string StkDesc { get; set; }
         public string TariffCode { get; set; }
         public int? Qty { get; set; }

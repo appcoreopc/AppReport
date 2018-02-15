@@ -33,6 +33,7 @@ export class RptSkModel {
  signedDate : string;
  fImpCost : number;
  fGstcost : number;
+ signedByEmpIdImp : number;
  signedByNameImp : string;
  signedByIdnoImp : string;
  signedByPosImp : string; 

@@ -62,7 +62,12 @@ namespace AppReport.Services
                 SignedByEmpId = requestModel.SignedByEmpId,
                 SignedByName = requestModel.SignedByName,
                 SignedByIdno = requestModel.SignedByIdno,
-                SignedByPos = requestModel.SignedByPos
+                SignedByPos = requestModel.SignedByPos,
+
+                SignedByEmpIdImp = requestModel.SignedByEmpIdImp,
+                SignedByNameImp = requestModel.SignedByNameImp,
+                SignedByIdnoImp = requestModel.SignedByIdnoImp,
+                SignedByPosImp = requestModel.SignedByPosImp
             };
  
             if (requestModel.RptId.HasValue)

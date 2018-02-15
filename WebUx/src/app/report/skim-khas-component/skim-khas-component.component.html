@@ -26,6 +26,9 @@
 									</div>
 									<div class="cell c2">
 										<input id="refNo" type="text" class="form-control text-control" formControlName="refNo" />
+										 <div *ngIf="formErrors.refNo" class="alert alert-danger">
+											{{ formErrors.refNo }}
+										</div>
 									</div>
 									<div class="cell c3">
 									</div>
@@ -61,7 +64,7 @@
 
 
 								<div class="form-group row" style="padding-top:20px">
-									<b>Recipient</b>
+								<label  class="label label-success" style="font-size:13px">Recipient</label>
 								</div>
 								<div class="form-group row">
 									<div class="cell c1">
@@ -69,6 +72,9 @@
 									</div>
 									<div class="cell c2345">
 										<input id="LRcptDept" type="text" class="form-control text-control" formControlName="lrcptDept" />
+										<div *ngIf="formErrors.lrcptDept" class="alert alert-danger">
+											{{ formErrors.lrcptDept }}
+										</div>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -77,6 +83,9 @@
 									</div>
 									<div class="cell c2345">
 										<input id="LRcptBr" type="text" class="form-control text-control" formControlName="lrcptBr" />
+										<div *ngIf="formErrors.lrcptBr" class="alert alert-danger">
+											{{ formErrors.lrcptBr }}
+										</div>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -85,6 +94,9 @@
 									</div>
 									<div class="cell c2345">
 										<input id="LRcptAdd1" type="text" class="form-control text-control" formControlName="lrcptAdd1" />
+										<div *ngIf="formErrors.lrcptAdd1" class="alert alert-danger">
+											{{ formErrors.lrcptAdd1 }}
+										</div>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -93,6 +105,9 @@
 									</div>
 									<div class="cell c2345">
 										<input id="LRcptAdd2" type="text" class="form-control text-control" formControlName="lrcptAdd2" />
+										<div *ngIf="formErrors.lrcptAdd2" class="alert alert-danger">
+											{{ formErrors.lrcptAdd2 }}
+										</div>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -101,6 +116,9 @@
 									</div>
 									<div class="cell c2345">
 										<input id="LRcptAdd3" type="text" class="form-control text-control" formControlName="lrcptAdd3" />
+										<div *ngIf="formErrors.lrcptAdd3" class="alert alert-danger">
+											{{ formErrors.lrcptAdd3 }}
+										</div>
 									</div>
 								</div>
 								<div class="form-group row">
@@ -109,12 +127,14 @@
 									</div>
 									<div class="cell c2345">
 										<input id="LRcptAdd4" type="text" class="form-control text-control" formControlName="lrcptAdd4" />
+										<div *ngIf="formErrors.lrcptAdd4" class="alert alert-danger">
+											{{ formErrors.lrcptAdd4 }}
+										</div>
 									</div>
 								</div>
 
-
-								<div class="form-group row" style="padding-top:20px">
-									<b>Signed By</b>
+								<div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Letter Signed By</label>
 								</div>
 								<div class="form-group row">
 									<div class="cell c1">
@@ -132,17 +152,23 @@
 									</div>
 									<div class="cell c2345">
 										<input id="SignedByName" type="text" class="form-control text-control" formControlName="signedByName" />
+										<div *ngIf="formErrors.signedByName" class="alert alert-danger">
+											{{ formErrors.signedByName }}
+										</div>
 									</div>
 								</div>
 
 
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="icno">IC
+										<label for="signedByIdno">IC
 											<Noscript></Noscript> :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="icno" type="text" class="form-control text-control" formControlName="signedByIdno" />
+										<input id="signedByIdno" type="text" class="form-control text-control" formControlName="signedByIdno" />
+										<div *ngIf="formErrors.signedByIdno" class="alert alert-danger">
+											{{ formErrors.signedByIdno }}
+										</div>
 									</div>
 								</div>
 
@@ -152,11 +178,64 @@
 									</div>
 									<div class="cell c2345">
 										<input id="SignedByPos" type="text" class="form-control text-control" formControlName="signedByPos" />
+										<div *ngIf="formErrors.signedByPos" class="alert alert-danger">
+											{{ formErrors.signedByPos }}
+										</div>
 									</div>
 								</div>
+
+								<div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Report Signed By</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="signedByEmpIdImp">Employee :</label>
+									</div>
+									<div class="cell c2345">
+										<select class="form-control" formControlName="signedByEmpIdImp" style="width:300px" (change)="onEmpImpChange($event.target.value)">
+											<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="signedByNameImp">Name :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="signedByNameImp" type="text" class="form-control text-control" formControlName="signedByNameImp" />
+										<div *ngIf="formErrors.signedByNameImp" class="alert alert-danger">
+											{{ formErrors.signedByNameImp }}
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="signedByIdnoImp">IC
+											<Noscript></Noscript> :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="signedByIdnoImp" type="text" class="form-control text-control" formControlName="signedByIdnoImp" />
+										<div *ngIf="formErrors.signedByIdnoImp" class="alert alert-danger">
+											{{ formErrors.signedByIdnoImp }}
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="signedByPosImp">Position :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="signedByPosImp" type="text" class="form-control text-control" formControlName="signedByPosImp" />
+										<div *ngIf="formErrors.signedByPosImp" class="alert alert-danger">
+											{{ formErrors.signedByPosImp }}
+										</div>
+									</div>
+								</div>
+ 
 							</div>
-
-
 
 						</div>
 
@@ -169,7 +248,7 @@
 							</div>
 							<div class="cell c4">
 							</div>
-							<div class="cell c5">
+							<div class="cell c5" style="text-align:right">
 
 								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>
 							</div>
@@ -184,40 +263,45 @@
 
 			</p-tabPanel>
 
-			<p-tabPanel header="Detail Entry" [(disabled)]="enabledDetailEntry" (click)="changeTab(0)">
+			<p-tabPanel header="Detail Entry" (click)="changeTab(0)">
 
 
-				<p-button icon="fa fa-fw fa-save" label="Add new entry" (click)="showEntryForm()">
+				<p-button icon="fa fa-fw fa-save"  label="Add new entry" style="display:none" (click)="showEntryForm()">
 				</p-button>
 
 				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" [columns]="dataEntryColumns" [value]="data.rptSkMimp" selectionMode="single"
 				 [paginator]="true" [rows]="10" dataKey="txnId">
-
+ 
 					<ng-template pTemplate="header" let-dataEntryColumns>
-						<tr>
+						<tr [pSelectableRow]="rowData">
 							<th style="width: 2.25em"></th>
-							<th *ngFor="let col of dataEntryColumns">
-								{{col.header}}
-							</th>
+							<th style="text-align:center; width:80px">Bill</th>
+							<th style="text-align:center; width:150px">Tarikh</th>
+							<th style="text-align:center">No Barang Kastam</th>
+							<th style="text-align:center">Kuantiti Import</th>
+							<th style="text-align:center">Nilai Import</th>
+							<th style="text-align:center">GST</th>
+							<th style="text-align:center">Catatan</th>
 						</tr>
-					</ng-template>
+					</ng-template> 
 
-					<ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
+					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
 						<tr [pSelectableRow]="rowData">
 							<td>
 								<div [pRowToggler]="rowData">
 									<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
 								</div>
 							</td>
-
-							<td *ngFor="let col of columns">
-								{{rowData[col.field]}}
-							</td>
+							<td style="width:80px">{{rowData.txnId}}</td>
+							<td style="text-align:center">{{rowData.fImpDate | date: 'dd/MM/yyyy'}}</td> 
+							<td>{{rowData.fCustomNo}}</td> 
+							<td style="text-align:right">{{rowData.fImpWgt | number:'1.2-2'}}</td>
+							<td style="text-align:right">{{rowData.fImpCost | number:'1.2-2'}}</td>
+							<td style="text-align:right">{{rowData.fGstcost | number:'1.2-2'}}</td>
+							<td>{{rowData.note}}</td> 
 						</tr>
-
-					</ng-template>
-
-
+					</ng-template>  
+  
 					<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
 
 						<tr>
@@ -281,8 +365,8 @@
 													</div>
 													<div class="cell c2345">
 
-														<p-button icon="fa fa-fw fa-plus" label="Save" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
-														<p-button icon="fa fa-fw fa-plus" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
+														<p-button icon="fa fa-fw fa-plus" label="Update" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
+														<p-button icon="fa fa-fw fa-close" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
 
 													</div>
 												</div>
@@ -311,9 +395,9 @@
 
 				</div>
 
-				<div class="container">
+				<div class="container" style="text-align:right">
 
-					<p-button icon="fa fa-fw fa-plus" label="Save Skim Khas" (click)="save()"></p-button>
+					<p-button icon="fa fa-fw fa-save" label="Save" (click)="save()"></p-button>
 				</div>
 
 
@@ -350,21 +434,21 @@
   
 	<ng-template pTemplate="header" let-dataEntryColumns>
 			<tr [pSelectableRow]="rowData">
-				<th>Report Id</th>
-				<th>Report Month/Year</th>
-				<th>Reference No</th>
-				<th>Nilai Barang Diimport (RM)</th>
-				<th>Amount GST Digantung (RM)</th>
+				<th style="text-align:center; width:80px">Report Id</th>
+				<th style="text-align:center; width:150px">Report Month/Year</th>
+				<th style="text-align:center">Reference No</th>
+				<th style="text-align:center">Nilai Barang Diimport (RM)</th>
+				<th style="text-align:center">Amount GST Digantung (RM)</th>
 			</tr>
 		</ng-template>
 		
   <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
 		 <tr [pSelectableRow]="rowData">
             <td>{{rowData.rptId}}</td>
-            <td>{{rowData.rptDate | date: 'MMM / yyyy'}}</td> 
+            <td style="text-align:center">{{rowData.rptDate | date: 'MMM / yyyy'}}</td> 
             <td>{{rowData.refNo}}</td> 
-            <td>{{rowData.fImpCost | number:'1.2-2'}}</td>
-            <td>{{rowData.fGstcost | number:'1.2-2'}}</td>
+            <td style="text-align:right">{{rowData.fImpCost | number:'1.2-2'}}</td>
+            <td style="text-align:right">{{rowData.fGstcost | number:'1.2-2'}}</td>
         </tr>
     </ng-template> 
 </p-table>
@@ -467,7 +551,7 @@
 
 <p-dialog id="formPrintReport" header="Print SKIM Khas" [(visible)]="displayPrintReport" modal='true'> 
 	 
-	<a target="_self" class="btn btn-success" role="button" href="http://localhost:5050/rptsk/DownloadLetter/{{data.rptId}}">SKIM Khas Letter</a>
-	&nbsp;
-	<a target="_self" class="btn btn-primary" role="button"  href="http://localhost:5050/rptsk/DownloadReport/{{data.rptId}}">SKIM Khas Report</a>
+	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptsk/DownloadLetter/{{data.rptId}}">SKIM Khas Letter</a>
+	&nbsp; 
+	<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptsk/DownloadReport/{{data.rptId}}">SKIM Khas Report</a>
 </p-dialog>

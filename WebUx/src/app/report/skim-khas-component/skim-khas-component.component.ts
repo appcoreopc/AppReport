@@ -5,6 +5,8 @@ import {
   SKIMKHAS_SAVE_SUCCESS, EMPLOYEE_GET, EMPLOYEE_GET_OK, CONFIG_GET, CONFIG_GET_OK,
   JOBTITLE_GET_OK, JOBTITLE_GET
 } from '../../sharedObjects/sharedMessages';
+import { APPLICATION_HOST
+} from '../../sharedObjects/applicationSetup';
 import { RptSkModel } from "../../model/RptSkModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription'
@@ -53,7 +55,8 @@ export class SkimKhasComponentComponent implements OnInit {
   displayPrintReport: boolean = false;
   enabledDetailEntry: boolean = false;
   selectedDetailEntry: boolean = false;
-  tabIndex:number = 0;
+  tabIndex:number = 0; 
+  applicationHost:string = APPLICATION_HOST;
   
   formTitle: string = "New GRN";
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
@@ -66,8 +69,21 @@ export class SkimKhasComponentComponent implements OnInit {
   
   formErrors = {
     'rptId': '',
+    'refNo': '',
     'rptDate': '',
-    'letterDate': ''
+    'letterDate': '',
+    'lrcptDept': '',
+    'lrcptBr' : '',
+    'lrcptAdd1': '',
+    'lrcptAdd2': '',
+    'lrcptAdd3': '',
+    'lrcptAdd4': '',
+    'signedByName': '',
+    'signedByIdno': '',
+    'signedByPos': '',
+    'signedByNameImp': '',
+    'signedByIdnoImp': '',
+    'signedByPosImp': ''
   };
   
   detailFormError = {
@@ -106,13 +122,52 @@ export class SkimKhasComponentComponent implements OnInit {
   
   itemSelected: boolean = false;
   
-  validationMessages = {
+validationMessages = {
+    'refNo': {
+      'required': 'Reference No is required.'
+    },
     'rptDate': {
       'required': 'Report Month/Year is required.'
     },
     'letterDate': {
       'required': 'Date of Letter is required.'
-    }
+    },
+    'lrcptDept': {
+      'required': 'Department is required.'
+    },
+    'lrcptBr': {
+      'required': 'Branch is required.'
+    },
+    'lrcptAdd1': {
+      'required': 'Address is required.'
+    },
+    'lrcptAdd2': {
+      'required': 'Address is required.'
+    },
+    'lrcptAdd3': {
+      'required': 'Address is required.'
+    },
+    'lrcptAdd4': {
+      'required': 'Address is required.'
+    }, 
+    'signedByName': {
+      'required': 'Name is required.'
+    },
+    'signedByIdno': {
+      'required': 'IC is required.'
+    },
+    'signedByPos': {
+      'required': 'Position is required.'
+    }, 
+    'signedByNameImp': {
+      'required': 'Name is required.'
+    },
+    'signedByIdnoImp': {
+      'required': 'IC is required.'
+    },
+    'signedByPosImp': {
+      'required': 'Position is required.'
+    },
   };
   
   userSubscription: Subscription;
@@ -183,7 +238,7 @@ export class SkimKhasComponentComponent implements OnInit {
   
   
   ngAfterViewInit() {
-    
+    console.log("applicationHost",this.applicationHost);
     this.dispatchIntent(SKIMKHAS_GET); 
     this.dispatchIntent(EMPLOYEE_GET);
     this.dispatchIntent(CONFIG_GET);
@@ -213,6 +268,11 @@ export class SkimKhasComponentComponent implements OnInit {
     this.data.signedByIdno = mainFormModel.signedByIdno;
     this.data.signedByName = mainFormModel.signedByName;
     this.data.signedByPos = mainFormModel.signedByPos;
+    
+    this.data.signedByEmpIdImp = mainFormModel.signedByEmpIdImp;
+    this.data.signedByIdnoImp = mainFormModel.signedByIdnoImp;
+    this.data.signedByNameImp = mainFormModel.signedByNameImp;
+    this.data.signedByPosImp = mainFormModel.signedByPosImp;
     
     // Dates handling     
     this.data.letterDate = util.getTargetDate(new Date(mainFormModel.letterDate));
@@ -259,6 +319,7 @@ export class SkimKhasComponentComponent implements OnInit {
       }
     }
   }
+ 
   
   componentMessageHandle(message: any) {
     
@@ -270,7 +331,7 @@ export class SkimKhasComponentComponent implements OnInit {
         this.dataList.push(dataInfo);
       }
       
-      this.rows = this.dataList;
+      this.rows = this.dataList.sort(function(a,b) {return (a.rptId > b.rptId) ? -1 : ((b.rptId > a.rptId) ? 1 : 0);} ); 
     }
     else if (message && message.type == EMPLOYEE_GET_OK) {
       this.empRows.length = 0;
@@ -394,10 +455,14 @@ export class SkimKhasComponentComponent implements OnInit {
       'lrcptAdd2': ['', [Validators.required, Validators.minLength(1)]],
       'lrcptAdd3': ['', [Validators.required, Validators.minLength(1)]],
       'lrcptAdd4': ['', [Validators.required, Validators.minLength(1)]],
-      'signedByEmpId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
+      'signedByEmpId': [''],
       'signedByPos': ['', [Validators.required, Validators.minLength(1)]],
       'signedByIdno': ['', [Validators.required, Validators.minLength(1)]],
-      'signedByName': ['', [Validators.required, Validators.minLength(1)]]
+      'signedByName': ['', [Validators.required, Validators.minLength(1)]],
+      'signedByEmpIdImp': [''],
+      'signedByPosImp': ['', [Validators.required, Validators.minLength(1)]],
+      'signedByIdnoImp': ['', [Validators.required, Validators.minLength(1)]],
+      'signedByNameImp': ['', [Validators.required, Validators.minLength(1)]]
     });
     
   }
@@ -417,10 +482,14 @@ export class SkimKhasComponentComponent implements OnInit {
       'lrcptAdd2': [this.data.lrcptAdd2, [Validators.required, Validators.minLength(1)]],
       'lrcptAdd3': [this.data.lrcptAdd3, [Validators.required, Validators.minLength(1)]],
       'lrcptAdd4': [this.data.lrcptAdd4, [Validators.required, Validators.minLength(1)]],
-      'signedByEmpId': [this.data.signedByEmpId, [Validators.required, Validators.minLength(1), Validators.min(1)]],
+      'signedByEmpId': [this.data.signedByEmpId],
       'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]],
       'signedByIdno': [this.data.signedByIdno, [Validators.required, Validators.minLength(1)]],
-      'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]]
+      'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]],
+      'signedByEmpIdImp': [this.data.signedByEmpIdImp],
+      'signedByPosImp': [this.data.signedByPosImp, [Validators.required, Validators.minLength(1)]],
+      'signedByIdnoImp': [this.data.signedByIdnoImp, [Validators.required, Validators.minLength(1)]],
+      'signedByNameImp': [this.data.signedByNameImp, [Validators.required, Validators.minLength(1)]]
     });
     
     this.dataForm.valueChanges.debounceTime(300).subscribe(
@@ -433,8 +502,7 @@ export class SkimKhasComponentComponent implements OnInit {
       this.display = true;
       this.intention = ADD;
       
-      this.setupAddForm();
-      
+      this.setupAddForm(); 
       // reinit form entires //
       this.data.rptSkMimp = new Array<RptSkMimpModel>();
       
@@ -446,7 +514,7 @@ export class SkimKhasComponentComponent implements OnInit {
     
     setupMainFormForEdit() {
       
-      this.formTitle = "Edit Report SKIM Khas";
+      this.formTitle = "Edit Report SKIM Khas - " + this.data.rptId;
       this.intention = UPDATE;
       
       this.configureEditForm();
@@ -647,6 +715,36 @@ export class SkimKhasComponentComponent implements OnInit {
         }
         
 
+        onEmpImpChange(id){ 
+
+          for (var cRow in this.empRows)
+          { 
+            if(this.empRows[cRow].empId == id){
+              this.data.signedByNameImp = this.empRows[cRow].empName;
+              this.data.signedByIdnoImp = this.empRows[cRow].empIdno;
+
+              for (var jRow in this.jobTitleRows)
+              {
+                if(this.empRows[cRow].jobTitleId == this.jobTitleRows[jRow].jobTitleId)
+                {
+                   this.data.signedByPosImp = this.jobTitleRows[jRow].jobTitleName;
+                   break; 
+                }
+
+              }
+              
+              break;
+            }
+    
+          }
+ 
+          this.dataForm.get("signedByNameImp").setValue(this.data.signedByNameImp); 
+          this.dataForm.get("signedByIdnoImp").setValue(this.data.signedByIdnoImp); 
+          this.dataForm.get("signedByPosImp").setValue(this.data.signedByPosImp);  
+        }
+        
+       
+
         onEmpChange(id){ 
 
           for (var cRow in this.empRows)
@@ -676,5 +774,8 @@ export class SkimKhasComponentComponent implements OnInit {
         }
         
       }
+
+
+      
       
       

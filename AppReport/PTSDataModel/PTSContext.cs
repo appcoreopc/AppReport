@@ -10,19 +10,21 @@ namespace AppReport.PTSDataModel
         public virtual DbSet<Config> Config { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
-        public virtual DbSet<EmpJobTitle> EmpJobTitle { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Grn> Grn { get; set; }
         public virtual DbSet<JobTitle> JobTitle { get; set; }
         public virtual DbSet<Module> Module { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<Rmaterial> Rmaterial { get; set; }
+        public virtual DbSet<Rmcat> Rmcat { get; set; }
         public virtual DbSet<RptLg> RptLg { get; set; }
         public virtual DbSet<RptLgYbgt> RptLgYbgt { get; set; }
+        public virtual DbSet<RptLgYexp> RptLgYexp { get; set; }
         public virtual DbSet<RptLgYimp> RptLgYimp { get; set; }
         public virtual DbSet<RptLgYrdy> RptLgYrdy { get; set; }
         public virtual DbSet<RptM1> RptM1 { get; set; }
         public virtual DbSet<RptM1Mstk> RptM1Mstk { get; set; }
+        public virtual DbSet<RptM1MstkInv> RptM1MstkInv { get; set; }
         public virtual DbSet<RptSk> RptSk { get; set; }
         public virtual DbSet<RptSkMimp> RptSkMimp { get; set; }
         public virtual DbSet<RptStatus> RptStatus { get; set; }
@@ -31,8 +33,6 @@ namespace AppReport.PTSDataModel
         public virtual DbSet<Uom> Uom { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-
-        // Unable to generate entity type for table 'dbo.RMCat'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -161,7 +161,7 @@ namespace AppReport.PTSDataModel
 
                 entity.Property(e => e.Dom)
                     .HasColumnName("DOM")
-                    .HasColumnType("datetime");
+                    .HasColumnType("date");
 
                 entity.Property(e => e.Dono)
                     .HasColumnName("DONo")
@@ -252,8 +252,6 @@ namespace AppReport.PTSDataModel
 
             modelBuilder.Entity<JobTitle>(entity =>
             {
-                entity.Property(e => e.JobTitleId).ValueGeneratedNever();
-
                 entity.Property(e => e.CreatedDt)
                     .HasColumnName("CreatedDT")
                     .HasColumnType("datetime");
@@ -288,9 +286,7 @@ namespace AppReport.PTSDataModel
 
                 entity.ToTable("RMaterial");
 
-                entity.Property(e => e.Rmid)
-                    .HasColumnName("RMId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Rmid).HasColumnName("RMId");
 
                 entity.Property(e => e.CountryList).HasColumnType("varchar(100)");
 
@@ -321,6 +317,25 @@ namespace AppReport.PTSDataModel
                 entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
 
                 entity.Property(e => e.Uomid).HasColumnName("UOMId");
+            });
+
+            modelBuilder.Entity<Rmcat>(entity =>
+            {
+                entity.ToTable("RMCat");
+
+                entity.Property(e => e.RmcatId).HasColumnName("RMCatId");
+
+                entity.Property(e => e.CreatedDt)
+                    .HasColumnName("CreatedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.EditedDt)
+                    .HasColumnName("EditedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.RmcatName)
+                    .HasColumnName("RMCatName")
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<RptLg>(entity =>
@@ -386,36 +401,6 @@ namespace AppReport.PTSDataModel
 
                 entity.Property(e => e.BrcptDept)
                     .HasColumnName("BRcptDept")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.BsignedByAdd1)
-                    .HasColumnName("BSignedByAdd1")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.BsignedByAdd2)
-                    .HasColumnName("BSignedByAdd2")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.BsignedByAdd3)
-                    .HasColumnName("BSignedByAdd3")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.BsignedByAdd4)
-                    .HasColumnName("BSignedByAdd4")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.BsignedByEmpId).HasColumnName("BSignedByEmpId");
-
-                entity.Property(e => e.BsignedByIdno)
-                    .HasColumnName("BSignedByIDNo")
-                    .HasColumnType("varchar(20)");
-
-                entity.Property(e => e.BsignedByName)
-                    .HasColumnName("BSignedByName")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.BsignedByPos)
-                    .HasColumnName("BSignedByPos")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.CreatedDt)
@@ -505,6 +490,102 @@ namespace AppReport.PTSDataModel
                 entity.Property(e => e.FCoWebsite)
                     .HasColumnName("F_CoWebsite")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.FExpCloseCostY1)
+                    .HasColumnName("F_Exp_CloseCost_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpCloseCostY2)
+                    .HasColumnName("F_Exp_CloseCost_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpCloseQtyY1)
+                    .HasColumnName("F_Exp_CloseQty_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpCloseQtyY2)
+                    .HasColumnName("F_Exp_CloseQty_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpCostY1)
+                    .HasColumnName("F_Exp_Cost_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpCostY2)
+                    .HasColumnName("F_Exp_Cost_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpDamagedCostY1)
+                    .HasColumnName("F_Exp_DamagedCost_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpDamagedCostY2)
+                    .HasColumnName("F_Exp_DamagedCost_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpDamagedQtyY1)
+                    .HasColumnName("F_Exp_DamagedQty_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpDamagedQtyY2)
+                    .HasColumnName("F_Exp_DamagedQty_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpLocSalesCostY1)
+                    .HasColumnName("F_Exp_LocSalesCost_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpLocSalesCostY2)
+                    .HasColumnName("F_Exp_LocSalesCost_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpLocSalesQtyY1)
+                    .HasColumnName("F_Exp_LocSalesQty_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpLocSalesQtyY2)
+                    .HasColumnName("F_Exp_LocSalesQty_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpMadeCostY1)
+                    .HasColumnName("F_Exp_MadeCost_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpMadeCostY2)
+                    .HasColumnName("F_Exp_MadeCost_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpMadeQtyY1)
+                    .HasColumnName("F_Exp_MadeQty_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpMadeQtyY2)
+                    .HasColumnName("F_Exp_MadeQty_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpOpenBalCostY1)
+                    .HasColumnName("F_Exp_OpenBalCost_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpOpenBalCostY2)
+                    .HasColumnName("F_Exp_OpenBalCost_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpOpenBalQtyY1)
+                    .HasColumnName("F_Exp_OpenBalQty_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpOpenBalQtyY2)
+                    .HasColumnName("F_Exp_OpenBalQty_Y2")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpQtyY1)
+                    .HasColumnName("F_Exp_Qty_Y1")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FExpQtyY2)
+                    .HasColumnName("F_Exp_Qty_Y2")
+                    .HasColumnType("decimal");
 
                 entity.Property(e => e.FImpCloseBalCostY1)
                     .HasColumnName("F_Imp_CloseBalCost_Y1")
@@ -602,56 +683,24 @@ namespace AppReport.PTSDataModel
                     .HasColumnName("F_MktExpCost")
                     .HasColumnType("decimal");
 
-                entity.Property(e => e.FRdyCostY1)
-                    .HasColumnName("F_Rdy_Cost_Y1")
+                entity.Property(e => e.FRdyCost)
+                    .HasColumnName("F_Rdy_Cost")
                     .HasColumnType("decimal");
 
-                entity.Property(e => e.FRdyCostY3)
-                    .HasColumnName("F_Rdy_Cost_Y3")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyDutyImpCostY1)
-                    .HasColumnName("F_Rdy_DutyImpCost_Y1")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyDutyImpCostY2)
-                    .HasColumnName("F_Rdy_DutyImpCost_Y2")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyDutyImpCostY3)
-                    .HasColumnName("F_Rdy_DutyImpCost_Y3")
+                entity.Property(e => e.FRdyDutyImpCost)
+                    .HasColumnName("F_Rdy_DutyImpCost")
                     .HasColumnType("decimal");
 
                 entity.Property(e => e.FRdyGoodCost)
                     .HasColumnName("F_RdyGoodCost")
                     .HasColumnType("decimal");
 
-                entity.Property(e => e.FRdyGstcostY1)
-                    .HasColumnName("F_Rdy_GSTCost_Y1")
+                entity.Property(e => e.FRdyGstcost)
+                    .HasColumnName("F_Rdy_GSTCost")
                     .HasColumnType("decimal");
 
-                entity.Property(e => e.FRdyGstcostY2)
-                    .HasColumnName("F_Rdy_GSTCost_Y2")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyGstcostY3)
-                    .HasColumnName("F_Rdy_GSTCost_Y3")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyStkCostY2)
-                    .HasColumnName("F_Rdy_StkCost_Y2")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyTaxCostY1)
-                    .HasColumnName("F_Rdy_TaxCost_Y1")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyTaxCostY2)
-                    .HasColumnName("F_Rdy_TaxCost_Y2")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FRdyTaxCostY3)
-                    .HasColumnName("F_Rdy_TaxCost_Y3")
+                entity.Property(e => e.FRdyTaxCost)
+                    .HasColumnName("F_Rdy_TaxCost")
                     .HasColumnType("decimal");
 
                 entity.Property(e => e.FRmcost)
@@ -667,22 +716,6 @@ namespace AppReport.PTSDataModel
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.LicenseFee).HasColumnType("decimal");
-
-                entity.Property(e => e.LocExpMY1)
-                    .HasColumnName("LocExpM_Y1")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LocExpMY2)
-                    .HasColumnName("LocExpM_Y2")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LocImpMY1)
-                    .HasColumnName("LocImpM_Y1")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LocImpMY2)
-                    .HasColumnName("LocImpM_Y2")
-                    .HasMaxLength(50);
 
                 entity.Property(e => e.LocalSalesRate).HasColumnType("decimal");
 
@@ -780,8 +813,6 @@ namespace AppReport.PTSDataModel
 
                 entity.ToTable("RptLG_YBgt");
 
-                entity.Property(e => e.TxnId).ValueGeneratedNever();
-
                 entity.Property(e => e.FCost)
                     .HasColumnName("F_Cost")
                     .HasColumnType("decimal");
@@ -812,7 +843,7 @@ namespace AppReport.PTSDataModel
 
                 entity.Property(e => e.FRmdesc)
                     .HasColumnName("F_RMDesc")
-                    .HasColumnType("nchar(10)");
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.FTariffCode)
                     .HasColumnName("F_TariffCode")
@@ -827,6 +858,42 @@ namespace AppReport.PTSDataModel
                     .HasMaxLength(10);
 
                 entity.Property(e => e.Rmid).HasColumnName("RMId");
+            });
+
+            modelBuilder.Entity<RptLgYexp>(entity =>
+            {
+                entity.HasKey(e => e.TxnId)
+                    .HasName("PK_ptLG_YExpStk");
+
+                entity.ToTable("RptLG_YExp");
+
+                entity.Property(e => e.CloseBalCost).HasColumnType("decimal");
+
+                entity.Property(e => e.CloseBalQty).HasColumnType("decimal");
+
+                entity.Property(e => e.DamagedCost).HasColumnType("decimal");
+
+                entity.Property(e => e.DamagedQty).HasColumnType("decimal");
+
+                entity.Property(e => e.ExpCost).HasColumnType("decimal");
+
+                entity.Property(e => e.ExpQty).HasColumnType("decimal");
+
+                entity.Property(e => e.LocSalesCost).HasColumnType("decimal");
+
+                entity.Property(e => e.LocSalesQty).HasColumnType("decimal");
+
+                entity.Property(e => e.MadeCost).HasColumnType("decimal");
+
+                entity.Property(e => e.MadeQty).HasColumnType("decimal");
+
+                entity.Property(e => e.OpenBalCost).HasColumnType("decimal");
+
+                entity.Property(e => e.OpenBalQty).HasColumnType("decimal");
+
+                entity.Property(e => e.StkDesc).HasMaxLength(500);
+
+                entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<RptLgYimp>(entity =>
@@ -930,6 +997,22 @@ namespace AppReport.PTSDataModel
                 entity.HasKey(e => e.RptId)
                     .HasName("PK_RptM1_1");
 
+                entity.Property(e => e.AppdByIdno)
+                    .HasColumnName("AppdByIDNo")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.AppdByName).HasMaxLength(50);
+
+                entity.Property(e => e.AppdByPos).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedByIdno)
+                    .HasColumnName("CreatedByIDNo")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.CreatedByName).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedByPos).HasMaxLength(50);
+
                 entity.Property(e => e.CreatedDt)
                     .HasColumnName("CreatedDT")
                     .HasColumnType("datetime");
@@ -948,32 +1031,52 @@ namespace AppReport.PTSDataModel
 
                 entity.Property(e => e.ExpQuota).HasColumnType("decimal");
 
-                entity.Property(e => e.FAppdByIdno)
-                    .HasColumnName("F_AppdByIDNo")
-                    .HasColumnType("varchar(20)");
-
-                entity.Property(e => e.FAppdByName)
-                    .HasColumnName("F_AppdByName")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.FAppdByPos)
-                    .HasColumnName("F_AppdByPos")
-                    .HasMaxLength(50);
-
                 entity.Property(e => e.FCloseBal)
                     .HasColumnName("F_CloseBal")
                     .HasColumnType("decimal");
 
-                entity.Property(e => e.FCreatedByIdno)
-                    .HasColumnName("F_CreatedByIDNo")
+                entity.Property(e => e.FCoAdd1)
+                    .HasColumnName("F_CoAdd1")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoAdd2)
+                    .HasColumnName("F_CoAdd2")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoAdd3)
+                    .HasColumnName("F_CoAdd3")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoAdd4)
+                    .HasColumnName("F_CoAdd4")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FCoEmail)
+                    .HasColumnName("F_CoEmail")
                     .HasColumnType("varchar(20)");
 
-                entity.Property(e => e.FCreatedByName)
-                    .HasColumnName("F_CreatedByName")
+                entity.Property(e => e.FCoFax)
+                    .HasColumnName("F_CoFax")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoLogo)
+                    .HasColumnName("F_CoLogo")
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(e => e.FCoName)
+                    .HasColumnName("F_CoName")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.FCreatedByPos)
-                    .HasColumnName("F_CreatedByPos")
+                entity.Property(e => e.FCoRegNo)
+                    .HasColumnName("F_CoRegNo")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoTel)
+                    .HasColumnName("F_CoTel")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.FCoWebsite)
+                    .HasColumnName("F_CoWebsite")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.FEqTaxLost)
@@ -1003,18 +1106,6 @@ namespace AppReport.PTSDataModel
                 entity.Property(e => e.FRmtaxLost)
                     .HasColumnName("F_RMTaxLost")
                     .HasColumnType("decimal");
-
-                entity.Property(e => e.FSignedByIdno)
-                    .HasColumnName("F_SignedByIDNo")
-                    .HasColumnType("varchar(20)");
-
-                entity.Property(e => e.FSignedByName)
-                    .HasColumnName("F_SignedByName")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.FSignedByPos)
-                    .HasColumnName("F_SignedByPos")
-                    .HasMaxLength(50);
 
                 entity.Property(e => e.FSumDutyExcise)
                     .HasColumnName("F_SumDutyExcise")
@@ -1049,6 +1140,8 @@ namespace AppReport.PTSDataModel
                     .HasColumnType("date");
 
                 entity.Property(e => e.LetterDate).HasColumnType("datetime");
+
+                entity.Property(e => e.LicenseNo).HasColumnType("varchar(50)");
 
                 entity.Property(e => e.LocalSalesQuota).HasColumnType("decimal");
 
@@ -1110,34 +1203,28 @@ namespace AppReport.PTSDataModel
 
                 entity.Property(e => e.SalesLocal).HasColumnType("decimal");
 
+                entity.Property(e => e.SignedByIdno)
+                    .HasColumnName("SignedByIDNo")
+                    .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.SignedByName).HasMaxLength(50);
+
+                entity.Property(e => e.SignedByPos).HasMaxLength(50);
+
                 entity.Property(e => e.SignedDate).HasColumnType("date");
             });
 
             modelBuilder.Entity<RptM1Mstk>(entity =>
             {
-                entity.HasKey(e => e.TxnId)
+                entity.HasKey(e => e.MstkId)
                     .HasName("PK_RptM1Trans");
 
                 entity.ToTable("RptM1_MStk");
 
+                entity.Property(e => e.MstkId).HasColumnName("MStkId");
+
                 entity.Property(e => e.FCloseBal)
                     .HasColumnName("F_CloseBal")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FImpFreightCost)
-                    .HasColumnName("F_ImpFreightCost")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FImpWgt)
-                    .HasColumnName("F_ImpWgt")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FLocFreightCost)
-                    .HasColumnName("F_LocFreightCost")
-                    .HasColumnType("decimal");
-
-                entity.Property(e => e.FLocWgt)
-                    .HasColumnName("F_LocWgt")
                     .HasColumnType("decimal");
 
                 entity.Property(e => e.FOpenBal)
@@ -1164,13 +1251,41 @@ namespace AppReport.PTSDataModel
                     .HasColumnName("F_UOMCode")
                     .HasMaxLength(10);
 
-                entity.Property(e => e.InvoiceNo).HasColumnType("varchar(50)");
-
                 entity.Property(e => e.Rmid).HasColumnName("RMId");
 
                 entity.Property(e => e.UsedCost).HasColumnType("decimal");
 
                 entity.Property(e => e.WastedCost).HasColumnType("decimal");
+            });
+
+            modelBuilder.Entity<RptM1MstkInv>(entity =>
+            {
+                entity.HasKey(e => e.MstkInvId)
+                    .HasName("PK_RptM1_MStkInv");
+
+                entity.ToTable("RptM1_MStkInv");
+
+                entity.Property(e => e.MstkInvId).HasColumnName("MStkInvId");
+
+                entity.Property(e => e.FImpFreightCost)
+                    .HasColumnName("F_ImpFreightCost")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FImpWgt)
+                    .HasColumnName("F_ImpWgt")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FLocFreightCost)
+                    .HasColumnName("F_LocFreightCost")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.FLocWgt)
+                    .HasColumnName("F_LocWgt")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.InvoiceNo).HasColumnType("varchar(50)");
+
+                entity.Property(e => e.MstkId).HasColumnName("MStkId");
             });
 
             modelBuilder.Entity<RptSk>(entity =>
@@ -1278,6 +1393,8 @@ namespace AppReport.PTSDataModel
 
                 entity.Property(e => e.RptDate).HasColumnType("datetime");
 
+                entity.Property(e => e.SignedByEmpIdImp).HasColumnName("SignedByEmpId_Imp");
+
                 entity.Property(e => e.SignedByIdno)
                     .HasColumnName("SignedByIDNo")
                     .HasColumnType("varchar(20)");
@@ -1340,9 +1457,7 @@ namespace AppReport.PTSDataModel
             {
                 entity.ToTable("STNCustom");
 
-                entity.Property(e => e.StncustomId)
-                    .HasColumnName("STNCustomId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.StncustomId).HasColumnName("STNCustomId");
 
                 entity.Property(e => e.CreatedDt)
                     .HasColumnName("CreatedDT")

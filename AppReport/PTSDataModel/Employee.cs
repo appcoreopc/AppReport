@@ -11,6 +11,7 @@ namespace AppReport.PTSDataModel
         public string EmpAd1 { get; set; }
         public string EmpAd2 { get; set; }
         public string EmpAd3 { get; set; }
+        public int? JobTitleId { get; set; }
         public int? CreatedByUserId { get; set; }
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }

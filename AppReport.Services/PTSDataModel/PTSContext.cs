@@ -33,7 +33,12 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<Uom> Uom { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-             
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1388,6 +1393,8 @@ namespace AppReport.DataServices.PTSDataModel
 
                 entity.Property(e => e.RptDate).HasColumnType("datetime");
 
+                entity.Property(e => e.SignedByEmpIdImp).HasColumnName("SignedByEmpId_Imp");
+
                 entity.Property(e => e.SignedByIdno)
                     .HasColumnName("SignedByIDNo")
                     .HasColumnType("varchar(20)");
@@ -1450,9 +1457,7 @@ namespace AppReport.DataServices.PTSDataModel
             {
                 entity.ToTable("STNCustom");
 
-                entity.Property(e => e.StncustomId)
-                    .HasColumnName("STNCustomId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.StncustomId).HasColumnName("STNCustomId");
 
                 entity.Property(e => e.CreatedDt)
                     .HasColumnName("CreatedDT")
