@@ -549,7 +549,7 @@
  
 </p-dialog>
 
-<p-dialog id="formPrintReport" header="Print SKIM Khas" [(visible)]="displayPrintReport" modal='true'> 
+<p-dialog id="formPrintReport" header="Print SKIM Khas - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
 	 
 	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptsk/DownloadLetter/{{data.rptId}}">SKIM Khas Letter</a>
 	&nbsp; 

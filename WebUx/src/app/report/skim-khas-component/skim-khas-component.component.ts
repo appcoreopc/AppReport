@@ -331,7 +331,7 @@ validationMessages = {
         this.dataList.push(dataInfo);
       }
       
-      this.rows = this.dataList.sort(function(a,b) {return (a.rptId > b.rptId) ? -1 : ((b.rptId > a.rptId) ? 1 : 0);} ); 
+      this.rows = this.dataList.sort(function(a,b) {return (a.rptId > b.rptId) ? 1 : ((b.rptId > a.rptId) ? -1 : 0);} ); 
     }
     else if (message && message.type == EMPLOYEE_GET_OK) {
       this.empRows.length = 0;
