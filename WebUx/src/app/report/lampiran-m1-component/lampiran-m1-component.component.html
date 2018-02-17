@@ -1,3 +1,626 @@
-<p>
-  lampiran-m1-component works!
-</p>
+ 
+
+<div class="container">
+
+ 
+
+	<p-dialog id="formAction" header="{{formTitle}}" [(visible)]="display" modal='true'>
+
+
+
+		<p-tabView [activeIndex]="tabIndex" >
+
+			<p-tabPanel header="Basic Entry" (click)="changeTab(0)">
+
+				<form [formGroup]='dataForm'>
+
+					<div style="width:1000px;padding:0px">
+
+						<div class="panel panel-info">
+							<div class="panel-body" style="padding:5px; padding-left:30px">
+
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="refNo">Reference No :</label>
+									</div>
+									<div class="cell c2">
+										<input id="refNo" type="text" class="form-control text-control" formControlName="refNo" />
+										 <div *ngIf="formErrors.refNo" class="alert alert-danger">
+											{{ formErrors.refNo }}
+										</div>
+									</div>
+									<div class="cell c3">
+									</div>
+									<div class="cell c4">
+										<label for="letterDate">Date of Letter :</label>
+									</div>
+									<div class="cell c5">
+										<p-calendar dateFormat="dd/mm/yy" formControlName="letterDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+										<div *ngIf="formErrors.letterDate" class="alert alert-danger">
+											{{ formErrors.letterDate }}
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="rptDate">Report Month/Year :</label>
+									</div>
+									<div class="cell c2">
+										<p-calendar dateFormat="M yy" formControlName="rptDate" showIcon="true"></p-calendar>
+
+										<div *ngIf="formErrors.rptDate" class="alert alert-danger">
+											{{ formErrors.rptDate }}
+										</div>
+									</div>
+									<div class="cell c3">
+									</div>
+									<div class="cell c4">
+									</div>
+									<div class="cell c5">
+									</div>
+								</div>
+
+
+
+								<div class="form-group row" style="padding-top:20px">
+								<label  class="label label-success" style="font-size:13px">Recipient</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="LRcptDept">Department :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="LRcptDept" type="text" class="form-control text-control" formControlName="lrcptDept" />
+										<div *ngIf="formErrors.lrcptDept" class="alert alert-danger">
+											{{ formErrors.lrcptDept }}
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="LRcptBr">Branch :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="LRcptBr" type="text" class="form-control text-control" formControlName="lrcptBr" />
+										<div *ngIf="formErrors.lrcptBr" class="alert alert-danger">
+											{{ formErrors.lrcptBr }}
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="LRcptAdd1">Address :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="LRcptAdd1" type="text" class="form-control text-control" formControlName="lrcptAdd1" />
+										<div *ngIf="formErrors.lrcptAdd1" class="alert alert-danger">
+											{{ formErrors.lrcptAdd1 }}
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="LRcptAdd2"></label>
+									</div>
+									<div class="cell c2345">
+										<input id="LRcptAdd2" type="text" class="form-control text-control" formControlName="lrcptAdd2" />
+										<div *ngIf="formErrors.lrcptAdd2" class="alert alert-danger">
+											{{ formErrors.lrcptAdd2 }}
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="LRcptAdd3"></label>
+									</div>
+									<div class="cell c2345">
+										<input id="LRcptAdd3" type="text" class="form-control text-control" formControlName="lrcptAdd3" />
+										<div *ngIf="formErrors.lrcptAdd3" class="alert alert-danger">
+											{{ formErrors.lrcptAdd3 }}
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="LRcptAdd4"></label>
+									</div>
+									<div class="cell c2345">
+										<input id="LRcptAdd4" type="text" class="form-control text-control" formControlName="lrcptAdd4" />
+										<div *ngIf="formErrors.lrcptAdd4" class="alert alert-danger">
+											{{ formErrors.lrcptAdd4 }}
+										</div>
+									</div>
+                </div>
+                <div style="clear:both; height:20px"></div>
+					<div class="form-group row">
+						<div class="cell c1">
+							<label for="gpbdate">Tempoh Lesen GPB :</label>
+						</div>
+						<div class="cell c2">
+							<p-calendar dateFormat="dd/mm/yy" formControlName="gpbdate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+							<div *ngIf="formErrors.gpbdate" class="alert alert-danger">
+								{{ formErrors.gpbdate }}
+							</div>
+						</div> 
+						<div class="cell c3"> 
+						</div>
+						<div class="cell c4">
+							<label for="licenseNo">License No :</label>
+						</div>
+						<div class="cell c5">
+							<input id="licenseNo" type="text" class="form-control text-control" formControlName="licenseNo" />
+							<div *ngIf="formErrors.licenseNo" class="alert alert-danger">
+								{{ formErrors.licenseNo }}
+							</div>
+						</div>
+					</div>
+
+					
+					<div class="form-group row">
+					</div>
+				 
+								
+								<div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Kuota</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="expQuota">Eksport :</label>
+									</div>
+									<div class="cell c2">
+										<input id="expQuota" type="number" class="form-control text-control" formControlName="expQuota" />
+										<div *ngIf="formErrors.expQuota" class="alert alert-danger">
+											{{ formErrors.expQuota }}
+										</div>
+									</div>
+									<div class="cell c3">
+									</div>
+									<div class="cell c4">
+										<label for="localSalesQuota">Jualan Tempatan :</label>
+									</div>
+									<div class="cell c5">
+										<input id="localSalesQuota" type="number" class="form-control text-control" formControlName="localSalesQuota" />
+										<div *ngIf="formErrors.localSalesQuota" class="alert alert-danger">
+											{{ formErrors.localSalesQuota }}
+										</div>
+									</div>
+                </div>
+                
+                
+								<div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Nilai & Peratusan</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="salesExpCont">Eksport Terus :</label>
+									</div>
+									<div class="cell c2">
+										<input id="salesExpCont" type="number" class="form-control text-control" formControlName="salesExpCont" />
+										<div *ngIf="formErrors.salesExpCont" class="alert alert-danger">
+											{{ formErrors.salesExpCont }}
+										</div>
+									</div>
+									<div class="cell c3">
+									</div>
+									<div class="cell c4">
+										<label for="salesGpb">Jualan ke GPB :</label>
+									</div>
+									<div class="cell c5">
+										<input id="salesGpb" type="number" class="form-control text-control" formControlName="salesGpb" />
+										<div *ngIf="formErrors.salesGpb" class="alert alert-danger">
+											{{ formErrors.salesGpb }}
+										</div>
+									</div>
+                </div>
+                
+                <div class="form-group row">
+									<div class="cell c1">
+										<label for="salesFiz">Jualan ke FIZ :</label>
+									</div>
+									<div class="cell c2">
+										<input id="salesFiz" type="number" class="form-control text-control" formControlName="salesFiz" />
+										<div *ngIf="formErrors.salesFiz" class="alert alert-danger">
+											{{ formErrors.salesFiz }}
+										</div>
+									</div>
+									<div class="cell c3">
+									</div>
+									<div class="cell c4">
+										<label for="salesLocal">Jualan Tempatan :</label>
+									</div>
+									<div class="cell c5">
+										<input id="salesLocal" type="number" class="form-control text-control" formControlName="salesLocal" />
+										<div *ngIf="formErrors.salesLocal" class="alert alert-danger">
+											{{ formErrors.salesLocal }}
+										</div>
+									</div>
+                </div>
+				 
+				
+                 <div style="clear:both; height:20px"></div>
+
+
+								<div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Letter Signed By</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="signedByEmpId">Employee :</label>
+									</div>
+									<div class="cell c2345">
+										<select class="form-control" formControlName="signedByEmpId" style="width:300px" (change)="onEmpChange($event.target.value)">
+											<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="SignedByName">Name :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="SignedByName" type="text" class="form-control text-control" formControlName="signedByName" />
+										<div *ngIf="formErrors.signedByName" class="alert alert-danger">
+											{{ formErrors.signedByName }}
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="signedByIdno">IC
+											<Noscript></Noscript> :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="signedByIdno" type="text" class="form-control text-control" formControlName="signedByIdno" />
+										<div *ngIf="formErrors.signedByIdno" class="alert alert-danger">
+											{{ formErrors.signedByIdno }}
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="SignedByPos">Position :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="SignedByPos" type="text" class="form-control text-control" formControlName="signedByPos" />
+										<div *ngIf="formErrors.signedByPos" class="alert alert-danger">
+											{{ formErrors.signedByPos }}
+										</div>
+									</div>
+								</div>
+ 
+                <div class="form-group row">
+									<div class="cell c1">
+										<label for="signedDate">Signed Date :</label>
+									</div>
+									<div class="cell c2345">
+										<p-calendar dateFormat="dd/mm/yy" formControlName="signedDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+										<div *ngIf="formErrors.signedDate" class="alert alert-danger">
+											{{ formErrors.signedDate }}
+										</div>
+									</div> 
+                </div>
+                
+
+
+                <div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Report Created By</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="createdByEmpId">Employee :</label>
+									</div>
+									<div class="cell c2345">
+										<select class="form-control" formControlName="createdByEmpId" style="width:300px" (change)="onEmpCreatedChange($event.target.value)">
+											<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="createdByName">Name :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="createdByName" type="text" class="form-control text-control" formControlName="createdByName" />
+										<div *ngIf="formErrors.createdByName" class="alert alert-danger">
+											{{ formErrors.createdByName }}
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="createdByIdno">IC
+											<Noscript></Noscript> :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="createdByIdno" type="text" class="form-control text-control" formControlName="createdByIdno" />
+										<div *ngIf="formErrors.createdByIdno" class="alert alert-danger">
+											{{ formErrors.createdByIdno }}
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="createdByPos">Position :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="createdByPos" type="text" class="form-control text-control" formControlName="createdByPos" />
+										<div *ngIf="formErrors.createdByPos" class="alert alert-danger">
+											{{ formErrors.createdByPos }}
+										</div>
+									</div>
+                </div>
+                 
+               <div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Report Approved By</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appdByEmpId">Employee :</label>
+									</div>
+									<div class="cell c2345">
+										<select class="form-control" formControlName="appdByEmpId" style="width:300px" (change)="onEmpAppChange($event.target.value)">
+											<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appdByName">Name :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="appdByName" type="text" class="form-control text-control" formControlName="appdByName" />
+										<div *ngIf="formErrors.appdByName" class="alert alert-danger">
+											{{ formErrors.appdByName }}
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appdByIdno">IC
+											<Noscript></Noscript> :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="appdByIdno" type="text" class="form-control text-control" formControlName="appdByIdno" />
+										<div *ngIf="formErrors.appdByIdno" class="alert alert-danger">
+											{{ formErrors.appdByIdno }}
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appdByPos">Position :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="appdByPos" type="text" class="form-control text-control" formControlName="appdByPos" />
+										<div *ngIf="formErrors.appdByPos" class="alert alert-danger">
+											{{ formErrors.appdByPos }}
+										</div>
+									</div>
+								</div>
+ 
+							</div>
+
+						</div>
+
+						<div class="form-group row">
+							<div class="cell c1">
+							</div>
+							<div class="cell c2">
+							</div>
+							<div class="cell c3">
+							</div>
+							<div class="cell c4">
+							</div>
+							<div class="cell c5" style="text-align:right">
+
+								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>
+							</div>
+						</div>
+
+						<p>Form value: {{ dataForm.value | json }}</p>
+
+					</div>
+
+
+				</form>
+
+			</p-tabPanel>
+
+			<p-tabPanel header="Detail Entry" (click)="changeTab(0)">
+
+
+				<p-button icon="fa fa-fw fa-save"  label="Add new entry" style="display:none" (click)="showEntryForm()">
+				</p-button>
+
+				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" [columns]="dataEntryColumns" [value]="data.rptM1Mstk" selectionMode="single"
+				 [paginator]="true" [rows]="10" dataKey="mstkId">
+ 
+					<ng-template pTemplate="header" let-dataEntryColumns>
+						<tr [pSelectableRow]="rowData">
+							<th style="width: 2.25em"></th>
+							<th style="text-align:center; width:80px">Bil</th>
+							<th style="text-align:center; width:150px">Jenis bahan mentah / komponen</th>
+							<th style="text-align:center">U/M</th>
+							<th style="text-align:center">Tariff kod</th>
+							<th style="text-align:center">Jumlah stok permulaan</th>
+							<th style="text-align:center">Jumlah bahan mentah(4+6+7)</th>
+							<th style="text-align:center">Jumlah bahan mentah yang digunakan</th>
+							<th style="text-align:center">Sisa / rosak</th>
+							<th style="text-align:center">Jumlah stok penutup</th>
+						</tr>
+					</ng-template> 
+ 
+					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
+						<tr [pSelectableRow]="rowData">
+							<td>
+								<div [pRowToggler]="rowData">
+									<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+								</div>
+							</td>
+							<td style="width:80px">{{rowData.mstkId}}</td>  
+							<td>{{rowData.fRmdesc}}</td> 
+							<td>{{rowData.fUomcode}}</td> 
+							<td>{{rowData.fTariffCode}}</td> 
+							<td style="text-align:right">{{rowData.fOpenBal | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.fTotalRm | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.usedCost | number:'1.2-2'}}</td>
+							<td style="text-align:right">{{rowData.wastedCost | number:'1.2-2'}}</td>
+							<td style="text-align:right">{{rowData.fCloseBal | number:'1.2-2'}}</td>
+						</tr>
+					</ng-template>  
+  
+					<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+
+						<tr>
+
+							<form [formGroup]='expandEditForm'>
+
+								<td [attr.colspan]="columns.length + 1">
+
+									<div style="width:1000px;padding:0px">
+										<div class="panel panel-info">
+											<div class="panel-body" style="padding:5px; padding-left:30px">
+ 
+                                                <div class="form-group row">
+													<div class="cell c1">
+														<label for="usedCost">Jumlah bahan mentah yang digunakan</label>
+													</div>
+													<div class="cell c2345">
+														<input id="usedCost" formControlName="usedCost" type="number" class="form-control text-control" />
+													</div>
+												</div>
+                                                <div class="form-group row">
+													<div class="cell c1">
+														<label for="wastedCost">Sisa / Rosak</label>
+													</div>
+													<div class="cell c2345">
+														<input id="wastedCost" formControlName="wastedCost" type="number" class="form-control text-control" />
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<div class="cell c1"> 
+													</div>
+													<div class="cell c2345">
+
+														<p-button icon="fa fa-fw fa-plus" label="Update" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
+														<p-button icon="fa fa-fw fa-close" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+								</td>
+
+							</form>
+
+						</tr>
+
+					</ng-template>
+
+				</p-table>
+
+				<div>
+
+					<div>
+
+						<p>Form value: {{ dataForm.value | json }}</p>
+					</div>
+
+				</div>
+
+				<div class="container" style="text-align:right">
+
+					<p-button icon="fa fa-fw fa-save" label="Save" (click)="save()"></p-button>
+				</div>
+
+
+			</p-tabPanel>
+
+
+
+		</p-tabView>
+
+	</p-dialog>
+
+</div>
+
+  
+<div class="container">
+
+	<div style="text-align:left; float:left"> 
+		<b>REPORT - LAMPIRAN M1</b>
+	</div>
+	<div style="text-align:right; float:right">
+		<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>
+
+		<p-button (onClick)="editForm()" icon="fa fa-fw fa-edit" label="Edit"></p-button>
+
+		<p-button (onClick)="printReport()" icon="fa fa-fw fa-print" label="Print"></p-button>
+	</div> 
+</div>  
+
+
+
+<div style="clear:both; height:10px"></div>
+
+
+<div class="container">
+ 
+ 
+   <p-table [columns]="mainColumns" [value]="rows" selectionMode="single" [paginator]="true" [rows]="10" (onRowSelect)="onRowSelect($event)">
+  
+	<ng-template pTemplate="header" let-dataEntryColumns>
+			<tr [pSelectableRow]="rowData">
+				<th style="text-align:center; width:80px">Report ID</th>
+				<th style="text-align:center; width:150px">Report Month/Year</th>
+				<th style="text-align:center">Reference No</th>
+				<th style="text-align:center">Total Sales</th> 
+			</tr>
+		</ng-template>
+		
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
+		 <tr [pSelectableRow]="rowData">
+            <td>{{rowData.rptId}}</td>
+            <td style="text-align:center">{{rowData.rptDate | date: 'MMM / yyyy'}}</td> 
+            <td>{{rowData.refNo}}</td> 
+            <td style="text-align:right">{{rowData.salesExpCont + rowData.salesGpb + rowData.salesFiz  
+				+ rowData.salesLocal | number:'1.2-2'}}</td> 
+        </tr>
+	</ng-template> 
+	
+</p-table>
+
+</div>
+
+<p-dialog id="formAction" header="{{formTitle}}" [(visible)]="displayDataEntry" modal='true'>
+
+	<form [formGroup]='entryDetailForm'>
+ 
+	</form>
+ 
+</p-dialog>
+
+<p-dialog id="formPrintReport" header="Print LAMPIRAN M1 - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
+	 
+	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptm1/DownloadLetter/{{data.rptId}}">Lampiran M1 (Letter)</a>
+	&nbsp; 
+	<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptm1/DownloadMonthlyReport/{{data.rptId}}">Penyata Bulanan Mentah / Komponen</a>
+	&nbsp; 
+	<a target="_self" class="btn btn-primary" role="button"  
+	href="{{applicationHost}}/rptm1/DownloadMonthlySummary/{{data.rptId}}">Maklumat Cukai Terkoban</a>
+</p-dialog>

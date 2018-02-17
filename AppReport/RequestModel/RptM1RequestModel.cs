@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AppReport.RequestModel
 {
     public class RptM1RequestModel
     {
-        public int RptId { get; set; }
+        public int? RptId { get; set; }
         public int? RptStatusId { get; set; }
         public DateTime? RptDate { get; set; }
         public string RefNo { get; set; }
@@ -73,8 +74,10 @@ namespace AppReport.RequestModel
         public int? CreatedByUserId { get; set; }
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }
-        public DateTime? EditedDt { get; set; }
+        public DateTime? EditedDt { get; set; } 
 
+        public IEnumerable<RptM1MstkModel> RptM1Mstk { get; set; }
+        public IEnumerable<RptM1MstkInvModel> RptM1MstkInv { get; set; }
     }
 }
 

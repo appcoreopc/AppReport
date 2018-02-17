@@ -717,6 +717,10 @@ validationMessages = {
 
         onEmpImpChange(id){ 
 
+          this.data.signedByNameImp = "";
+          this.data.signedByIdnoImp = "";
+          this.data.signedByPosImp = "";
+              
           for (var cRow in this.empRows)
           { 
             if(this.empRows[cRow].empId == id){
@@ -746,6 +750,10 @@ validationMessages = {
        
 
         onEmpChange(id){ 
+
+          this.data.signedByName = "";
+          this.data.signedByIdno = "";
+          this.data.signedByPos = "";
 
           for (var cRow in this.empRows)
           { 

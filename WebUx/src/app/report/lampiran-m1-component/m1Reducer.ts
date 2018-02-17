@@ -1,7 +1,8 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 
-import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS,
+import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS, 
+	JOBTITLE_GET, JOBTITLE_GET_OK, M1LAMPIRAN_PRINT, M1LAMPIRAN_PRINT_OK,
 	 M1LAMPIRAN_MESSAGE_END, M1LAMPIRAN_SAVE_ERR, M1LAMPIRAN_CANCEL_OK, M1LAMPIRAN_GET, M1LAMPIRAN_GET_ERR,
 	  M1LAMPIRAN_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 
@@ -20,6 +21,12 @@ import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS,
 		case M1LAMPIRAN_SAVE_ERR:
 			console.log(M1LAMPIRAN_SAVE_ERR);
 			return  { status : 5, type: M1LAMPIRAN_MESSAGE_END };			
+		case M1LAMPIRAN_PRINT:
+			console.log(M1LAMPIRAN_PRINT_OK);
+			return { status : 6, type: M1LAMPIRAN_PRINT_OK }	
+		case JOBTITLE_GET_OK:
+			console.log(JOBTITLE_GET_OK);
+			return { status : 7, type: JOBTITLE_GET_OK }		
 		default:
 			return status;						
 		}					

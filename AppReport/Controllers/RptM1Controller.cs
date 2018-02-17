@@ -16,10 +16,10 @@ using AppReport.Resources;
 using AppReport.Util;
 using iTextSharp.text.pdf.draw;
 using System.Linq;
+using AppReport.RequestModel;
 
 namespace AppReport.Controllers
-{
-    [Route("api/[controller]")]
+{ 
     public class RptM1Controller : Controller
     { 
         private PTSContext _ptsContext; 
@@ -47,8 +47,8 @@ namespace AppReport.Controllers
             _env = env;
             _ptsContext = ptsContext; 
         }
-         
-        public IActionResult Index(int id)
+
+        /*public IActionResult Index(int id)
         {
             var rptM1 = new RptM1Service(_ptsContext).Get(id);
 
@@ -71,8 +71,89 @@ namespace AppReport.Controllers
             }
 
             return View();
-        }  
-         
+        }*/
+
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var reportItem = new RptM1Service(_ptsContext).GetAllRptInvoices();
+            return new JsonResult(reportItem);
+        }
+
+        [HttpPost]
+        public IActionResult Save([FromBody] RptM1RequestModel request)
+        {
+            if (this.ModelState.IsValid)
+            {
+                if (request != null)
+                {
+                    var result = new RptM1Service(_ptsContext).Save(request);
+                    return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                }
+
+            }
+            return new BadRequestResult();
+        }
+
+
+        [HttpGet]
+        public FileResult Download(string fileName)
+        {
+            string filepath = Path.Combine(AppConstant.ReportFilePath, fileName);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
+            return File(fileBytes, "application/pdf", fileName);
+        }
+
+        [HttpGet]
+        public FileResult DownloadLetter(int id)
+        {
+            var rptM1 = new RptM1Service(_ptsContext).Get(id); 
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptM1 != null)
+            {
+                rpt = PrintLetter(rptM1);
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadMonthlyReport(int id)
+        {
+            var rptM1 = new RptM1Service(_ptsContext).Get(id);
+
+            IEnumerable<RptM1Mstk> rptM1Mstk = new RptM1MstkService(_ptsContext).Get(id);
+            List<RptM1Mstk> rptM1MstkList = (rptM1Mstk != null) ? rptM1Mstk.ToList() : new List<RptM1Mstk>(); 
+
+            IEnumerable<RptM1MstkInv> RptM1MstkInv = new RptM1MstkInvService(_ptsContext).Get(id);
+            List<RptM1MstkInv> RptM1MstkInvList = (RptM1MstkInv != null) ? RptM1MstkInv.ToList() : new List<RptM1MstkInv>();
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptM1 != null)
+            {
+                rpt = PrintMonthlyRpt(rptM1, rptM1MstkList, RptM1MstkInvList);
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadMonthlySummary(int id)
+        {
+            var rptM1 = new RptM1Service(_ptsContext).Get(id);
+             
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptM1 != null)
+            {
+                rpt = PrintMonthlySummary(rptM1);
+            }
+            return Download(rpt);
+        }
+
+
         public class ITextEvents : PdfPageEventHelper
         {
 
@@ -268,9 +349,13 @@ namespace AppReport.Controllers
             }
         }
          
-        private void PrintLetter(RptM1 rptM1)
-        {
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+        private string PrintLetter(RptM1 rptM1)
+        { 
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + "_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
+
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
             {
                 DateTime dtletter = rptM1.LetterDate.HasValue ? (DateTime)rptM1.LetterDate : DateTime.Today; 
                 string strLDate = dtletter.Day.ToString("D" + 2) + "hb " + ResourceHelper.Get(dtletter.ToString("MMMM")) + " " + dtletter.Year.ToString();
@@ -838,11 +923,16 @@ Website: {rptM1.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
          
-        private void PrintMonthlyRpt(RptM1 rptM1, List<RptM1Mstk> rptList, List<RptM1MstkInv> rptInvList)
+        private string PrintMonthlyRpt(RptM1 rptM1, List<RptM1Mstk> rptList, List<RptM1MstkInv> rptInvList)
         {
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Monthly_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + " - Monthly_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
+
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
             {
                 Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 40f, 10f);
                 //doc.SetMargins(0f, 0f, 10f, 10f);
@@ -1433,11 +1523,16 @@ Website: {rptM1.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
          
-        private void PrintMonthlySummary(RptM1 rptM1)
+        private string PrintMonthlySummary(RptM1 rptM1)
         {
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Summary"  + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + " - Summary_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
+
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
             {
                 Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 40f, 20f);
                 doc.AddAuthor(AppConstant.ReportAuthor);
@@ -1617,7 +1712,7 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.RmdutyExcise), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.RmdutyExcise
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -1637,35 +1732,35 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.PurchEq), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}" ,"NIL"), f11)); //rptM1.PurchEq
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.EqDutyImp), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.EqDutyImp
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.EqGst), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.EqGst
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.EqDutyExcise), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.EqDutyExcise
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.FEqTaxLost), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.FEqTaxLost
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -1679,7 +1774,7 @@ Website: {rptM1.FCoWebsite}", f2));
                     t1b.AddCell(cell);
 
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.PurchEq + rptM1.PurchRm), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}",  rptM1.PurchRm), f11)); //rptM1.PurchEq +
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -1700,7 +1795,7 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.FSumDutyExcise), f11));
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.FSumDutyExcise
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -1722,7 +1817,7 @@ Website: {rptM1.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
-        }
-
+            return rptName;
+        } 
     }
 }

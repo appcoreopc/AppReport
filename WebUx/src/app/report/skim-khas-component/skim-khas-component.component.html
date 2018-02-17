@@ -25,7 +25,7 @@
 										<label for="refNo">Reference No :</label>
 									</div>
 									<div class="cell c2">
-										<input id="refNo" type="text" class="form-control text-control" formControlName="refNo" />
+										<input id="refNo" type="text" maxlength="50" class="form-control text-control" formControlName="refNo" />
 										 <div *ngIf="formErrors.refNo" class="alert alert-danger">
 											{{ formErrors.refNo }}
 										</div>
@@ -71,7 +71,7 @@
 										<label for="LRcptDept">Department :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptDept" type="text" class="form-control text-control" formControlName="lrcptDept" />
+										<input id="LRcptDept" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptDept" />
 										<div *ngIf="formErrors.lrcptDept" class="alert alert-danger">
 											{{ formErrors.lrcptDept }}
 										</div>
@@ -82,7 +82,7 @@
 										<label for="LRcptBr">Branch :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptBr" type="text" class="form-control text-control" formControlName="lrcptBr" />
+										<input id="LRcptBr" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptBr" />
 										<div *ngIf="formErrors.lrcptBr" class="alert alert-danger">
 											{{ formErrors.lrcptBr }}
 										</div>
@@ -93,7 +93,7 @@
 										<label for="LRcptAdd1">Address :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd1" type="text" class="form-control text-control" formControlName="lrcptAdd1" />
+										<input id="LRcptAdd1" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd1" />
 										<div *ngIf="formErrors.lrcptAdd1" class="alert alert-danger">
 											{{ formErrors.lrcptAdd1 }}
 										</div>
@@ -104,7 +104,7 @@
 										<label for="LRcptAdd2"></label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd2" type="text" class="form-control text-control" formControlName="lrcptAdd2" />
+										<input id="LRcptAdd2" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd2" />
 										<div *ngIf="formErrors.lrcptAdd2" class="alert alert-danger">
 											{{ formErrors.lrcptAdd2 }}
 										</div>
@@ -115,7 +115,7 @@
 										<label for="LRcptAdd3"></label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd3" type="text" class="form-control text-control" formControlName="lrcptAdd3" />
+										<input id="LRcptAdd3" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd3" />
 										<div *ngIf="formErrors.lrcptAdd3" class="alert alert-danger">
 											{{ formErrors.lrcptAdd3 }}
 										</div>
@@ -126,7 +126,7 @@
 										<label for="LRcptAdd4"></label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd4" type="text" class="form-control text-control" formControlName="lrcptAdd4" />
+										<input id="LRcptAdd4" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd4" />
 										<div *ngIf="formErrors.lrcptAdd4" class="alert alert-danger">
 											{{ formErrors.lrcptAdd4 }}
 										</div>
@@ -151,7 +151,7 @@
 										<label for="SignedByName">Name :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="SignedByName" type="text" class="form-control text-control" formControlName="signedByName" />
+										<input id="SignedByName" type="text" maxlength="50" class="form-control text-control" formControlName="signedByName" />
 										<div *ngIf="formErrors.signedByName" class="alert alert-danger">
 											{{ formErrors.signedByName }}
 										</div>
@@ -165,7 +165,7 @@
 											<Noscript></Noscript> :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="signedByIdno" type="text" class="form-control text-control" formControlName="signedByIdno" />
+										<input id="signedByIdno" type="text" maxlength="20" class="form-control text-control" formControlName="signedByIdno" />
 										<div *ngIf="formErrors.signedByIdno" class="alert alert-danger">
 											{{ formErrors.signedByIdno }}
 										</div>
@@ -177,7 +177,7 @@
 										<label for="SignedByPos">Position :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="SignedByPos" type="text" class="form-control text-control" formControlName="signedByPos" />
+										<input id="SignedByPos" type="text" maxlength="50" class="form-control text-control" formControlName="signedByPos" />
 										<div *ngIf="formErrors.signedByPos" class="alert alert-danger">
 											{{ formErrors.signedByPos }}
 										</div>
@@ -202,7 +202,7 @@
 										<label for="signedByNameImp">Name :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="signedByNameImp" type="text" class="form-control text-control" formControlName="signedByNameImp" />
+										<input id="signedByNameImp" type="text" maxlength="50" class="form-control text-control" formControlName="signedByNameImp" />
 										<div *ngIf="formErrors.signedByNameImp" class="alert alert-danger">
 											{{ formErrors.signedByNameImp }}
 										</div>
@@ -216,7 +216,7 @@
 											<Noscript></Noscript> :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="signedByIdnoImp" type="text" class="form-control text-control" formControlName="signedByIdnoImp" />
+										<input id="signedByIdnoImp" type="text" maxlength="20" class="form-control text-control" formControlName="signedByIdnoImp" />
 										<div *ngIf="formErrors.signedByIdnoImp" class="alert alert-danger">
 											{{ formErrors.signedByIdnoImp }}
 										</div>
@@ -228,7 +228,7 @@
 										<label for="signedByPosImp">Position :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="signedByPosImp" type="text" class="form-control text-control" formControlName="signedByPosImp" />
+										<input id="signedByPosImp" type="text" maxlength="50" class="form-control text-control" formControlName="signedByPosImp" />
 										<div *ngIf="formErrors.signedByPosImp" class="alert alert-danger">
 											{{ formErrors.signedByPosImp }}
 										</div>
@@ -355,7 +355,8 @@
 														<label for="catatan">Catatan</label>
 													</div>
 													<div class="cell c2345">
-														<input id="catatan" type="text" formControlName="note" class="form-control text-control" />
+														<textarea id="catatan" [rows]="5" [cols]="500" maxlength="1000" pInputTextarea autoResize="autoResize" formControlName="note"></textarea>
+													 
 													</div>
 												</div>
 
@@ -411,18 +412,19 @@
 
 </div>
 
-
 <div class="container">
 
-	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>
+	<div style="text-align:left; float:left"> 
+		<b>REPORT - SKIM KHAS</b>
+	</div>
+	<div style="text-align:right; float:right">
+		<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>
 
-	<p-button (onClick)="editForm()" icon="fa fa-fw fa-edit" label="Edit"></p-button>
+		<p-button (onClick)="editForm()" icon="fa fa-fw fa-edit" label="Edit"></p-button>
 
-	<p-button (onClick)="printReport()" icon="fa fa-fw fa-print" label="Print"></p-button>
- 
-</div>
-
-
+		<p-button (onClick)="printReport()" icon="fa fa-fw fa-print" label="Print"></p-button>
+	</div> 
+</div>  
 
 <div style="clear:both; height:10px"></div>
 
@@ -434,7 +436,7 @@
   
 	<ng-template pTemplate="header" let-dataEntryColumns>
 			<tr [pSelectableRow]="rowData">
-				<th style="text-align:center; width:80px">Report Id</th>
+				<th style="text-align:center; width:80px">Report ID</th>
 				<th style="text-align:center; width:150px">Report Month/Year</th>
 				<th style="text-align:center">Reference No</th>
 				<th style="text-align:center">Nilai Barang Diimport (RM)</th>
@@ -551,7 +553,7 @@
 
 <p-dialog id="formPrintReport" header="Print SKIM Khas - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
 	 
-	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptsk/DownloadLetter/{{data.rptId}}">SKIM Khas Letter</a>
+	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptsk/DownloadLetter/{{data.rptId}}">SKIM Khas (Letter)</a>
 	&nbsp; 
-	<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptsk/DownloadReport/{{data.rptId}}">SKIM Khas Report</a>
+	<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptsk/DownloadReport/{{data.rptId}}">Lampiran B</a>
 </p-dialog>
