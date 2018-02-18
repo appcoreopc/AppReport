@@ -63,11 +63,8 @@ export class UserComponentComponent implements OnInit {
   ];
   
   userSubscription : Subscription;
-  
   dataList : Array < any > = new Array < any > ();
-  
   display : boolean = false;
-  
   itemSelected : boolean = false;
   
   constructor(private store : Store < CityAppState >, private fb : FormBuilder, private http : HttpClient) {}
@@ -91,7 +88,7 @@ export class UserComponentComponent implements OnInit {
   
   save() {
     
-    debugger;
+    debugger; 
     
     let data = this.formUtil.commit();
     
@@ -116,7 +113,7 @@ export class UserComponentComponent implements OnInit {
     }
   }
   
-  componentMessageHandle(messageAll : Array < any >) {
+  componentMessageHandle(messageAll : Array <any>) {
     
     messageAll.map(message => {
       
@@ -138,24 +135,14 @@ export class UserComponentComponent implements OnInit {
   }
   
   private configureAddForm() {
-    this.personForm = this
-    .fb
-    .group({
-      'username': [
-        '',
-        [
-          Validators.required, Validators.minLength(1),
-          Validators.maxLength(24)
-        ]
-      ],
-      'password': [
-        '',
-        [
-          Validators.required, Validators.minLength(1),
-          Validators.maxLength(24)
-        ]
-      ]
-    });
+    
+    this.person = new UserModel();
+    this.person.username = '';
+    this.person.password = '';
+
+    this.formUtil = new FormUtil<UserModel>(this.person, this.formValidators);
+    let userform = this.formUtil.createForm(false);
+    this.personForm = userform;
   }
   
   private configureUpdateForm() {
@@ -265,9 +252,11 @@ export class UserComponentComponent implements OnInit {
       }
       
       addForm() {
-        this.display = true;
+        
         this.intention = ADD;
         this.configureAddForm();
+
+        this.display = true;
       }
       
       dispatchIntent(messageType : string, data?: any)
