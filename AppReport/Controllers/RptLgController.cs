@@ -16,10 +16,10 @@ using AppReport.Resources;
 using AppReport.Util;
 using iTextSharp.text.pdf.draw;
 using System.Linq;
+using AppReport.RequestModel;
 
 namespace AppReport.Controllers
-{
-    [Route("api/[controller]")]
+{ 
     public class RptLgController : Controller
     { 
         private PTSContext _ptsContext; 
@@ -45,8 +45,8 @@ namespace AppReport.Controllers
             _env = env;
             _ptsContext = ptsContext; 
         }
-         
-        public IActionResult Index(int id)
+
+        /*public IActionResult Index(int id)
         {
             var rptLg = new RptLgService(_ptsContext).Get(id);
              
@@ -84,8 +84,193 @@ namespace AppReport.Controllers
             }
 
             return View();
-        }  
+        }*/
+
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var reportItem = new RptLgService(_ptsContext).GetAllRptDetails();
+            return new JsonResult(reportItem);
+        }
+
+        [HttpPost]
+        public IActionResult Save([FromBody] RptLgRequestModel request)
+        {
+            if (this.ModelState.IsValid)
+            {
+                if (request != null)
+                {
+                    var result = new RptLgService(_ptsContext).Save(request);
+                    return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                }
+
+            }
+            return new BadRequestResult();
+        }
+
+        [HttpGet]
+        public FileResult Download(string fileName)
+        {
+            string filepath = Path.Combine(AppConstant.ReportFilePath, fileName);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
+            return File(fileBytes, "application/pdf", fileName);
+        }
+
+        [HttpGet]
+        public FileResult DownloadLetter(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintLetter(rptLg);
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadAttachment(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintAttachment(rptLg);
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadImportRptY1(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);  
+            IEnumerable<RptLgYimp> rptLgYimp1 = new RptLgYimpService(_ptsContext).Get(id, (int)rptLg.RptY1);  
+            List<RptLgYimp> rptLgYimp1List = (rptLgYimp1 != null) ? rptLgYimp1.ToList() : new List<RptLgYimp>(); 
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintImportRpt(rptLg, rptLgYimp1List, "Y1");
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadImportRptY2(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id); 
+            IEnumerable<RptLgYimp> rptLgYimp2 = new RptLgYimpService(_ptsContext).Get(id, (int)rptLg.RptY2);  
+            List<RptLgYimp> rptLgYimp2List = (rptLgYimp2 != null) ? rptLgYimp2.ToList() : new List<RptLgYimp>(); 
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintImportRpt(rptLg, rptLgYimp2List, "Y2");
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadExportRptY1(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+            IEnumerable<RptLgYexp> rptLgYexp1 = new RptLgYexpService(_ptsContext).Get(id, (int)rptLg.RptY1); 
+            List<RptLgYexp> rptLgYexp1List = (rptLgYexp1 != null) ? rptLgYexp1.ToList() : new List<RptLgYexp>(); 
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintExportRpt(rptLg, rptLgYexp1List, "Y1");
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadExportRptY2(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+            IEnumerable<RptLgYexp> rptLgYexp2 = new RptLgYexpService(_ptsContext).Get(id, (int)rptLg.RptY2);
+            List<RptLgYexp> rptLgYexp2List = (rptLgYexp2 != null) ? rptLgYexp2.ToList() : new List<RptLgYexp>();
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintExportRpt(rptLg, rptLgYexp2List, "Y2");
+            }
+            return Download(rpt);
+        }
          
+        [HttpGet]
+        public FileResult DownloadLampiranA1(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintLampiran(rptLg, "A1", null, null);
+            }
+            return Download(rpt);
+        }
+         
+        [HttpGet]
+        public FileResult DownloadLampiranA2(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+            IEnumerable<RptLgYbgt> rptLgYbgt1 = new RptLgYbgtService(_ptsContext).Get(id, false); 
+            List<RptLgYbgt> rptLgYbgt1List = (rptLgYbgt1 != null) ? rptLgYbgt1.ToList() : new List<RptLgYbgt>(); 
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintLampiran(rptLg, "A2", rptLgYbgt1List, null);
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadLampiranA21(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+            IEnumerable<RptLgYbgt> rptLgYbgt2 = new RptLgYbgtService(_ptsContext).Get(id, true); 
+            List<RptLgYbgt> rptLgYbgt2List = (rptLgYbgt2 != null) ? rptLgYbgt2.ToList() : new List<RptLgYbgt>();
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintLampiran(rptLg, "A2(1)", rptLgYbgt2List, null);
+            }
+            return Download(rpt);
+        }
+
+        [HttpGet]
+        public FileResult DownloadLampiranA3(int id)
+        {
+            var rptLg = new RptLgService(_ptsContext).Get(id);
+            IEnumerable<RptLgYrdy> rptLgYrdy = new RptLgYrdyService(_ptsContext).Get(id); 
+            List<RptLgYrdy> rptLgYrdyList = (rptLgYrdy != null) ? rptLgYrdy.ToList() : new List<RptLgYrdy>();
+
+            _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string rpt = string.Empty;
+            if (rptLg != null)
+            {
+                rpt = PrintLampiran(rptLg, "A3", null, rptLgYrdyList);
+            }
+            return Download(rpt);
+        }
+
         public class ITextEvents : PdfPageEventHelper
         {
 
@@ -276,10 +461,14 @@ namespace AppReport.Controllers
             }
         }
          
-        private void PrintLetter(RptLg rptLg)
+        private string PrintLetter(RptLg rptLg)
         {
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
-            {
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + "_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
+
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
+            { 
                 DateTime dtletter = rptLg.Ldate.HasValue ? (DateTime)rptLg.Ldate : DateTime.Today;
                 string strLDate = dtletter.ToString("dd-MMM-yyyy");
 
@@ -660,12 +849,17 @@ Website: {rptLg.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
 
-        private void PrintAttachment(RptLg rptLg)
+        private string PrintAttachment(RptLg rptLg)
         {
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Lampiran B _" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
-            {
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + " - Lampiran B _" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
+
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
+            { 
                 DateTime dtletter = rptLg.Ldate.HasValue ? (DateTime)rptLg.Ldate : DateTime.Today;
                 DateTime dtApp = rptLg.AppDate.HasValue ? (DateTime)rptLg.AppDate : DateTime.Today;
                 string strLDate = dtletter.ToString("dd-MMM-yyyy");
@@ -870,7 +1064,7 @@ Website: {rptLg.FCoWebsite}", f2));
                     t4.AddCell(cell);
                      
                     var content = new Chunk(@"Dengan ini memohon pembaharuan lesem untuk menggudang / mengilang di dalam seksyen 
-65/65 A Akta Kastam 1967 bagi mengilang, " + rptLg.MfdGood.ToUpper() + @" bermula dari "
+65/65 A Akta Kastam 1967 bagi mengilang, " + rptLg.MfdGoodY3.ToUpper() + @" bermula dari "
 + Convert.ToDateTime(rptLg.MfdLicenseSdate).Day.ToString("D" + 2) + @" "
 + ResourceHelper.Get(Convert.ToDateTime(rptLg.MfdLicenseSdate).ToString("MMMM")).ToUpper() + @" " + Convert.ToDateTime(rptLg.MfdLicenseSdate).Year.ToString()
 + @" hingga "
@@ -1066,7 +1260,7 @@ Website: {rptLg.FCoWebsite}", f2));
                     cell.PaddingLeft = 30f;
                     cell.Border = PdfCell.NO_BORDER;
                     cell.Colspan = 2;
-                    cell.AddElement(new Paragraph(rptLg.MfdGood, f4));
+                    cell.AddElement(new Paragraph(rptLg.MfdGoodY1, f4));
                     t5.AddCell(cell);
 
                     cell = new PdfPCell();
@@ -1084,7 +1278,7 @@ Website: {rptLg.FCoWebsite}", f2));
                     cell.PaddingLeft = 30f;
                     cell.Border = PdfCell.NO_BORDER;
                     cell.Colspan = 2;
-                    cell.AddElement(new Paragraph(rptLg.MfdGood, f4));
+                    cell.AddElement(new Paragraph(rptLg.MfdGoodY2, f4));
                     t5.AddCell(cell); 
 
                     cell = new PdfPCell();
@@ -1416,11 +1610,12 @@ Website: {rptLg.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
   
-        private void PrintImportRpt(RptLg rptLg, List<RptLgYimp> rptLgYimpList, string rptType)
+        private string PrintImportRpt(RptLg rptLg, List<RptLgYimp> rptLgYimpList, string rptType)
         {
-            var rptName = rptLg.RptY1.ToString() + "-" + rptLg.RptY2.ToString();
+            var rptName1 = rptLg.RptY1.ToString() + "-" + rptLg.RptY2.ToString();
 
             var titlePeriod =  ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptSdateY1).Month).ToString()) + " " + ((DateTime)rptLg.RptSdateY1).Year.ToString()
                 + " HINGGA " + ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptEdateY2).Month).ToString()) + " " + ((DateTime)rptLg.RptEdateY2).Year.ToString();
@@ -1428,12 +1623,16 @@ Website: {rptLg.FCoWebsite}", f2));
 
             if (rptType == "Y1")
             {
-                rptName = rptLg.RptY1.ToString();
+                rptName1 = rptLg.RptY1.ToString();
                 titlePeriod = ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptSdateY1).Month).ToString()) + " " + ((DateTime)rptLg.RptSdateY1).Year.ToString()
                 + " HINGGA " + ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptEdateY1).Month).ToString()) + " " + ((DateTime)rptLg.RptEdateY1).Year.ToString();
             }
 
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Import for " + rptName + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + " - Import for " + rptName1 + "_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
+
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
             { 
                 Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 10f, 10f);
                 //doc.SetMargins(0f, 0f, 10f, 10f);
@@ -1769,11 +1968,12 @@ Website: {rptLg.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
          
-        private void PrintExportRpt(RptLg rptLg, List<RptLgYexp> rptLgYrdyList, string rptType)
+        private string PrintExportRpt(RptLg rptLg, List<RptLgYexp> rptLgYrdyList, string rptType)
         {
-            var rptName = rptLg.RptY1.ToString() + "-" + rptLg.RptY2.ToString();
+            var rptName1 = rptLg.RptY1.ToString() + "-" + rptLg.RptY2.ToString();
 
             var titlePeriod = ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptSdateY2).Month).ToString()) +  
                 " HINGGA " + ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptEdateY2).Month).ToString()) + " tahun " + ((DateTime)rptLg.RptEdateY2).Year.ToString();
@@ -1781,13 +1981,16 @@ Website: {rptLg.FCoWebsite}", f2));
 
             if (rptType == "Y1")
             {
-                rptName = rptLg.RptY1.ToString();
+                rptName1 = rptLg.RptY1.ToString();
                 titlePeriod = ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptSdateY1).Month).ToString()) +  
                 " HINGGA " + ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptEdateY1).Month).ToString()) + " tahun " + ((DateTime)rptLg.RptEdateY1).Year.ToString();
             }
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + " - Eksport for " + rptName1 + "_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
 
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Eksport for " + rptName + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
-            {
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
+            { 
                 Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 10f, 10f);
                 //doc.SetMargins(0f, 0f, 10f, 10f);
                 doc.AddAuthor(AppConstant.ReportAuthor);
@@ -2122,17 +2325,22 @@ Website: {rptLg.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
          
-        private void PrintLampiran(RptLg rptLg, string rptType, List<RptLgYbgt> bgtList, List<RptLgYrdy> rdyList)
+        private string PrintLampiran(RptLg rptLg, string rptType, List<RptLgYbgt> bgtList, List<RptLgYrdy> rdyList)
         { 
             var titlePeriod = ((DateTime)rptLg.RptSdateY3).Day.ToString("D" + 2) + " " + ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptSdateY3).Month).ToString()) +
                 " HINGGA " + ((DateTime)rptLg.RptEdateY3).Day.ToString("D" + 2) + " " +  ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptEdateY3).Month).ToString()) + " " + ((DateTime)rptLg.RptEdateY3).Year.ToString();
 
-              
-            using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Lampiran " + rptType + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+            string rptPath = string.Empty;
+            string rptName = _rptFileName + " - Lampiran " + rptType + "_" + _rptFileDT + ".pdf";
+            rptPath = AppConstant.ReportFilePath + rptName;
+
+            using (Stream outStream = new FileStream(rptPath, FileMode.OpenOrCreate))
             {
-                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 10f, 10f);
+               // using (Stream outStream = new FileStream(AppConstant.ReportFilePath + _rptFileName + " - Lampiran " + rptType + "_" + _rptFileDT + ".pdf", FileMode.OpenOrCreate))
+                 Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 10f, 10f);
                 //doc.SetMargins(0f, 0f, 10f, 10f);
                 doc.AddAuthor(AppConstant.ReportAuthor);
                 doc.AddCreator(AppConstant.ReportCreator);
@@ -2707,6 +2915,7 @@ Website: {rptLg.FCoWebsite}", f2));
                     doc.Close();
                 }
             }
+            return rptName;
         }
          
     }

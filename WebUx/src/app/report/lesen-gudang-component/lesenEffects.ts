@@ -24,7 +24,7 @@ import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
       return JSON.stringify(action.data);
     })
     .switchMap(payload =>   
-      this.http.post(APPLICATION_HOST + '/employee/save', payload, {headers : headersJson})      
+      this.http.post(APPLICATION_HOST + '/rptLg/save', payload, {headers : headersJson})      
     )
     .map(res => ({ type: LESEN_SAVE_SUCCESS, data: res }))
     .catch(() => Observable.of({ type: LESEN_SAVE_ERR }));
@@ -42,7 +42,7 @@ import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
       .map(action => {   
         JSON.stringify(action);
       })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/employee/index')  
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/rptLg/index')  
       .map(res => {       
         return { type: LESEN_GET_OK, data: res};
       }) 

@@ -52,9 +52,11 @@
 
 
 
+
+
 GO
 CREATE TRIGGER [dbo].[RptSK_Insert]
-       ON dbo.RptSK
+       ON [dbo].[RptSK]
 AFTER INSERT, UPDATE
 AS
 BEGIN
@@ -149,15 +151,28 @@ F_CoGSTNo= @F_CoGSTNo
 where RptId = @RptId
 
 if(not exists(select 1 from RptSK_MImp where RptId = @RptId))
+begin
 	insert into RptSK_MImp (RptId, F_ImpDate, F_CustomNo, F_ImpWgt, F_ImpCost, F_GSTCost)
 	select  @RptId, GRNDate, CustomNo, sum(KASWgt), sum(CIF), sum(GST)
 	from GRN with (nolock)
 	where Month(GRNDate) = Month(@RptDate)
 	and Year(GRNDate) = Year(@RptDate)
 	Group By GRNDate, CustomNo
-	order by GRNDate, CustomNo
+	order by GRNDate, CustomNo 
+
+end
 
 
+	declare @SumImpCost as decimal(18,2), 
+	@SumGSTCost as decimal(18,2);
+
+	select @SumImpCost = sum(F_ImpCost), @SumGSTCost = sum(F_GSTCost)
+	from RptSK_MImp with (nolock)
+	where RptId= @RptId
+
+    update RptSK 
+	set F_ImpCost = @SumImpCost, F_GSTCost = @SumGSTCost
+	where RptId= @RptId
 
 
 END

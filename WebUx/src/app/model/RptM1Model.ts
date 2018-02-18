@@ -8,7 +8,7 @@ export class RptM1Model {
   rptDate : string;
   refNo : string;
   letterDate : string;
-  fCoName : string;
+ /* fCoName : string;
   fCoRegNo : string;
   fCoAdd1 : string;
   fCoAdd2 : string;
@@ -18,7 +18,7 @@ export class RptM1Model {
   fCoFax : string;
   fCoEmail : string;
   fCoWebsite : string;
-  fCoLogo : string;
+  fCoLogo : string;*/
   lrcptDept : string;
   lrcptBr : string;
   lrcptAdd1 : string;
@@ -28,7 +28,7 @@ export class RptM1Model {
   expQuota : number;
  localSalesQuota : number;
  gpbdate : string;
- purchRm : number;
+ //purchRm : number;
  purchEq : number;
  salesExpCont : number;
  salesGpb : number;
@@ -40,18 +40,18 @@ export class RptM1Model {
  signedByIdno : string;
  signedDate : string;
  licenseNo : string;
- rmdutyImp : number;
- rmgst : number;
+  //rmdutyImp : number;
+  //rmgst : number;
  rmdutyExcise : number;
- fRmtaxLost : number;
+  //fRmtaxLost : number;
  eqDutyImp : number;
  eqGst : number;
  eqDutyExcise : number;
  fEqTaxLost : number;
- fSumDutyImp : number;
- fSumGst : number;
+  //fSumDutyImp : number;
+  //fSumGst : number;
  fSumDutyExcise : number;
- fSumTaxLost : number;
+  //fSumTaxLost : number;
  createdByEmpId : number;
  createdByPos : string;
  createdByName : string;
@@ -60,7 +60,7 @@ export class RptM1Model {
  appdByPos : string;
  appdByName : string;
  appdByIdno : string;
- fOpenBal : number;
+ /*fOpenBal : number;
  fImpWgt : number;
  fImpFreightCost : number;
  fLocalWgt : number;
@@ -68,7 +68,7 @@ export class RptM1Model {
  fUsedCost : number;
  fWastedCost : number;
  fTotalRm : number;
- fCloseBal : number; 
+ fCloseBal : number; */
 
  rptM1Mstk : RptM1MstkModel[];
  rptM1MstkInv : RptM1MstkInvModel[];

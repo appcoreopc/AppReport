@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppReport.DataServices.PTSDataModel
+namespace AppReport.RequestModel
 {
-    public partial class RptLg
+    public class RptLgRequestModel
     {
-        public int RptId { get; set; }
+        public int? RptId { get; set; }
         public int? RptStatusId { get; set; }
         public string FCoName { get; set; }
         public string FCoRegNo { get; set; }
@@ -151,5 +151,12 @@ namespace AppReport.DataServices.PTSDataModel
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }
         public DateTime? EditedDt { get; set; }
+
+        public IEnumerable<RptLgYbgtModel> RptLgYbgt { get; set; }
+        public IEnumerable<RptLgYexpModel> RptLgYexp { get; set; }
+        public IEnumerable<RptLgYimpModel> RptLgYimp { get; set; }
+        public IEnumerable<RptLgYrdyModel> RptLgYrdy { get; set; }
+
     }
 }
+

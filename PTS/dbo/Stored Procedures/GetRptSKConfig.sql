@@ -4,8 +4,7 @@ CREATE PROCEDURE [dbo].[GetRptSKConfig]
 
  select ConfigKey, ConfigData
  FROM Config 
-  where ModuleId=1
-  and id=3
+  where ModuleId=1 
 
 
 /*

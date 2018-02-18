@@ -34,6 +34,7 @@
     [SignedByPos]           NVARCHAR (50)   NULL,
     [SignedByName]          NVARCHAR (50)   NULL,
     [SignedDate]            DATE            NULL,
+    [AppByEmpId]            INT             NULL,
     [AppByPos]              NVARCHAR (50)   NULL,
     [AppByName]             NVARCHAR (50)   NULL,
     [AppByIDNo]             VARCHAR (20)    NULL,
@@ -54,7 +55,9 @@
     [RptSignedByPos]        NVARCHAR (50)   NULL,
     [RptSignedByIDNo]       VARCHAR (20)    NULL,
     [RptSignedByName]       NVARCHAR (50)   NULL,
-    [MfdGood]               NVARCHAR (MAX)  NULL,
+    [MfdGoodY1]             NVARCHAR (MAX)  NULL,
+    [MfdGoodY2]             NVARCHAR (MAX)  NULL,
+    [MfdGoodY3]             NVARCHAR (MAX)  NULL,
     [MfdLicenseSDate]       DATE            NULL,
     [MfdLicenseEDate]       DATE            NULL,
     [IsChgCoName]           BIT             NULL,
@@ -144,6 +147,10 @@
     [EditedDT]              DATETIME        NULL,
     CONSTRAINT [PK_RptLG_1] PRIMARY KEY CLUSTERED ([RptId] ASC)
 );
+
+
+
+
 
 
 
