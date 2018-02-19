@@ -73,11 +73,9 @@ export class UserComponentComponent implements OnInit {
     
     this.userSubscription = this
     .store
-    .subscribe(appData => {
-      
+    .subscribe(appData => {      
       this.componentMessageHandle(messageUtil.getMultiMessage(appData, [USER_GET_OK, USER_SAVE_SUCCESS]));
-      
-    });
+     });
     
     this.configureUpdateForm();
   }
@@ -87,9 +85,7 @@ export class UserComponentComponent implements OnInit {
   }
   
   save() {
-    
-    debugger; 
-    
+          
     let data = this.formUtil.commit();
     
     if (data)
@@ -178,13 +174,9 @@ export class UserComponentComponent implements OnInit {
       return;
     }
     
-    const form = this.personForm;
-    // this.person.userId = data.userId;
-    //this.person.username = data.username;
-    //this.person.password = data.password;
+    const form = this.personForm;  
     
-    for (const field in this.formErrors) {
-      // clear previous error message (if any)
+    for (const field in this.formErrors) {    
       this.formErrors[field] = '';
       const control = form.get(field);
       
@@ -205,14 +197,11 @@ export class UserComponentComponent implements OnInit {
       }  
       
       onSelect(evt : any) {
-        
-        debugger;
-        
+              
         if (evt && evt.selected && evt.selected.length > 0) {
-          
-          this.person = evt.selected[0] as UserModel;
-          
+                    this.person = evt.selected[0] as UserModel;          
           this.itemSelected = true;
+
           this.formUtil = new FormUtil<UserModel>(this.person, this.formValidators);
           let userform = this.formUtil.createForm(false);
           this.personForm = userform;
@@ -221,7 +210,7 @@ export class UserComponentComponent implements OnInit {
           .subscribe(data => this.onValueChanged(data));
           
           this.display = true; 
-          //this.edit();
+        
         }
       }
       

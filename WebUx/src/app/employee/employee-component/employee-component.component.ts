@@ -11,6 +11,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { DialogModule } from 'primeng/dialog';
+import {FormUtil} from "../../sharedObjects/formUtil";
 
 @Component({
   selector: 'app-employee-component',
@@ -29,7 +30,7 @@ export class EmployeeComponentComponent implements OnInit {
   display: boolean = false;
   formTitle: string = "New Employee";
   dataList: Array<any> = new Array<any>();
-
+  formUtil : FormUtil<EmployeeModel>;
 
   jobListMap = {};
 
@@ -67,7 +68,6 @@ export class EmployeeComponentComponent implements OnInit {
   };
 
   userSubscription: Subscription;
-
   rows = [];
   jobTitleRows = [];
 
@@ -96,29 +96,41 @@ export class EmployeeComponentComponent implements OnInit {
 
   save() {
 
-    var saveJson = new EmployeeModel();
-
+    debugger;     
+    let data = this.formUtil.commit();
+    
     if (this.intention == ADD) {
-      saveJson = this.personForm.value as EmployeeModel;
-      this.person.jobTitle = this.mapJobToTitle[this.person.jobTitleId];
-
+      data.empId = null;   
+      this.person.jobTitle = this.mapJobToTitle[data.jobTitleId];
     }
     else {
-
-      this.person.jobTitle = this.mapJobToTitle[this.person.jobTitleId];
-      saveJson.empId = this.person.empId;
-      saveJson.empName = this.person.empName;
-      saveJson.empIdno = this.person.empIdno;
-      saveJson.empAd1 = this.person.empAd1;
-      saveJson.empAd2 = this.person.empAd2;
-      saveJson.empAd3 = this.person.empAd3;
-      saveJson.jobTitleId = this.person.jobTitleId;
+      this.person.jobTitle = this.mapJobToTitle[data.jobTitleId];
+      data.empId = this.person.empId;    
     }
+    
+    // Updating grid info from reference to this.person 
+    // this is the main reason we are keeping track of it. 
+    this.person.empName = data.empName;
+    this.person.empIdno = data.empIdno;
+    this.person.empAd1 = data.empAd1;
+    this.person.empAd2 = data.empAd2;
+    this.person.empAd3 = data.empAd3;
+    this.person.jobTitleId = data.jobTitleId;
+   
+    this.rows = [...this.rows];
+    this.dispatchIntent(EMPLOYEE_SAVE, data);
 
-    var strJson = JSON.stringify(saveJson);
-    this.dispatchIntent(EMPLOYEE_SAVE, saveJson);
     this.display = false;
   }
+  
+  formValidators = {   
+    'empName': [Validators.required, Validators.minLength(1)],
+    'empIdno': [Validators.required, Validators.minLength(1)],
+    'empAd1': [Validators.required, Validators.minLength(1)],
+    'empAd2': [Validators.minLength(1)],
+    'empAd3': [Validators.minLength(1)],
+    'jobTitleId': [Validators.required, Validators.minLength(1), Validators.min(1)]
+    }
 
   private setFormValidation(id: any) {
 
@@ -133,43 +145,18 @@ export class EmployeeComponentComponent implements OnInit {
     });
   }
 
-  private configureAddForm() {
-
-    this.setFormValidation('');
-
-    for (const field in this.formErrors) {
-      this.formErrors[field] = '';
-    }
-
-    this.configureValidationMessage();
-  }
-
   private configureEditForm() {
-
-    this.setFormValidation(this.person.empId);
-    this.configureValidationMessage();
-    
-  }
-
-  private configureValidationMessage()
-  {
-    this.personForm.valueChanges.debounceTime(300)
-      .subscribe(data => this.onValueChanged(data));
-  }
+    this.setFormValidation(this.person.empId);       
+  } 
 
   onValueChanged(data?: EmployeeModel) {
+
+   debugger;
 
     if (!this.personForm) { return; }
 
     const form = this.personForm;
-    this.person.empId = data.empId;
-    this.person.empName = data.empName;
-    this.person.empIdno = data.empIdno;
-    this.person.empAd1 = data.empAd1;
-    this.person.empAd2 = data.empAd2;
-    this.person.empAd3 = data.empAd3;
-    this.person.jobTitleId = data.jobTitleId;
-
+   
     for (const field in this.formErrors) {
       // clear previous error message (if any)
       this.formErrors[field] = '';
@@ -244,21 +231,32 @@ export class EmployeeComponentComponent implements OnInit {
 
   onSelect(evt: any) {
     if (evt && evt.selected && evt.selected.length > 0) {
-      this.person = evt.selected[0] as EmployeeModel;
+      this.person = evt.selected[0] as EmployeeModel;      
       this.itemSelected = true;
+      this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
+      let form = this.formUtil.createForm(false);
+      this.personForm = form;
+
+      this.personForm.valueChanges.debounceTime(300)
+      .subscribe(data => this.onValueChanged(data));
+
+      this.display = true;
+
     }
     else
       this.itemSelected = false;
-
-    this.edit();
+    
   }
 
   addForm() {
-    console.log("add form");
+    
     this.formTitle = "New Employee";
     this.display = true;
     this.intention = ADD;
-    this.configureAddForm();
+   
+    this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
+    let userform = this.formUtil.createForm(false);
+    this.personForm = userform;
   }
 
   edit() {
