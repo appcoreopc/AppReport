@@ -6,8 +6,9 @@ import { ConfigModel } from "../../model/ConfigModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
-import {DialogModule} from 'primeng/dialog';
-  
+import {DialogModule} from 'primeng/dialog';  
+import {FormUtil} from "../../sharedObjects/formUtil";
+
   @Component({  
     selector: 'app-config-component',
     templateUrl: './config-component.component.html',
@@ -19,12 +20,19 @@ import {DialogModule} from 'primeng/dialog';
     private person: ConfigModel = new ConfigModel(); 
     private personForm: FormGroup;
     private intention : number = UPDATE;
+    private formUtil : FormUtil<ConfigModel>;
     
     display: boolean = false;
     
     formTitle: string = "New Config"; 
     dataList : Array<any> = new Array<any>();  
-    
+
+    formValidators = {
+      'configId': [Validators.minLength(1)],
+      'configKey': [Validators.required, Validators.minLength(1)],
+      'configData': [Validators.required, Validators.minLength(1)] 
+    }  
+             
     formErrors = {
       'configKey': '',
       'configData': ''     
@@ -63,41 +71,42 @@ import {DialogModule} from 'primeng/dialog';
           [ CONFIG_GET_OK, CONFIG_SAVE_SUCCESS]));
         }); 
       
-        this.configureEditForm();
+        this.setFormValidation(0);
       }
       
-      ngAfterViewInit() {            
+      ngAfterViewInit() {   
+
         this.dispatchIntent(CONFIG_GET); 
+
       }
       
       save()
-      {     
-        
-        var saveJson = new ConfigModel();
+      {                     
+        let data = this.formUtil.commit(); 
+
+
         if (this.intention == ADD)
         {
-          saveJson = this.personForm.value as ConfigModel;
+          data.configId = null;          
         }
         else {
+          data.configId = this.person.configId;          
           
-          saveJson.configId = this.person.configId;
-          saveJson.configKey = this.person.configKey;
-          saveJson.configData = this.person.configData; 
+          this.person.configKey = data.configKey;
+          this.person.configData = data.configData;
         }
-        
-        var strJson = JSON.stringify(saveJson);           
-        this.dispatchIntent(CONFIG_SAVE, saveJson);
+                       
+        this.dispatchIntent(CONFIG_SAVE, data);
         this.display = false; 
       } 
-
+  
       private setFormValidation(id :any) {
  
           this.personForm = this.fb.group({ 
                 'configId': [id],
                 'configKey': ['', [Validators.required, Validators.minLength(1)]],
                 'configData': ['', [Validators.required, Validators.minLength(1)]] 
-            }); 
-        
+            });         
       }
             
       private configureAddForm()
@@ -107,23 +116,16 @@ import {DialogModule} from 'primeng/dialog';
         for (const field in this.formErrors) { 
           this.formErrors[field] = ''; 
         } 
-      }
-                
-      private configureEditForm() { 
-       
-        this.setFormValidation(this.person.configId); 
-        this.personForm.valueChanges.debounceTime(300)
-        .subscribe(data => this.onValueChanged(data));
-     }
-
+      }                
+  
         onValueChanged(data?: ConfigModel) {
           
           if (!this.personForm) { return; }              
           
           const form = this.personForm;
-          this.person.configId = data.configId;
-          this.person.configKey = data.configKey;
-          this.person.configData = data.configData;    
+          //this.person.configId = data.configId;
+          //this.person.configKey = data.configKey;
+          //this.person.configData = data.configData;    
           
           for (const field in this.formErrors) {
             // clear previous error message (if any)
@@ -170,12 +172,16 @@ import {DialogModule} from 'primeng/dialog';
           if (evt && evt.selected && evt.selected.length > 0)
           {
             this.person = evt.selected[0] as ConfigModel;                   
-            this.itemSelected = true;   
+            this.itemSelected = true; 
+
+            this.formUtil = new FormUtil<ConfigModel>(this.person, this.formValidators);
+            let userform = this.formUtil.createForm(false);
+            this.personForm = userform;
           }
           else 
           this.itemSelected = false;
           
-            this.edit();
+          this.edit();
         }
         
         addForm() {        
@@ -189,22 +195,15 @@ import {DialogModule} from 'primeng/dialog';
         edit() {  
           
           this.formTitle = "Edit Config"; 
-          this.intention = UPDATE;                            
-          this.configureEditForm();
-          
-          if (this.person)
-          {                                 
-            this.personForm.get("configKey").setValue(this.person.configKey);
-            this.personForm.get("configData").setValue(this.person.configData);
-            this.personForm.get("configId").setValue(this.person.configId);               
-            this.display = true;
-          }       
+          this.intention = UPDATE;  
+          this.display = true;   
         }                          
         
         cancel() 
         {
           this.display = false;     
-          this.itemSelected = false;          
+          this.itemSelected = false;
+          this.person = this.formUtil.rollback();
         }                          
         
         dispatchIntent(messageType : string, data? : any)
