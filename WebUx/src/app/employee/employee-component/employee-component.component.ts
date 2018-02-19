@@ -96,7 +96,6 @@ export class EmployeeComponentComponent implements OnInit {
 
   save() {
 
-    debugger;     
     let data = this.formUtil.commit();
     
     if (this.intention == ADD) {
@@ -132,21 +131,21 @@ export class EmployeeComponentComponent implements OnInit {
     'jobTitleId': [Validators.required, Validators.minLength(1), Validators.min(1)]
     }
 
-  private setFormValidation(id: any) {
-
-    this.personForm = this.fb.group({
-      'empId': [id],
-      'empName': ['', [Validators.required, Validators.minLength(1)]],
-      'empIdno': ['', [Validators.required, Validators.minLength(1)]],
-      'empAd1': ['', [Validators.required, Validators.minLength(1)]],
-      'empAd2': ['', [Validators.minLength(1)]],
-      'empAd3': ['', [Validators.minLength(1)]],
-      'jobTitleId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]
-    });
-  }
 
   private configureEditForm() {
-    this.setFormValidation(this.person.empId);       
+
+    this.person = new EmployeeModel();
+    this.person.empId = -1;
+    this.person.empName = "";
+    this.person.empAd1 = "";
+    this.person.empAd2 = "";
+    this.person.empAd3 = "";
+    this.person.jobTitleId = -1;
+    this.person.empIdno = -1;
+
+    this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
+    let userform = this.formUtil.createForm(true);
+    this.personForm = userform;
   } 
 
   onValueChanged(data?: EmployeeModel) {
@@ -255,37 +254,9 @@ export class EmployeeComponentComponent implements OnInit {
     this.intention = ADD;
 
     this.person = new EmployeeModel();
-    debugger;
-
-    // this.person.empAd1 = '';
-    // this.person.empAd2 = '';
-    // this.person.empAd3 = '';
-    // this.person.empId = null;
-    // this.person.empName = '';
-    // this.person.empIdno = null;
-    // this.person.jobTitleId = null;
-   
     this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
     let userform = this.formUtil.createForm(false);
     this.personForm = userform;
-  }
-
-  edit() {
-
-    this.formTitle = "Edit Employee";
-    this.intention = UPDATE;
-    this.configureEditForm();
-
-    if (this.person) {
-      this.personForm.get("empName").setValue(this.person.empName);
-      this.personForm.get("empIdno").setValue(this.person.empIdno);
-      this.personForm.get("empId").setValue(this.person.empId);
-      this.personForm.get("empAd1").setValue(this.person.empAd1);
-      this.personForm.get("empAd2").setValue(this.person.empAd2);
-      this.personForm.get("empAd3").setValue(this.person.empAd3);
-      this.personForm.get("jobTitleId").setValue(this.person.jobTitleId);
-      this.display = true;
-    }
   }
 
   cancel() {

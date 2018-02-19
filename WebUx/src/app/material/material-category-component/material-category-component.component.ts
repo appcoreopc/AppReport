@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import {FormUtil} from "../../sharedObjects/formUtil";
 
 import { CityAppState, MATERIAL_CATEGORY_GET, 
   MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE, 
@@ -22,6 +23,12 @@ export class MaterialCategoryComponentComponent implements OnInit {
   person: MaterialCategoryModel = new MaterialCategoryModel();
   personForm: FormGroup;
   private intention : number = UPDATE;
+  formUtil : FormUtil<MaterialCategoryModel>;
+
+  formValidators = {   
+    'rmcatId': [Validators.minLength(1)],
+    'rmcatName': [Validators.required, Validators.minLength(1)]
+    }
     
     formErrors = {
       'rmcatId': '',
@@ -94,21 +101,21 @@ export class MaterialCategoryComponentComponent implements OnInit {
         
         save() {    
           
-          var saveJson = new MaterialCategoryModel();
+          let data = this.formUtil.commit();
+          
           if (this.intention == ADD)
           {
-            saveJson = this.personForm.value as MaterialCategoryModel;
+            data.rmcatId = null;
           }
           else {
-            
-            saveJson.rmcatName = this.rmcatModel.rmcatName; 
-            saveJson.rmcatId = this.rmcatModel.rmcatId;        
+            this.rmcatModel.rmcatId = data.rmcatId;
+            this.rmcatModel.rmcatName = data.rmcatName;          
           }
           
-          var strJson = JSON.stringify(saveJson);           
-          this.dispatchIntent(MATERIAL_CATEGORY_SAVE, saveJson);
+          this.rows = [...this.rows];
+
+          this.dispatchIntent(MATERIAL_CATEGORY_SAVE, data);
           this.display = false; 
-          
         }  
         
         private configureAddForm() {
@@ -137,8 +144,8 @@ export class MaterialCategoryComponentComponent implements OnInit {
                   if (!this.personForm) { return; }
                   
                   const form = this.personForm;
-                  this.rmcatModel.rmcatId = data.rmcatId;
-                  this.rmcatModel.rmcatName = data.rmcatName;
+                  //this.rmcatModel.rmcatId = data.rmcatId;
+                  //this.rmcatModel.rmcatName = data.rmcatName;
                   
                   for (const field in this.formErrors) {
                     // clear previous error message (if any)
@@ -172,11 +179,24 @@ export class MaterialCategoryComponentComponent implements OnInit {
                   }            
                   
                   onSelect(evt : any) {
-                    
+          
+                    debugger;
+
                     if (evt && evt.selected && evt.selected.length > 0)
                     {
+
                       this.rmcatModel = evt.selected[0] as MaterialCategoryModel; 
                       this.itemSelected = true;   
+                      
+                      this.formUtil = new FormUtil<MaterialCategoryModel>(this.rmcatModel, 
+                        this.formValidators);
+
+                      let form = this.formUtil.createForm(false);
+                      this.personForm = form;
+
+                  this.personForm.valueChanges.debounceTime(300)
+                  .subscribe(data => this.onValueChanged(data));
+                                  
                     } 
                     else 
                       this.itemSelected = false;
@@ -187,14 +207,9 @@ export class MaterialCategoryComponentComponent implements OnInit {
                   edit() {  
                     this.formTitle = "Edit Material Category"; 
                     this.intention = UPDATE;                            
-                    this.configureUpdateForm();
-                    
-                    if (this.rmcatModel)
-                    {
-                      this.personForm.get("rmcatId").setValue(this.rmcatModel.rmcatId);
-                      this.personForm.get("rmcatName").setValue(this.rmcatModel.rmcatName);         
-                      this.display = true;
-                    }       
+                    // this.configureUpdateForm();
+                    this.display = true;
+                           
                   }
                   
                   cancel() 
