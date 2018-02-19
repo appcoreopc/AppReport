@@ -14,9 +14,9 @@ export class RptLgModel {
   fCoFax : string;
   fCoEmail : string;
   fCoWebsite : string;
-  fCoLogo : string;
+  fCoLogo : string;*/
   rptY1 : number;
-  rptY2 : number;*/
+  rptY2 : number;
   rptSdateY1 : string;
   rptEdateY1 : string;
   rptSdateY2 : string;

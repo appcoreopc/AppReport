@@ -895,11 +895,9 @@
 							</div>
 							<div class="cell c4">
 							</div>
-							<div class="cell c5" style="text-align:right">
-
+							<div class="cell c5" style="text-align:right"> 
 								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>
-								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="testSave()"></p-button>
-							</div>
+						 	</div>
 						</div>
 
 						<p>Form value: {{ dataForm.value | json }}</p>
@@ -1027,19 +1025,16 @@
 	<ng-template pTemplate="header" let-dataEntryColumns>
 			<tr [pSelectableRow]="rowData">
 				<th style="text-align:center; width:80px">Report ID</th>
-				<th style="text-align:center; width:150px">Report Month/Year</th>
-				<th style="text-align:center">Reference No</th>
-				<th style="text-align:center">Total Sales</th> 
+				<th style="text-align:center; width:150px">Report Year</th>
+				<th style="text-align:center">Reference No</th> 
 			</tr>
 		</ng-template>
 		
   <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
 		 <tr [pSelectableRow]="rowData">
             <td>{{rowData.rptId}}</td>
-            <td style="text-align:center">{{rowData.rptDate | date: 'MMM / yyyy'}}</td> 
-            <td>{{rowData.refNo}}</td> 
-            <td style="text-align:right">{{rowData.salesExpCont + rowData.salesGpb + rowData.salesFiz  
-				+ rowData.salesLocal | number:'1.2-2'}}</td> 
+            <td style="text-align:center">{{rowData.rptY2}}</td> 
+            <td>{{rowData.refNo}}</td>  
         </tr>
 	</ng-template> 
 	
