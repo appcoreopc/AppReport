@@ -41,11 +41,11 @@ export class RptLgModel {
   appByPos : string;
   appByName : string;
   appByIdno : string;
-  /*appCoName : string;
+  appCoName : string;
   appAdd1 : string;
   appAdd2 : string;
   appAdd3 : string;
-  appAdd4 : string;*/
+  appAdd4 : string;
   appDate : string;
   brcptDept : string;
   brcptBr : string;

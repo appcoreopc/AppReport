@@ -63,7 +63,10 @@ export class UserComponentComponent implements OnInit {
 
   userSubscription : Subscription;
   dataList : Array < any > = new Array < any > ();
+<<<<<<< HEAD
 
+=======
+>>>>>>> f619348303a4c3ec68815b363c262965f848c2b3
   display : boolean = false;
   itemSelected : boolean = false;
 
@@ -72,6 +75,7 @@ export class UserComponentComponent implements OnInit {
   ngOnInit() {
 
     this.userSubscription = this
+<<<<<<< HEAD
       .store
       .subscribe(appData => {
 
@@ -79,6 +83,13 @@ export class UserComponentComponent implements OnInit {
 
       });
 
+=======
+    .store
+    .subscribe(appData => {      
+      this.componentMessageHandle(messageUtil.getMultiMessage(appData, [USER_GET_OK, USER_SAVE_SUCCESS]));
+     });
+    
+>>>>>>> f619348303a4c3ec68815b363c262965f848c2b3
     this.configureUpdateForm();
   }
 
@@ -87,6 +98,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   save() {
+<<<<<<< HEAD
 
     debugger;
 
@@ -100,14 +112,43 @@ export class UserComponentComponent implements OnInit {
       saveJson.password = this.person.password;
       saveJson.userTypeId = this.person.userTypeId;
 
+=======
+          
+    let data = this.formUtil.commit();
+    
+    if (data)
+    {
+      if (this.intention == ADD)
+      {
+        // create new row or refresh data 
+        data.userId = null;
+      }
+      else 
+      { 
+        data.userId = this.person.userId;
+      }
+      this.person.username = data.username;
+      this.person.password = data.password;
+      this.person.userTypeId = data.userTypeId;
+      
+      this.rows = [...this.rows];
+     
+      this.dispatchIntent(USER_SAVE, data);
+>>>>>>> f619348303a4c3ec68815b363c262965f848c2b3
     }
     var strJson = JSON.stringify(saveJson);
     this.dispatchIntent(USER_SAVE, saveJson);
     //this.personForm.reset();
   }
+<<<<<<< HEAD
 
   componentMessageHandle(messageAll : Array < any >) {
 
+=======
+  
+  componentMessageHandle(messageAll : Array <any>) {
+    
+>>>>>>> f619348303a4c3ec68815b363c262965f848c2b3
     messageAll.map(message => {
 
       if (message && message.type == USER_GET_OK) {
@@ -128,6 +169,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   private configureAddForm() {
+<<<<<<< HEAD
     this.personForm = this
       .fb
       .group({
@@ -146,6 +188,16 @@ export class UserComponentComponent implements OnInit {
           ]
         ]
       });
+=======
+    
+    this.person = new UserModel();
+    this.person.username = '';
+    this.person.password = '';
+
+    this.formUtil = new FormUtil<UserModel>(this.person, this.formValidators);
+    let userform = this.formUtil.createForm(false);
+    this.personForm = userform;
+>>>>>>> f619348303a4c3ec68815b363c262965f848c2b3
   }
 
   private configureUpdateForm() {
@@ -180,6 +232,7 @@ export class UserComponentComponent implements OnInit {
     if (!this.personForm) {
       return;
     }
+<<<<<<< HEAD
 
     const form = this.personForm;
     // this.person.userId = data.userId;
@@ -188,6 +241,12 @@ export class UserComponentComponent implements OnInit {
 
     for (const field in this.formErrors) {
       // clear previous error message (if any)
+=======
+    
+    const form = this.personForm;  
+    
+    for (const field in this.formErrors) {    
+>>>>>>> f619348303a4c3ec68815b363c262965f848c2b3
       this.formErrors[field] = '';
       const control = form.get(field);
 
@@ -203,6 +262,7 @@ export class UserComponentComponent implements OnInit {
   formValidators = {
     'username' : [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)],
+<<<<<<< HEAD
     'password' : [Validators.required, Validators.minLength(1),
     Validators.maxLength(24)]
   }  
@@ -240,6 +300,70 @@ export class UserComponentComponent implements OnInit {
         .get("password")
         .setValue(this.person.password);
       this.display = true;
+=======
+      'password' : [Validators.required, Validators.minLength(1),
+        Validators.maxLength(24)]
+      }  
+      
+      onSelect(evt : any) {
+              
+        if (evt && evt.selected && evt.selected.length > 0) {
+                    this.person = evt.selected[0] as UserModel;          
+          this.itemSelected = true;
+
+          this.formUtil = new FormUtil<UserModel>(this.person, this.formValidators);
+          let userform = this.formUtil.createForm(false);
+          this.personForm = userform;
+          
+          this.personForm.valueChanges.debounceTime(500)
+          .subscribe(data => this.onValueChanged(data));
+          
+          this.display = true; 
+        
+        }
+      }
+      
+      edit() {
+        
+        this.intention = UPDATE;
+        this.configureUpdateForm();
+        
+        if (this.person) {
+          this
+          .personForm
+          .get("username")
+          .setValue(this.person.username);
+          this
+          .personForm
+          .get("password")
+          .setValue(this.person.password);
+          this.display = true;
+        }
+      }
+      
+      cancel()
+      {
+        debugger;
+        this.display = false;
+        this.itemSelected = false;
+        this.person = this.formUtil.rollback();
+      }
+      
+      addForm() {
+        
+        this.intention = ADD;
+        this.configureAddForm();
+
+        this.display = true;
+      }
+      
+      dispatchIntent(messageType : string, data?: any)
+      {
+        this
+        .store
+        .dispatch({type: messageType, data: data});
+      }
+>>>>>>> f619348303a4c3ec68815b363c262965f848c2b3
     }
   }
 

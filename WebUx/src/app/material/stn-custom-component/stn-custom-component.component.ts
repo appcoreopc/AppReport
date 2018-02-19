@@ -114,15 +114,17 @@ export class StnCustomComponentComponent implements OnInit {
         }  
         
         private configureAddForm() {
+
           this.personForm = this.fb.group({
             'stncustomId': ['', [Validators.minLength(1)]],
               'stncustomName': ['', [Validators.required, Validators.minLength(1)]],
-              'isLocal': ['']
+              'isLocal': [true]
               });
               
               this.personForm.valueChanges.debounceTime(500)
               .subscribe(data => this.onValueChanged(data));
-            }
+              
+          }
             
             private configureUpdateForm() {
               this.personForm = this.fb.group({

@@ -94,6 +94,7 @@ namespace AppReport.Controllers
             return new JsonResult(reportItem);
         }
 
+
         [HttpPost]
         public IActionResult Save([FromBody] RptLgRequestModel request)
         {

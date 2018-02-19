@@ -56,6 +56,8 @@ export class LesenGudangComponentComponent implements OnInit {
   selectedDetailEntry: boolean = false;
   tabIndex:number = 0; 
   applicationHost:string = APPLICATION_HOST;
+  currentCutOffMonth:number = 1; 
+  mfdGoodList:string = "";
   
   formTitle: string = "New Lesen Gudang";
   dataList: Array<RptLgModel> = new Array<RptLgModel>();
@@ -92,11 +94,11 @@ export class LesenGudangComponentComponent implements OnInit {
     'appByPos': '',
     'appByName': '',
     'appByIdno': '',
-    //'appCoName': '',
-    //'appAdd1': '',
-    //'appAdd2': '',
-    //'appAdd3': '',
-    //'appAdd4': '',
+    'appCoName': '',
+    'appAdd1': '',
+    'appAdd2': '',
+    'appAdd3': '',
+    'appAdd4': '',
     'appDate': '',
     'brcptDept': '',
     'brcptBr': '',
@@ -109,7 +111,7 @@ export class LesenGudangComponentComponent implements OnInit {
     'rptSignedByPos': '',
     'rptSignedByIdno': '',
     'rptSignedByName': '',
-    'mfdGoodY1': '',
+    //'mfdGoodY1': '',
     'mfdGoodY2': '',
     'mfdGoodY3': '',
     'mfdLicenseSdate': '',
@@ -145,69 +147,65 @@ export class LesenGudangComponentComponent implements OnInit {
 
   
 validationMessages = { 
-    'rptSdateY1' : { 'required': 'Reference No is required.' }, 
-    'rptEdateY1' : { 'required': 'Reference No is required.' }, 
-    'rptSdateY2' : { 'required': 'Reference No is required.' }, 
-    'rptEdateY2' : { 'required': 'Reference No is required.' }, 
-    'rptSdateY3' : { 'required': 'Reference No is required.' }, 
-    'rptEdateY3' : { 'required': 'Reference No is required.' }, 
+    'rptSdateY1' : { 'required': 'Current Year - From is required.' }, 
+    'rptEdateY1' : { 'required': 'Current Year - To is required.' }, 
+    'rptSdateY2' : { 'required': 'Last Year - From is required.' }, 
+    'rptEdateY2' : { 'required': 'Last Year - To is required.' }, 
+    'rptSdateY3' : { 'required': 'Next Year - From is required.' }, 
+    'rptEdateY3' : { 'required': 'Next Year - To is required.' }, 
     'refNo' : { 'required': 'Reference No is required.' }, 
-    'ldate' : { 'required': 'Reference No is required.' }, 
-    'lrcptDept' : { 'required': 'Reference No is required.' }, 
-    'lrcptBr' : { 'required': 'Reference No is required.' }, 
-    'lrcptAdd1' : { 'required': 'Reference No is required.' }, 
-    'lrcptAdd2' : { 'required': 'Reference No is required.' }, 
-    'lrcptAdd3' : { 'required': 'Reference No is required.' }, 
-    'lrcptAdd4' : { 'required': 'Reference No is required.' }, 
-    'pbbcekNo' : { 'required': 'Reference No is required.' }, 
-    'licenseFee' : { 'required': 'Reference No is required.' }, 
-    'signedByEmpId' : { 'required': 'Reference No is required.' }, 
-    'signedByPos' : { 'required': 'Reference No is required.' }, 
-    'signedByName' : { 'required': 'Reference No is required.' }, 
-    'signedDate' : { 'required': 'Reference No is required.' }, 
-    'appByEmpId' : { 'required': 'Reference No is required.' }, 
-    'appByPos' : { 'required': 'Reference No is required.' }, 
-    'appByName' : { 'required': 'Reference No is required.' }, 
-    'appByIdno' : { 'required': 'Reference No is required.' }, 
-    //'appCoName' : { 'required': 'Reference No is required.' }, 
-    //'appAdd1' : { 'required': 'Reference No is required.' }, 
-    //'appAdd2' : { 'required': 'Reference No is required.' }, 
-    //'appAdd3' : { 'required': 'Reference No is required.' }, 
-    //'appAdd4' : { 'required': 'Reference No is required.' }, 
-    'appDate' : { 'required': 'Reference No is required.' }, 
-    'brcptDept' : { 'required': 'Reference No is required.' }, 
-    'brcptBr' : { 'required': 'Reference No is required.' }, 
-    'brcptAdd1' : { 'required': 'Reference No is required.' }, 
-    'brcptAdd2' : { 'required': 'Reference No is required.' }, 
-    'brcptAdd3' : { 'required': 'Reference No is required.' }, 
-    'brcptAdd4' : { 'required': 'Reference No is required.' }, 
-    'rptCoName' : { 'required': 'Reference No is required.' }, 
-    'rptSignedByEmpId' : { 'required': 'Reference No is required.' }, 
-    'rptSignedByPos' : { 'required': 'Reference No is required.' }, 
-    'rptSignedByIdno' : { 'required': 'Reference No is required.' }, 
-    'rptSignedByName' : { 'required': 'Reference No is required.' }, 
-    'mfdGoodY1' : { 'required': 'Reference No is required.' }, 
-    'mfdGoodY2' : { 'required': 'Reference No is required.' }, 
-    'mfdGoodY3' : { 'required': 'Reference No is required.' }, 
-    'mfdLicenseSdate' : { 'required': 'Reference No is required.' }, 
-    'mfdLicenseEdate' : { 'required': 'Reference No is required.' }, 
-    'isChgCoName' : { 'required': 'Reference No is required.' }, 
-    'isChgCoMember' : { 'required': 'Reference No is required.' }, 
-    'isChgAddress' : { 'required': 'Reference No is required.' }, 
-    'isChgFtyStr' : { 'required': 'Reference No is required.' }, 
-    'isChgEq' : { 'required': 'Reference No is required.' }, 
-    'bgtRmcost' : { 'required': 'Reference No is required.' },  
-    'bgtRdyGoodCost' : { 'required': 'Reference No is required.' }, 
-    'mktExpRate' : { 'required': 'Reference No is required.' }, 
-    'bgtMktExpCost' : { 'required': 'Reference No is required.' }, 
-    'bgtMktExpRate' : { 'required': 'Reference No is required.' }, 
-    'localSalesRate' : { 'required': 'Reference No is required.' }, 
-    'bgtLocSalesCost' : { 'required': 'Reference No is required.' }, 
-    'bgtLocSalesRate' : { 'required': 'Reference No is required.' }, 
-    'ipcRdc' : { 'required': 'Reference No is required.' }, 
-    'valueAdded' : { 'required': 'Reference No is required.' }, 
-    'repairSvc' : { 'required': 'Reference No is required.' }, 
-    'sparePart' : { 'required': 'Reference No is required.' }, 
+    'ldate' : { 'required': 'Date of Letter is required.' }, 
+    'lrcptDept' : { 'required': 'Department is required.' }, 
+    'lrcptBr' : { 'required': 'Branch is required.' }, 
+    'lrcptAdd1' : { 'required': 'Address is required.' }, 
+    'lrcptAdd2' : { 'required': 'Address is required.' }, 
+    'lrcptAdd3' : { 'required': 'Address is required.' }, 
+    'lrcptAdd4' : { 'required': 'Address is required.' }, 
+    'pbbcekNo' : { 'required': 'PBB Cek No. is required.' }, 
+    'licenseFee' : { 'required': 'License Fee is required.' },  
+    'signedByPos' : { 'required': 'Position is required.' }, 
+    'signedByName' : { 'required': 'Name is required.' }, 
+    'signedDate' : { 'required': 'Signed Date is required.' }, 
+    'appCoName' : { 'required': 'Company Name is required.' },
+    'appAdd1' : { 'required': 'Address is required.' },      
+    'appAdd2' : { 'required': 'Address is required.' },      
+    'appAdd3' : { 'required': 'Address is required.' },      
+    'appAdd4' : { 'required': 'Address is required.' },      
+    'appByPos' : { 'required': 'Position is required.' }, 
+    'appByName' : { 'required': 'Name is required.' }, 
+    'appByIdno' : { 'required': 'IC is required.' },  
+    'appDate' : { 'required': 'Application Date is required.' }, 
+    'brcptDept' : { 'required': 'Department is required.' }, 
+    'brcptBr' : { 'required': 'Branch is required.' }, 
+    'brcptAdd1' : { 'required': 'Address is required.' }, 
+    'brcptAdd2' : { 'required': 'Address is required.' }, 
+    'brcptAdd3' : { 'required': 'Address is required.' }, 
+    'brcptAdd4' : { 'required': 'Address is required.' }, 
+    'rptCoName' : { 'required': 'Company Name is required.' },  
+    'rptSignedByPos' : { 'required': 'Position is required.' }, 
+    'rptSignedByIdno' : { 'required': 'IC is required.' }, 
+    'rptSignedByName' : { 'required': 'Name is required.' },  
+    'mfdGoodY2' : { 'required': 'Good list is required.' }, 
+    'mfdGoodY3' : { 'required': 'Good list is required.' }, 
+    'mfdLicenseSdate' : { 'required': 'License Start Date is required.' }, 
+    'mfdLicenseEdate' : { 'required': 'License End Date is required.' }, 
+    'isChgCoName' : { 'required': 'required.' }, 
+    'isChgCoMember' : { 'required': 'required.' }, 
+    'isChgAddress' : { 'required': 'required.' }, 
+    'isChgFtyStr' : { 'required': 'required.' }, 
+    'isChgEq' : { 'required': 'required.' }, 
+    'bgtRmcost' : { 'required': 'required.' },  
+    'bgtRdyGoodCost' : { 'required': 'required.' }, 
+    'mktExpRate' : { 'required': 'required.' }, 
+    'bgtMktExpCost' : { 'required': 'required.' }, 
+    'bgtMktExpRate' : { 'required': 'required.' }, 
+    'localSalesRate' : { 'required': 'required.' }, 
+    'bgtLocSalesCost' : { 'required': 'required.' }, 
+    'bgtLocSalesRate' : { 'required': 'required.' }, 
+    'ipcRdc' : { 'required': 'required.' }, 
+    'valueAdded' : { 'required': 'required.' }, 
+    'repairSvc' : { 'required': 'required.' }, 
+    'sparePart' : { 'required': 'required.' }, 
   };
 
   
@@ -300,6 +298,12 @@ ngAfterViewInit() {
     this.data.signedByName = mainFormModel.signedByName;
     this.data.signedByPos = mainFormModel.signedByPos;
     
+    this.data.appCoName = mainFormModel.appCoName;
+    this.data.appAdd1 = mainFormModel.appAdd1;
+    this.data.appAdd2 = mainFormModel.appAdd2;
+    this.data.appAdd3 = mainFormModel.appAdd3;
+    this.data.appAdd4 = mainFormModel.appAdd4;
+
     this.data.appByEmpId = mainFormModel.appByEmpId;
     this.data.appByIdno = mainFormModel.appByIdno;
     this.data.appByName = mainFormModel.appByName;
@@ -316,7 +320,7 @@ ngAfterViewInit() {
     this.data.rptSignedByPos = mainFormModel.rptSignedByPos;
     this.data.rptSignedByIdno = mainFormModel.rptSignedByIdno;
     this.data.rptSignedByName = mainFormModel.rptSignedByName;
-    this.data.mfdGoodY1 = mainFormModel.mfdGoodY1;
+    //this.data.mfdGoodY1 = mainFormModel.mfdGoodY1;
     this.data.mfdGoodY2 = mainFormModel.mfdGoodY2;
     this.data.mfdGoodY3 = mainFormModel.mfdGoodY3;
     this.data.isChgCoName = mainFormModel.isChgCoName;
@@ -375,6 +379,15 @@ ngAfterViewInit() {
     var strJson = JSON.stringify(this.data); 
     this.dispatchIntent(LESEN_SAVE, strJson);
     this.display = false;
+  }
+
+  testSave(){
+    var json = { "rptId": 6, "rptSdateY1": "2016-12-31T16:00:00.000Z", "rptEdateY1": "2017-12-30T16:00:00.000Z", "rptSdateY2": "2017-12-31T16:00:00.000Z", "rptEdateY2": "2018-09-30T16:00:00.000Z", "rptSdateY3": "2018-12-31T16:00:00.000Z", "rptEdateY3": "2019-12-30T16:00:00.000Z", "refNo": "ABC(1)GHH45435345 (83)", "ldate": "2018-01-08T16:00:00.000Z", "lrcptDept": "Penolong Kanan Pengarah Kastam", "lrcptBr": "Cawangan Gudang Pengilangan Berlesen", "lrcptAdd1": "Tingkat 2, Kompleks Kastam Seberang Jaya,", "lrcptAdd2": "Lot 5492, M.K.1, Jalan Perpustakaan, Lebuh Tenggiri 2,", "lrcptAdd3": "13700 Seberang Perai Tengah,", "lrcptAdd4": "Pulau Pinang.", "pbbcekNo": "39196578", "licenseFee": 4900, "signedByEmpId": 1, "signedByPos": "Pengarah", "signedByName": "Yeoh Paik Sun", "signedDate": "2018-01-09T16:00:00.000Z", "appByEmpId": "1", "appByPos": "Pengurus", "appByName": "Yeoh Phaik Suan", "appByIdno": "600516-07-5038", "appDate": "2018-01-08T16:00:00.000Z", "brcptDept": "dgsgdg gdfgdfgdfg", "brcptBr": "brach 34234", "brcptAdd1": "address 1", "brcptAdd2": "address 2", "brcptAdd3": "address 3", "brcptAdd4": "address 14", "rptCoName": "PTS Industries Sdn. Bhd.", "rptSignedByEmpId": 1, "rptSignedByPos": "Pengarah", "rptSignedByIdno": "5908065-12-9089", "rptSignedByName": "Yeoh Phaik Suan", "mfdGoodY2": "aaa, bbb, ccc, ddd", "mfdGoodY3": "aaa, bbb, ccc, ddd", "mfdLicenseSdate": "2016-12-31T16:00:00.000Z", "mfdLicenseEdate": "2018-12-30T16:00:00.000Z", "isChgCoName": true, "isChgCoMember": true, "isChgAddress": true, "isChgFtyStr": true, "isChgEq": true, "bgtRmcost": 900890, "bgtRdyGoodCost": 234, "mktExpRate": 1.5, "bgtMktExpCost": 678.9, "bgtMktExpRate": 45.95, "localSalesRate": 67.8, "bgtLocSalesCost": 4500, "bgtLocSalesRate": 45.6, "ipcRdc": "testing IPC", "valueAdded": "eqw", "repairSvc": "Light fixing", "sparePart": "eqwe" };
+    
+    var strJson = JSON.stringify(json); 
+    this.dispatchIntent(LESEN_SAVE, strJson);
+    this.display = false;
+ 
   }
   
   
@@ -461,15 +474,16 @@ ngAfterViewInit() {
        
         for (var idx in message.data)
         {
-          var configDataInfo = message.data[idx] as ConfigModel;    
+           var configDataInfo = message.data[idx] as ConfigModel;    
 
-           if(! (configDataInfo.moduleId == 1 && configDataInfo.id == 2)) continue;
-
-          configDataList.push({   
-            configId : configDataInfo.configId,
-            configKey : configDataInfo.configKey,
-            configData : configDataInfo.configData 
-          }); 
+            if( (configDataInfo.moduleId == 1 && configDataInfo.id == 2) || (configDataInfo.moduleId == 0 && configDataInfo.id == 0)) 
+            {
+                        configDataList.push({   
+                          configId : configDataInfo.configId,
+                          configKey : configDataInfo.configKey,
+                          configData : configDataInfo.configData 
+                        }); 
+            }
         } 
 
         this.configRows = configDataList; 
@@ -490,7 +504,7 @@ ngAfterViewInit() {
       } 
   }
   
-  private setupAddForm() {
+  private setupAddForm() { 
     
     this.configureAddForms();
     
@@ -513,8 +527,43 @@ ngAfterViewInit() {
             this.data.lrcptDept = this.configRows[cRow].configData;
         else if(this.configRows[cRow].configKey == "LetterRcptBr") 
             this.data.lrcptBr = this.configRows[cRow].configData;
- 
+
+        else if(this.configRows[cRow].configKey == "BRcptAdd1") 
+            this.data.brcptAdd1 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "BRcptAdd2") 
+            this.data.brcptAdd2 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "BRcptAdd3") 
+            this.data.brcptAdd3 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "BRcptAdd4") 
+            this.data.brcptAdd4 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "BRcptDept") 
+            this.data.brcptDept = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "BRcptBr") 
+            this.data.brcptBr = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "CurrentCutOffMonth") 
+            this.currentCutOffMonth = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "MfdGoodList") 
+            this.mfdGoodList = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "CoName") {
+            this.data.rptCoName = this.configRows[cRow].configData;
+            this.data.appCoName = this.configRows[cRow].configData;
+        }
+        else if(this.configRows[cRow].configKey == "CoAdd1") 
+            this.data.appAdd1 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "CoAdd2") 
+            this.data.appAdd2 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "CoAdd3") 
+            this.data.appAdd3 = this.configRows[cRow].configData;
+        else if(this.configRows[cRow].configKey == "CoAdd4") 
+            this.data.appAdd4 = this.configRows[cRow].configData;
+  
       }
+
+     
+      this.setReportDate(new Date());
+ 
+      this.dataForm.get("mfdGoodY2").setValue(this.mfdGoodList);
+      this.dataForm.get("mfdGoodY3").setValue(this.mfdGoodList);  
 
       this.dataForm.get("lrcptAdd1").setValue(this.data.lrcptAdd1); 
       this.dataForm.get("lrcptAdd2").setValue(this.data.lrcptAdd2); 
@@ -522,6 +571,51 @@ ngAfterViewInit() {
       this.dataForm.get("lrcptAdd4").setValue(this.data.lrcptAdd4); 
       this.dataForm.get("lrcptDept").setValue(this.data.lrcptDept);
       this.dataForm.get("lrcptBr").setValue(this.data.lrcptBr);
+
+      this.dataForm.get("brcptAdd1").setValue(this.data.brcptAdd1); 
+      this.dataForm.get("brcptAdd2").setValue(this.data.brcptAdd2); 
+      this.dataForm.get("brcptAdd3").setValue(this.data.brcptAdd3); 
+      this.dataForm.get("brcptAdd4").setValue(this.data.brcptAdd4); 
+      this.dataForm.get("brcptDept").setValue(this.data.brcptDept);
+      this.dataForm.get("brcptBr").setValue(this.data.brcptBr);
+
+      this.dataForm.get("rptCoName").setValue(this.data.rptCoName);
+      this.dataForm.get("appCoName").setValue(this.data.appCoName);
+      this.dataForm.get("appAdd1").setValue(this.data.appAdd1);
+      this.dataForm.get("appAdd2").setValue(this.data.appAdd2);
+      this.dataForm.get("appAdd3").setValue(this.data.appAdd3);
+      this.dataForm.get("appAdd4").setValue(this.data.appAdd4);
+  }
+    
+  setReportDate(dt){
+      var cDt = dt;
+      let cYr = cDt.getFullYear();  
+      let pYr = cYr-1; 
+      let nYr = cYr+1; 
+      let cSDate = new Date(cYr + "-1-1"); 
+      let cEDate = new Date(cYr + "-" + this.currentCutOffMonth + "-31"); 
+      let pSDate = new Date(pYr + "-1-1"); 
+      let pEDate = new Date(pYr + "-12-31"); 
+      let nSDate = new Date(nYr + "-1-1"); 
+      let nEDate = new Date(nYr + "-12-31");  
+
+      this.dataForm.get("rptSdateY1").setValue(pSDate);
+      this.dataForm.get("rptEdateY1").setValue(pEDate);
+      this.dataForm.get("rptSdateY2").setValue(cSDate);
+      this.dataForm.get("rptEdateY2").setValue(cEDate);
+      this.dataForm.get("rptSdateY3").setValue(nSDate);
+      this.dataForm.get("rptEdateY3").setValue(nEDate);
+
+  }
+
+  onSelectRptSdateY2(evt) {
+        
+        debugger; 
+        if (evt) {
+          this.setReportDate(new Date(evt));
+          console.log("onSelectRptSdateY2",evt);
+        } 
+        
   }
 
   
@@ -558,6 +652,11 @@ ngAfterViewInit() {
       'signedByPos': ['', [Validators.required, Validators.minLength(1)]],
       'signedByName': ['', [Validators.required, Validators.minLength(1)]],
       'signedDate': ['', [Validators.required, Validators.minLength(1)]],
+      'appCoName': ['', [Validators.required, Validators.minLength(1)]],
+      'appAdd1': ['', [Validators.required, Validators.minLength(1)]],
+      'appAdd2': ['', [Validators.required, Validators.minLength(1)]],
+      'appAdd3': ['', [Validators.required, Validators.minLength(1)]],
+      'appAdd4': ['', [Validators.required, Validators.minLength(1)]],
       'appByEmpId': [''],
       'appByPos': ['', [Validators.required, Validators.minLength(1)]],
       'appByName': ['', [Validators.required, Validators.minLength(1)]],
@@ -574,16 +673,16 @@ ngAfterViewInit() {
       'rptSignedByPos': ['', [Validators.required, Validators.minLength(1)]],
       'rptSignedByIdno': ['', [Validators.required, Validators.minLength(1)]],
       'rptSignedByName': ['', [Validators.required, Validators.minLength(1)]],
-      'mfdGoodY1': ['', [Validators.required, Validators.minLength(1)]],
+      //'mfdGoodY1': ['', [Validators.required, Validators.minLength(1)]],
       'mfdGoodY2': ['', [Validators.required, Validators.minLength(1)]],
       'mfdGoodY3': ['', [Validators.required, Validators.minLength(1)]],
       'mfdLicenseSdate': ['', [Validators.required, Validators.minLength(1)]],
       'mfdLicenseEdate': ['', [Validators.required, Validators.minLength(1)]],
-      'isChgCoName': ['', [Validators.required, Validators.minLength(1)]],
-      'isChgCoMember': ['', [Validators.required, Validators.minLength(1)]],
-      'isChgAddress': ['', [Validators.required, Validators.minLength(1)]],
-      'isChgFtyStr': ['', [Validators.required, Validators.minLength(1)]],
-      'isChgEq': ['', [Validators.required, Validators.minLength(1)]],
+      'isChgCoName': [false],
+      'isChgCoMember': [false],
+      'isChgAddress': [false],
+      'isChgFtyStr': [false],
+      'isChgEq': [false],
       'bgtRmcost': ['', [Validators.required, Validators.minLength(1)]], 
       'bgtRdyGoodCost': ['', [Validators.required, Validators.minLength(1)]],
       'mktExpRate': ['', [Validators.required, Validators.minLength(1)]],
@@ -627,6 +726,11 @@ ngAfterViewInit() {
       'signedByPos': [this.data.signedByPos, [Validators.required, Validators.minLength(1)]],
       'signedByName': [this.data.signedByName, [Validators.required, Validators.minLength(1)]],
       'signedDate': ['', [Validators.required, Validators.minLength(1)]],
+      'appCoName': [this.data.appCoName, [Validators.required, Validators.minLength(1)]],
+      'appAdd1': [this.data.appAdd1, [Validators.required, Validators.minLength(1)]],
+      'appAdd2': [this.data.appAdd2, [Validators.required, Validators.minLength(1)]],
+      'appAdd3': [this.data.appAdd3, [Validators.required, Validators.minLength(1)]],
+      'appAdd4': [this.data.appAdd4, [Validators.required, Validators.minLength(1)]],
       'appByEmpId': [this.data.appByEmpId],
       'appByPos': [this.data.appByPos, [Validators.required, Validators.minLength(1)]],
       'appByName': [this.data.appByName, [Validators.required, Validators.minLength(1)]],
@@ -643,16 +747,16 @@ ngAfterViewInit() {
       'rptSignedByPos': [this.data.rptSignedByPos, [Validators.required, Validators.minLength(1)]],
       'rptSignedByIdno': [this.data.rptSignedByIdno, [Validators.required, Validators.minLength(1)]],
       'rptSignedByName': [this.data.rptSignedByName, [Validators.required, Validators.minLength(1)]],
-      'mfdGoodY1': [this.data.mfdGoodY1, [Validators.required, Validators.minLength(1)]],
+      //'mfdGoodY1': [this.data.mfdGoodY1, [Validators.required, Validators.minLength(1)]],
       'mfdGoodY2': [this.data.mfdGoodY2, [Validators.required, Validators.minLength(1)]],
       'mfdGoodY3': [this.data.mfdGoodY3, [Validators.required, Validators.minLength(1)]],
       'mfdLicenseSdate': ['', [Validators.required, Validators.minLength(1)]],
       'mfdLicenseEdate': ['', [Validators.required, Validators.minLength(1)]],
-      'isChgCoName': [this.data.isChgCoName, [Validators.required, Validators.minLength(1)]],
-      'isChgCoMember': [this.data.isChgCoMember, [Validators.required, Validators.minLength(1)]],
-      'isChgAddress': [this.data.isChgAddress, [Validators.required, Validators.minLength(1)]],
-      'isChgFtyStr': [this.data.isChgFtyStr, [Validators.required, Validators.minLength(1)]],
-      'isChgEq': [this.data.isChgEq, [Validators.required, Validators.minLength(1)]],
+      'isChgCoName': [this.data.isChgCoName],
+      'isChgCoMember': [this.data.isChgCoMember],
+      'isChgAddress': [this.data.isChgAddress],
+      'isChgFtyStr': [this.data.isChgFtyStr],
+      'isChgEq': [this.data.isChgEq],
       'bgtRmcost': [this.data.bgtRmcost, [Validators.required, Validators.minLength(1)]], 
       'bgtRdyGoodCost': [this.data.bgtRdyGoodCost, [Validators.required, Validators.minLength(1)]],
       'mktExpRate': [this.data.mktExpRate, [Validators.required, Validators.minLength(1)]],
@@ -673,7 +777,7 @@ ngAfterViewInit() {
     
     addForm() {
       
-      this.formTitle = "New Report Lampiran M1";
+      this.formTitle = "New Report Lesen Gudang";
       this.display = true;
       this.intention = ADD;
       
@@ -688,7 +792,7 @@ ngAfterViewInit() {
     
     setupMainFormForEdit() {
       
-      this.formTitle = "Edit Report Lampiran M1 - " + this.data.rptId;
+      this.formTitle = "Edit Report Lesen Gudang - " + this.data.rptId;
       this.intention = UPDATE;
       
       this.configureEditForm();
@@ -954,10 +1058,44 @@ ngAfterViewInit() {
     
           }
 
-          this.dataForm.get("appdByName").setValue(this.data.appByName); 
-          this.dataForm.get("appdByIdno").setValue(this.data.appByIdno); 
-          this.dataForm.get("appdByPos").setValue(this.data.appByPos);  
+          this.dataForm.get("appByName").setValue(this.data.appByName); 
+          this.dataForm.get("appByIdno").setValue(this.data.appByIdno); 
+          this.dataForm.get("appByPos").setValue(this.data.appByPos);  
         }
+
+        onEmpRptChange(id){ 
+
+          this.data.rptSignedByName = "";
+          this.data.rptSignedByIdno = "";
+          this.data.rptSignedByPos = "";
+
+          for (var cRow in this.empRows)
+          { 
+            if(this.empRows[cRow].empId == id){
+              this.data.rptSignedByName = this.empRows[cRow].empName;
+              this.data.rptSignedByIdno = this.empRows[cRow].empIdno;
+
+              for (var jRow in this.jobTitleRows)
+              {
+                if(this.empRows[cRow].jobTitleId == this.jobTitleRows[jRow].jobTitleId)
+                {
+                   this.data.rptSignedByPos = this.jobTitleRows[jRow].jobTitleName;
+                   break; 
+                }
+
+              }
+              
+              break;
+            }
+    
+          }
+
+          this.dataForm.get("rptSignedByName").setValue(this.data.rptSignedByName); 
+          this.dataForm.get("rptSignedByIdno").setValue(this.data.rptSignedByIdno); 
+          this.dataForm.get("rptSignedByPos").setValue(this.data.rptSignedByPos);  
+        }
+
+
         
       }
 

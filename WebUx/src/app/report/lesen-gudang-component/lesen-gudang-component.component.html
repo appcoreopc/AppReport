@@ -47,7 +47,7 @@
 										<label for="rptSdateY2">Current Year - From :</label>
 									</div>
 									<div class="cell c2">
-										<p-calendar dateFormat="dd/mm/yy" formControlName="rptSdateY2" showIcon="true"></p-calendar>
+										<p-calendar dateFormat="dd/mm/yy" formControlName="rptSdateY2" showIcon="true"  (onSelect)="onSelectRptSdateY2($event)"></p-calendar>
 
 										<div *ngIf="formErrors.rptSdateY2" class="alert alert-danger">
 											{{ formErrors.rptSdateY2 }}
@@ -72,7 +72,7 @@
 										<label for="rptSdateY1">Last Year - From :</label>
 									</div>
 									<div class="cell c2">
-										<p-calendar dateFormat="dd/mm/yy" formControlName="rptSdateY1" showIcon="true"></p-calendar>
+										<p-calendar dateFormat="dd/mm/yy" formControlName="rptSdateY1" showIcon="true" onvl></p-calendar>
 
 										<div *ngIf="formErrors.rptSdateY1" class="alert alert-danger">
 											{{ formErrors.rptSdateY1 }}
@@ -130,7 +130,7 @@
 									<div class="cell c3">
 									</div>
 									<div class="cell c4">
-										<label for="ldate">License Fee (2 Yrs) :</label>
+										<label for="licenseFee">License Fee (2 Yrs) :</label>
 									</div>
 									<div class="cell c5">
 										<input id="licenseFee" type="number" maxlength="50" class="form-control text-control" formControlName="licenseFee" />
@@ -147,10 +147,10 @@
                             
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="LRcptDept">Department :</label>
+										<label for="lrcptDept">Department :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptDept" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptDept" />
+										<input id="lrcptDept" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptDept" />
 										<div *ngIf="formErrors.lrcptDept" class="alert alert-danger">
 											{{ formErrors.lrcptDept }}
 										</div>
@@ -159,10 +159,10 @@
                                 
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="LRcptBr">Branch :</label>
+										<label for="lrcptBr">Branch :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptBr" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptBr" />
+										<input id="lrcptBr" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptBr" />
 										<div *ngIf="formErrors.lrcptBr" class="alert alert-danger">
 											{{ formErrors.lrcptBr }}
 										</div>
@@ -171,10 +171,10 @@
                                 
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="LRcptAdd1">Address :</label>
+										<label for="lrcptAdd1">Address :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd1" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd1" />
+										<input id="lrcptAdd1" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd1" />
 										<div *ngIf="formErrors.lrcptAdd1" class="alert alert-danger">
 											{{ formErrors.lrcptAdd1 }}
 										</div>
@@ -183,10 +183,10 @@
                                 
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="LRcptAdd2"></label>
+										<label for="lrcptAdd2"></label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd2" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd2" />
+										<input id="lrcptAdd2" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd2" />
 										<div *ngIf="formErrors.lrcptAdd2" class="alert alert-danger">
 											{{ formErrors.lrcptAdd2 }}
 										</div>
@@ -195,10 +195,10 @@
                                 
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="LRcptAdd3"></label>
+										<label for="lrcptAdd3"></label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd3" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd3" />
+										<input id="lrcptAdd3" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd3" />
 										<div *ngIf="formErrors.lrcptAdd3" class="alert alert-danger">
 											{{ formErrors.lrcptAdd3 }}
 										</div>
@@ -207,10 +207,10 @@
                                 
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="LRcptAdd4"></label>
+										<label for="lrcptAdd4"></label>
 									</div>
 									<div class="cell c2345">
-										<input id="LRcptAdd4" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd4" />
+										<input id="lrcptAdd4" type="text" maxlength="100"  class="form-control text-control" formControlName="lrcptAdd4" />
 										<div *ngIf="formErrors.lrcptAdd4" class="alert alert-danger">
 											{{ formErrors.lrcptAdd4 }}
 										</div>
@@ -234,10 +234,10 @@
                                 
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="SignedByName">Name :</label>
+										<label for="signedByName">Name :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="SignedByName" type="text" maxlength="50" class="form-control text-control" formControlName="signedByName" />
+										<input id="signedByName" type="text" maxlength="50" class="form-control text-control" formControlName="signedByName" />
 										<div *ngIf="formErrors.signedByName" class="alert alert-danger">
 											{{ formErrors.signedByName }}
 										</div>
@@ -247,10 +247,10 @@
  
 								<div class="form-group row">
 									<div class="cell c1">
-										<label for="SignedByPos">Position :</label>
+										<label for="signedByPos">Position :</label>
 									</div>
 									<div class="cell c2345">
-										<input id="SignedByPos" type="text" maxlength="50" class="form-control text-control" formControlName="signedByPos" />
+										<input id="signedByPos" type="text" maxlength="50" class="form-control text-control" formControlName="signedByPos" />
 										<div *ngIf="formErrors.signedByPos" class="alert alert-danger">
 											{{ formErrors.signedByPos }}
 										</div>
@@ -333,10 +333,78 @@
 									</div>
 								</div> 
 
+								 <div class="form-group row">
+									<div class="cell c1">
+										<label for="signedDate">Signed Date :</label>
+									</div>
+									<div class="cell c2345">
+										<p-calendar dateFormat="dd/mm/yy" formControlName="signedDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+										<div *ngIf="formErrors.signedDate" class="alert alert-danger">
+											{{ formErrors.signedDate }}
+										</div>
+									</div> 
+                                 </div>
+
 								<div class="form-group row" style="padding-top:20px"> 
 									<label  class="label label-success" style="font-size:13px">License Applied By</label>
                                 </div>
-                                
+								
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appCoName">Company Name :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="appCoName" type="text" maxlength="50" class="form-control text-control" formControlName="appCoName" />
+										<div *ngIf="formErrors.appCoName" class="alert alert-danger">
+											{{ formErrors.appCoName }}
+										</div>
+									</div>
+								</div> 
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appAdd1">Address :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="appAdd1" type="text" maxlength="50" class="form-control text-control" formControlName="appAdd1" />
+										<div *ngIf="formErrors.appAdd1" class="alert alert-danger">
+											{{ formErrors.appAdd1 }}
+										</div>
+									</div>
+								</div> 
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appAdd2"></label>
+									</div>
+									<div class="cell c2345">
+										<input id="appAdd2" type="text" maxlength="50" class="form-control text-control" formControlName="appAdd2" />
+										<div *ngIf="formErrors.appAdd2" class="alert alert-danger">
+											{{ formErrors.appAdd2 }}
+										</div>
+									</div>
+								</div> 
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appAdd3"></label>
+									</div>
+									<div class="cell c2345">
+										<input id="appAdd3" type="text" maxlength="50" class="form-control text-control" formControlName="appAdd3" />
+										<div *ngIf="formErrors.appAdd3" class="alert alert-danger">
+											{{ formErrors.appAdd3 }}
+										</div>
+									</div>
+								</div> 
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="appAdd4"></label>
+									</div>
+									<div class="cell c2345">
+										<input id="appAdd4" type="text" maxlength="50" class="form-control text-control" formControlName="appAdd4" />
+										<div *ngIf="formErrors.appAdd4" class="alert alert-danger">
+											{{ formErrors.appAdd4 }}
+										</div>
+									</div>
+								</div> 
+
 								<div class="form-group row">
 									<div class="cell c1">
 										<label for="appByEmpId">Employee :</label>
@@ -413,28 +481,28 @@
 									</div>
 								</div>
 								
-								<!--<div class="form-group row">
+								 <div class="form-group row">
 									<div class="cell c1">
-										<label for="mfdLicenseSDate">License Date - From :</label>
+										<label for="mfdLicenseSdate">License Date - From :</label>
 									</div>
 									<div class="cell c2">
-										<p-calendar dateFormat="dd/mm/yy" formControlName="mfdLicenseSDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
-										<div *ngIf="formErrors.mfdLicenseSDate" class="alert alert-danger">
-											{{ formErrors.mfdLicenseSDate }}
+										<p-calendar dateFormat="dd/mm/yy" formControlName="mfdLicenseSdate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+										<div *ngIf="formErrors.mfdLicenseSdate" class="alert alert-danger">
+											{{ formErrors.mfdLicenseSdate }}
 										</div>
 									</div>
 									<div class="cell c3"> 
 									</div>
 									<div class="cell c4">
-										<label for="mfdLicenseEDate">To :</label>
+										<label for="mfdLicenseEdate">To :</label>
 									</div>
 									<div class="cell c5">
-										<p-calendar dateFormat="dd/mm/yy" formControlName="mfdLicenseEDate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
-										<div *ngIf="formErrors.mfdLicenseEDate" class="alert alert-danger">
-											{{ formErrors.mfdLicenseEDate }}
+										<p-calendar dateFormat="dd/mm/yy" formControlName="mfdLicenseEdate" [showIcon]="true" [monthNavigator]="true"></p-calendar>
+										<div *ngIf="formErrors.mfdLicenseEdate" class="alert alert-danger">
+											{{ formErrors.mfdLicenseEdate }}
 										</div>
 									</div>
-								</div>-->
+								</div> 
 								
                             <div class="form-group row" style="padding-top:30px">
                                 <div class="cell" style="width:600px">
@@ -446,10 +514,7 @@
                                     Ya
                                     &nbsp;&nbsp;<input type="radio" formControlName="isChgCoName" [value]="false">
                                     Tidak
-
-                                    <div *ngIf="formErrors.isChgCoName" class="alert alert-danger">
-                                    {{ formErrors.isChgCoName }}
-                                    </div>
+ 
                                 </div>  
                             </div>  
 
@@ -463,10 +528,7 @@
                                     Ya
                                     &nbsp;&nbsp;<input type="radio" formControlName="isChgCoMember" [value]="false">
                                     Tidak
-
-                                    <div *ngIf="formErrors.isChgCoMember" class="alert alert-danger">
-                                    {{ formErrors.isChgCoMember }}
-                                    </div>
+ 
                                 </div>  
                             </div>  
 
@@ -480,10 +542,7 @@
                                     Ya
                                     &nbsp;&nbsp;<input type="radio" formControlName="isChgAddress" [value]="false">
                                     Tidak
-
-                                    <div *ngIf="formErrors.isChgAddress" class="alert alert-danger">
-                                    {{ formErrors.isChgAddress }}
-                                    </div>
+ 
                                 </div>  
                             </div>  
 
@@ -497,10 +556,7 @@
                                     Ya
                                     &nbsp;&nbsp;<input type="radio" formControlName="isChgFtyStr" [value]="false">
                                     Tidak
-
-                                    <div *ngIf="formErrors.isChgFtyStr" class="alert alert-danger">
-                                    {{ formErrors.isChgFtyStr }}
-                                    </div>
+ 
                                 </div>  
                             </div>  
 
@@ -514,15 +570,12 @@
                                     Ya
                                     &nbsp;&nbsp;<input type="radio" formControlName="isChgEq" [value]="false">
                                     Tidak
-
-                                    <div *ngIf="formErrors.isChgEq" class="alert alert-danger">
-                                    {{ formErrors.isChgEq }}
-                                    </div>
+ 
                                 </div>  
                             </div>  
 					
                             <div class="form-group row">
-                                <div class="cell" style="width:400px">
+                                <div class="cell" style="width: 600px">
                                     <label for="bgtRmcost">4.2. Anggaran nilai bahan-bahan mentah / komponen yang akan digunakan dalam tahun ini :</label>
                                 </div>
                                 <div class="cell" style="width: 300px">
@@ -540,7 +593,7 @@
                                 </div>
                         </div>
 								
-                        <div class="form-group row" style="padding-top:20px">
+                        <!--<div class="form-group row" style="padding-top:20px">
                             <div class="cell" style="width:400px">
                                 <label for="mfdGoodY1">4.3. Jenis barang yang dikilang tahun lepas : </label>
                             </div>
@@ -553,7 +606,7 @@
                                 </div>  
                                 
                             </div>
-                        </div>
+                        </div>-->
 					
                         <div class="form-group row" style="padding-top:20px">
                             <div class="cell" style="width:400px">
@@ -708,7 +761,7 @@
                             </div>
                             <div class="cell" style="width: 500px"> 
                             
-                                <input id="ipcRdc" formControlName="ipcRdc" maxlength="16" type="number" class="form-control text-control"/> 
+                                <input id="ipcRdc" formControlName="ipcRdc" maxlength="200" type="text" class="form-control text-control"/> 
                                 <div *ngIf="formErrors.ipcRdc" class="alert alert-danger">
                                     {{ formErrors.ipcRdc }}
                                 </div>  
@@ -722,7 +775,7 @@
                             </div>
                             <div class="cell" style="width: 500px"> 
                             
-                                <input id="valueAdded" formControlName="valueAdded" maxlength="16" type="number" class="form-control text-control"/> 
+                                <input id="valueAdded" formControlName="valueAdded" maxlength="200" type="text" class="form-control text-control"/> 
                                 <div *ngIf="formErrors.valueAdded" class="alert alert-danger">
                                     {{ formErrors.valueAdded }}
                                 </div>  
@@ -736,7 +789,7 @@
                             </div>
                             <div class="cell" style="width: 500px"> 
                             
-                                <input id="repairSvc" formControlName="repairSvc" maxlength="16" type="number" class="form-control text-control"/> 
+                                <input id="repairSvc" formControlName="repairSvc" maxlength="200" type="text" class="form-control text-control"/> 
                                 <div *ngIf="formErrors.repairSvc" class="alert alert-danger">
                                     {{ formErrors.repairSvc }}
                                 </div>  
@@ -750,18 +803,176 @@
                             </div>
                             <div class="cell" style="width: 500px"> 
                             
-                                <input id="sparePart" formControlName="sparePart" maxlength="16" type="number" class="form-control text-control"/> 
+                                <input id="sparePart" formControlName="sparePart" maxlength="200" type="text" class="form-control text-control"/> 
                                 <div *ngIf="formErrors.sparePart" class="alert alert-danger">
                                     {{ formErrors.sparePart }}
                                 </div>  
                                 
                             </div>
-                        </div> 
+						</div> 
+						
+
+						
+								<div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Report Signed By</label>
+								</div>
+								
+								
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="rptCoName">Company Name :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="rptCoName" type="text" maxlength="50" class="form-control text-control" formControlName="rptCoName" />
+										<div *ngIf="formErrors.rptCoName" class="alert alert-danger">
+											{{ formErrors.rptCoName }}
+										</div>
+									</div>
+								</div> 
+                                
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="rptSignedByEmpId">Employee :</label>
+									</div>
+									<div class="cell c2345">
+										<select class="form-control" formControlName="rptSignedByEmpId" style="width:300px" (change)="onEmpRptChange($event.target.value)">
+											<option *ngFor="let obj of empRows" [value]="obj.empId">{{obj.empName}}</option>
+										</select>
+									</div>
+                                </div>
+                                
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="rptSignedByName">Name :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="rptSignedByName" type="text" maxlength="50" class="form-control text-control" formControlName="rptSignedByName" />
+										<div *ngIf="formErrors.rptSignedByName" class="alert alert-danger">
+											{{ formErrors.rptSignedByName }}
+										</div>
+									</div>
+								</div> 
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="rptSignedByIdno">IC
+											<Noscript></Noscript> :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="rptSignedByIdno" type="text" maxlength="20" class="form-control text-control" formControlName="rptSignedByIdno" />
+										<div *ngIf="formErrors.rptSignedByIdno" class="alert alert-danger">
+											{{ formErrors.rptSignedByIdno }}
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="rptSignedByPos">Position :</label>
+									</div>
+									<div class="cell c2345">
+										<input id="rptSignedByPos" type="text" maxlength="50" class="form-control text-control" formControlName="rptSignedByPos" />
+										<div *ngIf="formErrors.rptSignedByPos" class="alert alert-danger">
+											{{ formErrors.rptSignedByPos }}
+										</div>
+									</div>
+								</div>
+								
+
 
 				             </div>
 				         </div>
 			     	</div>
 				</form>
+
+				
+						<div class="form-group row">
+							<div class="cell c1">
+							</div>
+							<div class="cell c2">
+							</div>
+							<div class="cell c3">
+							</div>
+							<div class="cell c4">
+							</div>
+							<div class="cell c5" style="text-align:right">
+
+								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>
+								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="testSave()"></p-button>
+							</div>
+						</div>
+
+						<p>Form value: {{ dataForm.value | json }}</p>
+
+
+			</p-tabPanel>
+
+			<p-tabPanel header="Detail Entry" (click)="changeTab(0)">
+
+
+				<p-button icon="fa fa-fw fa-save"  label="Add new entry" style="display:none" (click)="showEntryForm()">
+				</p-button>
+
+				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" [columns]="dataEntryColumns" [value]="data.rptSkMimp" selectionMode="single"
+				 [paginator]="true" [rows]="10" dataKey="txnId">
+ 
+					<ng-template pTemplate="header" let-dataEntryColumns>
+						<tr [pSelectableRow]="rowData">
+							<th style="width: 2.25em"></th>
+							<th style="text-align:center; width:80px">Bill</th> 
+						</tr>
+					</ng-template> 
+
+					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
+						<tr [pSelectableRow]="rowData">
+							<td>
+								<div [pRowToggler]="rowData">
+									<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+								</div>
+							</td>
+							<td style="width:80px">{{rowData.txnId}}</td> 
+						</tr>
+					</ng-template>  
+  
+					<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+
+						<tr>
+
+							<form [formGroup]='expandEditForm'>
+
+								<td [attr.colspan]="columns.length + 1">
+
+									<div style="width:1000px;padding:0px">
+										<div class="panel panel-info">
+											<div class="panel-body" style="padding:5px; padding-left:30px">
+ 
+
+												<div class="form-group row">
+													<div class="cell c1">
+														<label for="catatan"></label>
+													</div>
+													<div class="cell c2345">
+
+														<p-button icon="fa fa-fw fa-plus" label="Update" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
+														<p-button icon="fa fa-fw fa-close" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+								</td>
+
+							</form>
+
+						</tr>
+
+					</ng-template>
+
+				</p-table>
 
 				<div>
 
@@ -792,7 +1003,7 @@
 <div class="container">
 
 	<div style="text-align:left; float:left"> 
-		<b>REPORT - LAMPIRAN M1</b>
+		<b>REPORT - LESEN GUDANG</b>
 	</div>
 	<div style="text-align:right; float:right">
 		<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>
@@ -844,12 +1055,52 @@
  
 </p-dialog>
 
-<p-dialog id="formPrintReport" header="Print LAMPIRAN M1 - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
+<p-dialog id="formPrintReport" header="Print Lesen Gudang - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
 	 
-	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptm1/DownloadLetter/{{data.rptId}}">Lampiran M1 (Letter)</a>
-	&nbsp; 
-	<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptm1/DownloadMonthlyReport/{{data.rptId}}">Penyata Bulanan Mentah / Komponen</a>
-	&nbsp; 
-	<a target="_self" class="btn btn-warning" role="button"  
-	href="{{applicationHost}}/rptm1/DownloadMonthlySummary/{{data.rptId}}">Maklumat Cukai Terkoban</a>
+ 
+     <div style="float:left">
+       <a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptLg/DownloadLetter/{{data.rptId}}">Lesen Gudang (Letter)</a>
+    </div>
+    <div style="padding-left:20px;float:left">
+      <a target="_self" class="btn btn-danger" role="button" href="{{applicationHost}}/rptLg/DownloadAttachment/{{data.rptId}}">Lampiran B</a>
+    </div>
+	
+	
+    <div style="clear:both; padding-top:20px"></div>
+  
+     <div style="float:left">
+      <a target="_self" class="btn btn-warning" role="button" href="{{applicationHost}}/rptLg/DownloadImportRptY1/{{data.rptId}}">Laporan Bahan yang diimport tahun lepas</a>
+	</div> 
+     <div style="padding-left:20px;float:left">
+       <a target="_self" class="btn btn-warning" role="button" href="{{applicationHost}}/rptLg/DownloadImportRptY2/{{data.rptId}}">Laporan Bahan yang diimport tahun ini</a>
+     </div>
+ 
+	<div style="clear:both; padding-top:20px"></div>
+	
+     <div style="float:left">
+      <a target="_self" class="btn btn-primary" role="button" href="{{applicationHost}}/rptLg/DownloadExportRptY1/{{data.rptId}}">Laporan Bahan yang dieksport tahun lepas</a>
+     </div>
+     <div style="float:left;padding-left:20px">
+      <a target="_self" class="btn btn-primary" role="button" href="{{applicationHost}}/rptLg/DownloadExportRptY2/{{data.rptId}}">Laporan Bahan yang dieksport tahun ini</a>
+	</div>
+	
+	<div style="clear:both; padding-top:20px"></div>
+
+	
+      <div style="float:left">
+       <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA1/{{data.rptId}}">Lampiran A1</a>
+     </div>
+     <div style="float:left;padding-left:20px">
+      <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA2/{{data.rptId}}">Lampiran A2</a>
+	 </div>
+
+     <div style="float:left;padding-left:20px">
+      <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA21/{{data.rptId}}">Lampiran A2 (1)</a>
+     </div>
+  
+     <div style="float:left;padding-left:20px">
+       <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA3/{{data.rptId}}">Lampiran A3</a>
+    </div>
+  
+
 </p-dialog>

@@ -36,22 +36,7 @@ export class FormUtil<T> {
         let model = { ...this._model};
     
         if (model) {
-
-            this.setFormWithModelValue(model, blankForm);
-            
-            // for (let objPropValue of Object.entries(this._model))
-            // {
-            //     let key = objPropValue[0];
-            //     let value = objPropValue[1];   
-            //     if (blankForm)
-            //         this._form.addControl(key, new FormControl('')); 
-            //     else 
-            //     {
-            //         let controlValidators = this._formValidators[key];
-            //         if (controlValidators)
-            //         this._form.addControl(key, new FormControl(value, controlValidators)); 
-            //     }
-            // }   
+            this.setFormWithModelValue(model, blankForm);     
         }
 
         return this._form;
