@@ -253,6 +253,17 @@ export class EmployeeComponentComponent implements OnInit {
     this.formTitle = "New Employee";
     this.display = true;
     this.intention = ADD;
+
+    this.person = new EmployeeModel();
+    debugger;
+
+    // this.person.empAd1 = '';
+    // this.person.empAd2 = '';
+    // this.person.empAd3 = '';
+    // this.person.empId = null;
+    // this.person.empName = '';
+    // this.person.empIdno = null;
+    // this.person.jobTitleId = null;
    
     this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
     let userform = this.formUtil.createForm(false);
