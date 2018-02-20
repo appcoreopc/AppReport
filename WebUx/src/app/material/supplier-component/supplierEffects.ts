@@ -35,11 +35,11 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL, SUPPLIER_SAVE_SUCCESS, SUPPLIER_WAIT_PEN
             },  
             err => {                       
               if (err && err.status == 201)
-              {
+              {               
                 messageUtil.dispatchIntent(this.store, SUPPLIER_SAVE_SUCCESS, null);                
               } 
               else 
-              {                    
+              {       
                  messageUtil.dispatchIntent(this.store, SUPPLIER_SAVE_ERR, null);             
               }         
             });  
