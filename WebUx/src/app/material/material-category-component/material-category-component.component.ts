@@ -213,8 +213,9 @@ export class MaterialCategoryComponentComponent implements OnInit {
                   }
                   
                   cancel() 
-                  {
-                    this.display = false;
+                  {                               
+                    this.person = this.formUtil.rollback();
                     this.itemSelected = false;
+                    this.display = false;       
                   }
                 }
