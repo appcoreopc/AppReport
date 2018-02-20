@@ -11,7 +11,7 @@ namespace AppReport.DataServices.PTSDataModel
 
         public ICollection<RptLgYbgt> RptLgYbgt { get; set; }
         public ICollection<RptLgYexp> RptLgYexp { get; set; }
-        public ICollection<RptLgYimp> RptLgYimp { get; set; }
+        public ICollection<RptLgYimp> RptLgYimp { get; set; } 
         public ICollection<RptLgYrdy> RptLgYrdy { get; set; }
 
     }

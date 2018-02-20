@@ -24,6 +24,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SpinnerModule } from 'primeng/spinner';
 import { DialogModule } from 'primeng/dialog';
 import { RptLgYexpModel } from '../../model/RptLgYexpModel';
+import { RptLgYimpModel } from '../../model/RptLgYimpModel';
 import { Data } from '@angular/router/src/config';
 import { JobTitleModel } from "../../model/JobTitleModel"; 
 
@@ -37,8 +38,10 @@ export class LesenGudangComponentComponent implements OnInit {
    // model 
   data: RptLgModel = new RptLgModel();
   mainItemSelected: RptLgModel;
-  itemEntryModel: RptLgYexpModel = new RptLgYexpModel();
-  expandSelectedRowItem : RptLgYexpModel; 
+  itemEntryModel: RptLgYimpModel = new RptLgYimpModel();
+  itemEntryModel_Ex: RptLgYexpModel = new RptLgYexpModel();
+  expandSelectedRowItem : RptLgYimpModel; 
+  expandSelectedRowItem_Ex : RptLgYexpModel; 
   configData: ConfigModel = new ConfigModel();
 
   // forms 
@@ -61,7 +64,8 @@ export class LesenGudangComponentComponent implements OnInit {
   
   formTitle: string = "New Lesen Gudang";
   dataList: Array<RptLgModel> = new Array<RptLgModel>();
-  gridEditRow: RptLgYexpModel = new RptLgYexpModel();
+  gridEditRow: RptLgYimpModel = new RptLgYimpModel();
+  gridEditRow_Ex: RptLgYexpModel = new RptLgYexpModel();
   empDataList: Array<any> = new Array<any>();
   configDataList : Array<any> = new Array<any>(); 
   jobTitleDataList : Array<any> = new Array<any>(); 
@@ -223,11 +227,35 @@ validationMessages = {
   
   
   dataEntryColumns = [
-    { field: 'txnId' }, 
+    { field: 'txnId' },   
+    { field: 'rptId' },  
+    { field: 'rptY' },  
+    { field: 'rmid' },  
+    { field: 'fRmcatName' },  
+    { field: 'fRmdesc' },  
+    { field: 'fUomcode' },  
+    { field: 'fTariffCode' },  
+    { field: 'fOpenBalWgt' },  
+    { field: 'fOpenBalCost' },  
+    { field: 'fImpRmwgt' },  
+    { field: 'fImpRmcost' },  
+    { field: 'fLocRmwgt' },  
+    { field: 'fLocRmcost' },  
+    { field: 'usedRmwgt' },  
+    { field: 'usedRmcost' },  
+    { field: 'returnedWgt' },  
+    { field: 'fCloseBalWgt' },  
+    { field: 'fCloseBalCost' }
   ];
   
   basicEntryColumns = [
-    { field: 'txnId', header: 'Bill' } 
+    { field: 'txnId', header: 'Bil' },
+    { field: 'fRmdesc', header: 'Bahan Mentah' },
+    { field: 'fUomcode', header: '' },
+    { field: 'fTariffCode', header: 'Kod Tarif' },
+    { field: 'usedRmwgt', header: 'Bahan Mentah Digunakan (Unit)' },
+    { field: 'usedRmcost', header: 'Bahan Mentah Digunakan (RM)' },
+    { field: 'returnedWgt', header: 'Bahan Mentah Rosak' },
   ];
   
   mainColumns = [ 
@@ -620,12 +648,18 @@ ngAfterViewInit() {
 
   
    changeTab(index: number): void {
-          this.tabIndex = index;
+         this.tabIndex = index;
+
+    /*   if(this.tabIndex == 1)
+        this.data.rptLgYimp = this.data.rptLgYimp.filter(a => a.rptY == this.data.rptY1);
+      else if(this.tabIndex == 2)
+        this.data.rptLgYimp = this.data.rptLgYimp.filter(a => a.rptY == this.data.rptY2);
+    */ 
    }
         
   private configureAddForms() {
     this.enabledDetailEntry = true;
-    this.tabIndex = 0;
+    //this.tabIndex = 0;
     console.log("configureAddForms");
     
   
@@ -701,7 +735,12 @@ ngAfterViewInit() {
   
   private configureEditForm() {
     this.enabledDetailEntry = false;
-    this.tabIndex = 0;
+    //this.tabIndex = 0;
+ 
+  this.data.rptLgYimpY1 = this.data.rptLgYimp.filter(a => a.rptY == this.data.rptY1);
+  this.data.rptLgYimpY2 = this.data.rptLgYimp.filter(a => a.rptY == this.data.rptY2);
+  this.data.rptLgYexpY1 = this.data.rptLgYexp.filter(a => a.rptY == this.data.rptY1);
+  this.data.rptLgYexpY2 = this.data.rptLgYexp.filter(a => a.rptY == this.data.rptY2);
 
     console.log("configureEditForm", this.data);
     this.dataForm = this.fb.group({
@@ -783,7 +822,8 @@ ngAfterViewInit() {
       
       this.setupAddForm(); 
       // reinit form entires //
-      this.data.rptLgYexpModel = new Array<RptLgYexpModel>(); 
+      this.data.rptLgYimp = new Array<RptLgYimpModel>(); 
+      this.data.rptLgYexp = new Array<RptLgYexpModel>(); 
     }
     
     addDataEntryForm() {
@@ -884,29 +924,43 @@ ngAfterViewInit() {
       }
       
       setupDetailEntryForm() {
-        this.itemEntryModel = new RptLgYexpModel();
-        
-        if (!this.data.rptLgYexpModel) {
-          this.data.rptLgYexpModel = new Array<RptLgYexpModel>();
+        this.itemEntryModel = new RptLgYimpModel();
+        this.itemEntryModel_Ex = new RptLgYexpModel();
+         
+        if (!this.data.rptLgYimp) {
+          this.data.rptLgYimp  = new Array<RptLgYimpModel>();
         }
-        
+        if (!this.data.rptLgYexp) {
+          this.data.rptLgYexp  = new Array<RptLgYexpModel>();
+        }
+         
         this.entryDetailForm = this.fb.group({
           'txnId': [this.itemEntryModel.txnId],
-          //'wastedCost': [this.itemEntryModel.wastedCost, [Validators.required, Validators.minLength(1)]],
-          //'usedCost': [this.itemEntryModel.usedCost, [Validators.required, Validators.minLength(1)]]  
+          'fRmdesc': [this.itemEntryModel.fRmdesc],
+          'fUomcode': [this.itemEntryModel.fUomcode],
+          'fTariffCode': [this.itemEntryModel.fTariffCode],
+          'usedRmwgt': [this.itemEntryModel.usedRmwgt],
+          'usedRmcost': [this.itemEntryModel.usedRmcost],
+          'returnedWgt': [this.itemEntryModel.returnedWgt] 
         });
         
         this.entryDetailForm.valueChanges.debounceTime(100).subscribe(
           data => this.onEntryDetailValueChanged(data));
         }
         
-        onEntryDetailValueChanged(data?: RptLgYexpModel) {
+        onEntryDetailValueChanged(data?: RptLgYimpModel) {
           
           if (!this.entryDetailForm) { return; }
           
           const form = this.entryDetailForm;
           
           this.itemEntryModel.txnId = data.txnId;
+          this.itemEntryModel.fRmdesc = data.fRmdesc;
+          this.itemEntryModel.fUomcode = data.fUomcode;
+          this.itemEntryModel.fTariffCode = data.fTariffCode;
+          this.itemEntryModel.usedRmwgt = data.usedRmwgt;
+          this.itemEntryModel.usedRmcost = data.usedRmcost;
+          this.itemEntryModel.returnedWgt = data.returnedWgt;
           //this.itemEntryModel.rptId = this.data.rptId;
           //this.itemEntryModel.usedCost = data.usedCost; 
           //this.itemEntryModel.wastedCost = data.wastedCost; 
@@ -929,19 +983,15 @@ ngAfterViewInit() {
           this.displayDataEntry = true;
         }
         
-        onGridRowSave(rowData: RptLgYexpModel, dt: any) {
+        onGridRowSave(rowData: RptLgYimpModel, dt: any) {
           
           const prevDataRow = { ...rowData };
-          const gridEditItem = this.expandEditForm.value as RptLgYexpModel;
+          const gridEditItem = this.expandEditForm.value as RptLgYimpModel;
           
-          if (gridEditItem) {
-            /*rowData.txnId = gridEditItem.txnId;
-            rowData.rptId = gridEditItem.rptId;
-            rowData.fCustomNo = gridEditItem.fCustomNo;
-            rowData.fGstcost = gridEditItem.fGstcost;
-            rowData.fImpCost = gridEditItem.fImpCost;
-            rowData.fImpDate = gridEditItem.fImpDate;
-            rowData.fImpWgt = gridEditItem.fImpWgt;*/ 
+          if (gridEditItem) { 
+            rowData.usedRmcost = gridEditItem.usedRmcost;
+            rowData.usedRmwgt = gridEditItem.usedRmwgt;
+            rowData.returnedWgt = gridEditItem.returnedWgt; 
           }
           
           // if (rowData) {
@@ -966,7 +1016,7 @@ ngAfterViewInit() {
         onRowExpanded(rowdata) {
           
           debugger; 
-          const row = rowdata.data as RptLgYexpModel;
+          const row = rowdata.data as RptLgYimpModel;
           
           // shorthand copy and then used to display on 
           // grid //
@@ -980,15 +1030,16 @@ ngAfterViewInit() {
           this.configureExpandGridForm(row)
         }
         
-        configureExpandGridForm(itemEntryModel: RptLgYexpModel)
+        configureExpandGridForm(itemEntryModel: RptLgYimpModel)
         {
           if (itemEntryModel)
           this.expandSelectedRowItem = itemEntryModel
           
           this.expandEditForm = this.fb.group({
-            //'rptId': [this.expandSelectedRowItem.rptId],
-            //'wastedCost': [this.expandSelectedRowItem.wastedCost, [Validators.required, Validators.minLength(1)]] ,
-            //'usedCost': [this.expandSelectedRowItem.usedCost, [Validators.required, Validators.minLength(1)]]
+            'rptId': [this.expandSelectedRowItem.rptId],
+            'usedRmcost': [this.expandSelectedRowItem.usedRmcost, [Validators.required, Validators.minLength(1)]],
+            'usedRmwgt': [this.expandSelectedRowItem.usedRmwgt, [Validators.required, Validators.minLength(1)]],
+            'returnedWgt': [this.expandSelectedRowItem.returnedWgt, [Validators.required, Validators.minLength(1)]]
           });
           
          /* if (itemEntryModel.fImpDate && itemEntryModel.fImpDate.length > 0)

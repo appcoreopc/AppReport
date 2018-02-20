@@ -22,7 +22,7 @@ namespace AppReport.Services
 
         public IEnumerable<RptLg> GetAllRptDetails()
         {
-            return _context.RptLg.Include(x => x.RptLgYexp).ToList();
+            return _context.RptLg.Include(x => x.RptLgYexp).Include(x => x.RptLgYimp).ToList();
         }
 
        /* public IEnumerable<RptLg> GetAllRptInvoices()
@@ -127,16 +127,16 @@ namespace AppReport.Services
 
             if (result)
             {
-                if (requestModel?.RptLgYbgt != null)
+                if (requestModel?.RptLgYimp != null)
                 {
-                    HandleChildUpdateItems(requestModel.RptLgYbgt);
+                    HandleChildUpdateItems_1(requestModel.RptLgYimp);
                 }
             }
 
             return result;
         }
 
-        private void HandleChildUpdateItems(IEnumerable<RptLgYbgtModel> requestItemDetails)
+        private void HandleChildUpdateItems_1(IEnumerable<RptLgYimpModel> requestItemDetails)
         {
             /// loops through items to see if we need to update 
 
@@ -145,13 +145,14 @@ namespace AppReport.Services
                 if (item.TxnId.HasValue)
                 {
                     // update    
-                    var targetUpdateItem = base.FindById<RptLgYbgt>(item.TxnId.Value);
+                    var targetUpdateItem = base.FindById<RptLgYimp>(item.TxnId.Value);
 
                     if (targetUpdateItem != null)
                     {
                         targetUpdateItem.RptId = item.RptId;
-                        /*targetUpdateItem.UsedCost = item.UsedCost;
-                        targetUpdateItem.WastedCost = item.WastedCost;*/
+                        targetUpdateItem.UsedRmcost = item.UsedRmcost;
+                        targetUpdateItem.UsedRmwgt = item.UsedRmwgt;
+                        targetUpdateItem.ReturnedWgt = item.ReturnedWgt; 
 
                         // Persist into database
                         Save(targetUpdateItem, targetUpdateItem.TxnId);

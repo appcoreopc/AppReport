@@ -37,6 +37,8 @@ button .commandBtn {
 .c4 { width: 15%}
 .c5 { width: 33%}
 .c2345 { width: 80%}
+.c12 { width: 35%}
+.c345 { width: 60%}
 .text-control { width: 99%}
 .date-control { width: 99%}
 .number-control { width: 99%}
@@ -51,4 +53,7 @@ select.form-control:not([size]):not([multiple]) {
 } 
 .numberCol {
     text-align: right;
+}
+.hide{
+    display: none;
 }

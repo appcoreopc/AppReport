@@ -1,5 +1,6 @@
 import { RptLgYexpModel } from "./RptLgYexpModel";
- 
+import { RptLgYimpModel } from "./RptLgYimpModel";
+
 export class RptLgModel { 
 
   rptId : number;
@@ -145,8 +146,12 @@ export class RptLgModel {
   fBgtGstcostImp : number;
   fBgtTaxCostImp : number;  */
 
-  rptLgYexpModel : RptLgYexpModel[];
-  //rptLgYexp : RptLgYexpModel[];
+  rptLgYimp : RptLgYimpModel[];
+  rptLgYimpY1 : RptLgYimpModel[];
+  rptLgYimpY2 : RptLgYimpModel[];
+  rptLgYexp : RptLgYexpModel[];
+  rptLgYexpY1 : RptLgYexpModel[];
+  rptLgYexpY2 : RptLgYexpModel[];
   //rptLgYimp : RptLgYimpModel[];
   //rptLgYrdy : RptLgYrdyModel[];
 }
