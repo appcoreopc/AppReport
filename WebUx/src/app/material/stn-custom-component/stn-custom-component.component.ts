@@ -112,9 +112,9 @@ export class StnCustomComponentComponent implements OnInit {
       this.stncustom.isLocal = data.isLocal;
     }
 
-    this.rows = [...this.rows];
+    this.rows = [...this.rows];    
     this.dispatchIntent(STN_CUSTOM_SAVE, data);
-    this.display = false;
+    
 
   }
 
