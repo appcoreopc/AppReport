@@ -63,7 +63,8 @@ export class UserComponentComponent implements OnInit {
   ];
 
   userSubscription : Subscription;
-  dataList : Array < any > = new Array < any > ();
+
+  dataList : Array < any > = new Array <any> ();
   display : boolean = false;
   itemSelected : boolean = false;
 
@@ -87,7 +88,7 @@ export class UserComponentComponent implements OnInit {
   save() {
           
     let data = this.formUtil.commit();
-    
+        
     if (data)
     {
       if (this.intention == ADD)
@@ -200,7 +201,7 @@ export class UserComponentComponent implements OnInit {
       onSelect(evt : any) {
               
         if (evt && evt.selected && evt.selected.length > 0) {
-                    this.person = evt.selected[0] as UserModel;          
+          this.person = evt.selected[0] as UserModel;          
           this.itemSelected = true;
 
           this.formUtil = new FormUtil<UserModel>(this.person, this.formValidators);
