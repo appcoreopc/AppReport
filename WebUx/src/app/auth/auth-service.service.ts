@@ -18,6 +18,8 @@ import {ISubscription} from "rxjs/Subscription";
 import * as messageUtil from "../sharedObjects/storeMessageUtil";
 import {Store} from '@ngrx/store';
 import {  Router }  from '@angular/router';
+import "rxjs/add/operator/map";
+
 
 @Injectable()
 export class AuthService {

@@ -12,6 +12,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { StncustomModel } from '../../model/StncustomModel';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormUtil } from "../../sharedObjects/formUtil";
+import "rxjs/add/operator/debounceTime";
 
 @Component({
   selector: 'app-stn-custom-component',
@@ -179,8 +180,7 @@ export class StnCustomComponentComponent implements OnInit {
   }
 
   onSelect(evt: any) {
-
-    debugger;
+    
     if (evt && evt.selected && evt.selected.length > 0) {
       this.stncustom = evt.selected[0] as StncustomModel;
       this.itemSelected = true;
