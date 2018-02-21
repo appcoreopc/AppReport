@@ -19,7 +19,10 @@ describe('NavigationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('NavigationComponent created', () => {
+    
+    console.log(component);
+    expect(component).not.toBeNull();
+;
   });
 });

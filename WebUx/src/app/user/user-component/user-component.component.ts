@@ -68,7 +68,7 @@ export class UserComponentComponent implements OnInit {
   display : boolean = false;
   itemSelected : boolean = false;
 
-  constructor(private store : Store < CityAppState >, private fb : FormBuilder, private http : HttpClient) {}
+  constructor(private store : Store <CityAppState>, private fb : FormBuilder, private http : HttpClient) {}
 
   ngOnInit() {
 
