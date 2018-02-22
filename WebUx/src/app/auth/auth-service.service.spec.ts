@@ -18,7 +18,7 @@ describe('AuthServiceService', () => {
     TestBed.configureTestingModule({
       imports : [ReactiveFormsModule, FormsModule, 
         StoreModule, HttpClientModule, BrowserAnimationsModule],
-      providers: [AuthService, {provide: Store, useValue: userServiceStub }, HttpClient ]]
+      providers: [AuthService, {provide: Store, useValue: userServiceStub }, HttpClient]
     });
   });
 
