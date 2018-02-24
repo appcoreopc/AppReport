@@ -17,9 +17,21 @@
 						<div class="panel panel-info">
 							<div class="panel-body" style="padding:5px; padding-left:30px">
                      
-                                
+                        				        
 
                                 <div class="form-group row">
+									<div class="cell c1">
+										<label for="refNo">Current Year :</label>
+									</div>
+									<div class="cell c2">
+										<input id="rptY2" type="number" maxlength="4" class="form-control text-control" formControlName="rptY2" />
+						             <div *ngIf="formErrors.rptY2" class="alert alert-danger">
+											{{ formErrors.rptY2 }}
+										</div>
+									</div> 
+                                </div>
+								
+							    <div class="form-group row">
 									<div class="cell c1">
 										<label for="refNo">Reference No :</label>
 									</div>
@@ -42,7 +54,7 @@
 									</div>
                                 </div>
                                 
-								<div class="form-group row">
+								<!--<div class="form-group row">
 									<div class="cell c1">
 										<label for="rptSdateY2">Current Year - From :</label>
 									</div>
@@ -115,7 +127,7 @@
 											{{ formErrors.rptEdateY3 }}
 										</div>
 									</div>
-                                 </div>
+                                 </div>-->
 
                                  <div class="form-group row">
 									<div class="cell c1">
@@ -465,7 +477,7 @@
 									</div>
                                 </div>
                                 
-								<div class="form-group row">
+								<!--<div class="form-group row">
 									<div class="cell" style="width:400px">
 										<label for="mfdGoodY3">Jenis barang bagi mengilang untuk permohonan : </label>
 									</div>
@@ -479,7 +491,7 @@
 										</div>  
 										 
 									</div>
-								</div>
+								</div>-->
 								
 								 <div class="form-group row">
 									<div class="cell c1">
@@ -606,7 +618,7 @@
                                 </div>  
                                 
                             </div>
-                        </div>-->
+                        </div>
 					
                         <div class="form-group row" style="padding-top:20px">
                             <div class="cell" style="width:400px">
@@ -622,7 +634,7 @@
                                 </div>  
                                 
                             </div>
-                        </div> 
+                        </div> -->
 
                         <div class="form-group row">
                             <div class="cell" style="width:400px">
@@ -904,128 +916,7 @@
 
 
 			</p-tabPanel>
-
-			<p-tabPanel header="Import - Last Year ({{data.rptY1}})" (click)="changeTab(1)">
-
-
-				<p-button icon="fa fa-fw fa-save"  label="Add new entry" style="display:none" (click)="showEntryForm()">
-				</p-button>
-
-				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" [columns]="dataEntryColumns" [value]="data.rptLgYimpY1" selectionMode="single"
-				 [paginator]="true" [rows]="10" dataKey="txnId">
- 
-					<ng-template pTemplate="header" let-dataEntryColumns>
-						<tr [pSelectableRow]="rowData">
-							<th rowspan="2" style="width: 2.25em"></th> 
-							<th rowspan="2" style="text-align:center; width:80px">Bil</th> 
-							<th rowspan="2" style="text-align:center">Bahan Mentah</th>
-							<th rowspan="2" style="width: 60px; text-align:center"></th> 
-							<th rowspan="2" style="text-align:center">Kod Tarif</th>
-							<th colspan="2" style="text-align:center">Bahan Mentah Digunakan</th> 
-							<th rowspan="2" style="text-align:center">Bahan Mentah Rosak / Dipulangkan</th>
-						</tr>
-						<tr [pSelectableRow]="rowData"> 
-							<th style="text-align:center">Unit</th>
-							<th style="text-align:center">Nilai (RM)</th> 
-						</tr>
-					</ng-template>  
-					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
-						<tr [pSelectableRow]="rowData"> <!-- [ngClass]="{ 'hide': rowData.rptY!=2016 }" -->
-							<td>
-								<div [pRowToggler]="rowData">  
-									<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
-								</div>
-							</td>
-							<td style="width:80px">{{rowData.rptY}} {{rowData.txnId}}</td> 
-							<td>{{rowData.fRmdesc}}</td> 
-							<td>{{rowData.fUomcode}}</td> 
-							<td>{{rowData.fTariffCode}}</td> 
-							<td style="text-align:right">{{rowData.usedRmwgt | number:'1.2-2'}}</td> 
-							<td style="text-align:right">{{rowData.usedRmcost | number:'1.2-2'}}</td> 
-							<td style="text-align:right">{{rowData.returnedWgt | number:'1.2-2'}}</td> 
-						</tr>
-					</ng-template>  
   
-					<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-
-						<tr>
-
-							<form [formGroup]='expandEditForm'>
-
-								<td [attr.colspan]="columns.length + 1">
-
-									<div style="width:1000px;padding:0px">
-										<div class="panel panel-info">
-											<div class="panel-body" style="padding:5px; padding-left:30px">
- 
-                                                <div class="form-group row">
-													<div class="cell c12">
-														<label for="usedRmwgt">Bahan Mentah Digunakan (Unit)</label>
-													</div>
-													<div class="cell c345">
-														<input id="usedRmwgt" maxlength="8" formControlName="usedRmwgt" type="number" class="form-control text-control" />
-													</div>
-												</div>
-                                                <div class="form-group row">
-													<div class="cell c12">
-														<label for="usedRmcost">Bahan Mentah Digunakan (RM)</label>
-													</div>
-													<div class="cell c345">
-														<input id="usedRmcost" maxlength="16" formControlName="usedRmcost" type="number" class="form-control text-control" />
-													</div>
-												</div>
-                                                <div class="form-group row">
-													<div class="cell c12">
-														<label for="returnedWgt">Bahan Mentah Rosak / Dipulangkan</label>
-													</div>
-													<div class="cell c345">
-														<input id="returnedWgt" maxlength="8" formControlName="returnedWgt" type="number" class="form-control text-control" />
-													</div>
-												</div>
-												<div class="form-group row">
-													<div class="cell c12">
-														<label for="catatan"></label>
-													</div>
-													<div class="cell c345">
-
-														<p-button icon="fa fa-fw fa-plus" label="Update" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
-														<p-button icon="fa fa-fw fa-close" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
-
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-
-								</td>
-
-							</form>
-
-						</tr>
-
-					</ng-template>
-
-				</p-table>
-
-				<div>
-
-					<div>
-
-						<p>Form value: {{ dataForm.value | json }}</p>
-					</div>
-
-				</div>
-
-				<div class="container" style="text-align:right">
-
-					<p-button icon="fa fa-fw fa-save" label="Save" (click)="save()"></p-button>
-				</div>
-
-
-			</p-tabPanel>
-
 			<p-tabPanel header="Import - Current Year ({{data.rptY2}})" (click)="changeTab(2)">
 
 
@@ -1147,13 +1038,13 @@
 
 			</p-tabPanel>
 
-            <p-tabPanel header="Export - Last Year ({{data.rptY1}})" (click)="changeTab(3)">
+            <p-tabPanel header="Export - Current Year ({{data.rptY2}})" (click)="changeTab(2)">
 
 
 				<p-button icon="fa fa-fw fa-save"  label="Add new entry" style="display:none" (click)="showEntryForm()">
 				</p-button>
 
-				<p-table #dtEntry (onRowExpand)="onRowExpanded($event)" [columns]="dataEntryColumns" [value]="data.rptLgYexpY2" selectionMode="single"
+				<p-table #dtEntryExp (onRowExpand)="onRowExpandedExp($event)" [columns]="dataEntryColumns" [value]="data.rptLgYexpY2" selectionMode="single"
 				 [paginator]="true" [rows]="10" dataKey="txnId">
  
 					<ng-template pTemplate="header" let-dataEntryColumns>
@@ -1161,27 +1052,21 @@
 							<th rowspan="2" style="width: 2.25em"></th> 
 							<th rowspan="2" style="text-align:center; width:80px">Bil</th> 
 							<th rowspan="2" style="text-align:center">Jenis barang siap</th> 
-							<th rowspan="2" style="text-align:center">Kod Tarif</th>
-							<th colspan="2" style="text-align:center">Stok Awal</th>
+							<th rowspan="2" style="text-align:center">Kod Tarif</th> 
 							<th colspan="2" style="text-align:center">Kuantiti Dihasilkan</th> 
 							<th colspan="2" style="text-align:center">Kuantiti Dieksport / FTZ / GPB</th>
 							<th colspan="2" style="text-align:center">Kuantiti Jualan Tempatan</th>
-							<th colspan="2" style="text-align:center">Kuantiti Barang Siap Rosak</th>
-							<th colspan="2" style="text-align:center">Baki</th>
+							<th colspan="2" style="text-align:center">Kuantiti Barang Siap Rosak</th> 
 						</tr>
 						<tr [pSelectableRow]="rowData"> 
 							<th style="text-align:center">Unit</th>
-							<th style="text-align:center">Nilai (RM)</th> 
+							<th style="text-align:center">Nilai (RM)</th>  
 							<th style="text-align:center">Unit</th>
 							<th style="text-align:center">Nilai (RM)</th> 
 							<th style="text-align:center">Unit</th>
 							<th style="text-align:center">Nilai (RM)</th> 
 							<th style="text-align:center">Unit</th>
-							<th style="text-align:center">Nilai (RM)</th> 
-							<th style="text-align:center">Unit</th>
-							<th style="text-align:center">Nilai (RM)</th> 
-							<th style="text-align:center">Unit</th>
-							<th style="text-align:center">Nilai (RM)</th> 
+							<th style="text-align:center">Nilai (RM)</th>  
 						</tr>
 					</ng-template>  
 					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
@@ -1194,9 +1079,7 @@
 	
 							<td style="width:80px">{{rowData.rptY}} {{rowData.txnId}}</td> 
 							<td>{{rowData.stkDesc}}</td> 
-							<td>{{rowData.tariffCode}}</td>  
-							<td style="text-align:right">{{rowData.openBalQty | number:'1.2-2'}}</td> 
-							<td style="text-align:right">{{rowData.openBalCost | number:'1.2-2'}}</td> 
+							<td>{{rowData.tariffCode}}</td>   
 							<td style="text-align:right">{{rowData.madeQty | number:'1.2-2'}}</td> 
 							<td style="text-align:right">{{rowData.madeCost | number:'1.2-2'}}</td> 
 							<td style="text-align:right">{{rowData.expQty | number:'1.2-2'}}</td> 
@@ -1204,9 +1087,7 @@
 							<td style="text-align:right">{{rowData.locSalesQty | number:'1.2-2'}}</td> 
 							<td style="text-align:right">{{rowData.locSalesCost | number:'1.2-2'}}</td> 
 							<td style="text-align:right">{{rowData.damagedQty | number:'1.2-2'}}</td> 
-							<td style="text-align:right">{{rowData.damagedCost | number:'1.2-2'}}</td> 
-							<td style="text-align:right">{{rowData.closeBalQty | number:'1.2-2'}}</td> 
-							<td style="text-align:right">{{rowData.closeBalCost | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.damagedCost | number:'1.2-2'}}</td>  
 						</tr>
 					</ng-template>  
   
@@ -1214,46 +1095,82 @@
 
 						<tr>
 
-							<form [formGroup]='expandEditForm'>
+							<form [formGroup]='expandEditFormExp'>
 
 								<td [attr.colspan]="columns.length + 1">
 
 									<div style="width:1000px;padding:0px">
 										<div class="panel panel-info">
 											<div class="panel-body" style="padding:5px; padding-left:30px">
- 
+  
                                                 <div class="form-group row">
-													<div class="cell c12">
-														<label for="tariffCode">Kod Tarif</label>
+													<div class="cell c1">
+														<label for="madeQty">Kuantiti Dihasilkan (Unit)</label>
 													</div>
-													<div class="cell c345">
-														<input id="tariffCode" maxlength="50" formControlName="tariffCode" type="text" class="form-control text-control" />
+													<div class="cell c2">
+														<input id="madeQty" maxlength="8" formControlName="madeQty" type="number" class="form-control text-control" />
+													</div>
+													<div class="cell c3"></div>
+													<div class="cell c4">
+														<label for="madeCost">Nilai (RM)</label>
+													</div>
+													<div class="cell c5">
+														<input id="madeCost" maxlength="8" formControlName="madeCost" type="number" class="form-control text-control" />
 													</div>
 												</div>
                                                 <div class="form-group row">
-													<div class="cell c12">
-														<label for="openBalQty">Stok Awal (Unit)</label>
+													<div class="cell c1">
+														<label for="expQty">Kuantiti Dieksport / FTZ / GPB (Unit)</label>
 													</div>
-													<div class="cell c345">
-														<input id="openBalQty" maxlength="8" formControlName="openBalQty" type="number" class="form-control text-control" />
+													<div class="cell c2">
+														<input id="expQty" maxlength="8" formControlName="expQty" type="number" class="form-control text-control" />
+													</div>
+													<div class="cell c3"></div>
+													<div class="cell c4">
+														<label for="expCost">Nilai (RM)</label>
+													</div>
+													<div class="cell c5">
+														<input id="expCost" maxlength="8" formControlName="expCost" type="number" class="form-control text-control" />
 													</div>
 												</div>
                                                 <div class="form-group row">
-													<div class="cell c12">
-														<label for="openBalCost">Stok Awal (RM)</label>
+													<div class="cell c1">
+														<label for="locSalesQty">Kuantiti Jualan Tempatan (Unit)</label>
 													</div>
-													<div class="cell c345">
-														<input id="openBalCost" maxlength="8" formControlName="openBalCost" type="number" class="form-control text-control" />
+													<div class="cell c2">
+														<input id="locSalesQty" maxlength="8" formControlName="locSalesQty" type="number" class="form-control text-control" />
+													</div>
+													<div class="cell c3"></div>
+													<div class="cell c4">
+														<label for="locSalesCost">Nilai (RM)</label>
+													</div>
+													<div class="cell c5">
+														<input id="locSalesCost" maxlength="8" formControlName="locSalesCost" type="number" class="form-control text-control" />
 													</div>
 												</div>
+                                                <div class="form-group row">
+													<div class="cell c1">
+														<label for="damagedQty">Kuantiti Barang Siap Rosak (Unit)</label>
+													</div>
+													<div class="cell c2">
+														<input id="damagedQty" maxlength="8" formControlName="damagedQty" type="number" class="form-control text-control" />
+													</div>
+													<div class="cell c3"></div>
+													<div class="cell c4">
+														<label for="damagedCost">Nilai (RM)</label>
+													</div>
+													<div class="cell c5">
+														<input id="damagedCost" maxlength="8" formControlName="damagedCost" type="number" class="form-control text-control" />
+													</div>
+												</div> 
 												<div class="form-group row">
 													<div class="cell c12">
 														<label for="catatan"></label>
 													</div>
 													<div class="cell c345">
 
-														<p-button icon="fa fa-fw fa-plus" label="Update" (click)="onGridRowSave(rowData, dtEntry)"></p-button>
-														<p-button icon="fa fa-fw fa-close" label="Cancel" (click)="onGridRowCancel(rowData, dtEntry)"></p-button>
+														<p-button icon="fa fa-fw fa-plus" label="Update" (click)="onGridRowSaveExp(rowData, dtEntryExp)"></p-button>
+														<p-button icon="fa fa-fw fa-close" label="Cancel" (click)="onGridRowCancelExp(rowData, dtEntryExp)"></p-button>
 
 													</div>
 												</div>
@@ -1270,6 +1187,241 @@
 						</tr>
 
 					</ng-template>
+					
+
+				</p-table>
+
+				<div>
+
+					<div>
+
+						<p>Form value: {{ dataForm.value | json }}</p>
+					</div>
+
+				</div>
+
+				<div class="container" style="text-align:right">
+
+					<p-button icon="fa fa-fw fa-save" label="Save" (click)="save()"></p-button>
+				</div>
+
+
+			</p-tabPanel>
+
+
+		    <p-tabPanel header="Budget - Local" (click)="changeTab(3)">
+  
+				<p-table #dtEntryBgtL  [columns]="dataEntryColumns" [value]="data.rptLgYbgtL" selectionMode="single"
+				 [paginator]="true" [rows]="10" dataKey="txnId">
+ 
+					<ng-template pTemplate="header" let-dataEntryColumns>
+						<tr [pSelectableRow]="rowData">
+							<th style="text-align:center; width:80px">Bil</th> 
+							<th style="text-align:center; width:200px">Keterangan Bahan Mentah/Komponen</th> 
+							<th style="text-align:center">No. Kod Tariff</th> 
+							<th style="text-align:center; width:150px">Negara Tempat Asal</th> 
+							<th style="text-align:center">Kuantiti Yang Dipohon</th>
+							<th style="text-align:center; width:50px">Unit</th>
+							<th style="text-align:center">Nilai (RM)</th> 
+							<th style="text-align:center; width:80px">Kadar Duti Import (%)</th> 
+							<th style="text-align:center">Jumlah Duti Import (RM)</th> 
+							<th style="text-align:center; width:60px">Kadar GST (%)</th> 
+							<th style="text-align:center">Jumlah GST (RM)</th> 
+							<th style="text-align:center">Jumlah Cukai</th> 
+						</tr>
+					</ng-template>  
+ 
+	
+					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
+						<tr [pSelectableRow]="rowData"> 
+							<td>{{rowData.txnId}}</td> 
+							<td>{{rowData.fRmdesc}}</td> 
+							<td>{{rowData.fTariffCode}}</td>   
+							<td>{{rowData.fCountryList}}</td>   
+							<td style="text-align:right">{{rowData.qty | number:'1.2-2'}}</td> 
+							<td style="text-align:center;">{{rowData.fUomcode}}</td>   
+							<td style="text-align:right">{{rowData.fCost | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.fDutyImpRate | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.fDutyImpCost | number:'1.2-2'}}</td>  
+							<td style="text-align:center">{{rowData.fGstrate*100}}%</td> 
+							<td style="text-align:right">{{rowData.fGstcost | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.fTaxCost | number:'1.2-2'}}</td>   
+						</tr>
+					</ng-template>  
+  
+				 
+
+				</p-table>
+
+				<div>
+
+					<div>
+
+						<p>Form value: {{ dataForm.value | json }}</p>
+					</div>
+
+				</div>
+
+				<div class="container" style="text-align:right">
+
+					<p-button icon="fa fa-fw fa-save" label="Save" (click)="save()"></p-button>
+				</div> 
+
+			</p-tabPanel>
+
+			 <p-tabPanel header="Budget - Import" (click)="changeTab(4)">
+  
+				<p-table #dtEntryBgtL [columns]="dataEntryColumns" [value]="data.rptLgYbgtE" selectionMode="single"
+				 [paginator]="true" [rows]="10" dataKey="txnId">
+ 
+					<ng-template pTemplate="header" let-dataEntryColumns>
+						<tr [pSelectableRow]="rowData">
+							<th style="text-align:center; width:80px">Bil</th> 
+							<th style="text-align:center; width:200px">Keterangan Bahan Mentah/Komponen</th> 
+							<th style="text-align:center">No. Kod Tariff</th> 
+							<th style="text-align:center; width:150px">Negara Tempat Asal</th> 
+							<th style="text-align:center">Kuantiti Yang Dipohon</th>
+							<th style="text-align:center; width:50px">Unit</th>
+							<th style="text-align:center">Nilai (RM)</th> 
+							<th style="text-align:center; width:80px">Kadar Duti Import (%)</th> 
+							<th style="text-align:center">Jumlah Duti Import (RM)</th> 
+							<th style="text-align:center; width:60px">Kadar GST (%)</th> 
+							<th style="text-align:center">Jumlah GST (RM)</th> 
+							<th style="text-align:center">Jumlah Cukai</th> 
+						</tr>
+					</ng-template>  
+ 
+	
+					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
+						<tr [pSelectableRow]="rowData"> 
+							<td>{{rowData.txnId}}</td> 
+							<td>{{rowData.fRmdesc}}</td> 
+							<td>{{rowData.fTariffCode}}</td>   
+							<td>{{rowData.fCountryList}}</td>   
+							<td style="text-align:right">{{rowData.qty | number:'1.2-2'}}</td> 
+							<td style="text-align:center;">{{rowData.fUomcode}}</td>   
+							<td style="text-align:right">{{rowData.fCost | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.fDutyImpRate | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.fDutyImpCost | number:'1.2-2'}}</td>  
+							<td style="text-align:center">{{rowData.fGstrate*100}}%</td> 
+							<td style="text-align:right">{{rowData.fGstcost | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.fTaxCost | number:'1.2-2'}}</td>   
+						</tr>
+					</ng-template>  
+  
+				 
+
+				</p-table>
+
+				<div>
+
+					<div>
+
+						<p>Form value: {{ dataForm.value | json }}</p>
+					</div>
+
+				</div>
+
+				<div class="container" style="text-align:right">
+
+					<p-button icon="fa fa-fw fa-save" label="Save" (click)="save()"></p-button>
+				</div>
+
+
+			</p-tabPanel>
+
+			<p-tabPanel header="Forecast" (click)="changeTab(5)">
+ 
+				<p-table #dtEntryRdy (onRowExpand)="onRowExpandedRdy($event)" [columns]="dataEntryColumns" [value]="data.rptLgYrdy" selectionMode="single"
+				 [paginator]="true" [rows]="10" dataKey="txnId">
+ 
+					<ng-template pTemplate="header" let-dataEntryColumns>
+						<tr [pSelectableRow]="rowData">
+							<th rowspan="2" style="width: 2.25em"></th> 
+							<th style="text-align:center; width:80px">Bil</th> 
+							<th style="text-align:center; width:200px">Keterangan Batang Siap</th> 
+							<th style="text-align:center">No. Kod Tariff</th>  
+							<th style="text-align:center">Kuantiti</th> 
+							<th style="text-align:center">Nilai (RM)</th> 
+							<th style="text-align:center; width:80px">Kadar Duti Import</th> 
+							<th style="text-align:center">Jumlah Duti Import (RM)</th> 
+							<th style="text-align:center; width:60px">Kadar GST (%)</th> 
+							<th style="text-align:center">Jumlah GST (RM)</th> 
+							<th style="text-align:center">Jumlah Cukai</th> 
+						</tr> 
+					</ng-template>  
+					 <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
+						<tr [pSelectableRow]="rowData"> 
+							<td>
+								<div [pRowToggler]="rowData">  
+									<i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+								</div>
+							</td>  
+		  
+							<td>{{rowData.txnId}}</td> 
+							<td>{{rowData.stkDesc}}</td> 
+							<td>{{rowData.tariffCode}}</td>    
+							<td style="text-align:right">{{rowData.qty | number:'1.2-2'}}</td>  
+							<td style="text-align:right">{{rowData.cost | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.dutyImpRate | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.dutyImpCost | number:'1.2-2'}}</td>  
+							<td style="text-align:center">{{rowData.gstrate*100}}%</td> 
+							<td style="text-align:right">{{rowData.gstcost | number:'1.2-2'}}</td> 
+							<td style="text-align:right">{{rowData.taxCost | number:'1.2-2'}}</td>   
+						</tr>
+					</ng-template>  
+  
+					<ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+
+						<tr>
+
+							<form [formGroup]='expandEditFormRdy'>
+
+								<td [attr.colspan]="columns.length + 1">
+
+									<div style="width:1000px;padding:0px">
+										<div class="panel panel-info">
+											<div class="panel-body" style="padding:5px; padding-left:30px">
+  
+                                                <div class="form-group row">
+													<div class="cell c1">
+														<label for="qty">Kuantiti</label>
+													</div>
+													<div class="cell c2">
+														<input id="qty" maxlength="8" formControlName="qty" type="number" class="form-control text-control" />
+													</div>
+													<div class="cell c3"></div>
+													<div class="cell c4">
+														<label for="cost">Nilai (RM)</label>
+													</div>
+													<div class="cell c5">
+														<input id="cost" maxlength="8" formControlName="cost" type="number" class="form-control text-control" />
+													</div>
+												</div> 
+												<div class="form-group row">
+													<div class="cell c12"> 
+													</div>
+													<div class="cell c345">
+
+														<p-button icon="fa fa-fw fa-plus" label="Update" (click)="onGridRowSaveRdy(rowData, dtEntryRdy)"></p-button>
+														<p-button icon="fa fa-fw fa-close" label="Cancel" (click)="onGridRowCancelRdy(rowData, dtEntryRdy)"></p-button>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+								</td>
+
+							</form>
+
+						</tr>
+
+					</ng-template>
+					
 
 				</p-table>
 

@@ -14,6 +14,7 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<Grn> Grn { get; set; }
         public virtual DbSet<JobTitle> JobTitle { get; set; }
         public virtual DbSet<Module> Module { get; set; }
+        public virtual DbSet<ReadyStock> ReadyStock { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<Rmaterial> Rmaterial { get; set; }
         public virtual DbSet<Rmcat> Rmcat { get; set; }
@@ -33,7 +34,13 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<Uom> Uom { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-          
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Component>(entity =>
@@ -262,6 +269,27 @@ namespace AppReport.DataServices.PTSDataModel
                 entity.Property(e => e.ModuleId).ValueGeneratedNever();
 
                 entity.Property(e => e.ModuleName).HasColumnType("varchar(20)");
+            });
+
+            modelBuilder.Entity<ReadyStock>(entity =>
+            {
+                entity.Property(e => e.CreatedDt)
+                    .HasColumnName("CreatedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DutyImpRate).HasColumnType("decimal");
+
+                entity.Property(e => e.EditedDt)
+                    .HasColumnName("EditedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Gstrate)
+                    .HasColumnName("GSTRate")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.ReadyStockDesc).HasMaxLength(500);
+
+                entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<Report>(entity =>

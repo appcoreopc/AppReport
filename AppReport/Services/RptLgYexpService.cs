@@ -20,6 +20,9 @@ namespace AppReport.Services
 
         public IEnumerable<RptLgYexp> Get(int id, int y)
         {
+            if(id == 0)
+                return _context.RptLgYexp.Where(i => i.RptY == y).ToList().OrderBy(i => i.StkDesc);
+
             return _context.RptLgYexp.Where(i => i.RptId == id && i.RptY == y).ToList().OrderBy(i => i.StkDesc);
         }
 

@@ -22,7 +22,7 @@ namespace AppReport.Services
 
         public IEnumerable<RptLg> GetAllRptDetails()
         {
-            return _context.RptLg.Include(x => x.RptLgYexp).Include(x => x.RptLgYimp).ToList();
+            return _context.RptLg.Include(x => x.RptLgYexp).Include(x => x.RptLgYimp).Include(x => x.RptLgYbgt).Include(x => x.RptLgYrdy).ToList();
         }
 
        /* public IEnumerable<RptLg> GetAllRptInvoices()
@@ -47,12 +47,13 @@ namespace AppReport.Services
         {
             var newData = new RptLg()
             {
-                RptSdateY1 = requestModel.RptSdateY1,
-                RptEdateY1 = requestModel.RptEdateY1,
-                RptSdateY2 = requestModel.RptSdateY2,
-                RptEdateY2 = requestModel.RptEdateY2,
-                RptSdateY3 = requestModel.RptSdateY3,
-                RptEdateY3 = requestModel.RptEdateY3,
+                //RptSdateY1 = requestModel.RptSdateY1,
+                //RptEdateY1 = requestModel.RptEdateY1,
+                //RptSdateY2 = requestModel.RptSdateY2,
+                //RptEdateY2 = requestModel.RptEdateY2,
+                //RptSdateY3 = requestModel.RptSdateY3,
+                //RptEdateY3 = requestModel.RptEdateY3,
+                RptY2 = requestModel.RptY2,
                 RefNo = requestModel.RefNo,
                 Ldate = requestModel.Ldate,
                 LrcptDept = requestModel.LrcptDept,
@@ -90,8 +91,8 @@ namespace AppReport.Services
                 RptSignedByPos = requestModel.RptSignedByPos,
                 RptSignedByIdno = requestModel.RptSignedByIdno,
                 RptSignedByName = requestModel.RptSignedByName,
-                MfdGoodY2 = requestModel.MfdGoodY2,
-                MfdGoodY3 = requestModel.MfdGoodY3,
+                //MfdGoodY2 = requestModel.MfdGoodY2,
+                //MfdGoodY3 = requestModel.MfdGoodY3,
                 MfdLicenseSdate = requestModel.MfdLicenseSdate,
                 MfdLicenseEdate = requestModel.MfdLicenseEdate,
                 IsChgCoName = requestModel.IsChgCoName,
@@ -127,10 +128,14 @@ namespace AppReport.Services
 
             if (result)
             {
-                if (requestModel?.RptLgYimp != null)
-                {
-                    HandleChildUpdateItems_1(requestModel.RptLgYimp);
-                }
+                if (requestModel?.RptLgYimp != null) 
+                    HandleChildUpdateItems_1(requestModel.RptLgYimp); 
+               
+                if (requestModel?.RptLgYexp != null) 
+                    HandleChildUpdateItems_2(requestModel.RptLgYexp);
+
+                if (requestModel?.RptLgYrdy != null)
+                    HandleChildUpdateItems_3(requestModel.RptLgYrdy);
             }
 
             return result;
@@ -161,13 +166,89 @@ namespace AppReport.Services
                 else
                 {
                     // add 
-                    var targetAddItem = new RptLgYbgt();
+                    var targetAddItem = new RptLgYimp();
 
                     targetAddItem.RptId = item.RptId;
                     /*targetAddItem.UsedCost = item.UsedCost;
                     targetAddItem.WastedCost = item.WastedCost;*/
 
-                    base.Save<RptLgYbgt>(targetAddItem, null);
+                    base.Save<RptLgYimp>(targetAddItem, null);
+
+                }
+            }
+        }
+
+        private void HandleChildUpdateItems_2(IEnumerable<RptLgYexpModel> requestItemDetails)
+        {
+            /// loops through items to see if we need to update 
+
+            foreach (var item in requestItemDetails)
+            {
+                if (item.TxnId.HasValue)
+                {
+                    // update    
+                    var targetUpdateItem = base.FindById<RptLgYexp>(item.TxnId.Value);
+
+                    if (targetUpdateItem != null)
+                    {
+                        targetUpdateItem.RptId = item.RptId;
+                        targetUpdateItem.MadeQty = item.MadeQty;
+                        targetUpdateItem.MadeCost = item.MadeCost;
+                        targetUpdateItem.ExpQty = item.ExpQty;
+                        targetUpdateItem.ExpCost = item.ExpCost;
+                        targetUpdateItem.LocSalesQty = item.LocSalesQty;
+                        targetUpdateItem.LocSalesCost = item.LocSalesCost;
+                        targetUpdateItem.DamagedQty = item.DamagedQty;
+                        targetUpdateItem.DamagedCost = item.DamagedCost;
+
+                        // Persist into database
+                        Save(targetUpdateItem, targetUpdateItem.TxnId);
+                    }
+                }
+                else
+                {
+                    // add 
+                    var targetAddItem = new RptLgYexp();
+
+                    targetAddItem.RptId = item.RptId; 
+
+                    base.Save<RptLgYexp>(targetAddItem, null);
+
+                }
+            }
+        }
+         
+        private void HandleChildUpdateItems_3(IEnumerable<RptLgYrdyModel> requestItemDetails)
+        {
+            /// loops through items to see if we need to update 
+
+            foreach (var item in requestItemDetails)
+            {
+                if (item.TxnId.HasValue)
+                {
+                    // update    
+                    var targetUpdateItem = base.FindById<RptLgYrdy>(item.TxnId.Value);
+
+                    if (targetUpdateItem != null)
+                    {
+                        targetUpdateItem.RptId = item.RptId;
+                        targetUpdateItem.Qty = item.Qty;
+                        targetUpdateItem.Cost = item.Cost; 
+
+                        // Persist into database
+                        Save(targetUpdateItem, targetUpdateItem.TxnId);
+                    }
+                }
+                else
+                {
+                    // add 
+                    var targetAddItem = new RptLgYrdy();
+
+                    targetAddItem.RptId = item.RptId;
+                    targetAddItem.Qty = item.Qty;
+                    targetAddItem.Cost = item.Cost;
+
+                    base.Save<RptLgYrdy>(targetAddItem, null);
 
                 }
             }

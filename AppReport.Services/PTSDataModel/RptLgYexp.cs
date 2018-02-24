@@ -8,6 +8,7 @@ namespace AppReport.DataServices.PTSDataModel
         public int TxnId { get; set; }
         public int? RptId { get; set; }
         public int? RptY { get; set; }
+        public int? ReadyStockId { get; set; }
         public string StkDesc { get; set; }
         public string TariffCode { get; set; }
         public decimal? OpenBalQty { get; set; }

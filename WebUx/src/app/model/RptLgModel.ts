@@ -1,5 +1,7 @@
 import { RptLgYexpModel } from "./RptLgYexpModel";
 import { RptLgYimpModel } from "./RptLgYimpModel";
+import { RptLgYbgtModel } from "./RptLgYbgtModel";
+import { RptLgYrdyModel } from "./RptLgYrdyModel";
 
 export class RptLgModel { 
 
@@ -18,12 +20,12 @@ export class RptLgModel {
   fCoLogo : string;*/
   rptY1 : number;
   rptY2 : number;
-  rptSdateY1 : string;
+  /*rptSdateY1 : string;
   rptEdateY1 : string;
   rptSdateY2 : string;
   rptEdateY2 : string;
   rptSdateY3 : string;
-  rptEdateY3 : string;
+  rptEdateY3 : string;*/
   refNo : string;
   ldate : string;
   lrcptDept : string;
@@ -152,6 +154,9 @@ export class RptLgModel {
   rptLgYexp : RptLgYexpModel[];
   rptLgYexpY1 : RptLgYexpModel[];
   rptLgYexpY2 : RptLgYexpModel[];
+  rptLgYbgt : RptLgYbgtModel[];
+  rptLgYbgtL : RptLgYbgtModel[];
+  rptLgYbgtE : RptLgYbgtModel[];
   //rptLgYimp : RptLgYimpModel[];
-  //rptLgYrdy : RptLgYrdyModel[];
+  rptLgYrdy : RptLgYrdyModel[];
 }

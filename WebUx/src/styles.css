@@ -57,3 +57,12 @@ select.form-control:not([size]):not([multiple]) {
 .hide{
     display: none;
 }
+.ui-table .ui-table-thead>tr>th, .ui-table .ui-table-tbody>tr>td, .ui-table .ui-table-tfoot>tr>td {
+    padding: 3px;
+}
+td {
+    font-size:12px;
+}
+th {
+    font-size:12px;
+}

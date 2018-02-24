@@ -25,6 +25,8 @@ import { SpinnerModule } from 'primeng/spinner';
 import { DialogModule } from 'primeng/dialog';
 import { RptLgYexpModel } from '../../model/RptLgYexpModel';
 import { RptLgYimpModel } from '../../model/RptLgYimpModel';
+import { RptLgYbgtModel } from '../../model/RptLgYbgtModel';
+import { RptLgYrdyModel } from '../../model/RptLgYrdyModel';
 import { Data } from '@angular/router/src/config';
 import { JobTitleModel } from "../../model/JobTitleModel"; 
 
@@ -39,16 +41,27 @@ export class LesenGudangComponentComponent implements OnInit {
   data: RptLgModel = new RptLgModel();
   mainItemSelected: RptLgModel;
   itemEntryModel: RptLgYimpModel = new RptLgYimpModel();
-  itemEntryModel_Ex: RptLgYexpModel = new RptLgYexpModel();
+  itemEntryModelExp: RptLgYexpModel = new RptLgYexpModel();
+  itemEntryModelBgt: RptLgYbgtModel = new RptLgYbgtModel();
+  itemEntryModelRdy: RptLgYrdyModel = new RptLgYrdyModel();
   expandSelectedRowItem : RptLgYimpModel; 
-  expandSelectedRowItem_Ex : RptLgYexpModel; 
+  expandSelectedRowItemExp : RptLgYexpModel; 
+  expandSelectedRowItemBgt : RptLgYbgtModel; 
+  expandSelectedRowItemRdy : RptLgYrdyModel; 
   configData: ConfigModel = new ConfigModel();
 
   // forms 
   dataForm: FormGroup; // main entry form 
   entryDetailForm: FormGroup; // for detail entry form 
+  entryDetailFormExp: FormGroup; 
+  entryDetailFormBgt: FormGroup; 
+  entryDetailFormRdy: FormGroup; 
   expandEditForm : FormGroup;
-  
+  expandEditFormExp : FormGroup;
+  expandEditFormBgtL : FormGroup;
+  expandEditFormBgtE : FormGroup;
+  expandEditFormRdy : FormGroup;
+
   private intention: number = UPDATE;
   
   displayDataEntry: boolean = false;
@@ -60,12 +73,12 @@ export class LesenGudangComponentComponent implements OnInit {
   tabIndex:number = 0; 
   applicationHost:string = APPLICATION_HOST;
   currentCutOffMonth:number = 1; 
-  mfdGoodList:string = "";
+  //mfdGoodList:string = "";
   
   formTitle: string = "New Lesen Gudang";
   dataList: Array<RptLgModel> = new Array<RptLgModel>();
-  gridEditRow: RptLgYimpModel = new RptLgYimpModel();
-  gridEditRow_Ex: RptLgYexpModel = new RptLgYexpModel();
+  //gridEditRow: RptLgYimpModel = new RptLgYimpModel();
+  //gridEditRow_Ex: RptLgYexpModel = new RptLgYexpModel();
   empDataList: Array<any> = new Array<any>();
   configDataList : Array<any> = new Array<any>(); 
   jobTitleDataList : Array<any> = new Array<any>(); 
@@ -74,13 +87,14 @@ export class LesenGudangComponentComponent implements OnInit {
  
   formErrors = {
     'rptId': '',
-    'rptSdateY1': '',
+    /*'rptSdateY1': '',
     'rptEdateY1': '',
     'rptSdateY2': '',
     'rptEdateY2': '',
     'rptSdateY3': '',
-    'rptEdateY3': '',
+    'rptEdateY3': '',*/
     'refNo': '',
+    'rptY2': '',
     'ldate': '',
     'lrcptDept': '',
     'lrcptBr': '',
@@ -116,8 +130,8 @@ export class LesenGudangComponentComponent implements OnInit {
     'rptSignedByIdno': '',
     'rptSignedByName': '',
     //'mfdGoodY1': '',
-    'mfdGoodY2': '',
-    'mfdGoodY3': '',
+    //'mfdGoodY2': '',
+    //'mfdGoodY3': '',
     'mfdLicenseSdate': '',
     'mfdLicenseEdate': '',
     'isChgCoName': '',
@@ -151,12 +165,13 @@ export class LesenGudangComponentComponent implements OnInit {
 
   
 validationMessages = { 
-    'rptSdateY1' : { 'required': 'Current Year - From is required.' }, 
+    /*'rptSdateY1' : { 'required': 'Current Year - From is required.' }, 
     'rptEdateY1' : { 'required': 'Current Year - To is required.' }, 
     'rptSdateY2' : { 'required': 'Last Year - From is required.' }, 
     'rptEdateY2' : { 'required': 'Last Year - To is required.' }, 
     'rptSdateY3' : { 'required': 'Next Year - From is required.' }, 
-    'rptEdateY3' : { 'required': 'Next Year - To is required.' }, 
+    'rptEdateY3' : { 'required': 'Next Year - To is required.' }, */
+    'rptY2' : { 'required': 'Current Year is required.' }, 
     'refNo' : { 'required': 'Reference No is required.' }, 
     'ldate' : { 'required': 'Date of Letter is required.' }, 
     'lrcptDept' : { 'required': 'Department is required.' }, 
@@ -189,8 +204,8 @@ validationMessages = {
     'rptSignedByPos' : { 'required': 'Position is required.' }, 
     'rptSignedByIdno' : { 'required': 'IC is required.' }, 
     'rptSignedByName' : { 'required': 'Name is required.' },  
-    'mfdGoodY2' : { 'required': 'Good list is required.' }, 
-    'mfdGoodY3' : { 'required': 'Good list is required.' }, 
+    //'mfdGoodY2' : { 'required': 'Good list is required.' }, 
+    //'mfdGoodY3' : { 'required': 'Good list is required.' }, 
     'mfdLicenseSdate' : { 'required': 'License Start Date is required.' }, 
     'mfdLicenseEdate' : { 'required': 'License End Date is required.' }, 
     'isChgCoName' : { 'required': 'required.' }, 
@@ -226,38 +241,9 @@ validationMessages = {
   ];
   
   
-  dataEntryColumns = [
-    { field: 'txnId' },   
-    { field: 'rptId' },  
-    { field: 'rptY' },  
-    { field: 'rmid' },  
-    { field: 'fRmcatName' },  
-    { field: 'fRmdesc' },  
-    { field: 'fUomcode' },  
-    { field: 'fTariffCode' },  
-    { field: 'fOpenBalWgt' },  
-    { field: 'fOpenBalCost' },  
-    { field: 'fImpRmwgt' },  
-    { field: 'fImpRmcost' },  
-    { field: 'fLocRmwgt' },  
-    { field: 'fLocRmcost' },  
-    { field: 'usedRmwgt' },  
-    { field: 'usedRmcost' },  
-    { field: 'returnedWgt' },  
-    { field: 'fCloseBalWgt' },  
-    { field: 'fCloseBalCost' }
-  ];
+  dataEntryColumns = [];
   
-  basicEntryColumns = [
-    { field: 'txnId', header: 'Bil' },
-    { field: 'fRmdesc', header: 'Bahan Mentah' },
-    { field: 'fUomcode', header: '' },
-    { field: 'fTariffCode', header: 'Kod Tarif' },
-    { field: 'usedRmwgt', header: 'Bahan Mentah Digunakan (Unit)' },
-    { field: 'usedRmcost', header: 'Bahan Mentah Digunakan (RM)' },
-    { field: 'returnedWgt', header: 'Bahan Mentah Rosak' },
-  ];
-  
+ 
   mainColumns = [ 
     { prop: 'rptId', name: 'Report ID' },
     { prop: 'rptSdateY2', name: 'Current Year (Start)' },
@@ -311,6 +297,7 @@ ngAfterViewInit() {
     
     this.data.rptId = mainFormModel.rptId;
     this.data.refNo = mainFormModel.refNo;
+    this.data.rptY2 = mainFormModel.rptY2;
     
     this.data.lrcptBr = mainFormModel.lrcptBr;
     this.data.lrcptDept = mainFormModel.lrcptDept; 
@@ -349,8 +336,8 @@ ngAfterViewInit() {
     this.data.rptSignedByIdno = mainFormModel.rptSignedByIdno;
     this.data.rptSignedByName = mainFormModel.rptSignedByName;
     //this.data.mfdGoodY1 = mainFormModel.mfdGoodY1;
-    this.data.mfdGoodY2 = mainFormModel.mfdGoodY2;
-    this.data.mfdGoodY3 = mainFormModel.mfdGoodY3;
+    //this.data.mfdGoodY2 = mainFormModel.mfdGoodY2;
+    //this.data.mfdGoodY3 = mainFormModel.mfdGoodY3;
     this.data.isChgCoName = mainFormModel.isChgCoName;
     this.data.isChgCoMember = mainFormModel.isChgCoMember;
     this.data.isChgAddress = mainFormModel.isChgAddress;
@@ -372,12 +359,12 @@ ngAfterViewInit() {
     // Dates handling      
     this.data.mfdLicenseSdate = util.getTargetDate(new Date(mainFormModel.mfdLicenseSdate));
     this.data.mfdLicenseEdate = util.getTargetDate(new Date(mainFormModel.mfdLicenseEdate));
-    this.data.rptSdateY1 = util.getTargetDate(new Date(mainFormModel.rptSdateY1));
+    /*this.data.rptSdateY1 = util.getTargetDate(new Date(mainFormModel.rptSdateY1));
     this.data.rptEdateY1 = util.getTargetDate(new Date(mainFormModel.rptEdateY1));
     this.data.rptSdateY2 = util.getTargetDate(new Date(mainFormModel.rptSdateY2));
     this.data.rptEdateY2 = util.getTargetDate(new Date(mainFormModel.rptEdateY2));
     this.data.rptSdateY3 = util.getTargetDate(new Date(mainFormModel.rptSdateY3));
-    this.data.rptEdateY3 = util.getTargetDate(new Date(mainFormModel.rptEdateY3));
+    this.data.rptEdateY3 = util.getTargetDate(new Date(mainFormModel.rptEdateY3));*/
     this.data.ldate = util.getTargetDate(new Date(mainFormModel.ldate)); 
     this.data.signedDate = util.getTargetDate(new Date(mainFormModel.signedDate));  
     this.data.appDate = util.getTargetDate(new Date(mainFormModel.appDate));
@@ -393,12 +380,12 @@ ngAfterViewInit() {
       mainFormModel.rptId = this.data.rptId; 
       mainFormModel.mfdLicenseSdate =  this.data.mfdLicenseSdate;
       mainFormModel.mfdLicenseEdate =  this.data.mfdLicenseEdate;
-      mainFormModel.rptSdateY1 =  this.data.rptSdateY1;
+      /*mainFormModel.rptSdateY1 =  this.data.rptSdateY1;
       mainFormModel.rptEdateY1 =  this.data.rptEdateY1;
       mainFormModel.rptSdateY2 =  this.data.rptSdateY2;
       mainFormModel.rptEdateY2 =  this.data.rptEdateY2;
       mainFormModel.rptSdateY3 =  this.data.rptSdateY3;
-      mainFormModel.rptEdateY3 =  this.data.rptEdateY3;
+      mainFormModel.rptEdateY3 =  this.data.rptEdateY3;*/
       mainFormModel.ldate =  this.data.ldate; 
       mainFormModel.signedDate =  this.data.signedDate;  
       mainFormModel.appDate =  this.data.appDate;
@@ -410,7 +397,8 @@ ngAfterViewInit() {
   }
 
   testSave(){
-    var json = { "rptId": 6, "rptSdateY1": "2016-12-31T16:00:00.000Z", "rptEdateY1": "2017-12-30T16:00:00.000Z", "rptSdateY2": "2017-12-31T16:00:00.000Z", "rptEdateY2": "2018-09-30T16:00:00.000Z", "rptSdateY3": "2018-12-31T16:00:00.000Z", "rptEdateY3": "2019-12-30T16:00:00.000Z", "refNo": "ABC(1)GHH45435345 (83)", "ldate": "2018-01-08T16:00:00.000Z", "lrcptDept": "Penolong Kanan Pengarah Kastam", "lrcptBr": "Cawangan Gudang Pengilangan Berlesen", "lrcptAdd1": "Tingkat 2, Kompleks Kastam Seberang Jaya,", "lrcptAdd2": "Lot 5492, M.K.1, Jalan Perpustakaan, Lebuh Tenggiri 2,", "lrcptAdd3": "13700 Seberang Perai Tengah,", "lrcptAdd4": "Pulau Pinang.", "pbbcekNo": "39196578", "licenseFee": 4900, "signedByEmpId": 1, "signedByPos": "Pengarah", "signedByName": "Yeoh Paik Sun", "signedDate": "2018-01-09T16:00:00.000Z", "appByEmpId": "1", "appByPos": "Pengurus", "appByName": "Yeoh Phaik Suan", "appByIdno": "600516-07-5038", "appDate": "2018-01-08T16:00:00.000Z", "brcptDept": "dgsgdg gdfgdfgdfg", "brcptBr": "brach 34234", "brcptAdd1": "address 1", "brcptAdd2": "address 2", "brcptAdd3": "address 3", "brcptAdd4": "address 14", "rptCoName": "PTS Industries Sdn. Bhd.", "rptSignedByEmpId": 1, "rptSignedByPos": "Pengarah", "rptSignedByIdno": "5908065-12-9089", "rptSignedByName": "Yeoh Phaik Suan", "mfdGoodY2": "aaa, bbb, ccc, ddd", "mfdGoodY3": "aaa, bbb, ccc, ddd", "mfdLicenseSdate": "2016-12-31T16:00:00.000Z", "mfdLicenseEdate": "2018-12-30T16:00:00.000Z", "isChgCoName": true, "isChgCoMember": true, "isChgAddress": true, "isChgFtyStr": true, "isChgEq": true, "bgtRmcost": 900890, "bgtRdyGoodCost": 234, "mktExpRate": 1.5, "bgtMktExpCost": 678.9, "bgtMktExpRate": 45.95, "localSalesRate": 67.8, "bgtLocSalesCost": 4500, "bgtLocSalesRate": 45.6, "ipcRdc": "testing IPC", "valueAdded": "eqw", "repairSvc": "Light fixing", "sparePart": "eqwe" };
+    var json = { "rptId": 6, "rptSdateY1": "2016-12-31T16:00:00.000Z", "rptEdateY1": "2017-12-30T16:00:00.000Z", "rptSdateY2": "2017-12-31T16:00:00.000Z", "rptEdateY2": "2018-09-30T16:00:00.000Z", "rptSdateY3": "2018-12-31T16:00:00.000Z", "rptEdateY3": "2019-12-30T16:00:00.000Z", "refNo": "ABC(1)GHH45435345 (83)", "ldate": "2018-01-08T16:00:00.000Z", "lrcptDept": "Penolong Kanan Pengarah Kastam", "lrcptBr": "Cawangan Gudang Pengilangan Berlesen", "lrcptAdd1": "Tingkat 2, Kompleks Kastam Seberang Jaya,", "lrcptAdd2": "Lot 5492, M.K.1, Jalan Perpustakaan, Lebuh Tenggiri 2,", "lrcptAdd3": "13700 Seberang Perai Tengah,", "lrcptAdd4": "Pulau Pinang.", "pbbcekNo": "39196578", "licenseFee": 4900, "signedByEmpId": 1, "signedByPos": "Pengarah", "signedByName": "Yeoh Paik Sun", "signedDate": "2018-01-09T16:00:00.000Z", "appByEmpId": "1", "appByPos": "Pengurus", "appByName": "Yeoh Phaik Suan", "appByIdno": "600516-07-5038", "appDate": "2018-01-08T16:00:00.000Z", "brcptDept": "dgsgdg gdfgdfgdfg", "brcptBr": "brach 34234", "brcptAdd1": "address 1", "brcptAdd2": "address 2", "brcptAdd3": "address 3", "brcptAdd4": "address 14", "rptCoName": "PTS Industries Sdn. Bhd.", "rptSignedByEmpId": 1, "rptSignedByPos": "Pengarah", "rptSignedByIdno": "5908065-12-9089", "rptSignedByName": "Yeoh Phaik Suan", 
+      "mfdLicenseSdate": "2016-12-31T16:00:00.000Z", "mfdLicenseEdate": "2018-12-30T16:00:00.000Z", "isChgCoName": true, "isChgCoMember": true, "isChgAddress": true, "isChgFtyStr": true, "isChgEq": true, "bgtRmcost": 900890, "bgtRdyGoodCost": 234, "mktExpRate": 1.5, "bgtMktExpCost": 678.9, "bgtMktExpRate": 45.95, "localSalesRate": 67.8, "bgtLocSalesCost": 4500, "bgtLocSalesRate": 45.6, "ipcRdc": "testing IPC", "valueAdded": "eqw", "repairSvc": "Light fixing", "sparePart": "eqwe" };
     
     var strJson = JSON.stringify(json); 
     this.dispatchIntent(LESEN_SAVE, strJson);
@@ -427,12 +415,12 @@ ngAfterViewInit() {
     this.data.rptId = data.rptId;
     this.data.mfdLicenseSdate =  this.data.mfdLicenseSdate;
     this.data.mfdLicenseEdate =  this.data.mfdLicenseEdate;
-    this.data.rptSdateY1 =  this.data.rptSdateY1;
+    /*this.data.rptSdateY1 =  this.data.rptSdateY1;
     this.data.rptEdateY1 =  this.data.rptEdateY1;
     this.data.rptSdateY2 =  this.data.rptSdateY2;
     this.data.rptEdateY2 =  this.data.rptEdateY2;
     this.data.rptSdateY3 =  this.data.rptSdateY3;
-    this.data.rptEdateY3 =  this.data.rptEdateY3;
+    this.data.rptEdateY3 =  this.data.rptEdateY3;*/
     this.data.ldate =  this.data.ldate; 
     this.data.signedDate =  this.data.signedDate;  
     this.data.appDate =  this.data.appDate;
@@ -569,9 +557,7 @@ ngAfterViewInit() {
         else if(this.configRows[cRow].configKey == "BRcptBr") 
             this.data.brcptBr = this.configRows[cRow].configData;
         else if(this.configRows[cRow].configKey == "CurrentCutOffMonth") 
-            this.currentCutOffMonth = this.configRows[cRow].configData;
-        else if(this.configRows[cRow].configKey == "MfdGoodList") 
-            this.mfdGoodList = this.configRows[cRow].configData;
+            this.currentCutOffMonth = this.configRows[cRow].configData; 
         else if(this.configRows[cRow].configKey == "CoName") {
             this.data.rptCoName = this.configRows[cRow].configData;
             this.data.appCoName = this.configRows[cRow].configData;
@@ -588,11 +574,15 @@ ngAfterViewInit() {
       }
 
      
-      this.setReportDate(new Date());
+      //this.setReportDate(new Date());
  
-      this.dataForm.get("mfdGoodY2").setValue(this.mfdGoodList);
-      this.dataForm.get("mfdGoodY3").setValue(this.mfdGoodList);  
+      //this.dataForm.get("mfdGoodY2").setValue(this.mfdGoodList);
+      //this.dataForm.get("mfdGoodY3").setValue(this.mfdGoodList);  
 
+      var cDt = new Date(); 
+      this.data.rptY2 = cDt.getFullYear();  
+      
+      this.dataForm.get("rptY2").setValue(this.data.rptY2); 
       this.dataForm.get("lrcptAdd1").setValue(this.data.lrcptAdd1); 
       this.dataForm.get("lrcptAdd2").setValue(this.data.lrcptAdd2); 
       this.dataForm.get("lrcptAdd3").setValue(this.data.lrcptAdd3); 
@@ -615,7 +605,7 @@ ngAfterViewInit() {
       this.dataForm.get("appAdd4").setValue(this.data.appAdd4);
   }
     
-  setReportDate(dt){
+  /*setReportDate(dt){
       var cDt = dt;
       let cYr = cDt.getFullYear();  
       let pYr = cYr-1; 
@@ -634,9 +624,9 @@ ngAfterViewInit() {
       this.dataForm.get("rptSdateY3").setValue(nSDate);
       this.dataForm.get("rptEdateY3").setValue(nEDate);
 
-  }
+  }*/
 
-  onSelectRptSdateY2(evt) {
+ /* onSelectRptSdateY2(evt) {
         
         debugger; 
         if (evt) {
@@ -644,7 +634,7 @@ ngAfterViewInit() {
           console.log("onSelectRptSdateY2",evt);
         } 
         
-  }
+  }*/
 
   
    changeTab(index: number): void {
@@ -666,13 +656,14 @@ ngAfterViewInit() {
     this.dataForm = this.fb.group({
 
       'rptId': [],
-      'rptSdateY1': ['', [Validators.required, Validators.minLength(1)]], 
+      /*'rptSdateY1': ['', [Validators.required, Validators.minLength(1)]], 
       'rptEdateY1': ['', [Validators.required, Validators.minLength(1)]],
       'rptSdateY2': ['', [Validators.required, Validators.minLength(1)]],
       'rptEdateY2': ['', [Validators.required, Validators.minLength(1)]],
       'rptSdateY3': ['', [Validators.required, Validators.minLength(1)]],
-      'rptEdateY3': ['', [Validators.required, Validators.minLength(1)]],
+      'rptEdateY3': ['', [Validators.required, Validators.minLength(1)]],*/
       'refNo': ['', [Validators.required, Validators.minLength(1)]],
+      'rptY2': ['', [Validators.required, Validators.minLength(1)]],
       'ldate': ['', [Validators.required, Validators.minLength(1)]],
       'lrcptDept': ['', [Validators.required, Validators.minLength(1)]],
       'lrcptBr': ['', [Validators.required, Validators.minLength(1)]],
@@ -708,8 +699,8 @@ ngAfterViewInit() {
       'rptSignedByIdno': ['', [Validators.required, Validators.minLength(1)]],
       'rptSignedByName': ['', [Validators.required, Validators.minLength(1)]],
       //'mfdGoodY1': ['', [Validators.required, Validators.minLength(1)]],
-      'mfdGoodY2': ['', [Validators.required, Validators.minLength(1)]],
-      'mfdGoodY3': ['', [Validators.required, Validators.minLength(1)]],
+      //'mfdGoodY2': ['', [Validators.required, Validators.minLength(1)]],
+      //'mfdGoodY3': ['', [Validators.required, Validators.minLength(1)]],
       'mfdLicenseSdate': ['', [Validators.required, Validators.minLength(1)]],
       'mfdLicenseEdate': ['', [Validators.required, Validators.minLength(1)]],
       'isChgCoName': [false],
@@ -737,21 +728,24 @@ ngAfterViewInit() {
     this.enabledDetailEntry = false;
     //this.tabIndex = 0;
  
-  this.data.rptLgYimpY1 = this.data.rptLgYimp.filter(a => a.rptY == this.data.rptY1);
+  //this.data.rptLgYimpY1 = this.data.rptLgYimp.filter(a => a.rptY == this.data.rptY1);
   this.data.rptLgYimpY2 = this.data.rptLgYimp.filter(a => a.rptY == this.data.rptY2);
-  this.data.rptLgYexpY1 = this.data.rptLgYexp.filter(a => a.rptY == this.data.rptY1);
+  //this.data.rptLgYexpY1 = this.data.rptLgYexp.filter(a => a.rptY == this.data.rptY1);
   this.data.rptLgYexpY2 = this.data.rptLgYexp.filter(a => a.rptY == this.data.rptY2);
+  this.data.rptLgYbgtL = this.data.rptLgYbgt.filter(a => a.isLocal == true);
+  this.data.rptLgYbgtE = this.data.rptLgYbgt.filter(a => a.isLocal == false);
 
     console.log("configureEditForm", this.data);
     this.dataForm = this.fb.group({
-      'rptId': [this.data.rptId],
-      'rptSdateY1': ['', [Validators.required, Validators.minLength(1)]], 
+      'rptId': [this.data.rptId], 
+      /*'rptSdateY1': ['', [Validators.required, Validators.minLength(1)]], 
       'rptEdateY1': ['', [Validators.required, Validators.minLength(1)]],
       'rptSdateY2': ['', [Validators.required, Validators.minLength(1)]],
       'rptEdateY2': ['', [Validators.required, Validators.minLength(1)]],
       'rptSdateY3': ['', [Validators.required, Validators.minLength(1)]],
-      'rptEdateY3': ['', [Validators.required, Validators.minLength(1)]],
+      'rptEdateY3': ['', [Validators.required, Validators.minLength(1)]],*/
       'refNo': [this.data.refNo, [Validators.required, Validators.minLength(1)]],
+      'rptY2': [this.data.rptY2, [Validators.required, Validators.minLength(1)]],
       'ldate': ['', [Validators.required, Validators.minLength(1)]],
       'lrcptDept': [this.data.lrcptDept, [Validators.required, Validators.minLength(1)]],
       'lrcptBr': [this.data.lrcptBr, [Validators.required, Validators.minLength(1)]],
@@ -787,8 +781,8 @@ ngAfterViewInit() {
       'rptSignedByIdno': [this.data.rptSignedByIdno, [Validators.required, Validators.minLength(1)]],
       'rptSignedByName': [this.data.rptSignedByName, [Validators.required, Validators.minLength(1)]],
       //'mfdGoodY1': [this.data.mfdGoodY1, [Validators.required, Validators.minLength(1)]],
-      'mfdGoodY2': [this.data.mfdGoodY2, [Validators.required, Validators.minLength(1)]],
-      'mfdGoodY3': [this.data.mfdGoodY3, [Validators.required, Validators.minLength(1)]],
+      //'mfdGoodY2': [this.data.mfdGoodY2, [Validators.required, Validators.minLength(1)]],
+      //'mfdGoodY3': [this.data.mfdGoodY3, [Validators.required, Validators.minLength(1)]],
       'mfdLicenseSdate': ['', [Validators.required, Validators.minLength(1)]],
       'mfdLicenseEdate': ['', [Validators.required, Validators.minLength(1)]],
       'isChgCoName': [this.data.isChgCoName],
@@ -824,6 +818,8 @@ ngAfterViewInit() {
       // reinit form entires //
       this.data.rptLgYimp = new Array<RptLgYimpModel>(); 
       this.data.rptLgYexp = new Array<RptLgYexpModel>(); 
+      this.data.rptLgYbgt = new Array<RptLgYbgtModel>(); 
+      this.data.rptLgYrdy = new Array<RptLgYrdyModel>(); 
     }
     
     addDataEntryForm() {
@@ -839,24 +835,24 @@ ngAfterViewInit() {
        
       let mfdLicenseSdate =  new Date(this.data.mfdLicenseSdate);
       let mfdLicenseEdate =  new Date(this.data.mfdLicenseEdate);
-      let rptSdateY1 =  new Date(this.data.rptSdateY1);
+      /*let rptSdateY1 =  new Date(this.data.rptSdateY1);
       let rptEdateY1 =  new Date(this.data.rptEdateY1);
       let rptSdateY2 =  new Date(this.data.rptSdateY2);
       let rptEdateY2 =  new Date(this.data.rptEdateY2);
       let rptSdateY3 =  new Date(this.data.rptSdateY3);
-      let rptEdateY3 =  new Date(this.data.rptEdateY3);
+      let rptEdateY3 =  new Date(this.data.rptEdateY3);*/
       let ldate =  new Date(this.data.ldate); 
       let signedDate =  new Date(this.data.signedDate);  
       let appDate =  new Date(this.data.appDate);
  
       this.dataForm.get("mfdLicenseSdate").setValue(mfdLicenseSdate);
       this.dataForm.get("mfdLicenseEdate").setValue(mfdLicenseEdate);
-      this.dataForm.get("rptSdateY1").setValue(rptSdateY1);
+      /*this.dataForm.get("rptSdateY1").setValue(rptSdateY1);
       this.dataForm.get("rptEdateY1").setValue(rptEdateY1);
       this.dataForm.get("rptSdateY2").setValue(rptSdateY2);
       this.dataForm.get("rptEdateY2").setValue(rptEdateY2);
       this.dataForm.get("rptSdateY3").setValue(rptSdateY3);
-      this.dataForm.get("rptEdateY3").setValue(rptEdateY3);
+      this.dataForm.get("rptEdateY3").setValue(rptEdateY3);*/
       this.dataForm.get("ldate").setValue(ldate); 
       this.dataForm.get("signedDate").setValue(signedDate);  
       this.dataForm.get("appDate").setValue(appDate);
@@ -925,13 +921,21 @@ ngAfterViewInit() {
       
       setupDetailEntryForm() {
         this.itemEntryModel = new RptLgYimpModel();
-        this.itemEntryModel_Ex = new RptLgYexpModel();
+        this.itemEntryModelExp = new RptLgYexpModel();
+        this.itemEntryModelBgt = new RptLgYbgtModel();
+        this.itemEntryModelRdy = new RptLgYrdyModel();
          
         if (!this.data.rptLgYimp) {
           this.data.rptLgYimp  = new Array<RptLgYimpModel>();
         }
         if (!this.data.rptLgYexp) {
           this.data.rptLgYexp  = new Array<RptLgYexpModel>();
+        }
+        if (!this.data.rptLgYbgt) {
+          this.data.rptLgYbgt  = new Array<RptLgYbgtModel>();
+        }
+        if (!this.data.rptLgYrdy) {
+          this.data.rptLgYrdy  = new Array<RptLgYrdyModel>();
         }
          
         this.entryDetailForm = this.fb.group({
@@ -943,11 +947,59 @@ ngAfterViewInit() {
           'usedRmcost': [this.itemEntryModel.usedRmcost],
           'returnedWgt': [this.itemEntryModel.returnedWgt] 
         });
-        
+
+        this.entryDetailFormExp = this.fb.group({
+          'txnId': [this.itemEntryModelExp.txnId], 
+          'madeQty': [this.itemEntryModelExp.madeQty],
+          'madeCost': [this.itemEntryModelExp.madeCost],
+          'expQty': [this.itemEntryModelExp.expQty],
+          'expCost': [this.itemEntryModelExp.expCost],
+          'locSalesQty': [this.itemEntryModelExp.locSalesQty],
+          'locSalesCost': [this.itemEntryModelExp.locSalesCost],
+          'damagedQty': [this.itemEntryModelExp.damagedQty],
+          'damagedCost': [this.itemEntryModelExp.damagedCost]
+        }); 
+
+        this.entryDetailFormBgt = this.fb.group({
+          'txnId': [this.itemEntryModelBgt.txnId], 
+          'isLocal': [this.itemEntryModelBgt.isLocal],
+          'rmid': [this.itemEntryModelBgt.rmid],
+          'fRmdesc': [this.itemEntryModelBgt.fRmdesc],
+          'fUomcode': [this.itemEntryModelBgt.fUomcode],
+          'fTariffCode': [this.itemEntryModelBgt.fTariffCode],
+          'fCountryList': [this.itemEntryModelBgt.fCountryList],
+          'qty': [this.itemEntryModelBgt.qty],
+          'fCost': [this.itemEntryModelBgt.fCost],
+          'fDutyImpRate': [this.itemEntryModelBgt.fDutyImpRate],
+          'fDutyImpCost': [this.itemEntryModelBgt.fDutyImpCost],
+          'fGstrate': [this.itemEntryModelBgt.fGstrate],
+          'fGstcost': [this.itemEntryModelBgt.fGstcost],
+          'fTaxCost': [this.itemEntryModelBgt.fTaxCost]
+        });
+  
+        this.entryDetailFormRdy = this.fb.group({
+          'txnId': [this.itemEntryModelRdy.txnId], 
+          'stkDesc': [this.itemEntryModelRdy.stkDesc],
+          'tariffCode': [this.itemEntryModelRdy.tariffCode],
+          'qty': [this.itemEntryModelRdy.qty],
+          'cost': [this.itemEntryModelRdy.cost],
+          'dutyImpRate': [this.itemEntryModelRdy.dutyImpRate],
+          'dutyImpCost': [this.itemEntryModelRdy.dutyImpCost],
+          'gstrate': [this.itemEntryModelRdy.gstrate],
+          'gstcost': [this.itemEntryModelRdy.gstcost],
+          'taxCost': [this.itemEntryModelRdy.taxCost] 
+        });
+       
         this.entryDetailForm.valueChanges.debounceTime(100).subscribe(
           data => this.onEntryDetailValueChanged(data));
-        }
-        
+ 
+        this.entryDetailFormExp.valueChanges.debounceTime(100).subscribe(
+          data => this.onEntryDetailValueExpChanged(data));
+   
+        this.entryDetailFormBgt.valueChanges.debounceTime(100).subscribe(
+          data => this.onEntryDetailValueRdyChanged(data));
+      }
+       
         onEntryDetailValueChanged(data?: RptLgYimpModel) {
           
           if (!this.entryDetailForm) { return; }
@@ -978,7 +1030,69 @@ ngAfterViewInit() {
             }
           }
         }
+
+          onEntryDetailValueExpChanged(data?: RptLgYexpModel) {
+          
+          if (!this.entryDetailFormExp) { return; }
+          
+          const form = this.entryDetailFormExp;
+          
+          this.itemEntryModelExp.txnId = data.txnId;
+          this.itemEntryModelExp.madeQty = data.madeQty;
+          this.itemEntryModelExp.madeCost = data.madeCost; 
+          this.itemEntryModelExp.expQty = data.expQty;
+          this.itemEntryModelExp.expCost = data.expCost; 
+          this.itemEntryModelExp.locSalesQty = data.locSalesQty;
+          this.itemEntryModelExp.locSalesCost = data.locSalesCost; 
+          this.itemEntryModelExp.damagedQty = data.damagedQty;
+          this.itemEntryModelExp.damagedCost = data.damagedCost; 
+          
+          for (const field in this.detailFormError) {
+            // clear previous error message (if any)
+            this.detailFormError[field] = '';
+            const control = form.get(field);
+            
+            if (control && control.dirty && !control.valid) {
+              const messages = this.detailEntryValidationMessages[field];
+              for (const key in control.errors) {
+                this.detailFormError[field] += messages[key] + ' ';
+              }
+            }
+          }
+        }
         
+        
+        onEntryDetailValueRdyChanged(data?: RptLgYrdyModel) {
+          
+          if (!this.entryDetailFormRdy) { return; }
+          
+          const form = this.entryDetailFormRdy;
+           
+          this.itemEntryModelRdy.txnId = data.txnId;
+          this.itemEntryModelRdy.stkDesc = data.stkDesc;
+          this.itemEntryModelRdy.tariffCode = data.tariffCode; 
+          this.itemEntryModelRdy.qty = data.qty;
+          this.itemEntryModelRdy.cost = data.cost; 
+          this.itemEntryModelRdy.dutyImpRate = data.dutyImpRate;
+          this.itemEntryModelRdy.dutyImpCost = data.dutyImpCost; 
+          this.itemEntryModelRdy.gstrate = data.gstrate;
+          this.itemEntryModelRdy.gstcost = data.gstcost; 
+          this.itemEntryModelRdy.taxCost = data.taxCost; 
+          
+          for (const field in this.detailFormError) {
+            // clear previous error message (if any)
+            this.detailFormError[field] = '';
+            const control = form.get(field);
+            
+            if (control && control.dirty && !control.valid) {
+              const messages = this.detailEntryValidationMessages[field];
+              for (const key in control.errors) {
+                this.detailFormError[field] += messages[key] + ' ';
+              }
+            }
+          }
+        }
+
         showEntryForm() {
           this.displayDataEntry = true;
         }
@@ -1027,9 +1141,65 @@ ngAfterViewInit() {
           // converting date to a valida Date // 
           // this.gridEditRow.fImpDate = new Date(rowdata.fImpDate);
           
-          this.configureExpandGridForm(row)
+          this.configureExpandGridForm(row);
+        }
+
+
+        onGridRowSaveExp(rowData: RptLgYexpModel, dt: any) {
+          
+          const prevDataRow = { ...rowData };
+          const gridEditItem = this.expandEditFormExp.value as RptLgYexpModel;
+          
+          if (gridEditItem) { 
+            rowData.madeQty = gridEditItem.madeQty;
+            rowData.madeCost = gridEditItem.madeCost; 
+            rowData.expQty = gridEditItem.expQty;
+            rowData.expCost = gridEditItem.expCost; 
+            rowData.locSalesQty = gridEditItem.locSalesQty;
+            rowData.locSalesCost = gridEditItem.locSalesCost; 
+            rowData.damagedQty = gridEditItem.damagedQty;
+            rowData.damagedCost = gridEditItem.damagedCost;  
+          } 
+          dt.toggleRow(prevDataRow);   
         }
         
+        onGridRowCancelExp(rowData: any, dt: any) {
+          dt.toggleRow(rowData);
+        }
+
+         onRowExpandedExp(rowdata) {
+          
+          debugger; 
+          const row = rowdata.data as RptLgYexpModel;
+           
+          this.configureExpandGridFormExp(row);
+        }
+        
+        
+        onGridRowSaveRdy(rowData: RptLgYrdyModel, dt: any) {
+          
+          const prevDataRow = { ...rowData };
+          const gridEditItem = this.expandEditFormRdy.value as RptLgYrdyModel;
+           
+          if (gridEditItem) { 
+            rowData.qty = gridEditItem.qty;
+            rowData.cost = gridEditItem.cost;   
+          } 
+          dt.toggleRow(prevDataRow);   
+        }
+        
+        onGridRowCancelRdy(rowData: any, dt: any) {
+          dt.toggleRow(rowData);
+        }
+
+         onRowExpandedRdy(rowdata) {
+          
+          debugger; 
+          const row = rowdata.data as RptLgYrdyModel;
+           
+          this.configureExpandGridFormRdy(row);
+        }
+
         configureExpandGridForm(itemEntryModel: RptLgYimpModel)
         {
           if (itemEntryModel)
@@ -1048,7 +1218,45 @@ ngAfterViewInit() {
             this.expandEditForm.get("fImpDate").setValue(new Date());*/
           
         }
+
+       configureExpandGridFormExp(itemEntryModel: RptLgYexpModel)
+        {
+          if (itemEntryModel)
+          this.expandSelectedRowItemExp = itemEntryModel
+          
+          this.expandEditFormExp = this.fb.group({
+            'rptId': [this.expandSelectedRowItemExp.rptId],
+            'madeQty': [this.expandSelectedRowItemExp.madeQty, [Validators.required, Validators.minLength(1)]],
+            'madeCost': [this.expandSelectedRowItemExp.madeCost, [Validators.required, Validators.minLength(1)]],
+            'expQty': [this.expandSelectedRowItemExp.expQty, [Validators.required, Validators.minLength(1)]],
+            'expCost': [this.expandSelectedRowItemExp.expCost, [Validators.required, Validators.minLength(1)]],
+            'locSalesQty': [this.expandSelectedRowItemExp.locSalesQty, [Validators.required, Validators.minLength(1)]],
+            'locSalesCost': [this.expandSelectedRowItemExp.locSalesCost, [Validators.required, Validators.minLength(1)]],
+            'damagedQty': [this.expandSelectedRowItemExp.damagedQty, [Validators.required, Validators.minLength(1)]],
+            'damagedCost': [this.expandSelectedRowItemExp.damagedCost, [Validators.required, Validators.minLength(1)]] 
+          });
+           
+        }
         
+         configureExpandGridFormRdy(itemEntryModel: RptLgYrdyModel)
+        {
+          if (itemEntryModel)
+          this.expandSelectedRowItemRdy = itemEntryModel
+          
+          this.expandEditFormRdy = this.fb.group({
+            'rptId': [this.expandSelectedRowItemRdy.rptId],
+            'stkDesc': [this.expandSelectedRowItemRdy.stkDesc, [Validators.required, Validators.minLength(1)]],
+            'tariffCode': [this.expandSelectedRowItemRdy.tariffCode, [Validators.required, Validators.minLength(1)]],
+            'qty': [this.expandSelectedRowItemRdy.qty, [Validators.required, Validators.minLength(1)]],
+            'cost': [this.expandSelectedRowItemRdy.cost, [Validators.required, Validators.minLength(1)]],
+            'dutyImpRate': [this.expandSelectedRowItemRdy.dutyImpRate, [Validators.required, Validators.minLength(1)]],
+            'dutyImpCost': [this.expandSelectedRowItemRdy.dutyImpCost, [Validators.required, Validators.minLength(1)]],
+            'gstrate': [this.expandSelectedRowItemRdy.gstrate, [Validators.required, Validators.minLength(1)]],
+            'gstcost': [this.expandSelectedRowItemRdy.gstcost, [Validators.required, Validators.minLength(1)]],
+            'taxCost': [this.expandSelectedRowItemRdy.taxCost, [Validators.required, Validators.minLength(1)]]  
+          });
+           
+        }
  
 
         onEmpChange(id){ 

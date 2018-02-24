@@ -150,7 +150,7 @@ namespace AppReport.Controllers
         public FileResult DownloadImportRptY1(int id)
         {
             var rptLg = new RptLgService(_ptsContext).Get(id);  
-            IEnumerable<RptLgYimp> rptLgYimp1 = new RptLgYimpService(_ptsContext).Get(id, (int)rptLg.RptY1);  
+            IEnumerable<RptLgYimp> rptLgYimp1 = new RptLgYimpService(_ptsContext).Get(0, (int)rptLg.RptY1);  
             List<RptLgYimp> rptLgYimp1List = (rptLgYimp1 != null) ? rptLgYimp1.ToList() : new List<RptLgYimp>(); 
 
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -182,7 +182,7 @@ namespace AppReport.Controllers
         public FileResult DownloadExportRptY1(int id)
         {
             var rptLg = new RptLgService(_ptsContext).Get(id);
-            IEnumerable<RptLgYexp> rptLgYexp1 = new RptLgYexpService(_ptsContext).Get(id, (int)rptLg.RptY1); 
+            IEnumerable<RptLgYexp> rptLgYexp1 = new RptLgYexpService(_ptsContext).Get(0, (int)rptLg.RptY1); 
             List<RptLgYexp> rptLgYexp1List = (rptLgYexp1 != null) ? rptLgYexp1.ToList() : new List<RptLgYexp>(); 
 
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -2625,7 +2625,7 @@ Website: {rptLg.FCoWebsite}", f2));
                             cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                             tbl.AddCell(cell);
 
-                            cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.FGstrate), f3));
+                            cell = new PdfPCell(new Phrase(@String.Format("{0:0}", d.FGstrate*100) + "%", f3));
                             cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                             tbl.AddCell(cell);
 
@@ -2715,7 +2715,7 @@ Website: {rptLg.FCoWebsite}", f2));
                             cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                             tbl.AddCell(cell);
 
-                            cell = new PdfPCell(new Phrase(@String.Format("{0:N}", d.Gstrate), f3));
+                            cell = new PdfPCell(new Phrase(@String.Format("{0:0}", d.Gstrate * 100) + "%", f3));
                             cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                             tbl.AddCell(cell);
 
