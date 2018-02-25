@@ -23,6 +23,8 @@
 
 
 
+
+
 GO
 
 CREATE TRIGGER [dbo].[RptLG_YBgt_Update]
@@ -40,18 +42,19 @@ SET NOCOUNT ON;
 	FROM inserted
  
 	
-	UPDATE t
-	SET t.F_DutyImpCost = (isnull(t.F_Cost,0) * isnull(o.DutyImpRate,1)),
-	t.F_GSTCost = (isnull(t.F_Cost,0) + (isnull(t.F_Cost,0) * isnull(o.DutyImpRate,1))) 
-	FROM RptLG_YBgt t with (nolock) 
-	JOIN RMaterial o with (nolock) ON t.RMId = o.RMId 
-	WHERE t.RptId = @RptId 
-	 
+	
+	UPDATE RptLG_YBgt
+	SET F_DutyImpCost = (isnull(F_Cost,0) * isnull(F_DutyImpRate,1)) 
+	WHERE RptId = @RptId 
 
-	UPDATE t
-	SET t.F_TaxCost = (isnull(t.F_DutyImpCost,0) + isnull(t.F_GSTCost,0))  	
-	FROM RptLG_YBgt t with (nolock)  
-	WHERE t.RptId = @RptId    
+	UPDATE RptLG_YBgt
+	SET F_GSTCost = (isnull(F_Cost,0) + isnull(F_DutyImpCost,0)) * isnull(F_GSTRate,1)  
+	WHERE RptId = @RptId 
+
+
+	UPDATE RptLG_YBgt
+	SET F_TaxCost = (isnull(F_DutyImpCost,0) + isnull(F_GSTCost,0))  	 
+	WHERE RptId = @RptId   
 
 
 	declare @F_Bgt_Qty as int,

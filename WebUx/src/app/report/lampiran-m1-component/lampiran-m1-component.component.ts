@@ -95,6 +95,10 @@ export class LampiranM1ComponentComponent implements OnInit {
     'appdByName': '',
     'appdByIdno': '',
     'appdByPos': '',
+     'eqDutyImp': '',
+     'eqGst': '',
+     'eqDutyExcise': '',
+     'purchEq': ''
   };
 
     detailFormError = {
@@ -198,6 +202,18 @@ validationMessages = {
     'appdByPos': {
       'required': 'Position is required.'
     },  
+    /*'eqDutyImp': {
+      'required': 'Duti Import is required.'
+    },  
+    'eqGst': {
+      'required': 'GST 6% is required.'
+    },  
+    'eqDutyExcise': {
+      'required': 'Duti Eksais is required.'
+    },  
+    'purchEq': {
+      'required': 'Nilai Barangan Import (CIF) RM is required.'
+    }, */ 
   };
 
   
@@ -320,6 +336,11 @@ validationMessages = {
     this.data.salesFiz = mainFormModel.salesFiz;
     this.data.salesLocal = mainFormModel.salesLocal;
     this.data.licenseNo = mainFormModel.licenseNo;
+    
+    this.data.purchEq = mainFormModel.purchEq;
+    this.data.eqDutyImp = mainFormModel.eqDutyImp;
+    this.data.eqDutyExcise = mainFormModel.eqDutyExcise;
+    this.data.eqGst = mainFormModel.eqGst;
     
     // Dates handling     
     this.data.letterDate = util.getTargetDate(new Date(mainFormModel.letterDate));
@@ -529,7 +550,12 @@ validationMessages = {
       'appdByEmpId': [''],
       'appdByPos': ['', [Validators.required, Validators.minLength(1)]],
       'appdByIdno': ['', [Validators.required, Validators.minLength(1)]],
-      'appdByName': ['', [Validators.required, Validators.minLength(1)]]
+      'appdByName': ['', [Validators.required, Validators.minLength(1)]],
+      'purchEq': [''],
+      'eqDutyImp': [''],
+      'eqGst': [''],
+      'eqDutyExcise': ['']
+ 
     });
     
   }
@@ -570,7 +596,11 @@ validationMessages = {
       'appdByEmpId': [this.data.appdByEmpId],
       'appdByPos': [this.data.appdByPos, [Validators.required, Validators.minLength(1)]],
       'appdByIdno': [this.data.appdByIdno, [Validators.required, Validators.minLength(1)]],
-      'appdByName': [this.data.appdByName, [Validators.required, Validators.minLength(1)]]
+      'appdByName': [this.data.appdByName, [Validators.required, Validators.minLength(1)]],
+      'purchEq': [this.data.purchEq],
+      'eqDutyImp': [this.data.eqDutyImp],
+      'eqGst': [this.data.eqGst],
+      'eqDutyExcise': [this.data.eqDutyExcise]
     });
     
     this.dataForm.valueChanges.debounceTime(300).subscribe(
@@ -722,16 +752,10 @@ validationMessages = {
           const prevDataRow = { ...rowData };
           const gridEditItem = this.expandEditForm.value as RptM1MstkModel;
           
-          if (gridEditItem) {
-            /*rowData.txnId = gridEditItem.txnId;
-            rowData.rptId = gridEditItem.rptId;
-            rowData.fCustomNo = gridEditItem.fCustomNo;
-            rowData.fGstcost = gridEditItem.fGstcost;
-            rowData.fImpCost = gridEditItem.fImpCost;
-            rowData.fImpDate = gridEditItem.fImpDate;
-            rowData.fImpWgt = gridEditItem.fImpWgt;*/
+          if (gridEditItem) { 
             rowData.usedCost = gridEditItem.usedCost;
             rowData.wastedCost = gridEditItem.wastedCost;
+            rowData.fCloseBal = rowData.fTotalRm - rowData.usedCost - rowData.wastedCost;
           }
           
           // if (rowData) {

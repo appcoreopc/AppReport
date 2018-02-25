@@ -397,8 +397,51 @@ ngAfterViewInit() {
   }
 
   testSave(){
-    var json = { "rptId": 6, "rptSdateY1": "2016-12-31T16:00:00.000Z", "rptEdateY1": "2017-12-30T16:00:00.000Z", "rptSdateY2": "2017-12-31T16:00:00.000Z", "rptEdateY2": "2018-09-30T16:00:00.000Z", "rptSdateY3": "2018-12-31T16:00:00.000Z", "rptEdateY3": "2019-12-30T16:00:00.000Z", "refNo": "ABC(1)GHH45435345 (83)", "ldate": "2018-01-08T16:00:00.000Z", "lrcptDept": "Penolong Kanan Pengarah Kastam", "lrcptBr": "Cawangan Gudang Pengilangan Berlesen", "lrcptAdd1": "Tingkat 2, Kompleks Kastam Seberang Jaya,", "lrcptAdd2": "Lot 5492, M.K.1, Jalan Perpustakaan, Lebuh Tenggiri 2,", "lrcptAdd3": "13700 Seberang Perai Tengah,", "lrcptAdd4": "Pulau Pinang.", "pbbcekNo": "39196578", "licenseFee": 4900, "signedByEmpId": 1, "signedByPos": "Pengarah", "signedByName": "Yeoh Paik Sun", "signedDate": "2018-01-09T16:00:00.000Z", "appByEmpId": "1", "appByPos": "Pengurus", "appByName": "Yeoh Phaik Suan", "appByIdno": "600516-07-5038", "appDate": "2018-01-08T16:00:00.000Z", "brcptDept": "dgsgdg gdfgdfgdfg", "brcptBr": "brach 34234", "brcptAdd1": "address 1", "brcptAdd2": "address 2", "brcptAdd3": "address 3", "brcptAdd4": "address 14", "rptCoName": "PTS Industries Sdn. Bhd.", "rptSignedByEmpId": 1, "rptSignedByPos": "Pengarah", "rptSignedByIdno": "5908065-12-9089", "rptSignedByName": "Yeoh Phaik Suan", 
-      "mfdLicenseSdate": "2016-12-31T16:00:00.000Z", "mfdLicenseEdate": "2018-12-30T16:00:00.000Z", "isChgCoName": true, "isChgCoMember": true, "isChgAddress": true, "isChgFtyStr": true, "isChgEq": true, "bgtRmcost": 900890, "bgtRdyGoodCost": 234, "mktExpRate": 1.5, "bgtMktExpCost": 678.9, "bgtMktExpRate": 45.95, "localSalesRate": 67.8, "bgtLocSalesCost": 4500, "bgtLocSalesRate": 45.6, "ipcRdc": "testing IPC", "valueAdded": "eqw", "repairSvc": "Light fixing", "sparePart": "eqwe" };
+    var json =   { "rptId": null, "refNo": "df56789", "rptY2": 2018, "ldate": "2018-02-07T16:00:00.000Z", "lrcptDept": "Penolong Kanan Pengarah Kastam", 
+    "lrcptBr": "Cawangan Gudang Pengilangan Berlesen", 
+    "lrcptAdd1": "Tingkat 2, Kompleks Kastam Seberang Jaya,", 
+    "lrcptAdd2": "Lot 5492, M.K.1, Jalan Perpustakaan, Lebuh Tenggiri 2,", 
+    "lrcptAdd3": "13700 Seberang Perai Tengah,", "lrcptAdd4": "Pulau Pinang.", 
+    "pbbcekNo": "erer", "licenseFee": 44, "signedByEmpId": "1", "signedByPos": "Pengurus", 
+    "signedByName": "Yeoh Phaik Suan", "signedDate": "2018-02-15T16:00:00.000Z", 
+    "appCoName": "PTS Industries Sdn. Bhd.", "appAdd1": "3 & 5, Lorong Sungai Lokan 3/1", 
+    "appAdd2": "Taman Perindustrian Southtech,", "appAdd3": "13800 Sungai Dua, Butterworth,", 
+    "appAdd4": "Penang, Malaysia.", "appByEmpId": "2", "appByPos": "Pengurus", 
+    "appByName": "Heng Siow Lee", "appByIdno": "830810-01-9900", 
+    "appDate": "2018-02-08T16:00:00.000Z", "brcptDept": "Pengarah Kastam Negri", 
+    "brcptBr": "Cawangan Gudang Pengilangan Berlesen",
+     "brcptAdd1": "Tingkat 2, Kompleks Kastam Seberang Jaya,", 
+     "brcptAdd2": "Lot 5492, M.K.1, Jalan Perpustakaan, Lebuh Tenggiri 2,", 
+     "brcptAdd3": "13700 Seberang Perai Tengah, ", "brcptAdd4": "Pulau Pinang.", 
+     "rptCoName": "PTS Industries Sdn. Bhd.", "rptSignedByEmpId": "4006", 
+     "rptSignedByPos": "Pengarah", "rptSignedByIdno": "4456456", 
+     "rptSignedByName": "dfsdf444444444", "mfdLicenseSdate": "2018-02-08T16:00:00.000Z",
+      "mfdLicenseEdate": "2018-02-06T16:00:00.000Z", "isChgCoName": false, 
+      "isChgCoMember": false, "isChgAddress": false, "isChgFtyStr": false, 
+      "isChgEq": false, "bgtRmcost": 4, "bgtRdyGoodCost": 4, "mktExpRate": 4, 
+      "bgtMktExpCost": 4, "bgtMktExpRate": 4, "localSalesRate": 14, "bgtLocSalesCost": 4, 
+      "bgtLocSalesRate": 4, "ipcRdc": "4", "valueAdded": "4", "repairSvc": "4", 
+    "sparePart": "4",
+     "rptY1": 0, "rptSdateY1": "2018-02-07T16:00:00.000Z","rptEdateY1": "2018-02-07T16:00:00.000Z",
+     "rptSdateY2": "2018-02-07T16:00:00.000Z","rptEdateY2": "2018-02-07T16:00:00.000Z",
+     "rptSdateY3": "2018-02-07T16:00:00.000Z","rptEdateY3": "2018-02-07T16:00:00.000Z",
+  };
+
+ var json1 =  { "rptId": 6, "refNo": "ABC(1)GHH45435345 (83)", "rptY2": 2017, "ldate": "2017-12-01T16:00:00.000Z", "lrcptDept": "xxxxxyyyy666", 
+  "lrcptBr": "Cawangan Gudang Pengilangan Berlesen", "lrcptAdd1": "Tingkat 2, Kompleks Kastam Seberang Jaya,", 
+  "lrcptAdd2": "Lot 5492, M.K.1, Jalan Perpustakaan, Lebuh Tenggiri 2,", "lrcptAdd3": "13700 Seberang Perai Tengah,", "lrcptAdd4": "Pulau Pinang.", 
+  "pbbcekNo": "39196578", "licenseFee": 4900, "signedByEmpId": 1, 
+  "signedByPos": "Pengarah", "signedByName": "Yeoh Paik Sun", "signedDate": "2017-12-01T16:00:00.000Z", "appCoName": "sd", 
+  "appAdd1": "rerwer", "appAdd2": "wer", "appAdd3": "wer", "appAdd4": "werwer", "appByEmpId": 1, 
+  "appByPos": "Pengurus", "appByName": "Yeoh Phaik Suan", "appByIdno": "600516-07-5038", "appDate": "2017-11-30T16:00:00.000Z", 
+  "brcptDept": "dgsgdg gdfgdfgdfg", "brcptBr": "brach 34234", "brcptAdd1": "address 1", "brcptAdd2": "address 2", 
+  "brcptAdd3": "address 3", "brcptAdd4": "address 14", "rptCoName": "erwerer", "rptSignedByEmpId": 1,
+   "rptSignedByPos": "Pengarah", "rptSignedByIdno": "5908065-12-9089", "rptSignedByName": "Yeoh Phaik Suan", 
+   "mfdLicenseSdate": "2016-11-22T16:00:00.000Z", "mfdLicenseEdate": "2018-11-21T16:00:00.000Z", 
+   "isChgCoName": true, "isChgCoMember": true, "isChgAddress": true, "isChgFtyStr": true, "isChgEq": true,
+    "bgtRmcost": 900890, "bgtRdyGoodCost": 234, "mktExpRate": 1.5, "bgtMktExpCost": 678.9, "bgtMktExpRate": 45.95, 
+    "localSalesRate": 67.8, "bgtLocSalesCost": 4500, "bgtLocSalesRate": 45.6, "ipcRdc": "testing IPC", 
+    "valueAdded": "eqw", "repairSvc": "Light fixing", "sparePart": "eqwe" };
     
     var strJson = JSON.stringify(json); 
     this.dispatchIntent(LESEN_SAVE, strJson);
@@ -945,7 +988,9 @@ ngAfterViewInit() {
           'fTariffCode': [this.itemEntryModel.fTariffCode],
           'usedRmwgt': [this.itemEntryModel.usedRmwgt],
           'usedRmcost': [this.itemEntryModel.usedRmcost],
-          'returnedWgt': [this.itemEntryModel.returnedWgt] 
+          'returnedWgt': [this.itemEntryModel.returnedWgt],
+          'fOpenBalWgt': [this.itemEntryModel.fOpenBalWgt],
+          'fOpenBalCost': [this.itemEntryModel.fOpenBalCost]
         });
 
         this.entryDetailFormExp = this.fb.group({
@@ -957,7 +1002,9 @@ ngAfterViewInit() {
           'locSalesQty': [this.itemEntryModelExp.locSalesQty],
           'locSalesCost': [this.itemEntryModelExp.locSalesCost],
           'damagedQty': [this.itemEntryModelExp.damagedQty],
-          'damagedCost': [this.itemEntryModelExp.damagedCost]
+          'damagedCost': [this.itemEntryModelExp.damagedCost],
+          'openBalQty': [this.itemEntryModelExp.openBalQty],
+          'openBalCost': [this.itemEntryModelExp.openBalCost]
         }); 
 
         this.entryDetailFormBgt = this.fb.group({
@@ -1012,11 +1059,11 @@ ngAfterViewInit() {
           this.itemEntryModel.fTariffCode = data.fTariffCode;
           this.itemEntryModel.usedRmwgt = data.usedRmwgt;
           this.itemEntryModel.usedRmcost = data.usedRmcost;
-          this.itemEntryModel.returnedWgt = data.returnedWgt;
-          //this.itemEntryModel.rptId = this.data.rptId;
-          //this.itemEntryModel.usedCost = data.usedCost; 
-          //this.itemEntryModel.wastedCost = data.wastedCost; 
-          
+          this.itemEntryModel.returnedWgt = data.returnedWgt; 
+          this.itemEntryModel.fOpenBalWgt = data.fOpenBalWgt; 
+          this.itemEntryModel.fOpenBalCost = data.fOpenBalCost; 
+           
+
           for (const field in this.detailFormError) {
             // clear previous error message (if any)
             this.detailFormError[field] = '';
@@ -1046,6 +1093,8 @@ ngAfterViewInit() {
           this.itemEntryModelExp.locSalesCost = data.locSalesCost; 
           this.itemEntryModelExp.damagedQty = data.damagedQty;
           this.itemEntryModelExp.damagedCost = data.damagedCost; 
+          this.itemEntryModelExp.openBalQty = data.openBalQty; 
+          this.itemEntryModelExp.openBalCost = data.openBalCost; 
           
           for (const field in this.detailFormError) {
             // clear previous error message (if any)
@@ -1106,6 +1155,10 @@ ngAfterViewInit() {
             rowData.usedRmcost = gridEditItem.usedRmcost;
             rowData.usedRmwgt = gridEditItem.usedRmwgt;
             rowData.returnedWgt = gridEditItem.returnedWgt; 
+            rowData.fOpenBalWgt = gridEditItem.fOpenBalWgt; 
+            rowData.fOpenBalCost = gridEditItem.fOpenBalCost; 
+            rowData.fCloseBalWgt = (rowData.fOpenBalWgt + rowData.fImpRmwgt + rowData.fLocRmwgt) - (rowData.usedRmwgt + rowData.returnedWgt); 
+            rowData.fCloseBalCost = (rowData.fOpenBalCost + rowData.fImpRmcost + rowData.fLocRmcost) - (rowData.usedRmcost); 
           }
           
           // if (rowData) {
@@ -1159,7 +1212,11 @@ ngAfterViewInit() {
             rowData.locSalesCost = gridEditItem.locSalesCost; 
             rowData.damagedQty = gridEditItem.damagedQty;
             rowData.damagedCost = gridEditItem.damagedCost;  
-          } 
+            rowData.openBalQty = gridEditItem.openBalQty; 
+            rowData.openBalCost = gridEditItem.openBalCost; 
+            rowData.closeBalQty = (rowData.openBalQty + rowData.madeQty) - (rowData.expQty + rowData.locSalesQty + rowData.damagedQty); 
+            rowData.closeBalCost = (rowData.openBalCost + rowData.madeCost) - (rowData.expCost + rowData.locSalesCost + rowData.damagedCost); 
+          }
           dt.toggleRow(prevDataRow);   
         }
         
@@ -1180,10 +1237,13 @@ ngAfterViewInit() {
           
           const prevDataRow = { ...rowData };
           const gridEditItem = this.expandEditFormRdy.value as RptLgYrdyModel;
-           
+            
           if (gridEditItem) { 
             rowData.qty = gridEditItem.qty;
             rowData.cost = gridEditItem.cost;   
+            rowData.dutyImpCost = rowData.cost * rowData.dutyImpRate;
+            rowData.gstcost = (rowData.cost + rowData.dutyImpCost) * rowData.gstrate;
+            rowData.taxCost = rowData.dutyImpCost + rowData.gstcost;
           } 
           dt.toggleRow(prevDataRow);   
         }
@@ -1207,9 +1267,11 @@ ngAfterViewInit() {
           
           this.expandEditForm = this.fb.group({
             'rptId': [this.expandSelectedRowItem.rptId],
+            'fOpenBalWgt': [this.expandSelectedRowItem.fOpenBalWgt, [Validators.required, Validators.minLength(1)]],
+            'fOpenBalCost': [this.expandSelectedRowItem.fOpenBalCost, [Validators.required, Validators.minLength(1)]],
             'usedRmcost': [this.expandSelectedRowItem.usedRmcost, [Validators.required, Validators.minLength(1)]],
             'usedRmwgt': [this.expandSelectedRowItem.usedRmwgt, [Validators.required, Validators.minLength(1)]],
-            'returnedWgt': [this.expandSelectedRowItem.returnedWgt, [Validators.required, Validators.minLength(1)]]
+            'returnedWgt': [this.expandSelectedRowItem.returnedWgt, [Validators.required, Validators.minLength(1)]] 
           });
           
          /* if (itemEntryModel.fImpDate && itemEntryModel.fImpDate.length > 0)
@@ -1226,6 +1288,8 @@ ngAfterViewInit() {
           
           this.expandEditFormExp = this.fb.group({
             'rptId': [this.expandSelectedRowItemExp.rptId],
+            'openBalQty': [this.expandSelectedRowItemExp.openBalQty, [Validators.required, Validators.minLength(1)]],
+            'openBalCost': [this.expandSelectedRowItemExp.openBalCost, [Validators.required, Validators.minLength(1)]],
             'madeQty': [this.expandSelectedRowItemExp.madeQty, [Validators.required, Validators.minLength(1)]],
             'madeCost': [this.expandSelectedRowItemExp.madeCost, [Validators.required, Validators.minLength(1)]],
             'expQty': [this.expandSelectedRowItemExp.expQty, [Validators.required, Validators.minLength(1)]],

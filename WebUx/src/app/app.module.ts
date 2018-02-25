@@ -8,6 +8,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { ConfigComponentComponent } from './config/config-component/config-component.component';
 import { EmployeeComponentComponent } from './employee/employee-component/employee-component.component';
 import { RawMaterialComponentComponent } from './material/raw-material-component/raw-material-component.component';
+import { ReadyStockComponent } from './material/readystock-component/readystock-component.component';
 import { MaterialCategoryComponentComponent } from './material/material-category-component/material-category-component.component';
 import { StnCustomComponentComponent } from './material/stn-custom-component/stn-custom-component.component';
 import { SupplierComponentComponent } from './material/supplier-component/supplier-component.component';
@@ -37,6 +38,9 @@ import { MaterialCategoryReducer} from './material/material-category-component/m
 
 import { RawMaterialEffects } from './material/raw-material-component/rawMaterialEffects';
 import { RawMaterialReducer} from './material/raw-material-component/rawMaterialReducer';
+ 
+import { ReadyStockEffects } from './material/readystock-component/readyStockEffects';
+import { ReadyStockReducer} from './material/readystock-component/readyStockReducer';
 
 import { StnCustomEffects } from './material/stn-custom-component/stnCustomEffects';
 import { StnCustomReducer} from './material/stn-custom-component/stnCustomReducer';
@@ -85,6 +89,7 @@ export const ROUTES: Routes = [
   { path: 'supplier', component  : SupplierComponentComponent, canActivate: [AuthGuard]  },
   { path: 'materialCategory', component  : MaterialCategoryComponentComponent },
   { path: 'rawMaterial', component  : RawMaterialComponentComponent },
+  { path: 'readyStock', component  : ReadyStockComponent },
   { path: 'stnCustom', component  : StnCustomComponentComponent },
   { path: 'grn', component  : ReportGrnComponent },
   { path: 'm1', component  : LampiranM1ComponentComponent },
@@ -102,6 +107,7 @@ export const ROUTES: Routes = [
     EmployeeComponentComponent,
     NavigationComponent,
     RawMaterialComponentComponent,
+    ReadyStockComponent,
     MaterialCategoryComponentComponent,
     StnCustomComponentComponent,
     SupplierComponentComponent,
@@ -118,12 +124,12 @@ export const ROUTES: Routes = [
     BrowserAnimationsModule, DialogModule, MultiSelectModule,ConfirmDialogModule, SharedModule, TabViewModule,TableModule,FormsModule,
     
     StoreModule.forRoot([ConfigReducer, EmployeeReducer, UserReducer, AppProgressSpinnerReducer,
-      SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, GrnReducer,
+      SupplierReducer, MaterialCategoryReducer, RawMaterialReducer, ReadyStockReducer, GrnReducer,
       M1LampiranReducer, SkimKhasReducer, LesenReducer, UOMReducer, StnCustomReducer]),
       
       EffectsModule.forRoot([ConfigEffects, EmployeeEffects, UserEffects, 
         SupplierEffects, MaterialCategoryEffects, 
-        RawMaterialEffects, GrnEffects, M1LampiranEffects, 
+        RawMaterialEffects, ReadyStockEffects, GrnEffects, M1LampiranEffects, 
         SkimKhasEffects, LesenEffects, UOMEffects, StnCustomEffects]), 
         RouterModule.forRoot(ROUTES)
       ],

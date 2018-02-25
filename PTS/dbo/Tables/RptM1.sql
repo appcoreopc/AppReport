@@ -85,6 +85,10 @@
 
 
 
+
+
+
+
 GO
 CREATE TRIGGER [dbo].[RptM1_Insert]
        ON [dbo].[RptM1]
@@ -122,7 +126,8 @@ declare @RptId as int,
 @F_CloseBal as decimal(10,2),
 @F_TotalRM as decimal(10,2),
 @F_WastedCost as decimal(18,2),  
-@F_UsedCost as decimal(18,2)  
+@F_UsedCost as decimal(18,2),
+@DutyExcise as decimal(18,2) 
  
 select top 1 @F_CoName = ConfigData
  from Config with (nolock)
@@ -189,7 +194,8 @@ where Month(RptDate) = Month(@PrevRptDate)
 
 select @TotalFreightRMCost = sum(isnull(TotalFreightRMCost,0)),
 @RMDutyImp = sum(isnull(DutyImp,0)),
-@RMGST = sum(isnull(GST,0)) 
+@RMGST = sum(isnull(GST,0)),
+@DutyExcise = sum(isnull(DutyExcise,0))
 from GRN g with (nolock) 
 where Month(g.GRNDate) = Month(@RptDate)
 	and Year(g.GRNDate) = Year(@RptDate)  
@@ -210,12 +216,16 @@ F_OpenBal = isnull(@OpenBal,0),
 PurchRM = @TotalFreightRMCost, 
 RMDutyImp = @RMDutyImp,
 RMGST = @RMGST,
-F_RMTaxLost = isnull(@RMDutyImp,0) + isnull(@RMGST,0)
+F_RMTaxLost = isnull(@RMDutyImp,0) + isnull(@RMGST,0),
+F_EqTaxLost = isnull(EqDutyImp,0) + isnull(EqGST,0),
+RMDutyExcise = @DutyExcise
 where RptId = @RptId
 
 update RptM1 
-set F_SumDutyImp = RMDutyImp,  F_SumGST = RMGST,
-F_SumTaxLost = F_RMTaxLost
+set F_SumDutyImp = isnull(RMDutyImp,0) + isnull(EqDutyImp,0),  
+F_SumGST = isnull(RMGST,0) + isnull(EqGST,0),  
+F_SumTaxLost = isnull(F_RMTaxLost,0) + isnull(F_EqTaxLost,0),   
+F_SumDutyExcise = isnull(RMDutyExcise,0) + isnull(EqDutyExcise,0)
 where RptId = @RptId
 
 if(not exists(select 1 from RptM1_MStk where RptId = @RptId))

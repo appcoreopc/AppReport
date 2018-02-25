@@ -7,7 +7,7 @@ export class RptLgModel {
 
   rptId : number;
   rptStatusId : number;
-  /*fCoName : string;
+  fCoName : string;
   fCoRegNo : string;
   fCoAdd1 : string;
   fCoAdd2 : string;
@@ -17,15 +17,15 @@ export class RptLgModel {
   fCoFax : string;
   fCoEmail : string;
   fCoWebsite : string;
-  fCoLogo : string;*/
+  fCoLogo : string;
   rptY1 : number;
   rptY2 : number;
-  /*rptSdateY1 : string;
+  rptSdateY1 : string;
   rptEdateY1 : string;
   rptSdateY2 : string;
   rptEdateY2 : string;
   rptSdateY3 : string;
-  rptEdateY3 : string;*/
+  rptEdateY3 : string;
   refNo : string;
   ldate : string;
   lrcptDept : string;
@@ -71,15 +71,15 @@ export class RptLgModel {
   isChgAddress : boolean;
   isChgFtyStr : boolean;
   isChgEq : boolean;
-  //fRmcost : number;
+  fRmcost : number;
   bgtRmcost : number;
-  //fRdyGoodCost : number;
+  fRdyGoodCost : number;
   bgtRdyGoodCost : number;
-  //fMktExpCost : number;
+  fMktExpCost : number;
   mktExpRate : number;
   bgtMktExpCost : number;
   bgtMktExpRate : number;
-  //fLocalSalesCost : number;
+  fLocalSalesCost : number;
   localSalesRate : number;
   bgtLocSalesCost : number;
   bgtLocSalesRate : number;
@@ -87,7 +87,7 @@ export class RptLgModel {
   valueAdded : string;
   repairSvc : string;
   sparePart : string;
-  /*fImpOpenBalWgtY1 : number;
+  fImpOpenBalWgtY1 : number;
   fImpOpenBalCostY1 : number;
   fImpImpRmwgtY1 : number;
   fImpImpRmcostY1 : number;
@@ -146,7 +146,7 @@ export class RptLgModel {
   fBgtCostImp : number;
   fBgtDutyImpCostImp : number;
   fBgtGstcostImp : number;
-  fBgtTaxCostImp : number;  */
+  fBgtTaxCostImp : number;   
 
   rptLgYimp : RptLgYimpModel[];
   rptLgYimpY1 : RptLgYimpModel[];

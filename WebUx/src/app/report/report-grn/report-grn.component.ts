@@ -79,6 +79,7 @@ export class ReportGrnComponent implements OnInit {
     'cif':'',
     'customDate':'',
     'customNo':'',
+    'dutyExcise':'',
     'invoiceNo':'',
     'currencyId':'',
     'amountCurrency':'',
@@ -333,6 +334,7 @@ export class ReportGrnComponent implements OnInit {
         if (this.intention == ADD)
         {
              saveJson = this.dataForm.value as GrnModel;
+            saveJson.grnid = 0;
         }
         else {
             saveJson.grnid = this.data.grnid;
@@ -359,6 +361,7 @@ export class ReportGrnComponent implements OnInit {
             saveJson.cif = this.data.cif;
             saveJson.customDate = this.data.customDate;
             saveJson.customNo = this.data.customNo;
+            saveJson.dutyExcise = this.data.dutyExcise;
             saveJson.invoiceNo = this.data.invoiceNo;
             saveJson.currencyId = this.data.currencyId;
             saveJson.amountCurrency = this.data.amountCurrency;
@@ -398,7 +401,11 @@ export class ReportGrnComponent implements OnInit {
   } 
 
   testsave(){
-     var j= { "grnid": "", "grndate": "2018-01-01T16:00:00.000Z", "lotno": "xx4234234", "supplierId": 1, "rmid": 1, "height": 1, "heightUom": 1, "width": 2, "widthUom": 1, "thick": 3, "thickUom": 1, "wgt": 4, "roll": 5, "rollUom": 1, "dom": "2018-01-17T16:00:00.000Z", "dono": "abc11111", "stncustomId": 1, "componentId": 1, "kaswgt": 6, "dutyImp": 7, "gst": 8, "cif": 9, "customDate": "2017-01-18T16:00:00.000Z", "customNo": "23234234", "invoiceNo": "tb45345", "currencyId": 1, "amountCurrency": 10, "exRate": 0.9, "amount": 9, "pono": "po3234234", "otdlate": "late otd", "fwdInvNo": "inv23123123", "amt": 12, "forwarder": "ewrwre", "docRefNo": "doc234234", "vcarno": "d3432423", "impFreight": 13, "currencyAdj": "NA", "termChrg": 15, "aprtTxFee": 16, "delivery": 17, "handFwd": 18, "customExamFee": 19, "collectFee": 20, "cargoPrmt": "21", "docFee": 22, "breakBulk": 2256456, "edifee": 23, "freightGst": 24, "totalFreightCost": 2256643, "totalFreightRmcost": 2256652 };
+     var j= {"grnid":"0","grndate":"2018-02-15T16:00:00.000Z",
+     "lotno":"4","supplierId":"1","rmid":"1","height":4,
+     "heightUom":"1","width":4,"widthUom":"1","thick":4,
+     "thickUom":"1","wgt":4,"roll":4,"rollUom":"1",
+     "dom":"2018-02-21T16:00:00.000Z","dono":"4","stncustomId":"1","componentId":"1","kaswgt":14,"dutyImp":4,"gst":4,"cif":4,"customDate":"2018-02-01T16:00:00.000Z","customNo":"4","dutyExcise":4,"invoiceNo":"4","currencyId":"1","amountCurrency":4,"exRate":4,"amount":16,"pono":"4","otdlate":"4","fwdInvNo":"4","amt":4,"forwarder":"4","docRefNo":"4","vcarno":"4","impFreight":4,"currencyAdj":"NA","termChrg":4,"aprtTxFee":4,"delivery":4,"handFwd":4,"customExamFee":4,"collectFee":4,"cargoPrmt":"4","docFee":4,"breakBulk":4,"edifee":4,"freightGst":4,"totalFreightCost":44,"totalFreightRmcost":60};
       this.dispatchIntent(GRN_SAVE, j);
   }
 
@@ -492,6 +499,7 @@ export class ReportGrnComponent implements OnInit {
       this.data.cif = data.cif;
       this.data.customDate = data.customDate;
       this.data.customNo = data.customNo;
+      this.data.dutyExcise = data.dutyExcise;
       this.data.invoiceNo = data.invoiceNo;
       this.data.currencyId = data.currencyId;
       this.data.amountCurrency = data.amountCurrency;
@@ -575,6 +583,7 @@ export class ReportGrnComponent implements OnInit {
             cif : dataInfo.cif,
             customDate : new Date(dataInfo.customDate),
             customNo : dataInfo.customNo,
+            dutyExcise : dataInfo.dutyExcise,
             invoiceNo : dataInfo.invoiceNo,
             currencyId : dataInfo.currencyId,
             amountCurrency : dataInfo.amountCurrency,
@@ -784,6 +793,7 @@ private setFormValidation(id :any) {
         'cif': ['', [Validators.required, Validators.minLength(1)]],
         'customDate': ['', [Validators.required, Validators.minLength(1)]],
         'customNo': ['', [Validators.required, Validators.minLength(1)]],
+        'dutyExcise': [''],
         'invoiceNo': ['', [Validators.required, Validators.minLength(1)]],
         'currencyId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
         'amountCurrency': ['', [Validators.required, Validators.minLength(1)]],
@@ -874,6 +884,7 @@ private configureEditForm() {
      this.dataForm.get("cif").setValue(this.data.cif);
      this.dataForm.get("customDate").setValue(new Date(this.data.customDate));
      this.dataForm.get("customNo").setValue(this.data.customNo);
+     this.dataForm.get("dutyExcise").setValue(this.data.dutyExcise);
      this.dataForm.get("invoiceNo").setValue(this.data.invoiceNo);
      this.dataForm.get("currencyId").setValue(this.data.currencyId);
      this.dataForm.get("amountCurrency").setValue(this.data.amountCurrency);

@@ -687,8 +687,13 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell = new PdfPCell(new Phrase("RM", f4));
                     cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                     cell.Border = PdfCell.NO_BORDER;
-                    stbl.AddCell(cell);
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.PurchEq), f4));
+                    stbl.AddCell(cell); 
+
+                    if(rptM1.PurchEq == null)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", 0), f4));
+                    else
+                       cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.PurchEq), f4));
+
                     cell.Border = PdfCell.NO_BORDER;
                     cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                     stbl.AddCell(cell);
@@ -1712,7 +1717,11 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.RmdutyExcise
+                    if(rptM1.RmdutyExcise != null && rptM1.RmdutyExcise > 0)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.RmdutyExcise), f11));
+                    else
+                        cell = new PdfPCell(new Phrase("NIL", f11));
+              
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -1731,36 +1740,57 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.Padding = 5f;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
+ 
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}" ,"NIL"), f11)); //rptM1.PurchEq
+                    if (rptM1.PurchEq != null)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.PurchEq), f11));
+                    else
+                        cell = new PdfPCell(new Phrase("NIL", f11));
+
+                    cell.Padding = 0;
+                    cell.Padding = 5f;
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    t1b.AddCell(cell);
+                     
+                    if (rptM1.EqDutyImp != null)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.EqDutyImp), f11));
+                    else
+                        cell = new PdfPCell(new Phrase("NIL", f11));
+
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.EqDutyImp
+                    if (rptM1.EqGst != null)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.EqGst), f11));
+                    else
+                        cell = new PdfPCell(new Phrase("NIL", f11));
+                     
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
+ 
+                    if (rptM1.EqDutyExcise != null)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.EqDutyExcise), f11));
+                    else
+                        cell = new PdfPCell(new Phrase("NIL", f11));
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.EqGst
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
+                     
+                    if (rptM1.FEqTaxLost != null)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.FEqTaxLost), f11));
+                    else
+                        cell = new PdfPCell(new Phrase("NIL", f11));
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.EqDutyExcise
-                    cell.Padding = 0;
-                    cell.Padding = 5f;
-                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    t1b.AddCell(cell);
-
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.FEqTaxLost
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -1774,7 +1804,7 @@ Website: {rptM1.FCoWebsite}", f2));
                     t1b.AddCell(cell);
 
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}",  rptM1.PurchRm), f11)); //rptM1.PurchEq +
+                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}",  rptM1.PurchRm), f11));  
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -1795,7 +1825,11 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase(@String.Format("{0:N}", "NIL"), f11)); //rptM1.FSumDutyExcise
+                    if (rptM1.FSumDutyExcise != null && rptM1.FSumDutyExcise > 0)
+                        cell = new PdfPCell(new Phrase(@String.Format("{0:N}", rptM1.FSumDutyExcise), f11));
+                    else
+                        cell = new PdfPCell(new Phrase("NIL", f11)); 
+
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;

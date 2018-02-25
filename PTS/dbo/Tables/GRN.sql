@@ -23,6 +23,7 @@
     [CIF]                DECIMAL (18, 2)  NULL,
     [CustomDate]         DATE             NULL,
     [CustomNo]           VARCHAR (50)     NULL,
+    [DutyExcise]         DECIMAL (18, 2)  NULL,
     [InvoiceNo]          VARCHAR (50)     NULL,
     [CurrencyId]         INT              NULL,
     [AmountCurrency]     DECIMAL (18, 2)  NULL,
@@ -56,6 +57,8 @@
     [EditedDT]           DATETIME         NULL,
     CONSTRAINT [PK_GrnLog] PRIMARY KEY CLUSTERED ([GRNId] ASC)
 );
+
+
 
 
 

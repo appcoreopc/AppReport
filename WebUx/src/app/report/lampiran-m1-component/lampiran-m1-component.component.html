@@ -407,6 +407,45 @@
 										</div>
 									</div>
 								</div>
+
+
+								 <div class="form-group row" style="padding-top:20px"> 
+									<label  class="label label-success" style="font-size:13px">Mesin /Alat Ganti</label>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="purchEq">Nilai Barangan Import (CIF) RM :</label>
+									</div>
+									<div class="cell c2">
+										<input id="purchEq" type="number" maxlength="16" class="form-control text-control" formControlName="purchEq" />
+									 
+									</div>
+									<div class="cell c3"></div>
+									<div class="cell c4">
+										<label for="eqDutyImp">Duti Import :</label>
+									</div>
+									<div class="cell c5">
+										<input id="eqDutyImp" type="number" maxlength="16" class="form-control text-control" formControlName="eqDutyImp" />
+									 
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="cell c1">
+										<label for="eqGst">GST 6% :</label>
+									</div>
+									<div class="cell c2">
+										<input id="eqGst" type="number" maxlength="16" class="form-control text-control" formControlName="eqGst" />
+									 
+									</div>
+									<div class="cell c3"></div>
+									<div class="cell c4">
+										<label for="eqDutyExcise">Duti Eksais :</label>
+									</div>
+									<div class="cell c5">
+										<input id="eqDutyExcise" type="number" maxlength="16" class="form-control text-control" formControlName="eqDutyExcise" />
+										 
+									</div>
+								</div>
  
 							</div>
 
@@ -595,7 +634,7 @@
 		
   <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
 		 <tr [pSelectableRow]="rowData">
-            <td>{{rowData.rptId}}</td>
+            <td style="text-align:center">{{rowData.rptId}}</td>
             <td style="text-align:center">{{rowData.rptDate | date: 'MMM / yyyy'}}</td> 
             <td>{{rowData.refNo}}</td> 
             <td style="text-align:right">{{rowData.salesExpCont + rowData.salesGpb + rowData.salesFiz  

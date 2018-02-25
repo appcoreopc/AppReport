@@ -168,6 +168,8 @@ namespace AppReport.DataServices.PTSDataModel
                     .HasColumnName("DONo")
                     .HasColumnType("varchar(50)");
 
+                entity.Property(e => e.DutyExcise).HasColumnType("decimal");
+
                 entity.Property(e => e.DutyImp).HasColumnType("decimal");
 
                 entity.Property(e => e.Edifee)

@@ -179,6 +179,8 @@
 
 
 
+
+
 GO
 CREATE TRIGGER [dbo].[RptLG_Insert]
        ON [dbo].[RptLG]
@@ -206,7 +208,10 @@ declare @RptId as int,
 @CurrentYr as int,
 @LastYr as int,
 @MfdGoodY1 as nvarchar(max),
-@MfdGoodY2 as nvarchar(max)
+@MfdGoodY2 as nvarchar(max),
+@CurrentCutOffMonth as int
+
+select @MfdGoodY2 = dbo.[fnReadyStockList]()
 
 declare @F_Imp_OpenBalWgt_Y1 as decimal(10, 2),
 	@F_Imp_OpenBalCost_Y1 as decimal(18, 2),
@@ -326,8 +331,14 @@ where ModuleId = 0 and ConfigKey='CoSPLNo'
 select top 1 @F_CoGSTNo = ConfigData
  from Config with (nolock)
 where ModuleId = 0 and ConfigKey='CoGSTNo'
-  
-SELECT @RptId = RptId, @CurrentYr = Year(RptSDate_Y2)
+ 
+select top 1 @CurrentCutOffMonth = convert(int,ConfigData)
+ from Config with (nolock)
+where ModuleId = 1 and Id = 2 and ConfigKey='CurrentCutOffMonth'
+ 
+
+ 
+SELECT @RptId = RptId, @CurrentYr = RptY2
 FROM inserted 
 
 set @LastYr = @CurrentYr - 1 
@@ -337,8 +348,6 @@ from RptLG with (nolock)
 where RptY2 = @LastYr
 --and RptStatusId = 3 
   
-
-
 if @PrevRptId is not null
 begin
 	select Top 1 @F_Imp_OpenBalWgt_Y1 = isnull(F_Exp_OpenBalQty_Y2,0),
@@ -374,7 +383,6 @@ begin
 
 end
  
-  
 update RptLG
 set F_CoName = @F_CoName,
 	F_CoRegNo = @F_CoRegNo,
@@ -387,9 +395,16 @@ set F_CoName = @F_CoName,
 	F_CoEmail = @F_CoEmail,
 	F_CoWebsite = @F_CoWebsite,
 	F_CoLogo = @F_CoLogo,
-	RptY1 = Year(RptSDate_Y1),
-	RptY2 = Year(RptSDate_Y2),
+	RptY1 = @CurrentYr-1, 
+	RptSDate_Y1 = DATEFROMPARTS(@CurrentYr-1, 1, 1),
+	RptEDate_Y1 = DATEFROMPARTS(@CurrentYr-1, 12, 31),
+	RptSDate_Y2 = DATEFROMPARTS(@CurrentYr, 1, 1),
+	RptEDate_Y2 = DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEFROMPARTS(@CurrentYr, @CurrentCutOffMonth, 1))),
+	RptSDate_Y3 = DATEFROMPARTS(@CurrentYr+1, 1, 1),
+	RptEDate_Y3 = DATEFROMPARTS(@CurrentYr+1, 12, 31), 
 	MfdGoodY1 = @MfdGoodY1,
+	MfdGoodY2 = @MfdGoodY2,
+	MfdGoodY3 = @MfdGoodY2,
 	F_Imp_OpenBalWgt_Y1 = @F_Imp_OpenBalWgt_Y1,
 	F_Imp_OpenBalCost_Y1 = @F_Imp_OpenBalCost_Y1,
 	F_Imp_ImpRMWgt_Y1 = @F_ImpRMWgt_Y1,

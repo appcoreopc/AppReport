@@ -118,6 +118,7 @@ namespace AppReport.Services
             if (requestModel.RptId.HasValue)
             {
                 newData.RptId = (int)requestModel.RptId;
+                if (requestModel.RptId == 0) requestModel.RptId = null;
             }
             else
             {
@@ -157,7 +158,9 @@ namespace AppReport.Services
                         targetUpdateItem.RptId = item.RptId;
                         targetUpdateItem.UsedRmcost = item.UsedRmcost;
                         targetUpdateItem.UsedRmwgt = item.UsedRmwgt;
-                        targetUpdateItem.ReturnedWgt = item.ReturnedWgt; 
+                        targetUpdateItem.ReturnedWgt = item.ReturnedWgt;
+                        targetUpdateItem.FOpenBalWgt = item.FOpenBalWgt;
+                        targetUpdateItem.FOpenBalCost = item.FOpenBalCost;
 
                         // Persist into database
                         Save(targetUpdateItem, targetUpdateItem.TxnId);
@@ -200,6 +203,8 @@ namespace AppReport.Services
                         targetUpdateItem.LocSalesCost = item.LocSalesCost;
                         targetUpdateItem.DamagedQty = item.DamagedQty;
                         targetUpdateItem.DamagedCost = item.DamagedCost;
+                        targetUpdateItem.OpenBalQty = item.OpenBalQty;
+                        targetUpdateItem.OpenBalCost = item.OpenBalCost; 
 
                         // Persist into database
                         Save(targetUpdateItem, targetUpdateItem.TxnId);

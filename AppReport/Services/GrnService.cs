@@ -87,7 +87,8 @@ namespace AppReport.Services
                     Edifee = d.Edifee,
                     FreightGst = d.FreightGst,
                     TotalFreightCost = d.TotalFreightCost,
-                    TotalFreightRmcost = d.TotalFreightRmcost
+                    TotalFreightRmcost = d.TotalFreightRmcost,
+                    DutyExcise = d.DutyExcise
                 };
                 return base.Save<Grn>(data, null);
             }
@@ -146,6 +147,7 @@ namespace AppReport.Services
                     data.FreightGst = d.FreightGst;
                     data.TotalFreightCost = d.TotalFreightCost;
                     data.TotalFreightRmcost = d.TotalFreightRmcost;
+                    data.DutyExcise = d.DutyExcise;
                 }
 
                 return base.Save<Grn>(data, Convert.ToInt32(d.Grnid));

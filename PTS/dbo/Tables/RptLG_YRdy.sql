@@ -19,9 +19,11 @@
 
 
 
+
+
 GO
 
-create TRIGGER [dbo].[RptLG_YRdy_Update]
+CREATE TRIGGER [dbo].[RptLG_YRdy_Update]
        ON [dbo].[RptLG_YRdy]
 AFTER INSERT, UPDATE
 AS
@@ -34,18 +36,18 @@ SET NOCOUNT ON;
 	FROM inserted
   
 
-	UPDATE t
-	SET t.DutyImpCost = (isnull(t.Cost,0) * isnull(o.DutyImpRate,1)),
-	t.GSTCost = (isnull(t.Cost,0) + (isnull(t.Cost,0) * isnull(o.DutyImpRate,1)))  
-	FROM RptLG_YRdy t with (nolock) 
-	JOIN ReadyStock o with (nolock) ON t.ReadyStockId = o.ReadyStockId 
-	WHERE t.RptId = @RptId 
-	 
+	UPDATE RptLG_YRdy
+	SET DutyImpCost = (isnull(Cost,0) * isnull(DutyImpRate,1)) 
+	WHERE RptId = @RptId 
 
-	UPDATE t
-	SET t.TaxCost = (isnull(t.DutyImpCost,0) + isnull(t.GSTCost,0))  	
-	FROM RptLG_YRdy t with (nolock)  
-	WHERE t.RptId = @RptId    
+	UPDATE RptLG_YRdy
+	SET GSTCost = (isnull(Cost,0) + isnull(DutyImpCost,0)) * isnull(GSTRate,1)  
+	WHERE RptId = @RptId 
+
+
+	UPDATE RptLG_YRdy
+	SET TaxCost = (isnull(DutyImpCost,0) + isnull(GSTCost,0))  	 
+	WHERE RptId = @RptId    
 
 
 	declare @F_Rdy_Cost decimal(18, 2),

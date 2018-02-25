@@ -84,6 +84,12 @@ namespace AppReport.Services
                 AppdByName = requestModel.AppdByName,
                 AppdByIdno = requestModel.AppdByIdno,
                 AppdByPos = requestModel.AppdByPos,
+
+                PurchEq = requestModel.PurchEq,
+                EqDutyImp = requestModel.EqDutyImp,
+                EqGst = requestModel.EqGst,
+                EqDutyExcise = requestModel.EqDutyExcise,
+
             };
 
             if (requestModel.RptId.HasValue)

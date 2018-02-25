@@ -11,3 +11,7 @@
     CONSTRAINT [PK_ReadyStock] PRIMARY KEY CLUSTERED ([ReadyStockId] ASC)
 );
 
+
+
+
+

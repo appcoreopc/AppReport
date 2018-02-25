@@ -26,6 +26,8 @@
 
 
 
+
+
 GO
 
 CREATE TRIGGER [dbo].[RptLG_YImp_Update]
@@ -53,8 +55,8 @@ SET NOCOUNT ON;
 	UPDATE t
 		SET t.F_RMDesc = o.RMDesc, t.F_RMCatName = c.RMCatName, t.F_UOMCode = u.UomCode,
 		t.F_TariffCode = o.TariffCode, 
-		t.F_CloseBalWgt = (isnull(t.F_OpenBalWgt,0) + isnull(t.F_ImpRMWgt,0) + isnull(t.F_LocRMWgt,0)), 
-		t.F_CloseBalCost = (isnull(t.F_OpenBalCost,0) + isnull(t.F_ImpRMCost,0) + isnull(t.F_LocRMCost,0))
+		t.F_CloseBalWgt = (isnull(t.F_OpenBalWgt,0) + isnull(t.F_ImpRMWgt,0) + isnull(t.F_LocRMWgt,0)) - (isnull(t.UsedRMWgt,0) + isnull(t.ReturnedWgt,0)), 
+		t.F_CloseBalCost = (isnull(t.F_OpenBalCost,0) + isnull(t.F_ImpRMCost,0) + isnull(t.F_LocRMCost,0)) - isnull(t.UsedRMCost,0)
 		FROM RptLG_YImp t with (nolock) 
 		JOIN RMaterial o with (nolock) ON t.RMId = o.RMId
 		JOIN RMCat c with (nolock) ON t.RMId = o.RMId

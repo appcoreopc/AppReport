@@ -28,6 +28,7 @@ namespace AppReport.RequestModel
         public decimal? Cif { get; set; }
         public DateTime? CustomDate { get; set; }
         public string CustomNo { get; set; }
+        public decimal? DutyExcise { get; set; }
         public string InvoiceNo { get; set; }
         public int? CurrencyId { get; set; }
         public decimal? AmountCurrency { get; set; }

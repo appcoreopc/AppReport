@@ -23,6 +23,7 @@ export class GrnModel {
     cif : number;
     customDate : Date;
     customNo : string;
+    dutyExcise : number;
     invoiceNo : string;
     currencyId : number;
     amountCurrency : number;
