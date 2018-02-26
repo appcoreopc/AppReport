@@ -25,7 +25,7 @@ describe('ReadyStockComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ReadyStockComponent ],
-      imports : [NgxDatatableModule,
+      imports : [NgxDatatableModule, ButtonModule,
         DialogModule, ReactiveFormsModule, FormsModule, 
         StoreModule, HttpClientModule, BrowserAnimationsModule], 
      providers: [ {provide: Store, useValue: userServiceStub }, HttpClient ]

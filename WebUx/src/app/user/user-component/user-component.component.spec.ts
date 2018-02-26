@@ -7,6 +7,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import {Store} from '@ngrx/store';
+import {ButtonModule} from 'primeng/button';
+
 import {
   CityAppState,
   ADD,
@@ -37,7 +39,7 @@ describe('UserComponentComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserComponentComponent ], 
       imports : [NgxDatatableModule,
-         DialogModule, ReactiveFormsModule, FormsModule, 
+         DialogModule, ReactiveFormsModule, FormsModule, ButtonModule,
          StoreModule, HttpClientModule, BrowserAnimationsModule], 
       providers: [ {provide: Store, useValue: userServiceStub }, HttpClient ]
     })

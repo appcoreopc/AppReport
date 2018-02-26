@@ -26,7 +26,7 @@ describe('RawMaterialComponentComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ RawMaterialComponentComponent ],
       imports : [NgxDatatableModule,
-        DialogModule, ReactiveFormsModule, FormsModule, 
+        DialogModule, ReactiveFormsModule, FormsModule, ButtonModule,
         StoreModule, HttpClientModule, BrowserAnimationsModule], 
      providers: [ {provide: Store, useValue: userServiceStub }, HttpClient ]
 

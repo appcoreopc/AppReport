@@ -6,7 +6,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { RouterModule, Routes } from '@angular/router';
 import { ROUTES } from '../app.module';
-import { AppProgressSpinnerComponent } from '../app-progress-spinner/app-progress-spinner.component';
+
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription'
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +16,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent, AppProgressSpinnerComponent ],
+      declarations: [ LoginComponent ],
       imports : [DialogModule, ReactiveFormsModule, FormsModule, 
         RouterModule.forRoot(ROUTES)]
     })
