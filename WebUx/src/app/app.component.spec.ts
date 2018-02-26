@@ -5,6 +5,13 @@ import { ROUTES } from './app.module';
 import { AppProgressSpinnerComponent } from '../app/app-progress-spinner/app-progress-spinner.component'
 import { NavigationComponent } from '../app/navigation/navigation.component';
 
+
+
+
+
+
+
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
