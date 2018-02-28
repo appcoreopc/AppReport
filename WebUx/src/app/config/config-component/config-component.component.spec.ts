@@ -27,7 +27,7 @@ describe('ConfigComponentComponent', () => {
       imports : [
         DialogModule, ReactiveFormsModule, FormsModule, ButtonModule, NgxDatatableModule,
         StoreModule, HttpClientModule, BrowserAnimationsModule], 
-         providers: [ {provide: Store, useValue: userServiceStub }, HttpClient ]
+         providers: [ {provide: Store, useValue: userServiceStub } ]
     })
     .compileComponents();
   }));

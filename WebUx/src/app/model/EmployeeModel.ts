@@ -12,5 +12,7 @@ export class EmployeeModel {
     editedDt : Date;
     jobTitle? : string;
 
-
+    constructor(init? : Partial<EmployeeModel>) {
+     Object.assign(this, init);
+    }
 }

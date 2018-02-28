@@ -246,7 +246,6 @@ export class UserComponentComponent implements OnInit {
         
         this.intention = ADD;
         this.configureAddForm();
-
         this.display = true;
       }
       

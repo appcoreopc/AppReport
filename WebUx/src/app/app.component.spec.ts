@@ -2,14 +2,13 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ROUTES } from './app.module';
-import { AppProgressSpinnerComponent } from '../app/app-progress-spinner/app-progress-spinner.component'
-import { NavigationComponent } from '../app/navigation/navigation.component';
+import { ConfigComponentComponent } from './config/config-component/config-component.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent, ConfigComponentComponent
       ], imports : [RouterModule.forRoot(ROUTES)]
     }).compileComponents();
   }));

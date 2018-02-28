@@ -150,7 +150,7 @@ export class EmployeeComponentComponent implements OnInit {
 
   onValueChanged(data?: EmployeeModel) {
 
-   debugger;
+   
 
     if (!this.personForm) { return; }
 
@@ -248,14 +248,15 @@ export class EmployeeComponentComponent implements OnInit {
   }
 
   addForm() {
-    
     this.formTitle = "New Employee";
     this.display = true;
     this.intention = ADD;
 
-    this.person = new EmployeeModel();
+    this.person = new EmployeeModel({ empId:0, empAd1 : '', empIdno : 0,
+      empAd2 : '',  empAd3 : '', empName : ''});
+      
     this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
-    let userform = this.formUtil.createForm(false);
+    let userform = this.formUtil.createForm(true);
     this.personForm = userform;
   }
 
