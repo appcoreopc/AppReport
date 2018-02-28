@@ -12,6 +12,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
   import {MultiSelectModule} from 'primeng/multiselect';
   import {FormUtil} from "../../sharedObjects/formUtil";
   
+  
   @Component({
     selector: 'app-raw-material-component',
     templateUrl: './raw-material-component.component.html',
@@ -325,6 +326,8 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       }
       
       onSelect(evt : any) {
+
+        debugger;
         
         if (evt && evt.selected && evt.selected.length > 0)
         {

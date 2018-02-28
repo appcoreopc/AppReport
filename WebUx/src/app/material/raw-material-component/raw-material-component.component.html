@@ -180,17 +180,12 @@
 <div style="clear:both; height:10px"></div>
 
 <div class="container"> 
-  <ngx-datatable class="material striped" [loadingIndicator]="loadingIndicator"
-  [rows]="rows"
-  [limit]="10"
-  (select)="person"
-  [columns]="columns"
+  <ngx-datatable class="material striped" [rows]="rows" [limit]="10" [columns]="columns"
   [selectionType]="'single'"
   (select)="onSelect($event)"
   [headerHeight]="30"  [rowHeight]="'auto'"
   [footerHeight]="50">
 
-  
 	 <ngx-datatable-column  name="Id" prop="rmid" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
            {{value}}
