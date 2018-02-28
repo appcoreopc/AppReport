@@ -61,6 +61,7 @@ export class MaterialCategoryComponentComponent implements OnInit {
     private fb: FormBuilder) { }
     
     ngOnInit() {
+
       this.userSubscription = this.store.subscribe(appData => {     
         
         this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
@@ -71,7 +72,9 @@ export class MaterialCategoryComponentComponent implements OnInit {
       }
       
       ngAfterViewInit() {
+
         this.dispatchIntent(MATERIAL_CATEGORY_GET);
+        
       }
       
       componentMessageHandle(messageAll : Array<any>) {
@@ -121,8 +124,7 @@ export class MaterialCategoryComponentComponent implements OnInit {
       private configureAddForm() {
         
         this.personForm = this.fb.group({
-          'rmcatId': ['', [Validators.minLength(1),
-            Validators.maxLength(24)]],
+            'rmcatId': [''],
             'rmcatName': ['', [Validators.required, Validators.minLength(1)]]
           });
           
@@ -172,14 +174,13 @@ export class MaterialCategoryComponentComponent implements OnInit {
           addForm() {              
             
             this.formTitle = "New Material Category"; 
-            this.display = true;                          
+            
             this.intention = ADD;
             this.configureAddForm();  
+            this.display = true;                          
           }            
           
           onSelect(evt : any) {
-            
-            debugger;
             
             if (evt && evt.selected && evt.selected.length > 0)
             {

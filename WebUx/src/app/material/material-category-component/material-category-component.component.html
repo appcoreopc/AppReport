@@ -13,7 +13,7 @@
 					   <label for="rmcatName">Material Category Name :</label>
 					  </div> 
 					  <div class="cell c2345">   
-              <input id="rmcatName" type="text" maxlength="50" class="form-control text-control" formControlName="rmcatName">         
+              <input id="rmcatName" type="text" maxlength="50" class="form-control text-control" formControlName="rmcatName"> 
               
               <div *ngIf="formErrors.rmcatName" class="alert alert-danger">
                 {{ formErrors.rmcatName }}
@@ -37,7 +37,7 @@
         <div class="cell c5" style="text-align:right">	   
 
             <p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
-            <p-button icon="fa fa-fw fa-close" label="Cancel" [disabled]="!personForm.valid" (click)="cancel()"></p-button>   
+            <p-button icon="fa fa-fw fa-close" label="Cancel"  (click)="cancel()"></p-button>   
 
         </div>
       </div>

@@ -365,15 +365,14 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
         
         this.configureEditForm();
         
-        if (this.currentModel)
-        {                                
-          
-          
+        if (this.currentModel && this.currentModel.countryList)
+        {                                                    
           if (this.countries) {
             
             for(var c of this.countries)
             {
               var temp = new Array(); 
+
               temp = this.currentModel.countryList.split(",");
               
               for (var a in temp ) {
