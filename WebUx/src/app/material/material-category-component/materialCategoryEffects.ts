@@ -5,7 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
-import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE_SUCCESS,
+import {MATERIAL_CATEGORY_SAVE, 
+  MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE_SUCCESS,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
   MATERIAL_CATEGORY_MESSAGE_END, MATERIAL_CATEGORY_SAVE_ERR, MATERIAL_CATEGORY_CANCEL_OK, MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_ERR,
   MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_WAIT_PENDING, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -32,23 +34,26 @@ import {MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE
             
             this.http.post(APPLICATION_HOST + '/materialcategory/save', payload, {headers : headersJson})
             .subscribe(res => {                   
-              messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_ERR, null);
+              messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_SUCCESS, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             },  
             err => {                       
               if (err && err.status == 201)
               {
                 messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_SUCCESS, null);                
+                messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
               } 
               else 
               {                    
                  messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_ERR, null);             
+                 messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
               }         
             });  
           });          
             
         })
         .concatMap(res => {         
-          return Observable.of({ type: MATERIAL_CATEGORY_WAIT_PENDING });
+          return Observable.of({ type: PROGRESS_WAIT_SHOW });
         });       
     
     

@@ -94,7 +94,7 @@ export class SupplierComponentComponent implements OnInit {
       if (message && message.type == SUPPLIER_SAVE_SUCCESS) { 
 
         await timeUtil.delay(TIME_DELAY);
-        this.getUserList();   
+        this.getSupplier();   
         this.display = false;
       }
     });
@@ -208,7 +208,7 @@ export class SupplierComponentComponent implements OnInit {
     this.itemSelected = false;
   }
 
-  getUserList(): void {    
+  getSupplier(): void {    
     this.dispatchIntent(SUPPLIER_GET);    
   }
 }
