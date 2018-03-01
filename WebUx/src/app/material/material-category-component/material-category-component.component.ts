@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {FormUtil} from "../../sharedObjects/formUtil";
+import * as timeUtil from "../../sharedObjects/timeUtil";
 
 import { CityAppState, MATERIAL_CATEGORY_GET, 
   MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE, 
@@ -8,6 +9,7 @@ import { CityAppState, MATERIAL_CATEGORY_GET,
   UOM_CANCEL, UOM_CANCEL_OK, UOM_GET, UOM_GET_ERR, UOM_GET_OK, ADD, UPDATE
 } from '../../sharedObjects/sharedMessages';
 
+import {TIME_DELAY } from '../../sharedObjects/applicationSetup';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { MaterialCategoryModel } from "../../model/MaterialCategoryModel";
@@ -19,22 +21,22 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
   styleUrls: ['./material-category-component.component.css']
 })
 export class MaterialCategoryComponentComponent implements OnInit {
-  
-  person: MaterialCategoryModel = new MaterialCategoryModel();
+ 
+ 
   personForm: FormGroup;
   private intention : number = UPDATE;
   formUtil : FormUtil<MaterialCategoryModel>;
   
   formValidators = {   
-    'rmcatId': [Validators.minLength(1)],
+    'rmcatId': [],
     'rmcatName': [Validators.required, Validators.minLength(1)]
   }
-  
+
   formErrors = {
     'rmcatId': '',
     'rmcatName' : ''
   };
-  
+
   validationMessages = {     
     'rmcatName': {
       'required': 'Material Category Name is required.' 
@@ -61,29 +63,31 @@ export class MaterialCategoryComponentComponent implements OnInit {
     private fb: FormBuilder) { }
     
     ngOnInit() {
-
+      
       this.userSubscription = this.store.subscribe(appData => {     
         
         this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
-          [ MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE_SUCCESS]));    
+          [MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE_SUCCESS]));    
         }); 
         
-        this.configureUpdateForm();      
+        this.configureAddForm();      
       }
       
       ngAfterViewInit() {
-
+        
         this.dispatchIntent(MATERIAL_CATEGORY_GET);
         
       }
       
       componentMessageHandle(messageAll : Array<any>) {
         
-        messageAll.map(message => { 
+        messageAll.map(async message => { 
           
           if (message && message.type == MATERIAL_CATEGORY_GET_OK)
           {
             this.rows.length = 0;
+            this.dataList.length = 0;
+
             for (var rmcatInfo of message.data.data.data)
             {                
               this.dataList.push({                   
@@ -97,13 +101,15 @@ export class MaterialCategoryComponentComponent implements OnInit {
           
           if (message && message.type == MATERIAL_CATEGORY_SAVE_SUCCESS)
           {
-            this.display = false;             
+            this.display = false;     
+            await timeUtil.delay(TIME_DELAY);
+            this.getCategoryList();           
           }
         });    
       }
       
       save() {    
-        
+
         let data = this.formUtil.commit();
         
         if (this.intention == ADD)
@@ -111,109 +117,117 @@ export class MaterialCategoryComponentComponent implements OnInit {
           data.rmcatId = null;
         }
         else {
+
           this.rmcatModel.rmcatId = data.rmcatId;
           this.rmcatModel.rmcatName = data.rmcatName;          
-        }
-        
-        this.rows = [...this.rows];
-        
+        }                
+
+        this.rows = [...this.rows];        
         this.dispatchIntent(MATERIAL_CATEGORY_SAVE, data);
         this.display = false; 
       }  
       
       private configureAddForm() {
         
+        this.rmcatModel = new MaterialCategoryModel();
+        this.rmcatModel.rmcatId = 0;
+        this.rmcatModel.rmcatName = '';
+
+        this.formUtil = new FormUtil<MaterialCategoryModel>(this.rmcatModel, this.formValidators);
+        let userform = this.formUtil.createForm(false);
+        this.personForm = userform;
+
+        this.personForm.valueChanges.debounceTime(500)
+        .subscribe(data => this.onValueChanged(data));
+      }
+      
+      private configureUpdateForm() {
+        
         this.personForm = this.fb.group({
-            'rmcatId': [''],
-            'rmcatName': ['', [Validators.required, Validators.minLength(1)]]
-          });
-          
-          this.personForm.valueChanges.debounceTime(500)
-          .subscribe(data => this.onValueChanged(data));
-        }
+          'rmcatId': [this.rmcatModel.rmcatId, [Validators.minLength(1)]],
+          'rmcatName': [this.rmcatModel.rmcatName, [Validators.required, Validators.minLength(1)]]
+        });
         
-        private configureUpdateForm() {
-          this.personForm = this.fb.group({
-            'rmcatId': [this.rmcatModel.rmcatId, [Validators.minLength(1)]],
-            'rmcatName': [this.rmcatModel.rmcatName, [Validators.required, Validators.minLength(1)]]
-          });
-          
-          this.personForm.valueChanges.debounceTime(500)
-          .subscribe(data => this.onValueChanged(data));
-        }
+        this.personForm.valueChanges.debounceTime(500)
+        .subscribe(data => this.onValueChanged(data));
+      }
+      
+      onValueChanged(data?: MaterialCategoryModel) {
         
-        onValueChanged(data?: MaterialCategoryModel) {
-          
-          if (!this.personForm) { return; }
-          
-          const form = this.personForm;
-          
-          for (const field in this.formErrors) {
-            // clear previous error message (if any)
-            this.formErrors[field] = '';
-            const control = form.get(field);
-            
-            if (control && control.dirty && !control.valid) {
-              const messages = this.validationMessages[field];
-              for (const key in control.errors) {
-                this.formErrors[field] += messages[key] + ' ';
-              }
-            }
-          }   
-        }
+        if (!this.personForm) { return; }
         
-        dispatchIntent(messageType : string, data? : any)
-        {   
-          this.store.dispatch(
-            {     
-              type: messageType,
-              data : data
-            });      
-          }          
+        const form = this.personForm;
+        
+        for (const field in this.formErrors) {
+          // clear previous error message (if any)
+          this.formErrors[field] = '';
+          const control = form.get(field);
           
-          addForm() {              
-            
-            this.formTitle = "New Material Category"; 
-            
-            this.intention = ADD;
-            this.configureAddForm();  
-            this.display = true;                          
-          }            
-          
-          onSelect(evt : any) {
-            
-            if (evt && evt.selected && evt.selected.length > 0)
-            {
-              
-              this.rmcatModel = evt.selected[0] as MaterialCategoryModel; 
-              this.itemSelected = true;   
-              
-              this.formUtil = new FormUtil<MaterialCategoryModel>(this.rmcatModel, 
-                this.formValidators);
-                
-                let form = this.formUtil.createForm(false);
-                this.personForm = form;
-                
-                this.personForm.valueChanges.debounceTime(300)
-                .subscribe(data => this.onValueChanged(data));
-                
-              } 
-              else 
-              this.itemSelected = false;
-              
-              this.edit();
-            }          
-            
-            edit() {  
-              this.formTitle = "Edit Material Category"; 
-              this.intention = UPDATE;                            
-              this.display = true;
-            }
-            
-            cancel() 
-            {                               
-              this.person = this.formUtil.rollback();
-              this.itemSelected = false;
-              this.display = false;       
+          if (control && control.dirty && !control.valid) {
+            const messages = this.validationMessages[field];
+            for (const key in control.errors) {
+              this.formErrors[field] += messages[key] + ' ';
             }
           }
+        }   
+      }
+      
+      dispatchIntent(messageType : string, data? : any)
+      {   
+        this.store.dispatch(
+          {     
+            type: messageType,
+            data : data
+          });      
+        }          
+        
+        addForm() {          
+
+          this.formTitle = "New Material Category";                     
+          this.intention = ADD;
+          this.configureAddForm();  
+          this.display = true;                          
+        }            
+        
+        onSelect(evt : any) {
+          
+          if (evt && evt.selected && evt.selected.length > 0)
+          {            
+            this.rmcatModel = evt.selected[0] as MaterialCategoryModel; 
+            this.itemSelected = true;   
+            
+            this.formUtil = new FormUtil<MaterialCategoryModel>(this.rmcatModel, 
+              this.formValidators);
+              
+              let form = this.formUtil.createForm(false);
+              this.personForm = form;  
+
+              this.personForm.valueChanges.debounceTime(300)
+              .subscribe(data => this.onValueChanged(data));
+              
+            } 
+            else 
+            this.itemSelected = false;
+            
+            this.setEditIntention();
+          }          
+          
+          setEditIntention() {  
+
+            this.formTitle = "Edit Material Category"; 
+            this.intention = UPDATE;                            
+            this.display = true;
+          }
+          
+          cancel() 
+          {                               
+            this.rmcatModel = this.formUtil.rollback();
+            this.itemSelected = false;
+            this.display = false;       
+          }
+
+          getCategoryList(): any {
+            this.dispatchIntent(MATERIAL_CATEGORY_GET);  
+          }
+
+        }

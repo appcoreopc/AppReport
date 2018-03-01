@@ -35,11 +35,13 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
             .subscribe(res => {
               messageUtil.dispatchIntent(this.store, USER_SAVE_SUCCESS, null);
               messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+
             },
             err => {
               if (err && err.status == 201) {
                 messageUtil.dispatchIntent(this.store, USER_SAVE_SUCCESS, null);
                 messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+
               }
               else {
                 messageUtil.dispatchIntent(this.store, USER_SAVE_SUCCESS, null);
@@ -52,26 +54,23 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
     .concatMap(res => {
       return Observable.of({ type: PROGRESS_WAIT_SHOW });
     });
-        
+    
+    
     @Effect() userReset$ = this.actions$  
     .ofType(USER_CANCEL)  
     .map(action => 
-    {
+      {
         return ({ type: USER_CANCEL_OK});
-     }); 
+      }); 
       
       @Effect() userGet$ = this.actions$    
       .ofType(USER_GET)     
-      .switchMap(payload => { 
-        messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_SHOW);
-        return this.http.get(APPLICATION_HOST + '/user/index')
-      })  
-      .map(res => {   
-        messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE);
+      .switchMap(payload => this.http.get(APPLICATION_HOST + '/user/index')  
+      .map(res => {           
         return { type: USER_GET_OK, data: res};
       }) 
       .catch(() => Observable.of({ type: USER_GET_ERR }))
-    ; 
+    ); 
     
   }
   

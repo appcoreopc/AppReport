@@ -10,6 +10,8 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { SupplierModel } from "../../model/SupplierModel";
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormUtil } from "../../sharedObjects/formUtil";
+import * as timeUtil from "../../sharedObjects/timeUtil";
+import {APPLICATION_HOST, TIME_DELAY } from '../../sharedObjects/applicationSetup';
 
 @Component({
   selector: 'app-supplier-component',
@@ -18,15 +20,15 @@ import { FormUtil } from "../../sharedObjects/formUtil";
 })
 export class SupplierComponentComponent implements OnInit {
 
+
   private supplier: SupplierModel = new SupplierModel();
   personForm: FormGroup;
   private intention: number = UPDATE;
   formUtil: FormUtil<SupplierModel>;
 
   formValidators = {
-    'supplierId': [Validators.maxLength(24)],
-    'supplierName': [Validators.required, Validators.minLength(1),
-    Validators.maxLength(24)]
+    'supplierId': [],
+    'supplierName': [Validators.required, Validators.minLength(1), Validators.maxLength(24)]
   }
 
   formErrors = {
@@ -55,14 +57,12 @@ export class SupplierComponentComponent implements OnInit {
   itemSelected: boolean = false;
   formTitle: string = "New Supplier";
 
-  //private supplierModel: SupplierModel = new SupplierModel();
-
   constructor(private store: Store<CityAppState>,
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.userSubscription = this.store.subscribe(appData => {
 
+    this.userSubscription = this.store.subscribe(appData => {
       this.componentMessageHandle(messageUtil.getMultiMessage(appData,
         [SUPPLIER_GET_OK, SUPPLIER_SAVE_SUCCESS]));
     });
@@ -76,24 +76,25 @@ export class SupplierComponentComponent implements OnInit {
 
   componentMessageHandle(messageAll: Array<any>) {
 
-    messageAll.map(message => {
+    messageAll.map(async message => {
 
       if (message && message.type == SUPPLIER_GET_OK) {
-        this.rows.length = 0;
-        for (var supplierInfo of message.data.data.data) {
-          this.dataList.push({
-            supplierId: supplierInfo.supplierId,
-            supplierName: supplierInfo.supplierName,
-            createdByUserId: supplierInfo.createdByUserId,
-            editedByUserId: supplierInfo.editedByUserId,
-            editedDt: supplierInfo.editedDt
-          });
 
-          this.rows = this.dataList;
+        this.rows.length = 0;
+        this.dataList.length = 0;
+
+        for (var supplierInfo of message.data.data.data) {
+          let model = new SupplierModel();
+          model = { ...supplierInfo };
+          this.dataList.push(model);          
         }
+        this.rows = [...this.dataList];
       }
 
-      if (message && message.type == SUPPLIER_SAVE_SUCCESS) {      
+      if (message && message.type == SUPPLIER_SAVE_SUCCESS) { 
+
+        await timeUtil.delay(TIME_DELAY);
+        this.getUserList();   
         this.display = false;
       }
     });
@@ -173,7 +174,6 @@ export class SupplierComponentComponent implements OnInit {
 
   addForm() {
 
-
     this.formTitle = "New Supplier";
     this.display = true;
     this.intention = ADD;
@@ -206,5 +206,9 @@ export class SupplierComponentComponent implements OnInit {
     this.display = false;
     this.supplier = this.formUtil.rollback();
     this.itemSelected = false;
+  }
+
+  getUserList(): void {    
+    this.dispatchIntent(SUPPLIER_GET);    
   }
 }

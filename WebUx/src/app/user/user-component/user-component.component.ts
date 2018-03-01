@@ -127,9 +127,11 @@ export class UserComponentComponent implements OnInit {
         this.rows.length = 0;
 
         for (var userInfo of message.data.data.data) {
-          this
-            .dataList
-            .push({userId: userInfo.userId, username: userInfo.username, password: userInfo.password, userTypeId: userInfo.userTypeId});
+          
+          let model = new UserModel();
+          model = { ...userInfo};
+          this.dataList.push(model);
+
         }
         this.rows = this.dataList;
       }
@@ -137,8 +139,7 @@ export class UserComponentComponent implements OnInit {
       if (message && message.type == USER_SAVE_SUCCESS) {
         this.display = false;        
         await timeUtil.delay(TIME_DELAY);
-        this.getUserList();       
-       
+        this.getUserList();   
       }
     });
 
@@ -154,6 +155,9 @@ export class UserComponentComponent implements OnInit {
     this.formUtil = new FormUtil<UserModel>(this.person, this.formValidators);
     let userform = this.formUtil.createForm(false);
     this.personForm = userform;
+
+    this.personForm.valueChanges.debounceTime(200)
+    .subscribe(data => this.onValueChanged(data));
   }
 
   private configureUpdateForm() {
@@ -187,8 +191,7 @@ export class UserComponentComponent implements OnInit {
 
     if (!this.personForm) {
       return;
-    }
-    
+    }    
     const form = this.personForm;  
     
     for (const field in this.formErrors) {    
@@ -212,7 +215,9 @@ export class UserComponentComponent implements OnInit {
         Validators.maxLength(24)]
       }  
       
-      onSelect(evt : any) {              
+      onSelect(evt : any) {    
+        
+        debugger;
         
         if (evt && evt.selected && evt.selected.length > 0) {
           this.person = evt.selected[0] as UserModel;          
@@ -225,8 +230,7 @@ export class UserComponentComponent implements OnInit {
 
           this.personForm.valueChanges.debounceTime(200)
           .subscribe(data => this.onValueChanged(data));          
-          this.display = true; 
-        
+          this.display = true;         
         }
       }
       
