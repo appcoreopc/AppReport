@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL, STN_CUSTOM_SAVE_SUCCESS, STN_CUSTOM_WAIT_PENDING,
+import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
+   STN_CUSTOM_SAVE_SUCCESS, STN_CUSTOM_WAIT_PENDING,
   STN_CUSTOM_MESSAGE_END, STN_CUSTOM_SAVE_ERR, STN_CUSTOM_CANCEL_OK, STN_CUSTOM_GET, STN_CUSTOM_GET_ERR,
   STN_CUSTOM_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -12,7 +14,7 @@ import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL, STN_CUSTOM_SAVE_SUCCESS, STN_CUSTOM_
 
   @Injectable()
   export class StnCustomEffects {
-            
+
     constructor(
       private http: HttpClient,
       private actions$: Actions<CityAppState>, private store : Store<CityAppState>,
@@ -30,23 +32,26 @@ import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL, STN_CUSTOM_SAVE_SUCCESS, STN_CUSTOM_
             
             this.http.post(APPLICATION_HOST + '/stncustom/save', payload, {headers : headersJson})
             .subscribe(res => {                   
-              messageUtil.dispatchIntent(this.store, STN_CUSTOM_SAVE_ERR, null);
+              messageUtil.dispatchIntent(this.store, STN_CUSTOM_SAVE_SUCCESS, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             },  
             err => {                       
               if (err && err.status == 201)
               {
-                messageUtil.dispatchIntent(this.store, STN_CUSTOM_SAVE_SUCCESS, null);                
+                messageUtil.dispatchIntent(this.store, STN_CUSTOM_SAVE_SUCCESS, null);    
+                messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);            
               } 
               else 
               {                    
-                 messageUtil.dispatchIntent(this.store, STN_CUSTOM_SAVE_ERR, null);             
+                 messageUtil.dispatchIntent(this.store, STN_CUSTOM_SAVE_ERR, null);  
+                 messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);           
               }         
             });  
           });          
             
         })
         .concatMap(res => {         
-          return Observable.of({ type: STN_CUSTOM_WAIT_PENDING });
+          return Observable.of({ type: PROGRESS_WAIT_SHOW });
         });       
 
         

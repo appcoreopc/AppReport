@@ -13,6 +13,8 @@ import { StncustomModel } from '../../model/StncustomModel';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormUtil } from "../../sharedObjects/formUtil";
 import "rxjs/add/operator/debounceTime";
+import * as timeUtil from '../../sharedObjects/timeUtil';
+import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
 
 @Component({
   selector: 'app-stn-custom-component',
@@ -20,6 +22,7 @@ import "rxjs/add/operator/debounceTime";
   styleUrls: ['./stn-custom-component.component.css']
 })
 export class StnCustomComponentComponent implements OnInit {
+
 
   personForm: FormGroup;
   private intention: number = UPDATE;
@@ -55,6 +58,7 @@ export class StnCustomComponentComponent implements OnInit {
   private stncustom: StncustomModel = new StncustomModel();
 
   formValidators = {
+    'stncustomId': [],
     'stncustomName': [Validators.required, Validators.minLength(1)],
     'isLocal': [Validators.required]
   }
@@ -78,23 +82,28 @@ export class StnCustomComponentComponent implements OnInit {
 
   componentMessageHandle(messageAll: Array<any>) {
 
-    messageAll.map(message => {
+    messageAll.map(async message => {
 
       if (message && message.type == STN_CUSTOM_GET_OK) {
+        
         this.rows.length = 0;
-        for (var stncustomInfo of message.data.data.data) {
-          this.dataList.push({
-            stncustomId: stncustomInfo.stncustomId,
-            stncustomName: stncustomInfo.stncustomName,
-            isLocal: stncustomInfo.isLocal
-          });
+        this.dataList.length = 0;
 
-          this.rows = this.dataList;
+        for (var stncustomInfo of message.data.data.data) {
+
+          let model = new StncustomModel();
+          model = {...stncustomInfo};
+          this.dataList.push(model);         
         }
+        this.rows = [...this.dataList];
       }
 
       if (message && message.type == STN_CUSTOM_SAVE_SUCCESS) {
+
         this.display = false;
+        await timeUtil.delay(TIME_DELAY);        
+        this.getStn();
+
       }
     });
   }
@@ -102,34 +111,33 @@ export class StnCustomComponentComponent implements OnInit {
   save() {
 
     let data = this.formUtil.commit();
-
     if (this.intention == ADD) {
       data.stncustomId = null;
     }
     else {
-
       data.stncustomId = this.stncustom.stncustomId;
       this.stncustom.stncustomName = data.stncustomName;
       this.stncustom.isLocal = data.isLocal;
     }
 
     this.rows = [...this.rows];    
-    this.dispatchIntent(STN_CUSTOM_SAVE, data);
-    
-
+    this.dispatchIntent(STN_CUSTOM_SAVE, data);   
+    this.display = false; 
   }
 
   private configureAddForm() {
 
-    this.personForm = this.fb.group({
-      'stncustomId': ['', [Validators.minLength(1)]],
-      'stncustomName': ['', [Validators.required, Validators.minLength(1)]],
-      'isLocal': [true]
-    });
+    this.stncustom = new StncustomModel();
+    this.stncustom.isLocal = false; 
+    this.stncustom.stncustomId = 0;
+    this.stncustom.stncustomName = '';
+     
+    this.formUtil = new FormUtil<StncustomModel>(this.stncustom, this.formValidators);
+    let userform = this.formUtil.createForm(false);
+    this.personForm = userform;
 
     this.personForm.valueChanges.debounceTime(500)
       .subscribe(data => this.onValueChanged(data));
-
   }
 
   private configureUpdateForm() {
@@ -164,11 +172,7 @@ export class StnCustomComponentComponent implements OnInit {
   }
 
   dispatchIntent(messageType: string, data?: any) {
-    this.store.dispatch(
-      {
-        type: messageType,
-        data: data
-      });
+    messageUtil.dispatchIntent(this.store, messageType, data);
   }
 
   addForm() {
@@ -185,11 +189,13 @@ export class StnCustomComponentComponent implements OnInit {
       this.stncustom = evt.selected[0] as StncustomModel;
       this.itemSelected = true;
 
+      debugger;
+
       this.formUtil = new FormUtil<StncustomModel>(this.stncustom, this.formValidators);
       let userform = this.formUtil.createForm(false);
       this.personForm = userform;
 
-      this.personForm.valueChanges.debounceTime(500)
+      this.personForm.valueChanges.debounceTime(200)
         .subscribe(data => this.onValueChanged(data));
 
       this.formTitle = "Edit STN KASTAM";
@@ -205,5 +211,9 @@ export class StnCustomComponentComponent implements OnInit {
     this.display = false;
     this.itemSelected = false;
     this.stncustom = this.formUtil.rollback();
+  }
+
+  getStn(): any {
+    this.dispatchIntent(STN_CUSTOM_GET);
   }
 }
