@@ -33,7 +33,7 @@ export class AppProgressSpinnerComponent implements OnInit {
       
       if (message && message.type == PROGRESS_WAIT_SHOW)
       {                  
-        console.log('employee wait pending');
+        //console.log('employee wait pending');
         this.display = true;                
       }
       
