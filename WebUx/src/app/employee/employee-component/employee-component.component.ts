@@ -23,8 +23,6 @@ import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
 
 export class EmployeeComponentComponent implements OnInit {
   
-  @ViewChild('myDataTable') editTmpl: TemplateRef<any>;
-  
   private person: EmployeeModel = new EmployeeModel();
   private personForm: FormGroup;
   private intention: number = UPDATE;
@@ -121,10 +119,11 @@ export class EmployeeComponentComponent implements OnInit {
       this.rows = [...this.rows];
       
       this.dispatchIntent(EMPLOYEE_SAVE, data);
-      
+
     }
     
     formValidators = {   
+      'empId' : [Validators.minLength(1)],
       'empName': [Validators.required, Validators.minLength(1)],
       'empIdno': [Validators.required, Validators.minLength(1)],
       'empAd1': [Validators.required, Validators.minLength(1)],
@@ -233,18 +232,20 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     onSelect(evt: any) {
+
       if (evt && evt.selected && evt.selected.length > 0) {
         this.person = evt.selected[0] as EmployeeModel;      
         this.itemSelected = true;
         this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
         let form = this.formUtil.createForm(false);
         this.personForm = form;
-        
+        this.intention = UPDATE;
+
         this.personForm.valueChanges.debounceTime(300)
         .subscribe(data => this.onValueChanged(data));
         
         this.display = true;
-        
+
       }
       else
         this.itemSelected = false;
@@ -256,7 +257,7 @@ export class EmployeeComponentComponent implements OnInit {
       this.display = true;
       this.intention = ADD;
       
-      this.person = new EmployeeModel({ empId:0, empAd1 : '', empIdno : 0, jobTitleId : 1,
+      this.person = new EmployeeModel({ empId: 0, empAd1 : '', empIdno : 0, jobTitleId : 1,
       empAd2 : '',  empAd3 : '', empName : ''});
       
       this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
