@@ -10,7 +10,9 @@ import {
   USER_GET,
   USER_GET_OK,
   USER_SAVE,
-  USER_SAVE_SUCCESS
+  USER_SAVE_SUCCESS,
+  PROGRESS_WAIT_SHOW,
+  PROGRESS_WAIT_HIDE
 } from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
@@ -133,9 +135,10 @@ export class UserComponentComponent implements OnInit {
       }
 
       if (message && message.type == USER_SAVE_SUCCESS) {
-        this.display = false;
+        this.display = false;        
         await timeUtil.delay(TIME_DELAY);
-        this.getUserList();
+        this.getUserList();       
+       
       }
     });
 
@@ -209,10 +212,8 @@ export class UserComponentComponent implements OnInit {
         Validators.maxLength(24)]
       }  
       
-      onSelect(evt : any) {
-              
-        debugger;
-
+      onSelect(evt : any) {              
+        
         if (evt && evt.selected && evt.selected.length > 0) {
           this.person = evt.selected[0] as UserModel;          
           this.itemSelected = true;
@@ -222,9 +223,8 @@ export class UserComponentComponent implements OnInit {
           this.personForm = userform;
           this.intention = UPDATE;
 
-          this.personForm.valueChanges.debounceTime(500)
-          .subscribe(data => this.onValueChanged(data));
-          
+          this.personForm.valueChanges.debounceTime(200)
+          .subscribe(data => this.onValueChanged(data));          
           this.display = true; 
         
         }
