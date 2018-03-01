@@ -95,7 +95,7 @@ export class MaterialCategoryComponentComponent implements OnInit {
                 rmcatName : rmcatInfo.rmcatName 
               });  
               
-              this.rows = this.dataList;
+              this.rows = [...this.dataList];
             }
           }
           

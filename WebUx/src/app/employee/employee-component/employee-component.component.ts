@@ -190,10 +190,8 @@ export class EmployeeComponentComponent implements OnInit {
         
         if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {
           
-          this.display = false;
-        
-          await timeUtil.delay(TIME_DELAY);
-        
+          this.display = false;        
+          await timeUtil.delay(TIME_DELAY);        
           this.getEmployee();
         }
         
