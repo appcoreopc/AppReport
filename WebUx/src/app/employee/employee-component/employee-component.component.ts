@@ -13,6 +13,7 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { DialogModule } from 'primeng/dialog';
 import {FormUtil} from "../../sharedObjects/formUtil";
 import * as timeUtil from '../../sharedObjects/timeUtil';
+import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
 
 @Component({
   selector: 'app-employee-component',
@@ -191,9 +192,7 @@ export class EmployeeComponentComponent implements OnInit {
         if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {
           
           this.display = false;
-          
-          await timeUtil.delay(2000);
-          
+          await timeUtil.delay(TIME_DELAY);
           this.getEmployee();
         }
         
@@ -248,7 +247,7 @@ export class EmployeeComponentComponent implements OnInit {
         
       }
       else
-      this.itemSelected = false;
+        this.itemSelected = false;
       
     }
     

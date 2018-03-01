@@ -8,7 +8,7 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import {
   EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
   EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_WAIT_PENDING,
-  EMPLOYEE_GET, EMPLOYEE_GET_ERR,
+  EMPLOYEE_GET, EMPLOYEE_GET_ERR, 
   PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
   EMPLOYEE_GET_OK, JOBTITLE_GET, JOBTITLE_GET_OK, CityAppState, CityData, headersJson
 } from '../../sharedObjects/sharedMessages';
@@ -29,6 +29,7 @@ export class EmployeeEffects {
     .map(action => {
       return JSON.stringify(action.data);
     }).switchMap(payload => {
+
       /////////EXTRA CODE /////////////////////////////
 
       return Observable.of(payload)
