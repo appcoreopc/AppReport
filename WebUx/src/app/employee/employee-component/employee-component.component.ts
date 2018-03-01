@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import {
   CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
   ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS,
-  JOBTITLE_GET, JOBTITLE_GET_OK
+  JOBTITLE_GET, JOBTITLE_GET_OK, PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE
 } from '../../sharedObjects/sharedMessages';
 import { EmployeeModel } from "../../model/EmployeeModel";
 import { JobTitleModel } from "../../model/JobTitleModel";
@@ -123,12 +123,12 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     formValidators = {   
-      'empId' : [Validators.minLength(1)],
+      'empId' : [],
       'empName': [Validators.required, Validators.minLength(1)],
       'empIdno': [Validators.required, Validators.minLength(1)],
       'empAd1': [Validators.required, Validators.minLength(1)],
-      'empAd2': [Validators.minLength(1)],
-      'empAd3': [Validators.minLength(1)],
+      'empAd2': [],
+      'empAd3': [],
       'jobTitleId': [Validators.required, Validators.minLength(1), Validators.min(1)]
     }
     
@@ -191,7 +191,9 @@ export class EmployeeComponentComponent implements OnInit {
         if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {
           
           this.display = false;
+        
           await timeUtil.delay(TIME_DELAY);
+        
           this.getEmployee();
         }
         
@@ -278,9 +280,9 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     getEmployee()
-    {
+    {      
       this.dispatchIntent(EMPLOYEE_GET);
-    }
+    }     
     
   }
   

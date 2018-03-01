@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Store} from '@ngrx/store';
 
+import * as timeUtil from "../../sharedObjects/timeUtil";
+
 import {
   CityAppState,
   ADD,
@@ -16,7 +18,7 @@ import {FormUtil} from "../../sharedObjects/formUtil";
 import { UserModel } from "../../model/UserModel";
 import {FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
-import {APPLICATION_HOST} from '../../sharedObjects/applicationSetup';
+import {APPLICATION_HOST, TIME_DELAY } from '../../sharedObjects/applicationSetup';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({selector: 'app-user-component',
@@ -82,11 +84,14 @@ export class UserComponentComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+
     this.dispatchIntent(USER_GET);
   }
 
   save() {
           
+    debugger;
+
     let data = this.formUtil.commit();
         
     if (data)
@@ -107,16 +112,18 @@ export class UserComponentComponent implements OnInit {
       this.rows = [...this.rows];
      
       this.dispatchIntent(USER_SAVE, data);
-    }
-   
+    }   
   }
-  
+    
   componentMessageHandle(messageAll : Array <any>) {
     
-    messageAll.map(message => {
+    messageAll.map(async message => {
 
       if (message && message.type == USER_GET_OK) {
+
+        this.dataList.length = 0;
         this.rows.length = 0;
+
         for (var userInfo of message.data.data.data) {
           this
             .dataList
@@ -127,6 +134,8 @@ export class UserComponentComponent implements OnInit {
 
       if (message && message.type == USER_SAVE_SUCCESS) {
         this.display = false;
+        await timeUtil.delay(TIME_DELAY);
+        this.getUserList();
       }
     });
 
@@ -135,6 +144,7 @@ export class UserComponentComponent implements OnInit {
   private configureAddForm() {
     
     this.person = new UserModel();
+    this.person.userId = "0";
     this.person.username = '';
     this.person.password = '';
 
@@ -192,6 +202,7 @@ export class UserComponentComponent implements OnInit {
   }
 
   formValidators = {
+    'userId' : [],
     'username' : [Validators.required, Validators.minLength(1),
       Validators.maxLength(24)],
       'password' : [Validators.required, Validators.minLength(1),
@@ -200,6 +211,8 @@ export class UserComponentComponent implements OnInit {
       
       onSelect(evt : any) {
               
+        debugger;
+
         if (evt && evt.selected && evt.selected.length > 0) {
           this.person = evt.selected[0] as UserModel;          
           this.itemSelected = true;
@@ -207,7 +220,8 @@ export class UserComponentComponent implements OnInit {
           this.formUtil = new FormUtil<UserModel>(this.person, this.formValidators);
           let userform = this.formUtil.createForm(false);
           this.personForm = userform;
-          
+          this.intention = UPDATE;
+
           this.personForm.valueChanges.debounceTime(500)
           .subscribe(data => this.onValueChanged(data));
           
@@ -254,6 +268,11 @@ export class UserComponentComponent implements OnInit {
         this
         .store
         .dispatch({type: messageType, data: data});
+      }
+
+      getUserList()
+      {
+        this.dispatchIntent(USER_GET);
       }
     }
   
