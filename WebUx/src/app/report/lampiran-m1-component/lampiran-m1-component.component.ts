@@ -53,6 +53,7 @@ export class LampiranM1ComponentComponent implements OnInit {
   displayPrintReport: boolean = false;
   enabledDetailEntry: boolean = false;
   display: boolean = false;
+  saveDialogDisplay: boolean = false;
   selectedDetailEntry: boolean = false;
   tabIndex:number = 0; 
   applicationHost:string = APPLICATION_HOST;
@@ -295,6 +296,34 @@ validationMessages = {
     this.dispatchIntent(JOBTITLE_GET);
   }
   
+   saveValid(m){
+   
+    let isDataExist = false;
+
+    for (var d in this.dataList) { 
+      var dataInfo = this.dataList[d] as RptM1Model;
+      console.log(dataInfo.rptDate , m.rptDate);
+
+      var ddt = new Date(dataInfo.rptDate);
+      var dm = ddt.getMonth()+1;
+      var dy = ddt.getFullYear();
+      var md = m.rptDate.getMonth()+1;
+      var y = m.rptDate.getFullYear();
+
+      if ((this.intention == ADD && dm == md && dy== y)
+        || (this.intention != ADD && dm == md && dy== y && dataInfo.rptId != m.rptId))
+      {
+        isDataExist = true;
+        break;
+      } 
+    }
+ 
+    if(isDataExist) {
+      this.saveDialogDisplay = true;
+      return false;
+    } 
+    return true;
+  }
 
   save() {
     
@@ -302,6 +331,8 @@ validationMessages = {
     
     let mainFormModel = this.dataForm.value as RptM1Model;
     
+    //invalidSave
+    if(!this.saveValid(mainFormModel)) return; 
     // bind main form control fields //
     
     this.data.rptId = mainFormModel.rptId;
@@ -612,6 +643,9 @@ validationMessages = {
       this.formTitle = "New Report Lampiran M1";
       this.display = true;
       this.intention = ADD;
+       
+      this.data = new RptM1Model(); //invalidSave
+      this.itemSelected = false; //invalidSave
       
       this.setupAddForm(); 
       // reinit form entires //

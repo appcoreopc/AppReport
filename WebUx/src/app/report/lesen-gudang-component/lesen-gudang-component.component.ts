@@ -69,6 +69,7 @@ export class LesenGudangComponentComponent implements OnInit {
   displayPrintReport: boolean = false;
   enabledDetailEntry: boolean = false;
   display: boolean = false;
+  saveDialogDisplay: boolean = false;
   selectedDetailEntry: boolean = false;
   tabIndex:number = 0; 
   applicationHost:string = APPLICATION_HOST;
@@ -287,14 +288,36 @@ ngAfterViewInit() {
   }
   
 
+  saveValid(m){
+   
+    let isDataExist = false;
+
+    for (var d in this.dataList) { 
+      var dataInfo = this.dataList[d] as RptLgModel;
+      if ((this.intention == ADD && dataInfo.rptY2 == m.rptY2)
+        || (this.intention != ADD && dataInfo.rptY2 == m.rptY2 && dataInfo.rptId != m.rptId))
+      {
+        isDataExist = true;
+        break;
+      } 
+    }
+
+    if(isDataExist) {
+      this.saveDialogDisplay = true;
+      return false;
+    } 
+    return true;
+  }
+
   save() {
     
     debugger;
     
     let mainFormModel = this.dataForm.value as RptLgModel;
-    
-    // bind main form control fields //
-    
+     
+    //invalidSave
+    if(!this.saveValid(mainFormModel)) return; 
+
     this.data.rptId = mainFormModel.rptId;
     this.data.refNo = mainFormModel.refNo;
     this.data.rptY2 = mainFormModel.rptY2;
@@ -368,8 +391,9 @@ ngAfterViewInit() {
     this.data.ldate = util.getTargetDate(new Date(mainFormModel.ldate)); 
     this.data.signedDate = util.getTargetDate(new Date(mainFormModel.signedDate));  
     this.data.appDate = util.getTargetDate(new Date(mainFormModel.appDate));
-    
-    if (this.intention == ADD) {
+     
+
+    if (this.intention == ADD) { 
       
       //saveJson.rptDate = util.getTargetDate(this.data.rptDate);                
       //saveJson.letterDate = util.getTargetDate(this.data.rptDate);  
@@ -566,6 +590,7 @@ ngAfterViewInit() {
   private setupAddForm() { 
     
     this.configureAddForms();
+     
     
     for (const field in this.formErrors) {
       this.formErrors[field] = '';
@@ -857,7 +882,12 @@ ngAfterViewInit() {
       this.display = true;
       this.intention = ADD;
       
+      this.data = new RptLgModel(); //invalidSave
+      this.itemSelected = false; //invalidSave
+
       this.setupAddForm(); 
+
+      
       // reinit form entires //
       this.data.rptLgYimp = new Array<RptLgYimpModel>(); 
       this.data.rptLgYexp = new Array<RptLgYexpModel>(); 

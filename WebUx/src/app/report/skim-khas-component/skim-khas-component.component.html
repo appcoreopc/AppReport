@@ -412,6 +412,12 @@
 
 </div>
 
+<p-dialog header="Invalid Save" [(visible)]="saveDialogDisplay" modal="true">
+    Report Date already exists.<br>
+	Please choose another date.
+</p-dialog>
+
+
 <div class="container">
 
 	<div style="text-align:left; float:left"> 
@@ -432,7 +438,8 @@
 <div class="container">
  
  
-   <p-table [columns]="mainColumns" [value]="rows" selectionMode="single" [paginator]="true" [rows]="10" (onRowSelect)="onRowSelect($event)">
+   <p-table [columns]="mainColumns" [value]="rows" selectionMode="single" [paginator]="true" [rows]="10" 
+   (onRowSelect)="onRowSelect($event)" [(selection)]="itemSelected">
   
 	<ng-template pTemplate="header" let-dataEntryColumns>
 			<tr [pSelectableRow]="rowData">
@@ -446,7 +453,7 @@
 		
   <ng-template pTemplate="body" let-rowData let-columns="columns" let-expanded="expanded" columns="columns">
 		 <tr [pSelectableRow]="rowData">
-            <td>{{rowData.rptId}}</td>
+            <td style="text-align:center">{{rowData.rptId}}</td>
             <td style="text-align:center">{{rowData.rptDate | date: 'MMM / yyyy'}}</td> 
             <td>{{rowData.refNo}}</td> 
             <td style="text-align:right">{{rowData.fImpCost | number:'1.2-2'}}</td>

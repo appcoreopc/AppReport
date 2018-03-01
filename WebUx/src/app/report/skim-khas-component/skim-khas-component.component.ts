@@ -53,6 +53,7 @@ export class SkimKhasComponentComponent implements OnInit {
   display: boolean = false;
   displayEntryForm: boolean = false;
   displayPrintReport: boolean = false;
+  saveDialogDisplay: boolean = false;
   enabledDetailEntry: boolean = false;
   selectedDetailEntry: boolean = false;
   tabIndex:number = 0; 
@@ -244,6 +245,36 @@ validationMessages = {
     this.dispatchIntent(CONFIG_GET);
     this.dispatchIntent(JOBTITLE_GET);
   }
+
+  
+   saveValid(m){
+   
+    let isDataExist = false;
+
+    for (var d in this.dataList) { 
+      var dataInfo = this.dataList[d] as RptSkModel;
+      console.log(dataInfo.rptDate , m.rptDate);
+
+      var ddt = new Date(dataInfo.rptDate);
+      var dm = ddt.getMonth()+1;
+      var dy = ddt.getFullYear();
+      var md = m.rptDate.getMonth()+1;
+      var y = m.rptDate.getFullYear();
+
+      if ((this.intention == ADD && dm == md && dy== y)
+        || (this.intention != ADD && dm == md && dy== y && dataInfo.rptId != m.rptId))
+      {
+        isDataExist = true;
+        break;
+      } 
+    }
+ 
+    if(isDataExist) {
+      this.saveDialogDisplay = true;
+      return false;
+    } 
+    return true;
+  }
   
   save() {
     
@@ -251,6 +282,7 @@ validationMessages = {
     
     let mainFormModel = this.dataForm.value as RptSkModel;
     
+    if(!this.saveValid(mainFormModel)) return; 
     // bind main form control fields //
     
     this.data.rptId = mainFormModel.rptId;
@@ -501,6 +533,9 @@ validationMessages = {
       this.formTitle = "New Report SKIM Khas";
       this.display = true;
       this.intention = ADD;
+      
+      this.data = new RptSkModel(); //invalidSave
+      this.itemSelected = false; //invalidSave
       
       this.setupAddForm(); 
       // reinit form entires //

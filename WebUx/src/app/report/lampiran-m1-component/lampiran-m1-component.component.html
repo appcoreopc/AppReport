@@ -598,6 +598,12 @@
 
 </div>
 
+
+<p-dialog header="Invalid Save" [(visible)]="saveDialogDisplay" modal="true">
+	Report Date already exists.<br>
+	Please choose date.
+</p-dialog>
+
   
 <div class="container">
 
@@ -621,7 +627,8 @@
 <div class="container">
  
  
-   <p-table [columns]="mainColumns" [value]="rows" selectionMode="single" [paginator]="true" [rows]="10" (onRowSelect)="onRowSelect($event)">
+   <p-table [columns]="mainColumns" [value]="rows" selectionMode="single" [paginator]="true" [rows]="10" 
+   (onRowSelect)="onRowSelect($event)" [(selection)]="itemSelected">
   
 	<ng-template pTemplate="header" let-dataEntryColumns>
 			<tr [pSelectableRow]="rowData">

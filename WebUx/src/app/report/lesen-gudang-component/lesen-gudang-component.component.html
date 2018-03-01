@@ -908,8 +908,7 @@
 							<div class="cell c4">
 							</div>
 							<div class="cell c5" style="text-align:right"> 
-								
-	<p-button icon="fa fa-fw fa-save" label="testSave" (click)="testSave()"></p-button>
+								 
 								<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>
 						 	</div>
 						</div>
@@ -1512,6 +1511,11 @@
 
 </div>
 
+<p-dialog header="Invalid Save" [(visible)]="saveDialogDisplay" modal="true">
+    Current Year already exists.<br>
+	Please choose another year.
+</p-dialog>
+
   
 <div class="container">
 
@@ -1535,7 +1539,8 @@
 <div class="container">
  
  
-   <p-table [columns]="mainColumns" [value]="rows" selectionMode="single" [paginator]="true" [rows]="10" (onRowSelect)="onRowSelect($event)">
+   <p-table [columns]="mainColumns" [value]="rows" selectionMode="single" [paginator]="true" 
+   [rows]="10" (onRowSelect)="onRowSelect($event)" [(selection)]="itemSelected">
   
 	<ng-template pTemplate="header" let-dataEntryColumns>
 			<tr [pSelectableRow]="rowData">

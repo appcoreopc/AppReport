@@ -97,6 +97,8 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     save() {
+
+      debugger;
       
       let data = this.formUtil.commit();
       
@@ -233,6 +235,7 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     onSelect(evt: any) {
+      debugger;
       if (evt && evt.selected && evt.selected.length > 0) {
         this.person = evt.selected[0] as EmployeeModel;      
         this.itemSelected = true;
