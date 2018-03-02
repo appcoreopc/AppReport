@@ -21,6 +21,18 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
   })
   export class RawMaterialComponentComponent implements OnInit {
     
+    async getMaterialComponentData() {    
+      console.log('sync data loading');
+      // Tryin to sync loading of data // 
+      this.dispatchIntent(RAW_MATERIAL_GET);
+      await timeUtil.delay(2000);
+      this.dispatchIntent(MATERIAL_CATEGORY_GET);
+      await timeUtil.delay(2000);
+      this.dispatchIntent(UOM_GET);
+      await timeUtil.delay(2000);
+      this.dispatchIntent(COUNTRY_GET);
+
+    }
     private currentModel: RawMaterialModel = new RawMaterialModel(); 
     private personForm: FormGroup;
     private intention : number = UPDATE;    
@@ -123,10 +135,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       
       ngAfterViewInit() {       
         
-        this.dispatchIntent(RAW_MATERIAL_GET);
-        this.dispatchIntent(MATERIAL_CATEGORY_GET);
-        this.dispatchIntent(UOM_GET);
-        this.dispatchIntent(COUNTRY_GET);
+        this.getMaterialComponentData();
       }
       
       save()
@@ -259,14 +268,13 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
               model = {...userInfo};
               this.dataList.push(model);
             }        
-                                
+
             this.rows = [...this.dataList];
           }    
           
           if (message && message.type == RAW_MATERIAL_SAVE_SUCCESS)
           {                  
             this.display = false; 
-            console.log('save successful.');
             await timeUtil.delay(TIME_DELAY);
             this.getMaterialList();
           }    
@@ -281,7 +289,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
                 rmcatName : d.rmcatName 
               });
             }
-            
+
             this.rmcatRows = this.rmcatDataList;
             console.log("MATERIAL_CATEGORY_GET_OK",this.rmcatRows);
           } 
