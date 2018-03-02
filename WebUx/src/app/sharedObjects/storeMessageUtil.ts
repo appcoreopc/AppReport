@@ -62,11 +62,11 @@
             for (var idx in store)
             {          
                 var messageValue = store[idx];
-                if (messageValue && messageValue.data)
+                if (messageValue && messageValue.type)
                 {
-                    if (messagesTypeToListen.indexOf(messageValue.data.type, 0) >= 0)
+                    if (messagesTypeToListen.indexOf(messageValue.type, 0) >= 0)
                     { 
-                        messageList.push({data : messageValue, type : messageValue.data.type});                                 
+                        messageList.push({data : messageValue, type : messageValue.type});                                 
                     }            
                 }      
             }              
