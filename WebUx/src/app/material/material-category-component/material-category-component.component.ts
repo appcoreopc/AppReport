@@ -110,14 +110,12 @@ export class MaterialCategoryComponentComponent implements OnInit {
       
       save() {    
 
-        let data = this.formUtil.commit();
-        
+        let data = this.formUtil.commit();        
         if (this.intention == ADD)
         {
           data.rmcatId = null;
         }
         else {
-
           this.rmcatModel.rmcatId = data.rmcatId;
           this.rmcatModel.rmcatName = data.rmcatName;          
         }                

@@ -199,6 +199,8 @@ export class EmployeeComponentComponent implements OnInit {
           
           this.jobTitleRows.length = 0;
           let jobTitleDataList = [];
+          if (message.data && message.data.data && message.data.data)
+          {
           for (var d of message.data.data.data) {
             jobTitleDataList.push({
               jobTitleId: d.jobTitleId,
@@ -208,6 +210,8 @@ export class EmployeeComponentComponent implements OnInit {
           this.jobTitleRows = jobTitleDataList;
           this.mapJobToTitle(this.jobTitleRows);
         }
+        }
+
       });
       
       this.rebindJobTitleToRows();

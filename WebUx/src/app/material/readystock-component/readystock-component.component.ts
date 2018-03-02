@@ -82,9 +82,9 @@ export class ReadyStockComponent implements OnInit {
         this.userSubscription = this.store.subscribe(appData => {     
           
           this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
-            [ READYSTOCK_GET_OK, READYSTOCK_SAVE_SUCCESS]));    
+            [READYSTOCK_GET_OK, READYSTOCK_SAVE_SUCCESS]));    
           }); 
-          
+
           this.configureUpdateForm();      
         }
         
