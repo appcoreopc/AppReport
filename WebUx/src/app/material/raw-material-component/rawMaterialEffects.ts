@@ -6,12 +6,14 @@ import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
   RAW_MATERIAL_MESSAGE_END, RAW_MATERIAL_SAVE_ERR, RAW_MATERIAL_CANCEL_OK, 
   RAW_MATERIAL_GET, RAW_MATERIAL_GET_ERR, RAW_MATERIAL_WAIT_PENDING, 
   RAW_MATERIAL_GET_OK, UOM_GET, UOM_GET_OK, COUNTRY_GET,  COUNTRY_GET_OK,
   CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
+  
   
   @Injectable()
   export class RawMaterialEffects {   
@@ -31,26 +33,29 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
     { 
           return Observable.of(payload)
           .map(action => {
-            
+            debugger;
             this.http.post(APPLICATION_HOST + '/rawmaterial/save', payload, {headers : headersJson})
             .subscribe(res => {                   
-              messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_ERR, null);
+              messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_SUCCESS);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             },  
             err => {                       
               if (err && err.status == 201)
               {
-                messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_SUCCESS, null);                
+                messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_SUCCESS); 
+                messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);               
               } 
               else 
               {                    
-                 messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_ERR, null);             
+                 messageUtil.dispatchIntent(this.store, RAW_MATERIAL_SAVE_ERR, null);   
+                 messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);          
               }         
             });  
           });          
             
         })
         .concatMap(res => {         
-          return Observable.of({ type: RAW_MATERIAL_WAIT_PENDING });
+          return Observable.of({ type: PROGRESS_WAIT_SHOW });
         });       
     
     

@@ -17,7 +17,7 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS, RAW_M
 			return  { status : 3, type: RAW_MATERIAL_MESSAGE_END };	
 		case RAW_MATERIAL_SAVE_SUCCESS:
 			console.log(RAW_MATERIAL_SAVE_SUCCESS);
-			return { status : 4, type: RAW_MATERIAL_SAVE_SUCCESS }
+			return { status : 4, type: RAW_MATERIAL_SAVE_SUCCESS, data : action}
 		case RAW_MATERIAL_SAVE_ERR:
 			console.log(RAW_MATERIAL_SAVE_ERR);
 			return  { status : 5, type: RAW_MATERIAL_MESSAGE_END };		

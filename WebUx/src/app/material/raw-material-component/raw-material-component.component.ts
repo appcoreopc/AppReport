@@ -11,7 +11,8 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
   import {DialogModule} from 'primeng/dialog';
   import {MultiSelectModule} from 'primeng/multiselect';
   import {FormUtil} from "../../sharedObjects/formUtil";
-  
+  import * as timeUtil from '../../sharedObjects/timeUtil';
+  import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
   
   @Component({
     selector: 'app-raw-material-component',
@@ -22,16 +23,14 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
     
     private currentModel: RawMaterialModel = new RawMaterialModel(); 
     private personForm: FormGroup;
-    private intention : number = UPDATE;
-    
+    private intention : number = UPDATE;    
     display: boolean = false;
     
     formTitle: string = "New Raw Material"; 
     dataList : Array<any> = new Array<any>(); 
     uomDataList : Array<any> = new Array<any>(); 
     rmcatDataList : Array<any> = new Array<any>(); 
-    countryDataList : Array<any> = new Array<any>(); 
-    
+    countryDataList : Array<any> = new Array<any>();     
     formUtil : FormUtil<RawMaterialModel>;
     
     formValidators = {  
@@ -58,8 +57,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       'gstrate': ''    
     };
     
-    countries = []; 
-    
+    countries = [];         
     itemSelected : boolean = false;
     
     validationMessages = {    
@@ -116,14 +114,15 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       
       this.userSubscription = this.store.subscribe(appData => { 
         
-        this.componentMessageHandle(messageUtil.getMultiMessage(appData, 
+        this.componentMessageHandle(messageUtil.getMultiMessage(appData,           
           [ RAW_MATERIAL_GET_OK, RAW_MATERIAL_SAVE_SUCCESS, MATERIAL_CATEGORY_GET_OK, UOM_GET_OK, COUNTRY_GET_OK]));
         }); 
         
         this.setFormValidation('');
       }
       
-      ngAfterViewInit() {            
+      ngAfterViewInit() {       
+        
         this.dispatchIntent(RAW_MATERIAL_GET);
         this.dispatchIntent(MATERIAL_CATEGORY_GET);
         this.dispatchIntent(UOM_GET);
@@ -161,11 +160,11 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
           }
         }
         data.countryList = clist;          
-          
+        
         this.rows = [...this.rows];
-
+        
         this.dispatchIntent(RAW_MATERIAL_SAVE, data);       
-      
+        
         this.display = false; 
       } 
       
@@ -181,17 +180,13 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
           'tariffCode': ['', [Validators.required, Validators.minLength(1)]],
           'rmcatId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
           'uomid': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]
-        }); 
-        
-      }
-      
+        });                 
+      }      
       
       private  changeCountryCheckbox(i) {
         if (this.countries) {
           this.countries[i].checked = !this.countries[i].checked;
-        }
-        
-        console.log("clist",this.countries); 
+        }        
       }
       
       private ResetForm() {
@@ -206,34 +201,34 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       private configureAddForm()
       {
         this.ResetForm();
-        this.setFormValidation(''); 
         
-        for (const field in this.formErrors) { 
-          this.formErrors[field] = ''; 
-        } 
+        this.currentModel = new RawMaterialModel();
+        this.currentModel.countryList = '';
+        this.currentModel.dutyImpRate = '0';
+        this.currentModel.gstrate = 0;
+        this.currentModel.rmcatId = 0;
+        this.currentModel.rmcode = '';
+        this.currentModel.rmdesc = '';
+        this.currentModel.rmid = null;
+        this.currentModel.tariffCode = '';
+        this.currentModel.uomid = 0;        
+        
+        this.formUtil = new FormUtil<RawMaterialModel>(this.currentModel, this.formValidators);
+        let userform = this.formUtil.createForm(false);
+        this.personForm = userform;        
+        this.personForm.valueChanges.debounceTime(300)
+        .subscribe(data => this.onValueChanged(data));     
       }
       
-      private configureEditForm() {   
-        this.ResetForm();         
-
+      private configureEditForm() {           
+        this.ResetForm();    
       }
-
-
+      
       onValueChanged(data?: RawMaterialModel) {
         
         if (!this.personForm) { return; }              
         
         const form = this.personForm;
-        
-        // this.currentModel.rmid = data.rmid;
-        // this.currentModel.rmcode =  data.rmcode;
-        // this.currentModel.rmdesc = data.rmdesc;
-        // this.currentModel.rmcatId = data.rmcatId;
-        // this.currentModel.uomid = data.uomid;
-        // this.currentModel.gstrate = data.gstrate;
-        // this.currentModel.dutyImpRate = data.dutyImpRate;
-        // this.currentModel.countryList = data.countryList;
-        // this.currentModel.tariffCode = data.tariffCode; 
         
         for (const field in this.formErrors) {
           // clear previous error message (if any)
@@ -251,32 +246,29 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       
       componentMessageHandle(messageAll : Array<any>) {
         
-        messageAll.map(message => {  
+        messageAll.map(async message => {  
           
           if (message && message.type == RAW_MATERIAL_GET_OK)
-          {
-            
+          {            
             this.rows.length = 0;
+            this.dataList.length = 0;
+
             for (var userInfo of message.data.data.data)
-            {                    
-              this.dataList.push({   
-                rmid : userInfo.rmid,
-                rmcode : userInfo.rmcode,
-                rmdesc : userInfo.rmdesc,
-                rmcatId : userInfo.rmcatId,
-                uomid : userInfo.uomid,
-                gstrate : userInfo.gstrate,
-                dutyImpRate : userInfo.dutyImpRate,
-                countryList : userInfo.countryList,
-                tariffCode : userInfo.tariffCode  
-              });
-            }                
-            this.rows = this.dataList;
+            {               
+              let model  = new RawMaterialModel();
+              model = {...userInfo};
+              this.dataList.push(model);
+            }        
+                                
+            this.rows = [...this.dataList];
           }    
           
           if (message && message.type == RAW_MATERIAL_SAVE_SUCCESS)
           {                  
-            this.display = false;                
+            this.display = false; 
+            console.log('save successful.');
+            await timeUtil.delay(TIME_DELAY);
+            this.getMaterialList();
           }    
           
           if (message && message.type == MATERIAL_CATEGORY_GET_OK)
@@ -320,13 +312,14 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
                 checked : false
               });
             } 
+            
             console.log("COUNTRY_GET_OK",this.countries);
           } 
         });                
       }
       
       onSelect(evt : any) {
-
+        
         debugger;
         
         if (evt && evt.selected && evt.selected.length > 0)
@@ -372,7 +365,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
             for(var c of this.countries)
             {
               var temp = new Array(); 
-
+              
               temp = this.currentModel.countryList.split(",");
               
               for (var a in temp ) {
@@ -384,18 +377,17 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
           }             
         }       
         
-        /*let confirmList = [2,3];
-        this.flightids.forEach(id => {
-          if(id[0]) // here, true means that user checked the item 
-          confirmList.push(this.flightList.find(x => x.id === id[1]));
-        });*/
       }                          
       
       cancel() 
       {
         this.display = false;     
         this.itemSelected = false;          
-      }                          
+      }    
+      
+      getMaterialList() {
+        this.dispatchIntent(RAW_MATERIAL_GET);
+      }
       
       dispatchIntent(messageType : string, data? : any)
       {   

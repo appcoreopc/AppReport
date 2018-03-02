@@ -13,5 +13,4 @@ export class RawMaterialModel {
     createdDt : Date;
     editedByUserId : number;
     editedDt : Date;
-
 }
