@@ -125,17 +125,24 @@ export class ReadyStockComponent implements OnInit {
         });    
       }
       
-      save() {           
+      save() {     
         
-        let mainFormModel = this.personForm.value as ReadyStockModel;
+        debugger;
+        
+        let mainFormModel = this.formUtil.commit();
         
         if (this.intention == ADD)
         {
           mainFormModel.readyStockId = null;
-        }
+        }      
         
+        this.person.readyStockDesc = mainFormModel.readyStockDesc;
+        this.person.tariffCode = mainFormModel.tariffCode; 
+        this.person.dutyImpRate = mainFormModel.dutyImpRate;
+        this.person.gstrate = mainFormModel.gstrate;
+                                       
         this.rows = [...this.rows];
-        
+
         this.dispatchIntent(READYSTOCK_SAVE, mainFormModel);
         this.display = false; 
       }  
