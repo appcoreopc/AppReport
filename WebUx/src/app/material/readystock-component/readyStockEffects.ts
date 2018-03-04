@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import { READYSTOCK_SAVE,  READYSTOCK_CANCEL,  READYSTOCK_SAVE_SUCCESS,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
    READYSTOCK_MESSAGE_END,  READYSTOCK_SAVE_ERR,  READYSTOCK_CANCEL_OK,  READYSTOCK_GET,  READYSTOCK_GET_ERR,
    READYSTOCK_GET_OK,  READYSTOCK_WAIT_PENDING, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -32,23 +33,26 @@ import { READYSTOCK_SAVE,  READYSTOCK_CANCEL,  READYSTOCK_SAVE_SUCCESS,
             
             this.http.post(APPLICATION_HOST + '/readystock/save', payload, {headers : headersJson})
             .subscribe(res => {                   
-              messageUtil.dispatchIntent(this.store,  READYSTOCK_SAVE_ERR, null);
+              messageUtil.dispatchIntent(this.store,  READYSTOCK_SAVE_SUCCESS, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             },  
             err => {                       
               if (err && err.status == 201)
               {
-                messageUtil.dispatchIntent(this.store,  READYSTOCK_SAVE_SUCCESS, null);                
+                messageUtil.dispatchIntent(this.store,  READYSTOCK_SAVE_SUCCESS, null);
+                messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);               
               } 
               else 
               {                    
-                 messageUtil.dispatchIntent(this.store,  READYSTOCK_SAVE_ERR, null);             
+                 messageUtil.dispatchIntent(this.store,  READYSTOCK_SAVE_ERR, null);  
+                 messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);           
               }         
             });  
           });          
             
         })
         .concatMap(res => {         
-          return Observable.of({ type:  READYSTOCK_WAIT_PENDING });
+          return Observable.of({ type:  PROGRESS_WAIT_SHOW });
         });       
     
     
