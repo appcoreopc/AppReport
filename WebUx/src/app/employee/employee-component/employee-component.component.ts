@@ -119,7 +119,7 @@ export class EmployeeComponentComponent implements OnInit {
       this.rows = [...this.rows];
       
       this.dispatchIntent(EMPLOYEE_SAVE, data);
-
+      
     }
     
     formValidators = {   
@@ -195,27 +195,28 @@ export class EmployeeComponentComponent implements OnInit {
           this.getEmployee();
         }
         
-        if (message && message.type == JOBTITLE_GET_OK) {
-          
-          this.jobTitleRows.length = 0;
-          let jobTitleDataList = [];
-          if (message.data && message.data.data && message.data.data)
-          {
-          for (var d of message.data.data.data) {
-            jobTitleDataList.push({
-              jobTitleId: d.jobTitleId,
-              jobTitleName: d.jobTitleName
-            });
+        if (message && message.type == JOBTITLE_GET_OK) {          
+          debugger;        
+         
+          if (message.data && message.data && message.data.data)
+          {            
+            let msgDataList = message.data.data.data;
+            if (msgDataList.length > 0)
+            {
+              this.jobTitleRows.length = 0;
+              let jobTitleDataList = [];
+              
+              for (var d of msgDataList) {      
+                let jobtitlemodel = {...d};
+                this.jobTitleRows.push(jobtitlemodel);
+              }
+              console.log(this.jobTitleRows);        
+              this.mapJobToTitle(this.jobTitleRows);
+              this.rebindJobTitleToRows();              
+            }           
           }
-          this.jobTitleRows = jobTitleDataList;
-          this.mapJobToTitle(this.jobTitleRows);
         }
-        }
-
-      });
-      
-      this.rebindJobTitleToRows();
-      
+      });      
     }
     
     rebindJobTitleToRows() {
@@ -236,7 +237,7 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     onSelect(evt: any) {
-
+      
       if (evt && evt.selected && evt.selected.length > 0) {
         this.person = evt.selected[0] as EmployeeModel;      
         this.itemSelected = true;
@@ -244,15 +245,15 @@ export class EmployeeComponentComponent implements OnInit {
         let form = this.formUtil.createForm(false);
         this.personForm = form;
         this.intention = UPDATE;
-
+        
         this.personForm.valueChanges.debounceTime(300)
         .subscribe(data => this.onValueChanged(data));
         
         this.display = true;
-
+        
       }
       else
-        this.itemSelected = false;
+      this.itemSelected = false;
       
     }
     
