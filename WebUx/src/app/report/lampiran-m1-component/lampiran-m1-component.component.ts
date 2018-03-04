@@ -104,6 +104,7 @@ export class LampiranM1ComponentComponent implements OnInit {
 
     detailFormError = {
     'mstkId': '',
+    'fOpenBal': '',
     'usedCost': '',
     'wastedCost': '' 
   }
@@ -114,6 +115,9 @@ export class LampiranM1ComponentComponent implements OnInit {
     },
     'wastedCost': {
       'required': 'Sisa / rosak is required.'
+    } ,
+    'fOpenBal': {
+      'required': 'Jumlah stok permulaan is required.'
     } 
   };
 
@@ -251,6 +255,7 @@ validationMessages = {
   
   basicEntryColumns = [
     { field: 'mstkId', header: 'Bill' },
+    { field: 'fOpenBal', header: 'Jumlah stok permulaan' },
     { field: 'usedCost', header: 'Jumlah bahan mentah yang digunakan' },
     { field: 'wastedCost', header: 'Sisa / Rosak' } 
   ];
@@ -745,7 +750,8 @@ validationMessages = {
         this.entryDetailForm = this.fb.group({
           'mstkId': [this.itemEntryModel.mstkId],
           'wastedCost': [this.itemEntryModel.wastedCost, [Validators.required, Validators.minLength(1)]],
-          'usedCost': [this.itemEntryModel.usedCost, [Validators.required, Validators.minLength(1)]]  
+          'usedCost': [this.itemEntryModel.usedCost, [Validators.required, Validators.minLength(1)]],
+          'fOpenBal': [this.itemEntryModel.fOpenBal, [Validators.required, Validators.minLength(1)]]    
         });
         
         this.entryDetailForm.valueChanges.debounceTime(100).subscribe(
@@ -762,6 +768,7 @@ validationMessages = {
           this.itemEntryModel.rptId = this.data.rptId;
           this.itemEntryModel.usedCost = data.usedCost; 
           this.itemEntryModel.wastedCost = data.wastedCost; 
+          this.itemEntryModel.fOpenBal = data.fOpenBal; 
           
           for (const field in this.detailFormError) {
             // clear previous error message (if any)
@@ -787,8 +794,10 @@ validationMessages = {
           const gridEditItem = this.expandEditForm.value as RptM1MstkModel;
           
           if (gridEditItem) { 
+            rowData.fOpenBal = gridEditItem.fOpenBal;
             rowData.usedCost = gridEditItem.usedCost;
             rowData.wastedCost = gridEditItem.wastedCost;
+            rowData.fOpenBal = gridEditItem.fOpenBal;
             rowData.fCloseBal = rowData.fTotalRm - rowData.usedCost - rowData.wastedCost;
           }
           
@@ -835,8 +844,9 @@ validationMessages = {
           
           this.expandEditForm = this.fb.group({
             'rptId': [this.expandSelectedRowItem.rptId],
-            'wastedCost': [this.expandSelectedRowItem.wastedCost, [Validators.required, Validators.minLength(1)]] ,
-            'usedCost': [this.expandSelectedRowItem.usedCost, [Validators.required, Validators.minLength(1)]]
+            'wastedCost': [this.expandSelectedRowItem.wastedCost, [Validators.required, Validators.minLength(1)]],
+            'usedCost': [this.expandSelectedRowItem.usedCost, [Validators.required, Validators.minLength(1)]],
+            'fOpenBal': [this.expandSelectedRowItem.fOpenBal, [Validators.required, Validators.minLength(1)]]
           });
           
          /* if (itemEntryModel.fImpDate && itemEntryModel.fImpDate.length > 0)

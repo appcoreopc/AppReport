@@ -129,7 +129,8 @@ namespace AppReport.Services
                     {
                         targetUpdateItem.RptId = item.RptId;
                         targetUpdateItem.UsedCost = item.UsedCost;
-                        targetUpdateItem.WastedCost = item.WastedCost; 
+                        targetUpdateItem.WastedCost = item.WastedCost;
+                        targetUpdateItem.FOpenBal = item.FOpenBal;
 
                         // Persist into database
                         Save(targetUpdateItem, targetUpdateItem.MstkId);
@@ -143,6 +144,7 @@ namespace AppReport.Services
                     targetAddItem.RptId = item.RptId;
                     targetAddItem.UsedCost = item.UsedCost;
                     targetAddItem.WastedCost = item.WastedCost;
+                    targetAddItem.FOpenBal = item.FOpenBal;
 
                     base.Save<RptM1Mstk>(targetAddItem, null);
 
