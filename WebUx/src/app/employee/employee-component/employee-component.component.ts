@@ -196,8 +196,7 @@ export class EmployeeComponentComponent implements OnInit {
         }
         
         if (message && message.type == JOBTITLE_GET_OK) {          
-          debugger;        
-         
+          
           if (message.data && message.data && message.data.data)
           {            
             let msgDataList = message.data.data.data;
@@ -210,7 +209,7 @@ export class EmployeeComponentComponent implements OnInit {
                 let jobtitlemodel = {...d};
                 this.jobTitleRows.push(jobtitlemodel);
               }
-              console.log(this.jobTitleRows);        
+              
               this.mapJobToTitle(this.jobTitleRows);
               this.rebindJobTitleToRows();              
             }           
