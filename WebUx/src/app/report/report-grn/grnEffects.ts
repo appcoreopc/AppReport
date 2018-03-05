@@ -8,6 +8,7 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
   SUPPLIER_GET, SUPPLIER_GET_OK,  
   RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK,  
   UOM_GET, UOM_GET_OK, 
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
   COMPONENT_GET, COMPONENT_GET_OK, 
   CURRENCY_GET, CURRENCY_GET_OK, 
   STNCUSTOM_GET, STNCUSTOM_GET_OK,  
@@ -19,67 +20,70 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
   
   @Injectable()
   export class GrnEffects {  
-
- constructor(
+    
+    constructor(
       private http: HttpClient,
       private actions$: Actions<CityAppState>, private store : Store<CityAppState>,
     ) { }
     
-     
-
+    
+    
     @Effect() GrnSave$ = this.actions$    
     .ofType(GRN_SAVE)
     .map(action => {  
       console.log("save action",action);
       return JSON.stringify(action.data);
     }).switchMap(payload =>   
-    { 
-          return Observable.of(payload)
-          .map(action => {
-            
-            this.http.post(APPLICATION_HOST + '/grn/save', payload, {headers : headersJson})
-            .subscribe(res => {                   
-              messageUtil.dispatchIntent(this.store, GRN_SAVE_ERR, null);
-            },  
-            err => {                       
-              if (err && err.status == 201)
-              {
-                messageUtil.dispatchIntent(this.store, GRN_SAVE_SUCCESS, null);                
-              } 
-              else 
-              {                    
-                 messageUtil.dispatchIntent(this.store, GRN_SAVE_ERR, null);             
-              }         
-            });  
-          });          
-            
-        })
-        .concatMap(res => {         
-          return Observable.of({ type: GRN_WAIT_PENDING });
-        });       
-
-    
-    
-    @Effect() GrnReset$ = this.actions$  
-    .ofType(GRN_CANCEL)  
-    .map(action => 
-      {
-        return ({ type: GRN_CANCEL_OK});
-      }); 
-      
-      @Effect() GrnGet$ = this.actions$    
-      .ofType(GRN_GET)     
-      .map(action => {   
-        JSON.stringify(action);
+      { 
+        return Observable.of(payload)
+        .map(action => {
+          
+          this.http.post(APPLICATION_HOST + '/grn/save', payload, {headers : headersJson})
+          .subscribe(res => {                   
+            messageUtil.dispatchIntent(this.store, GRN_SAVE_SUCCESS, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          },  
+          err => {                       
+            if (err && err.status == 201)
+            {
+              messageUtil.dispatchIntent(this.store, GRN_SAVE_SUCCESS, null);     
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);           
+            } 
+            else 
+            {                    
+              messageUtil.dispatchIntent(this.store, GRN_SAVE_ERR, null);    
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);         
+            }         
+          });  
+        });          
+        
       })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/grn/index')  
-      .map(res => {       
-        return { type: GRN_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
-    ); 
-
-     @Effect() GrnGetUom$ = this.actions$    
+      .concatMap(res => {         
+        return Observable.of({ type: PROGRESS_WAIT_SHOW });
+      });       
+      
+      
+      
+      @Effect() GrnReset$ = this.actions$  
+      .ofType(GRN_CANCEL)  
+      .map(action => 
+        {
+          return ({ type: GRN_CANCEL_OK});
+        }); 
+        
+        @Effect() GrnGet$ = this.actions$    
+        .ofType(GRN_GET)     
+        .map(action => {   
+          JSON.stringify(action);
+        })
+        .switchMap(payload => this.http.get(APPLICATION_HOST + '/grn/index')  
+        .map(res => {       
+          return { type: GRN_GET_OK, data: res};
+        }) 
+        .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+      ); 
+      
+      @Effect() GrnGetUom$ = this.actions$    
       .ofType(UOM_GET)     
       .map(action => {   
         JSON.stringify(action);
@@ -92,46 +96,44 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
     ); 
     
     
-     @Effect() GrnGetComponent$ = this.actions$    
-      .ofType(COMPONENT_GET)     
-      .map(action => {   
-        JSON.stringify(action);
-      })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/component/index')  
-      .map(res => {       
-        return { type: COMPONENT_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
-    ); 
-
-    
-     @Effect() GrnGetCurrency$ = this.actions$    
-      .ofType(CURRENCY_GET)     
-      .map(action => {   
-        JSON.stringify(action);
-      })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/currency/index')  
-      .map(res => {       
-        return { type: CURRENCY_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
-    ); 
-
-    
-     @Effect() GrnGetStncustom$ = this.actions$    
-      .ofType(STNCUSTOM_GET)     
-      .map(action => {   
-        JSON.stringify(action);
-      })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/stncustom/index')  
-      .map(res => {       
-        return { type: STNCUSTOM_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
-    ); 
- 
- 
-
-  }
+    @Effect() GrnGetComponent$ = this.actions$    
+    .ofType(COMPONENT_GET)     
+    .map(action => {   
+      JSON.stringify(action);
+    })
+    .switchMap(payload => this.http.get(APPLICATION_HOST + '/component/index')  
+    .map(res => {       
+      return { type: COMPONENT_GET_OK, data: res};
+    }) 
+    .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+  ); 
   
   
+  @Effect() GrnGetCurrency$ = this.actions$    
+  .ofType(CURRENCY_GET)     
+  .map(action => {   
+    JSON.stringify(action);
+  })
+  .switchMap(payload => this.http.get(APPLICATION_HOST + '/currency/index')  
+  .map(res => {       
+    return { type: CURRENCY_GET_OK, data: res};
+  }) 
+  .catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+); 
+
+@Effect() GrnGetStncustom$ = this.actions$    
+.ofType(STNCUSTOM_GET)     
+.map(action => {   
+  JSON.stringify(action);
+})
+.switchMap(payload => this.http.get(APPLICATION_HOST + '/stncustom/index')  
+.map(res => {       
+  return { type: STNCUSTOM_GET_OK, data: res};
+}) 
+.catch(() => Observable.of({ type: GRN_SAVE_ERR }))
+); 
+
+
+
+}
+
