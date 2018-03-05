@@ -34,7 +34,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
   })
   
   export class ReportGrnComponent implements OnInit {
-    
+       
     private data: GrnModel = new GrnModel();
     private uomData: UomModel = new UomModel();
     private componentData: ComponentModel = new ComponentModel();
@@ -109,8 +109,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       'freightGst': [Validators.required, Validators.minLength(1)],
       'totalFreightCost': [Validators.required, Validators.minLength(1)],
       'totalFreightRmcost': [Validators.required, Validators.minLength(1)]
-    }
-    
+    }    
     
     formErrors = {
       'grnid': '',
@@ -387,10 +386,11 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       }
       
       save()
-      {
-        
-        var dataModel = new GrnModel();
-        
+      {       
+        debugger;
+
+        let dataModel = this.formUtil.commit(); 
+              
         if (this.intention == ADD)
         {
           dataModel = this.dataForm.value as GrnModel;
@@ -398,59 +398,60 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         }
         else {
           dataModel.grnid = this.data.grnid;
-          dataModel.grndate = this.data.grndate;
-          dataModel.lotno = this.data.lotno;
-          dataModel.supplierId = this.data.supplierId; 
-          dataModel.rmid = this.data.rmid;  
-          dataModel.height = this.data.height;
-          dataModel.heightUom = this.data.heightUom;
-          dataModel.width = this.data.width;
-          dataModel.widthUom = this.data.widthUom;
-          dataModel.thick = this.data.thick;
-          dataModel.thickUom = this.data.thickUom;
-          dataModel.wgt = this.data.wgt;
-          dataModel.roll = this.data.roll;
-          dataModel.rollUom = this.data.rollUom;
-          dataModel.dom = this.data.dom;
-          dataModel.dono = this.data.dono;
-          dataModel.stncustomId = this.data.stncustomId;
-          dataModel.componentId = this.data.componentId;
-          dataModel.kaswgt = this.data.kaswgt;
-          dataModel.dutyImp = this.data.dutyImp;
-          dataModel.gst = this.data.gst;
-          dataModel.cif = this.data.cif;
-          dataModel.customDate = this.data.customDate;
-          dataModel.customNo = this.data.customNo;
-          dataModel.dutyExcise = this.data.dutyExcise;
-          dataModel.invoiceNo = this.data.invoiceNo;
-          dataModel.currencyId = this.data.currencyId;
-          dataModel.amountCurrency = this.data.amountCurrency;
-          dataModel.exRate = this.data.exRate;
-          dataModel.amount = this.data.amount;
-          dataModel.pono = this.data.pono;
-          dataModel.otdlate = this.data.otdlate;
-          dataModel.fwdInvNo = this.data.fwdInvNo;
-          dataModel.amt = this.data.amt;
-          dataModel.forwarder = this.data.forwarder;
-          dataModel.docRefNo = this.data.docRefNo;
-          dataModel.vcarno = this.data.vcarno;
-          dataModel.impFreight = this.data.impFreight;
-          dataModel.currencyAdj = this.data.currencyAdj;
-          dataModel.termChrg = this.data.termChrg;
-          dataModel.aprtTxFee = this.data.aprtTxFee;
-          dataModel.delivery = this.data.delivery;
-          dataModel.handFwd = this.data.handFwd;
-          dataModel.customExamFee = this.data.customExamFee;
-          dataModel.collectFee = this.data.collectFee;
-          dataModel.cargoPrmt = this.data.cargoPrmt;
-          dataModel.docFee = this.data.docFee;
-          dataModel.breakBulk = this.data.breakBulk;
-          dataModel.edifee = this.data.edifee;
-          dataModel.freightGst = this.data.freightGst;
-          dataModel.totalFreightCost = this.data.totalFreightCost;
-          dataModel.totalFreightRmcost = this.data.totalFreightRmcost;
         }
         
+        this.data.grndate = dataModel.grndate;
+        this.data.lotno = dataModel.lotno;
+        this.data.supplierId = dataModel.supplierId; 
+        this.data.rmid = dataModel.rmid;  
+        this.data.height = dataModel.height;
+        this.data.heightUom = dataModel.heightUom;
+        this.data.width = dataModel.width;
+        this.data.widthUom = dataModel.widthUom;
+        this.data.thick = dataModel.thick;
+        this.data.thickUom = dataModel.thickUom;
+        this.data.wgt = dataModel.wgt;
+        this.data.roll = dataModel.roll;
+        this.data.rollUom = dataModel.rollUom;
+        this.data.dom = dataModel.dom;
+        this.data.dono = dataModel.dono;
+        this.data.stncustomId = dataModel.stncustomId;
+        this.data.componentId = dataModel.componentId;
+        this.data.kaswgt = dataModel.kaswgt;
+        this.data.dutyImp = dataModel.dutyImp;
+        this.data.gst = dataModel.gst;
+        this.data.cif = dataModel.cif;
+        this.data.customDate = dataModel.customDate;
+        this.data.customNo = dataModel.customNo;
+        this.data.dutyExcise = dataModel.dutyExcise;
+        this.data.invoiceNo = dataModel.invoiceNo;
+        this.data.currencyId = dataModel.currencyId;
+        this.data.amountCurrency = dataModel.amountCurrency;
+        this.data.exRate = dataModel.exRate;
+        this.data.amount = dataModel.amount;
+        this.data.pono = dataModel.pono;
+        this.data.otdlate = dataModel.otdlate;
+        this.data.fwdInvNo = dataModel.fwdInvNo;
+        this.data.amt = dataModel.amt;
+        this.data.forwarder = dataModel.forwarder;
+        this.data.docRefNo = dataModel.docRefNo;
+        this.data.vcarno = dataModel.vcarno;
+        this.data.impFreight = dataModel.impFreight;
+        this.data.currencyAdj = dataModel.currencyAdj;
+        this.data.termChrg = dataModel.termChrg;
+        this.data.aprtTxFee = dataModel.aprtTxFee;
+        this.data.delivery = dataModel.delivery;
+        this.data.handFwd = dataModel.handFwd;
+        this.data.customExamFee = dataModel.customExamFee;
+        this.data.collectFee = dataModel.collectFee;
+        this.data.cargoPrmt = dataModel.cargoPrmt;
+        this.data.docFee = dataModel.docFee;
+        this.data.breakBulk = dataModel.breakBulk;
+        this.data.edifee = dataModel.edifee;
+        this.data.freightGst = dataModel.freightGst;
+        this.data.totalFreightCost = dataModel.totalFreightCost;
+        this.data.totalFreightRmcost = dataModel.totalFreightRmcost;
+                
         this.dispatchIntent(GRN_SAVE, dataModel);          
         this.display = false; 
         
@@ -547,7 +548,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       
       componentMessageHandle(messageAll: Array<any>) {
         
-        messageAll.map(message => {
+        messageAll.map(async message => {
      
           if (message && message.type == GRN_GET_OK)
           {
@@ -564,6 +565,9 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
           } 
           else if (message && message.type == GRN_SAVE_SUCCESS)
           {                  
+            await timeUtil.delay(TIME_DELAY);  
+            this.getGrnData();   
+            
             this.display = false;                
           } 
           else if (message && message.type == SUPPLIER_GET_OK)
@@ -806,10 +810,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         
       }
       private configureEditForm() {
-        
-        // this.setFormValidation(this.data.grnid); 
-        //this.dataForm.valueChanges.debounceTime(300)
-        // .subscribe(data => this.onValueChanged(data));
+       
       }                          
       
       onSelect(evt : any) {
@@ -819,6 +820,8 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
           
           this.data = evt.selected[0] as GrnModel;                   
           this.itemSelected = true;   
+          
+          // Force a date - otherwise throw exception in the form //
 
           if (this.data.grndate)
               this.data.grndate = new Date(this.data.grndate);
@@ -855,8 +858,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.formTitle = "Edit GRN"; 
         this.intention = UPDATE;                            
         this.configureEditForm();
-        
-        
+                
         // if (this.data)
         // {                                  
         //  this.dataForm.get("grnid").setValue(this.data.grnid);
@@ -918,14 +920,19 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       
       cancel() 
       {
+        this.data = this.formUtil.rollback();
         this.display = false;     
         this.itemSelected = false;          
       }    
+
+      getGrnData(): any {      
+        this.dispatchIntent(GRN_GET);        
+      }
+
       
       dispatchIntent(messageType : string, data? : any)
       {   
-        console.log(messageType);
-        
+            
         this.store.dispatch(
           {     
             type: messageType,
