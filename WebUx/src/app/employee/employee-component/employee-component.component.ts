@@ -23,8 +23,8 @@ import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
 
 export class EmployeeComponentComponent implements OnInit {
   
-  private person: EmployeeModel = new EmployeeModel();
-  private personForm: FormGroup;
+  person: EmployeeModel = new EmployeeModel();
+  personForm: FormGroup;
   private intention: number = UPDATE;
   
   display: boolean = false;

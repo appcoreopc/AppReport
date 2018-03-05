@@ -34,7 +34,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
 
     }
     private currentModel: RawMaterialModel = new RawMaterialModel(); 
-    private personForm: FormGroup;
+    personForm: FormGroup;
     private intention : number = UPDATE;    
     display: boolean = false;
     

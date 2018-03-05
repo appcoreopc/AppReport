@@ -27,6 +27,12 @@ import { RptSkMimpModel } from '../../model/RptSkMimpModel';
 import { Data } from '@angular/router/src/config';
 import { JobTitleModel } from "../../model/JobTitleModel"; 
 
+import {FormUtil} from "../../sharedObjects/formUtil";
+import * as timeUtil from '../../sharedObjects/timeUtil';
+import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
+
+
+
 @Component({
   selector: 'app-skim-khas-component',
   templateUrl: './skim-khas-component.component.html',
@@ -67,6 +73,29 @@ export class SkimKhasComponentComponent implements OnInit {
   jobTitleDataList : Array<any> = new Array<any>(); 
   
   pCalendarEditEntryValue : Date; 
+
+  formUtil : FormUtil<RptSkModel>;
+  
+  formValidators = { 
+    'rptId': [],
+    'rptDate': [Validators.required, Validators.minLength(1)],
+    'letterDate': [Validators.required, Validators.minLength(1)],
+    'refNo': [Validators.required, Validators.minLength(1)],
+    'lrcptDept': [Validators.required, Validators.minLength(1)],
+    'lrcptBr': [Validators.required, Validators.minLength(1)],
+    'lrcptAdd1': [Validators.required, Validators.minLength(1)],
+    'lrcptAdd2': [Validators.required, Validators.minLength(1)],
+    'lrcptAdd3': [Validators.required, Validators.minLength(1)],
+    'lrcptAdd4': [Validators.required, Validators.minLength(1)],
+    'signedByEmpId': [],
+    'signedByPos': [Validators.required, Validators.minLength(1)],
+    'signedByIdno': [Validators.required, Validators.minLength(1)],
+    'signedByName': [Validators.required, Validators.minLength(1)],
+    'signedByEmpIdImp': [],
+    'signedByPosImp': [Validators.required, Validators.minLength(1)],
+    'signedByIdnoImp': [Validators.required, Validators.minLength(1)],
+    'signedByNameImp': [Validators.required, Validators.minLength(1)]
+  };
   
   formErrors = {
     'rptId': '',
@@ -123,7 +152,7 @@ export class SkimKhasComponentComponent implements OnInit {
   
   itemSelected: boolean = false;
   
-validationMessages = {
+  validationMessages = {
     'refNo': {
       'required': 'Reference No is required.'
     },
@@ -223,9 +252,9 @@ validationMessages = {
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, SKIMKHAS_GET_OK), SKIMKHAS_GET_OK));
       
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, EMPLOYEE_GET_OK), EMPLOYEE_GET_OK));
-
+      
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, CONFIG_GET_OK), CONFIG_GET_OK));
-       
+      
       this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, JOBTITLE_GET_OK), JOBTITLE_GET_OK));
       
     });
@@ -245,30 +274,30 @@ validationMessages = {
     this.dispatchIntent(CONFIG_GET);
     this.dispatchIntent(JOBTITLE_GET);
   }
-
   
-   saveValid(m){
-   
+  
+  saveValid(m){
+    
     let isDataExist = false;
-
+    
     for (var d in this.dataList) { 
       var dataInfo = this.dataList[d] as RptSkModel;
       console.log(dataInfo.rptDate , m.rptDate);
-
+      
       var ddt = new Date(dataInfo.rptDate);
       var dm = ddt.getMonth()+1;
       var dy = ddt.getFullYear();
       var md = m.rptDate.getMonth()+1;
       var y = m.rptDate.getFullYear();
-
+      
       if ((this.intention == ADD && dm == md && dy== y)
-        || (this.intention != ADD && dm == md && dy== y && dataInfo.rptId != m.rptId))
+      || (this.intention != ADD && dm == md && dy== y && dataInfo.rptId != m.rptId))
       {
         isDataExist = true;
         break;
       } 
     }
- 
+    
     if(isDataExist) {
       this.saveDialogDisplay = true;
       return false;
@@ -351,7 +380,7 @@ validationMessages = {
       }
     }
   }
- 
+  
   
   componentMessageHandle(message: any) {
     
@@ -395,41 +424,40 @@ validationMessages = {
     else if (message && message.type == SKIMKHAS_SAVE_SUCCESS) {
       this.display = false;
     }
-     else if (message && message.type == CONFIG_GET_OK)
-      { 
-        this.configRows.length = 0; 
-        let configDataList = new Array<any>(); 
-        
-       
-        for (var idx in message.data)
-        {
-          var configDataInfo = message.data[idx] as ConfigModel;    
-
-           if(! (configDataInfo.moduleId == 1 && configDataInfo.id == 3)) continue;
-
-          configDataList.push({   
-            configId : configDataInfo.configId,
-            configKey : configDataInfo.configKey,
-            configData : configDataInfo.configData 
-          }); 
-        } 
-
-        this.configRows = configDataList; 
-      }   
-      else if (message && message.type == JOBTITLE_GET_OK)
+    else if (message && message.type == CONFIG_GET_OK)
+    { 
+      this.configRows.length = 0; 
+      let configDataList = new Array<any>(); 
+      
+      
+      for (var idx in message.data)
       {
-        this.jobTitleRows.length = 0;  
-        for (var d of message.data)
-        {    
-          this.jobTitleDataList.push({   
-              jobTitleId : d.jobTitleId,
-              jobTitleName : d.jobTitleName 
-          });
-        }
+        var configDataInfo = message.data[idx] as ConfigModel;    
         
-
-        this.jobTitleRows = this.jobTitleDataList;
+        if(! (configDataInfo.moduleId == 1 && configDataInfo.id == 3)) continue;
+        
+        configDataList.push({   
+          configId : configDataInfo.configId,
+          configKey : configDataInfo.configKey,
+          configData : configDataInfo.configData 
+        }); 
       } 
+      
+      this.configRows = configDataList; 
+    }   
+    else if (message && message.type == JOBTITLE_GET_OK)
+    {
+      this.jobTitleRows.length = 0;  
+      for (var d of message.data)
+      {    
+        this.jobTitleDataList.push({   
+          jobTitleId : d.jobTitleId,
+          jobTitleName : d.jobTitleName 
+        });
+      }
+                 
+      this.jobTitleRows = this.jobTitleDataList;
+    } 
   }
   
   private setupAddForm() {
@@ -439,41 +467,43 @@ validationMessages = {
     for (const field in this.formErrors) {
       this.formErrors[field] = '';
     }
-
-        
-      for (var cRow in this.configRows)
-      { 
-        if(this.configRows[cRow].configKey == "LetterRcptAdd1") 
-            this.data.lrcptAdd1 = this.configRows[cRow].configData;
-        else if(this.configRows[cRow].configKey == "LetterRcptAdd2") 
-            this.data.lrcptAdd2 = this.configRows[cRow].configData;
-        else if(this.configRows[cRow].configKey == "LetterRcptAdd3") 
-            this.data.lrcptAdd3 = this.configRows[cRow].configData;
-        else if(this.configRows[cRow].configKey == "LetterRcptAdd4") 
-            this.data.lrcptAdd4 = this.configRows[cRow].configData;
-        else if(this.configRows[cRow].configKey == "LetterRcptDept") 
-            this.data.lrcptDept = this.configRows[cRow].configData;
-        else if(this.configRows[cRow].configKey == "LetterRcptBr") 
-            this.data.lrcptBr = this.configRows[cRow].configData;
- 
-      }
-
-      this.dataForm.get("lrcptAdd1").setValue(this.data.lrcptAdd1); 
-      this.dataForm.get("lrcptAdd2").setValue(this.data.lrcptAdd2); 
-      this.dataForm.get("lrcptAdd3").setValue(this.data.lrcptAdd3); 
-      this.dataForm.get("lrcptAdd4").setValue(this.data.lrcptAdd4); 
-      this.dataForm.get("lrcptDept").setValue(this.data.lrcptDept);
-      this.dataForm.get("lrcptBr").setValue(this.data.lrcptBr);
+    
+    
+    for (var cRow in this.configRows)
+    { 
+      if(this.configRows[cRow].configKey == "LetterRcptAdd1") 
+      this.data.lrcptAdd1 = this.configRows[cRow].configData;
+      else if(this.configRows[cRow].configKey == "LetterRcptAdd2") 
+      this.data.lrcptAdd2 = this.configRows[cRow].configData;
+      else if(this.configRows[cRow].configKey == "LetterRcptAdd3") 
+      this.data.lrcptAdd3 = this.configRows[cRow].configData;
+      else if(this.configRows[cRow].configKey == "LetterRcptAdd4") 
+      this.data.lrcptAdd4 = this.configRows[cRow].configData;
+      else if(this.configRows[cRow].configKey == "LetterRcptDept") 
+      this.data.lrcptDept = this.configRows[cRow].configData;
+      else if(this.configRows[cRow].configKey == "LetterRcptBr") 
+      this.data.lrcptBr = this.configRows[cRow].configData;
+      
+    }
+    
+    this.dataForm.get("lrcptAdd1").setValue(this.data.lrcptAdd1); 
+    this.dataForm.get("lrcptAdd2").setValue(this.data.lrcptAdd2); 
+    this.dataForm.get("lrcptAdd3").setValue(this.data.lrcptAdd3); 
+    this.dataForm.get("lrcptAdd4").setValue(this.data.lrcptAdd4); 
+    this.dataForm.get("lrcptDept").setValue(this.data.lrcptDept);
+    this.dataForm.get("lrcptBr").setValue(this.data.lrcptBr);
   }
-
   
-   changeTab(index: number): void {
-          this.tabIndex = index;
-   }
-        
+  
+  changeTab(index: number): void {
+    this.tabIndex = index;
+  }
+  
   private configureAddForms() {
+    
     this.enabledDetailEntry = true;
     this.tabIndex = 0;
+    
     console.log("configureAddForms");
     
     this.dataForm = this.fb.group({
@@ -502,7 +532,7 @@ validationMessages = {
   private configureEditForm() {
     this.enabledDetailEntry = false;
     this.tabIndex = 0;
-
+    
     this.dataForm = this.fb.group({
       'rptId': [this.data.rptId],
       'rptDate': ['', [Validators.required, Validators.minLength(1)]],
@@ -579,16 +609,16 @@ validationMessages = {
       onEditComplete(evt) {
         console.log(evt);
       }
-
+      
       editForm(){
-
+        
         this.setupMainFormForEdit();
       }
- 
+      
       printReport(){
         this.displayPrintReport = true;
       }
-
+      
       onRowSelect(evt) {
         
         debugger;
@@ -743,82 +773,82 @@ validationMessages = {
           });
           
           if (itemEntryModel.fImpDate && itemEntryModel.fImpDate.length > 0)
-            this.expandEditForm.get("fImpDate").setValue(new Date(itemEntryModel.fImpDate));
+          this.expandEditForm.get("fImpDate").setValue(new Date(itemEntryModel.fImpDate));
           else
-            this.expandEditForm.get("fImpDate").setValue(new Date());
+          this.expandEditForm.get("fImpDate").setValue(new Date());
           
         }
         
-
+        
         onEmpImpChange(id){ 
-
+          
           this.data.signedByNameImp = "";
           this.data.signedByIdnoImp = "";
           this.data.signedByPosImp = "";
-              
+          
           for (var cRow in this.empRows)
           { 
             if(this.empRows[cRow].empId == id){
               this.data.signedByNameImp = this.empRows[cRow].empName;
               this.data.signedByIdnoImp = this.empRows[cRow].empIdno;
-
+              
               for (var jRow in this.jobTitleRows)
               {
                 if(this.empRows[cRow].jobTitleId == this.jobTitleRows[jRow].jobTitleId)
                 {
-                   this.data.signedByPosImp = this.jobTitleRows[jRow].jobTitleName;
-                   break; 
+                  this.data.signedByPosImp = this.jobTitleRows[jRow].jobTitleName;
+                  break; 
                 }
-
+                
               }
               
               break;
             }
-    
+            
           }
- 
+          
           this.dataForm.get("signedByNameImp").setValue(this.data.signedByNameImp); 
           this.dataForm.get("signedByIdnoImp").setValue(this.data.signedByIdnoImp); 
           this.dataForm.get("signedByPosImp").setValue(this.data.signedByPosImp);  
         }
         
-       
-
+        
+        
         onEmpChange(id){ 
-
+          
           this.data.signedByName = "";
           this.data.signedByIdno = "";
           this.data.signedByPos = "";
-
+          
           for (var cRow in this.empRows)
           { 
             if(this.empRows[cRow].empId == id){
               this.data.signedByName = this.empRows[cRow].empName;
               this.data.signedByIdno = this.empRows[cRow].empIdno;
-
+              
               for (var jRow in this.jobTitleRows)
               {
                 if(this.empRows[cRow].jobTitleId == this.jobTitleRows[jRow].jobTitleId)
                 {
-                   this.data.signedByPos = this.jobTitleRows[jRow].jobTitleName;
-                   break; 
+                  this.data.signedByPos = this.jobTitleRows[jRow].jobTitleName;
+                  break; 
                 }
-
+                
               }
               
               break;
             }
-    
+            
           }
-
+          
           this.dataForm.get("signedByName").setValue(this.data.signedByName); 
           this.dataForm.get("signedByIdno").setValue(this.data.signedByIdno); 
           this.dataForm.get("signedByPos").setValue(this.data.signedByPos);  
         }
         
       }
-
-
+      
+      
       
       
       
