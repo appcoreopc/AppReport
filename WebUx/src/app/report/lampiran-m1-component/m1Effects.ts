@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
 	JOBTITLE_GET, JOBTITLE_GET_OK, M1LAMPIRAN_PRINT, M1LAMPIRAN_PRINT_OK, EMPLOYEE_WAIT_PENDING, 
   M1LAMPIRAN_MESSAGE_END, M1LAMPIRAN_SAVE_ERR, M1LAMPIRAN_CANCEL_OK, M1LAMPIRAN_GET, M1LAMPIRAN_GET_ERR,
   M1LAMPIRAN_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
@@ -18,8 +19,7 @@ import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS,
    constructor(
     private http: HttpClient,
     private actions$: Actions<CityAppState>, private store: Store<CityAppState>
-  ) { }
-     
+  ) { }     
 
      @Effect() M1LampiranSave$ = this.actions$
     .ofType(M1LAMPIRAN_SAVE)
@@ -31,30 +31,29 @@ import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS,
 
       return Observable.of(payload)
         .map(action => {
-
-          console.log('effect payload');
-          console.log(payload);
-
+      
           this.http.post(APPLICATION_HOST + '/rptm1/save', payload, { headers: headersJson })
             .subscribe
             (res => {
               messageUtil.dispatchIntent(this.store, M1LAMPIRAN_SAVE_SUCCESS, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             },
             err => {
+              console.log(err);
               if (err && err.status == 201) {
                 messageUtil.dispatchIntent(this.store, M1LAMPIRAN_SAVE_SUCCESS, null);
               }
               else {
                 messageUtil.dispatchIntent(this.store, M1LAMPIRAN_SAVE_ERR, null);
-              }
+             }
+             messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             });
         });
     })
     .concatMap(res => {
-      return Observable.of({ type: EMPLOYEE_WAIT_PENDING });
+      return Observable.of({ type: PROGRESS_WAIT_SHOW });
     });
-    
-    
+        
     @Effect() M1LampiranReset$ = this.actions$  
     .ofType(M1LAMPIRAN_CANCEL)  
     .map(action => 
@@ -62,33 +61,37 @@ import {M1LAMPIRAN_SAVE, M1LAMPIRAN_CANCEL, M1LAMPIRAN_SAVE_SUCCESS,
         return ({ type: M1LAMPIRAN_CANCEL_OK});
       }); 
       
+
       @Effect() M1LampiranGet$ = this.actions$    
       .ofType(M1LAMPIRAN_GET)     
-      .map(action => {   
+      .map(action => {  
+        debugger; 
+        console.log('jobtitle lampiran m1');
         JSON.stringify(action);
       })
       .switchMap(payload => this.http.get(APPLICATION_HOST + '/rptm1/index')  
       .map(res => {       
         return { type: M1LAMPIRAN_GET_OK, data: res};
       }) 
-      .catch(() => Observable.of({ type: M1LAMPIRAN_SAVE_ERR }))
+      .catch(() => Observable.of({ type: M1LAMPIRAN_GET_ERR }))
     ); 
+
+
     
     
-    @Effect() GrnGetJobTitle$ = this.actions$    
-      .ofType(JOBTITLE_GET)     
-      .map(action => {   
-      console.log('GrnGetJobTitle');
-        JSON.stringify(action);
-      })
-      .switchMap(payload => 
+    // @Effect() GrnGetJobTitle$ = this.actions$    
+    //   .ofType(JOBTITLE_GET)     
+    //   .map(action => {   
+    //   console.log('GrnGetJobTitle');
+    //     JSON.stringify(action);
+    //   })
+    //   .switchMap(payload => 
         
-          this.http.get(APPLICATION_HOST + '/JobTitle/index')  
-          .map(res => {       
-            return { type: JOBTITLE_GET_OK, data: res};
-          }) 
-          .catch(() => Observable.of({ type: M1LAMPIRAN_GET_ERR }))
-    );
+    //       this.http.get(APPLICATION_HOST + '/JobTitle/index')  
+    //       .map(res => {       
+    //         return { type: JOBTITLE_GET_OK, data: res};
+    //       }) 
+    //       .catch(() => Observable.of({ type: M1LAMPIRAN_GET_ERR }))
+    // );
   }
-  
   
