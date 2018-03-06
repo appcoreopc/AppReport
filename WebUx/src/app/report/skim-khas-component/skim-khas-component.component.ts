@@ -368,6 +368,8 @@ export class SkimKhasComponentComponent implements OnInit {
       this.data.rptId = data.rptId;
       this.data.rptDate = data.rptDate;
       this.data.letterDate = data.letterDate;
+
+      data.signedByEmpId
       
       for (const field in this.formErrors) {
         // clear previous error message (if any)
@@ -447,11 +449,12 @@ export class SkimKhasComponentComponent implements OnInit {
         }   
         else if (message && message.type == JOBTITLE_GET_OK)
         {
-          this.jobTitleRows.length = 0;  
-          this.jobTitleDataList.length = 0;
           
           if (message.data && message.data.data && message.data.data.data)
           {
+
+            this.jobTitleRows.length = 0;  
+            this.jobTitleDataList.length = 0;
             
             for (var jobtitleItem of message.data.data.data)
             {    
@@ -785,7 +788,9 @@ export class SkimKhasComponentComponent implements OnInit {
           }
           
           
-          onEmpImpChange(id){ 
+          onEmpImpChange(id) {
+            
+            debugger;
             
             this.data.signedByNameImp = "";
             this.data.signedByIdnoImp = "";
