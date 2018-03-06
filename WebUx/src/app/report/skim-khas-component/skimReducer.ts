@@ -16,7 +16,7 @@ export function SkimKhasReducer(status: CityAppState, action: Action) {
 			return  { status : 3, type: SKIMKHAS_MESSAGE_END };	
 		case SKIMKHAS_SAVE_SUCCESS:
 			console.log(SKIMKHAS_SAVE_SUCCESS);
-			return { status : 4, type: SKIMKHAS_SAVE_SUCCESS }
+			return { status : 4, data : action, type: SKIMKHAS_SAVE_SUCCESS }
 		case SKIMKHAS_SAVE_ERR:
 			console.log(SKIMKHAS_SAVE_ERR);
 			return  { status : 5, type: SKIMKHAS_MESSAGE_END };		
