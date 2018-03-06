@@ -188,9 +188,7 @@ export class StnCustomComponentComponent implements OnInit {
     if (evt && evt.selected && evt.selected.length > 0) {
       this.stncustom = evt.selected[0] as StncustomModel;
       this.itemSelected = true;
-
-      debugger;
-
+      
       this.formUtil = new FormUtil<StncustomModel>(this.stncustom, this.formValidators);
       let userform = this.formUtil.createForm(false);
       this.personForm = userform;

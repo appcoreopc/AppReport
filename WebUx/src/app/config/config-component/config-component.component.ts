@@ -17,8 +17,8 @@ import {FormUtil} from "../../sharedObjects/formUtil";
   
   export class ConfigComponentComponent implements OnInit {
     
-    private person: ConfigModel = new ConfigModel(); 
-    private personForm: FormGroup;
+    person: ConfigModel = new ConfigModel(); 
+    personForm: FormGroup;
     private intention : number = UPDATE;
     private formUtil : FormUtil<ConfigModel>;
     
