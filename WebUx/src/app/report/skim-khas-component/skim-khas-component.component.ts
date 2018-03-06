@@ -424,9 +424,7 @@ export class SkimKhasComponentComponent implements OnInit {
           
           this.empRows = [...this.empDataList];
         }
-        else if (message && message.type == SKIMKHAS_SAVE_SUCCESS) {
-          debugger;
-          console.log('getting ski khas data');
+        else if (message && message.type == SKIMKHAS_SAVE_SUCCESS) {         
           this.display = false;
           await timeUtil.delay(TIME_DELAY);
           this.getSkimData();
