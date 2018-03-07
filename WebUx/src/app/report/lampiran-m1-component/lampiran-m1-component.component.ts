@@ -72,9 +72,7 @@ export class LampiranM1ComponentComponent implements OnInit {
   jobTitleDataList : Array<any> = new Array<any>(); 
   
   pCalendarEditEntryValue : Date; 
-
   private firedGetFromSaveOperation : boolean = false;
-
   
   formErrors = {
     'rptId': '',
@@ -283,14 +281,8 @@ export class LampiranM1ComponentComponent implements OnInit {
         [
           M1LAMPIRAN_SAVE_SUCCESS, M1LAMPIRAN_GET_OK, EMPLOYEE_GET_OK,
           CONFIG_GET_OK, JOBTITLE_GET_OK
-        ]));
-        
-        // this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, M1LAMPIRAN_SAVE_SUCCESS), M1LAMPIRAN_SAVE_SUCCESS));
-        // this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, M1LAMPIRAN_GET_OK), M1LAMPIRAN_GET_OK));
-        // this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, EMPLOYEE_GET_OK), EMPLOYEE_GET_OK));
-        // this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, CONFIG_GET_OK), CONFIG_GET_OK));
-        // this.componentMessageHandle(messageUtil.handleMessage(messageUtil.getMessage(appData, JOBTITLE_GET_OK), JOBTITLE_GET_OK));
-        
+        ]));       
+   
       });
       
       //this.configureEditForm();
@@ -337,8 +329,8 @@ export class LampiranM1ComponentComponent implements OnInit {
     }
     
     save() {
-      
-      this.firedGetFromSaveOperation = false;
+
+      this.firedGetFromSaveOperation = true;      
       let mainFormModel = this.dataForm.value as RptM1Model;
       
       //invalidSave
@@ -479,7 +471,7 @@ export class LampiranM1ComponentComponent implements OnInit {
         }
         else if (message && message.type == M1LAMPIRAN_SAVE_SUCCESS) {
 
-          if (!this.firedGetFromSaveOperation) {
+          if (this.firedGetFromSaveOperation) {
             
           this.firedGetFromSaveOperation = !this.firedGetFromSaveOperation;
           this.display = false;
