@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
-	JOBTITLE_GET, JOBTITLE_GET_OK, EMPLOYEE_WAIT_PENDING, 
+  JOBTITLE_GET, JOBTITLE_GET_OK, EMPLOYEE_WAIT_PENDING, 
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
   LESEN_MESSAGE_END, LESEN_SAVE_ERR, LESEN_CANCEL_OK, LESEN_GET, LESEN_GET_ERR,
   LESEN_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -39,6 +40,7 @@ import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
             .subscribe
             (res => {
               messageUtil.dispatchIntent(this.store, LESEN_SAVE_SUCCESS, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             },
             err => {
               if (err && err.status == 201) {
@@ -47,11 +49,12 @@ import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
               else {
                 messageUtil.dispatchIntent(this.store, LESEN_SAVE_ERR, null);
               }
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
             });
         });
     })
     .concatMap(res => {
-      return Observable.of({ type: EMPLOYEE_WAIT_PENDING });
+      return Observable.of({ type: PROGRESS_WAIT_SHOW });
     });
     
     
