@@ -76,22 +76,21 @@ import {LESEN_SAVE, LESEN_CANCEL, LESEN_SAVE_SUCCESS,
       }) 
       .catch(() => Observable.of({ type: LESEN_SAVE_ERR }))
     ); 
-    
-    
-    @Effect() GrnGetJobTitle$ = this.actions$    
-      .ofType(JOBTITLE_GET)     
-      .map(action => {   
-      console.log('GrnGetJobTitle');
-        JSON.stringify(action);
-      })
-      .switchMap(payload => 
         
-          this.http.get(APPLICATION_HOST + '/JobTitle/index')  
-          .map(res => {       
-            return { type: JOBTITLE_GET_OK, data: res};
-          }) 
-          .catch(() => Observable.of({ type: LESEN_GET_ERR }))
-    );
+    // @Effect() GrnGetJobTitle$ = this.actions$    
+    //   .ofType(JOBTITLE_GET)     
+    //   .map(action => {   
+    //   console.log('GrnGetJobTitle');
+    //     JSON.stringify(action);
+    //   })
+    //   .switchMap(payload => 
+        
+    //       this.http.get(APPLICATION_HOST + '/JobTitle/index')  
+    //       .map(res => {       
+    //         return { type: JOBTITLE_GET_OK, data: res};
+    //       }) 
+    //       .catch(() => Observable.of({ type: LESEN_GET_ERR }))
+    // );
   }
   
   

@@ -79,19 +79,19 @@ export class SkimKhasEffects {
       .catch(() => Observable.of({ type: SKIMKHAS_SAVE_ERR }))
     );
 
-    @Effect() GrnGetJobTitle$ = this.actions$    
-      .ofType(JOBTITLE_GET)     
-      .map(action => {   
-      console.log('GrnGetJobTitle');
-        JSON.stringify(action);
-      })
-      .switchMap(payload => 
+    // @Effect() GrnGetJobTitle$ = this.actions$    
+    //   .ofType(JOBTITLE_GET)     
+    //   .map(action => {   
+    //   console.log('GrnGetJobTitle');
+    //     JSON.stringify(action);
+    //   })
+    //   .switchMap(payload => 
         
-          this.http.get(APPLICATION_HOST + '/JobTitle/index')  
-          .map(res => {       
-            return { type: JOBTITLE_GET_OK, data: res};
-          }) 
-          .catch(() => Observable.of({ type: SKIMKHAS_GET_ERR }))
-    ); 
+    //       this.http.get(APPLICATION_HOST + '/JobTitle/index')  
+    //       .map(res => {       
+    //         return { type: JOBTITLE_GET_OK, data: res};
+    //       }) 
+    //       .catch(() => Observable.of({ type: SKIMKHAS_GET_ERR }))
+    // ); 
 }
 
