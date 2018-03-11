@@ -4,9 +4,10 @@ export function getCurrentDateAsString()
     return today;  
 }
 
-export function getTargetDate(targetDate : Date)
+export function getTargetDate(dt : Date)
 {  
-    let target = targetDate.toDateString().slice(0, 10);
+    //let target = targetDate.toDateString().slice(0, 10); 
+    var target = dt.getFullYear() + '-' + (((dt.getMonth() + 1) < 10) ? '0' : '') + (dt.getMonth() + 1) + '-' + ((dt.getDate() < 10) ? '0' : '') + dt.getDate();
     return target;  
 }
 
