@@ -400,7 +400,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
           dataModel.grnid = this.data.grnid;
         }
         
-        this.data.grndate = dataModel.grndate;
+        this.data.grndate =  util.getTargetDate(new Date(dataModel.grndate));
         this.data.lotno = dataModel.lotno;
         this.data.supplierId = dataModel.supplierId; 
         this.data.rmid = dataModel.rmid;  
@@ -421,7 +421,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.data.dutyImp = dataModel.dutyImp;
         this.data.gst = dataModel.gst;
         this.data.cif = dataModel.cif;
-        this.data.customDate = dataModel.customDate;
+        this.data.customDate = util.getTargetDate(new Date(dataModel.customDate));
         this.data.customNo = dataModel.customNo;
         this.data.dutyExcise = dataModel.dutyExcise;
         this.data.invoiceNo = dataModel.invoiceNo;
