@@ -83,18 +83,18 @@ import { LoginComponent } from './login/login.component';
 import { AppProgressSpinnerComponent } from './app-progress-spinner/app-progress-spinner.component';
 
 export const ROUTES: Routes = [
-  { path: 'config', component  : ConfigComponentComponent },
+  { path: 'config', component  : ConfigComponentComponent, canActivate: [AuthGuard] },
   { path: 'employee', component: EmployeeComponentComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponentComponent, canActivate: [AuthGuard] }, 
   { path: 'supplier', component  : SupplierComponentComponent, canActivate: [AuthGuard]  },
-  { path: 'materialCategory', component  : MaterialCategoryComponentComponent },
-  { path: 'rawMaterial', component  : RawMaterialComponentComponent },
-  { path: 'readyStock', component  : ReadyStockComponent },
-  { path: 'stnCustom', component  : StnCustomComponentComponent },
-  { path: 'grn', component  : ReportGrnComponent },
-  { path: 'm1', component  : LampiranM1ComponentComponent },
-  { path: 'lesen', component  : LesenGudangComponentComponent },
-  { path: 'skim', component  : SkimKhasComponentComponent },
+  { path: 'materialCategory', component  : MaterialCategoryComponentComponent, canActivate: [AuthGuard] },
+  { path: 'rawMaterial', component  : RawMaterialComponentComponent, canActivate: [AuthGuard] },
+  { path: 'readyStock', component  : ReadyStockComponent, canActivate: [AuthGuard] },
+  { path: 'stnCustom', component  : StnCustomComponentComponent, canActivate: [AuthGuard]  },
+  { path: 'grn', component  : ReportGrnComponent, canActivate: [AuthGuard]  },
+  { path: 'm1', component  : LampiranM1ComponentComponent, canActivate: [AuthGuard]  },
+  { path: 'lesen', component  : LesenGudangComponentComponent, canActivate: [AuthGuard] },
+  { path: 'skim', component  : SkimKhasComponentComponent, canActivate: [AuthGuard] },
   { path: 'login', component  : LoginComponent },
   { path: '**', component: EmployeeComponentComponent, canActivate: [AuthGuard]}
 ];
