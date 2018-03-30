@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
 
   async login()
   {
-    console.log('test');
+    console.log('logging user in');
     if (!this.authService.isLogin)
     {   
       await this.authService.login(this.person.username, this.person.password);    
