@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth-service.service';
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  private isSignedOn : boolean = false;
 
-  ngOnInit() {
+  constructor(private authService : AuthService) { }
+
+  ngOnInit() {    
+
   }
 
+  ngAfterViewInit()	{
+
+    console.log('checking if user is signed on', this.authService.isLogin);
+    this.isSignedOn = this.authService.isLogin;
+
+  }
 }

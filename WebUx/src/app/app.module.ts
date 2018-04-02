@@ -96,6 +96,7 @@ export const ROUTES: Routes = [
   { path: 'lesen', component  : LesenGudangComponentComponent, canActivate: [AuthGuard] },
   { path: 'skim', component  : SkimKhasComponentComponent, canActivate: [AuthGuard] },
   { path: 'login', component  : LoginComponent },
+  { path: 'logout', component  : LoginComponent },
   { path: '**', component: EmployeeComponentComponent, canActivate: [AuthGuard]}
 ];
 
