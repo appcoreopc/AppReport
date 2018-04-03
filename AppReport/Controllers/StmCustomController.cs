@@ -44,10 +44,11 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(StncustomRequestModel requestData)
         {
-            if (requestData.StncustomId.HasValue)
+            if (requestData != null 
+                && requestData.StncustomId.HasValue)
             {
                 var result = new StmService(_ptsContext).Delete(requestData.StncustomId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

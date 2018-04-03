@@ -40,10 +40,11 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(EmployeeRequestModel requestData)
         {
-            if (requestData.EmpId.HasValue)
+            if (requestData != null && 
+                requestData.EmpId.HasValue)
             {
-                var result = new UserService(_ptsContext).Delete(requestData.EmpId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                var result = new EmployeeService(_ptsContext).Delete(requestData.EmpId.Value);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

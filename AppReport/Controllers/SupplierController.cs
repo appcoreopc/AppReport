@@ -42,10 +42,11 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(SupplierRequestModel requestData)
         {
-            if (requestData.SupplierId.HasValue)
+            if (requestData != null 
+                && requestData.SupplierId.HasValue)
             {
                 var result = new SupplierService(_ptsContext).Delete(requestData.SupplierId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

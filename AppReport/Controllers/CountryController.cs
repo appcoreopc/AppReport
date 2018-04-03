@@ -40,13 +40,13 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(CountryRequestModel requestData)
         {
-            /*if (requestData.CountryId.HasValue)
+            if (requestData != null && requestData.CountryId > 0)
             {
-                var result = new UserService(_ptsContext).Delete(requestData.CountryId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                var result = new CountryService(_ptsContext).Delete(requestData.CountryId);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
-            else*/
-            return new BadRequestResult();
+            else
+                return new BadRequestResult();
         }
     }
 }

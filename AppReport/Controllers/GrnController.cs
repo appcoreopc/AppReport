@@ -42,10 +42,11 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(GrnRequestModel requestData)
         {
-            if (requestData.Grnid > 0)
+            if (requestData != null && 
+                requestData.Grnid > 0)
             {
                 var result = new GrnService(_ptsContext).Delete(Convert.ToInt32(requestData.Grnid));
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

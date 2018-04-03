@@ -26,7 +26,7 @@ namespace AppReport.Services
 
         public bool Delete(int id)
         {
-            return Remove<User>(id);
+            return Remove<JobTitle>(id);
         }
 
         public bool Save(JobTitleRequestModel requestUser)

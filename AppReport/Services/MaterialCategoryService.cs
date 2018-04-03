@@ -44,11 +44,9 @@ namespace AppReport.Services
                     rmcat.RmcatName = d.RmcatName; 
                     return base.Save<Rmcat>(rmcat, rmcat.RmcatId);
                 }
-
             } 
 
             return false;
-            
         }
 
         public bool Delete(int materialCategoryId)

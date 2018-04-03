@@ -42,8 +42,13 @@ namespace AppReport.Controllers
 
         [HttpDelete]
         public IActionResult Delete(MaterialCategoryRequestModel requestData)
-        {        
-                return new BadRequestResult();
+        {   
+            if (requestData?.RmcatId != null && requestData.RmcatId.HasValue)
+            {
+                var result = new MaterialCategoryService(_ptsContext).Delete(requestData.RmcatId.Value);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
+            }
+            return new BadRequestResult();
         }
     }
 }

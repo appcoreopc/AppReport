@@ -46,10 +46,10 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(CurrencyRequestModel requestData)
         {
-            if (requestData.CurrencyId > 0)
+            if (requestData != null && requestData.CurrencyId > 0)
             {
                 var result = new CurrencyService(_ptsContext).Delete(Convert.ToInt32(requestData.CurrencyId));
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

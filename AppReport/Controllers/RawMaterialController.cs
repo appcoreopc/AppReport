@@ -46,7 +46,7 @@ namespace AppReport.Controllers
             if (requestData.RmcatId.HasValue)
             {
                 var result = new RawMaterialService(_ptsContext).Delete(requestData.RmcatId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

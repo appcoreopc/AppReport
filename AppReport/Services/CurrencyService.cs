@@ -1,5 +1,4 @@
 ﻿using AppReport.DataServices.PTSDataModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +30,7 @@ namespace AppReport.Services
         
         public bool Save(Currency d)
         {
-            return base.Save<Currency>(d, d.CurrencyId);
+            return Save<Currency>(d, d.CurrencyId);
         }
 
         public bool Save(int id)

@@ -43,10 +43,11 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(ReadyStockRequestModel requestData)
         {
-            if (requestData.ReadyStockId.HasValue)
+            if (requestData != null && 
+                requestData.ReadyStockId.HasValue)
             {
                 var result = new ReadyStockService(_ptsContext).Delete(requestData.ReadyStockId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

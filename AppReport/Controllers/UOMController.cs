@@ -47,10 +47,11 @@ namespace AppReport.Controllers
         [HttpDelete]
         public IActionResult Delete(UomRequestModel requestData)
         {
-            if (requestData.UomId > 0)
+            if (requestData != null 
+                && requestData.UomId > 0)
             {
                 var result = new UomService(_ptsContext).Delete(Convert.ToInt32(requestData.UomId));
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();
