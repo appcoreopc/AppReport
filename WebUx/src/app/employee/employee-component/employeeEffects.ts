@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
@@ -112,10 +112,9 @@ export class EmployeeEffects {
         .map(action => {
 
           debugger;
-
-          this.http.delete(APPLICATION_HOST + '/employee/delete',  { 
-            headers: headersJson
-          })
+         
+          this.http.delete(APPLICATION_HOST + '/employee/delete/' + "11222", { 
+            headers : headersJson})
           .subscribe(res => {
             messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);
             messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
