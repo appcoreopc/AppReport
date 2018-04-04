@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
-  ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS,
+  ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE,
   JOBTITLE_GET, JOBTITLE_GET_OK, PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE
 } from '../../sharedObjects/sharedMessages';
 import { EmployeeModel } from "../../model/EmployeeModel";
@@ -92,6 +92,11 @@ export class EmployeeComponentComponent implements OnInit {
       this.dispatchIntent(JOBTITLE_GET);
       
       this.dispatchIntent(EMPLOYEE_GET);
+
+      this.dispatchIntent(EMPLOYEE_DELETE, "{empid : 123}");
+
+
+
     }
     
     save() {

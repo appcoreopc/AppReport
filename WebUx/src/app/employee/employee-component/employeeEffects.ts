@@ -4,9 +4,10 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
+import { RequestOptions } from '@angular/http';
 
 import {
-  EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS,
+  EMPLOYEE_SAVE, EMPLOYEE_CANCEL, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE, EMPLOYEE_DELETE_SUCCESS, EMPLOYEE_DELETE_ERR,
   EMPLOYEE_MESSAGE_END, EMPLOYEE_SAVE_ERR, EMPLOYEE_CANCEL_OK, EMPLOYEE_WAIT_PENDING,
   EMPLOYEE_GET, EMPLOYEE_GET_ERR, 
   PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
@@ -17,12 +18,15 @@ import 'rxjs/Rx';
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
 
 @Injectable()
+
 export class EmployeeEffects {
 
   constructor(
     private http: HttpClient,
     private actions$: Actions<CityAppState>, private store: Store<CityAppState>,
   ) { }
+
+  
 
   @Effect() citySave$ = this.actions$
     .ofType(EMPLOYEE_SAVE)
@@ -93,6 +97,49 @@ export class EmployeeEffects {
         })
         .catch(() => Observable.of({ type: EMPLOYEE_GET_ERR }))
     );
+
+    @Effect() employeeDelete$ = this.actions$
+    .ofType(EMPLOYEE_DELETE)
+    .map(action => {
+      
+      return JSON.stringify(action.data);
+    }).switchMap(payload => {
+
+      /////////EXTRA CODE /////////////////////////////
+
+      return Observable.of(payload)
+
+        .map(action => {
+
+          debugger;
+
+          this.http.delete(APPLICATION_HOST + '/employee/delete',  { 
+            headers: headersJson
+          })
+          .subscribe(res => {
+            messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+
+          },
+          err => {
+            if (err && err.status == 201) {
+              messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+
+            }
+            else {
+              messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_ERR, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+            }            
+        });
+
+      ///////////EXTRA CODE ENDS ///////////////////////////          
+    })
+    .concatMap(res => {
+      return Observable.of({ type: PROGRESS_WAIT_SHOW });
+    });
+
+  }); 
 
 }
 

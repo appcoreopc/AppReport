@@ -7,8 +7,7 @@ using AppReport.Util;
 using AppReport.RequestModel;
 
 namespace AppReport.Controllers
-{
-  
+{  
     public class EmployeeController : Controller
     {
 
