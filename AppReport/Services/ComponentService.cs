@@ -28,7 +28,11 @@ namespace AppReport.Services
         {
             return Remove<Component>(id);
         }
-        
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Component>(deleteItems);
+        }
+
         public bool Save(Component d)
         {
             return base.Save<Component>(d, d.ComponentId);

@@ -24,6 +24,11 @@ namespace AppReport.Services
             return Remove<ReadyStock>(id);
         }
 
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<ReadyStock>(deleteItems);
+        }
+
         public bool Save(ReadyStockRequestModel requestModel)
         { 
             if (!requestModel.ReadyStockId.HasValue)

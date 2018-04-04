@@ -23,11 +23,11 @@ namespace AppReport.Services
             return _context.Currency.Skip(skipAmount).Take(takeAmount);
         }
 
-        public bool Delete(int id)
+        public bool Delete(string deleteItems)
         {
-            return Remove<Currency>(id);
+            return base.DeleteItems<Currency>(deleteItems);
         }
-        
+
         public bool Save(Currency d)
         {
             return Save<Currency>(d, d.CurrencyId);

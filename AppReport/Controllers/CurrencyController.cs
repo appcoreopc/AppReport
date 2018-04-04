@@ -9,10 +9,8 @@ using System;
 
 namespace AppReport.Controllers
 {
-       
     public class CurrencyController : Controller
     {
-
         private PTSContext _ptsContext;
 
         public CurrencyController(PTSContext ptsContext, IOptions<AppConfig> accessConfig)
@@ -44,11 +42,12 @@ namespace AppReport.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(CurrencyRequestModel requestData)
+        public IActionResult Delete([FromBody] DeleteRequestModel requestData)
         {
-            if (requestData != null && requestData.CurrencyId > 0)
+            if (requestData != null &&
+              !string.IsNullOrEmpty(requestData.DeleteItems))
             {
-                var result = new CurrencyService(_ptsContext).Delete(Convert.ToInt32(requestData.CurrencyId));
+                var result = new CurrencyService(_ptsContext).Delete(requestData.DeleteItems);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else

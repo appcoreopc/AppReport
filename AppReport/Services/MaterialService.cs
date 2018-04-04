@@ -28,6 +28,11 @@ namespace AppReport.Services
             return Remove<Rmaterial>(id);
         }
 
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Rmaterial>(deleteItems);
+        }
+
         public bool Save(Rmaterial user)
         {
             return Save<Rmaterial>(user, user.Rmid);

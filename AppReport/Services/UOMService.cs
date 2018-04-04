@@ -28,6 +28,11 @@ namespace AppReport.Services
         {
             return Remove<Uom>(id);
         }
+
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Uom>(deleteItems);
+        }
         
         public bool Save(Uom d)
         {

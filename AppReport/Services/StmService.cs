@@ -58,6 +58,11 @@ namespace AppReport.Services
             return Remove<Stncustom>(stnCustomId);
         }
 
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Stncustom>(deleteItems);
+        }
+
     }
 
 }

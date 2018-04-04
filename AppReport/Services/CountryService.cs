@@ -17,7 +17,7 @@ namespace AppReport.Services
         public IEnumerable<Country> GetAll()
         {
             return _context.Country;
-        }
+        }     
 
         public IEnumerable<Country> GetAll(int skipAmount, int takeAmount)
         {
@@ -27,6 +27,10 @@ namespace AppReport.Services
         public bool Delete(int id)
         {
             return Remove<Country>(id);
+        }
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Country>(deleteItems);
         }
 
         public bool Save(CountryRequestModel requestUser)

@@ -28,7 +28,12 @@ namespace AppReport.Services
         {
             return Remove<Stncustom>(id);
         }
-        
+
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Stncustom>(deleteItems);
+        }
+
         public bool Save(StncustomRequestModel request)
         {            
             if (!request.StncustomId.HasValue)

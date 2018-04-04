@@ -18,7 +18,7 @@ namespace AppReport.Services
         public IEnumerable<DataServices.PTSDataModel.Config> GetAll()
         {
             return _context.Config;
-        }
+        }     
 
         public IEnumerable<DataServices.PTSDataModel.Config> GetAll(int skipAmount, int takeAmount)
         {
@@ -48,6 +48,11 @@ namespace AppReport.Services
                 }
             }
             return false;
+        }
+
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<DataServices.PTSDataModel.Config>(deleteItems);
         }
 
         public bool Delete(int configId)

@@ -56,6 +56,12 @@ namespace AppReport.Services
         {
             return Remove<Supplier>(supplierId);
         }
+
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Supplier>(deleteItems);
+        }
+
     }
 
 }

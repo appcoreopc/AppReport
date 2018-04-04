@@ -53,5 +53,10 @@ namespace AppReport.Services
         {
             return Remove<Rmcat>(materialCategoryId);
         }
+
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Rmcat>(deleteItems);
+        }
     }
 }

@@ -30,6 +30,11 @@ namespace AppReport.Services
             return Remove<Users>(id);
         }
 
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Users>(deleteItems);
+        }
+
         public bool Save(UserRequestModel requestUser)
         {
             if (!requestUser.UserId.HasValue)

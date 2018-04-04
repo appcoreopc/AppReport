@@ -62,7 +62,7 @@ namespace AppReport.Services
 
                 if (itemToRemove != null)
                 {
-                    return Remove<T>(deleteItems.SplitByComma().ToIntList());
+                    return Remove<T>(itemToRemove);
                 }
             }
             return false;
