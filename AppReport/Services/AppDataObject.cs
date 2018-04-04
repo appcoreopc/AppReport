@@ -1,5 +1,6 @@
 ﻿using AppReport.DataServices.PTSDataModel;
 using System.Collections.Generic;
+using AppReport.Util;
 
 namespace AppReport.Services
 {
@@ -24,7 +25,7 @@ namespace AppReport.Services
             return noOfObjectChanged > 0 ? true : false;
         }
         
-        ///
+        
         public bool Save<T>(T target, int? uniqueId) where T : class
         {
             if (!uniqueId.HasValue)
@@ -53,5 +54,18 @@ namespace AppReport.Services
             return _context.Find<T>(id);
         }
 
+        public bool DeleteItems<T>(string deleteItems) where T : class
+        {
+            if (deleteItems != null)
+            {
+                var itemToRemove = deleteItems.SplitByComma().ToIntList();
+
+                if (itemToRemove != null)
+                {
+                    return Remove<T>(deleteItems.SplitByComma().ToIntList());
+                }
+            }
+            return false;
+        }
     }
 }

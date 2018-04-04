@@ -28,11 +28,7 @@ namespace AppReport.Services
 
         public bool Delete(string deleteItems)
         {
-            if (deleteItems != null)
-            {
-                return Remove<Employee>(deleteItems.SplitByComma().ToIntList());
-            }            
-            return false;
+            return base.DeleteItems<Employee>(deleteItems);
         }
 
         public bool Save(EmployeeRequestModel requestUser)
