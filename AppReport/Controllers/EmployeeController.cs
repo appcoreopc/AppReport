@@ -5,6 +5,7 @@ using AppReport.Config;
 using AppReport.Services;
 using AppReport.Util;
 using AppReport.RequestModel;
+using AppReport.Util;
 
 namespace AppReport.Controllers
 {  
@@ -16,6 +17,20 @@ namespace AppReport.Controllers
         public EmployeeController(PTSContext ptsContext, IOptions<AppConfig> accessConfig)
         {
             _ptsContext = ptsContext;
+        }
+
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody] DeleteRequestModel requestData)
+        {
+            if (requestData != null && 
+                !string.IsNullOrEmpty(requestData.DeleteItems))
+            {
+                var result = new EmployeeService(_ptsContext).Delete(requestData.DeleteItems);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
+            }
+            else
+                return new BadRequestResult();
         }
 
         [HttpGet]
@@ -36,17 +51,6 @@ namespace AppReport.Controllers
             return new BadRequestResult();
         }
 
-        [HttpDelete]
-        public IActionResult Delete(EmployeeRequestModel requestData)
-        {
-            if (requestData != null && 
-                requestData.EmpId.HasValue)
-            {
-                var result = new EmployeeService(_ptsContext).Delete(requestData.EmpId.Value);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
-            }
-            else
-                return new BadRequestResult();
-        }
+       
     }
 }

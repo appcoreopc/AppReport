@@ -2,6 +2,8 @@
 using AppReport.RequestModel;
 using System.Collections.Generic;
 using System.Linq;
+using AppReport.Util;
+
 
 namespace AppReport.Services
 {
@@ -24,9 +26,13 @@ namespace AppReport.Services
             return _context.Employee.Skip(skipAmount).Take(takeAmount);
         }
 
-        public bool Delete(int id)
+        public bool Delete(string deleteItems)
         {
-            return Remove<User>(id);
+            if (deleteItems != null)
+            {
+                return Remove<Employee>(deleteItems.SplitByComma().ToIntList());
+            }            
+            return false;
         }
 
         public bool Save(EmployeeRequestModel requestUser)
@@ -49,7 +55,6 @@ namespace AppReport.Services
                 var employee = base.FindById<Employee>(requestUser.EmpId.Value);
                 if (employee != null)
                 {
-
                     employee.EmpName = requestUser.EmpName;
                     employee.EmpAd1 = requestUser.EmpAd1;
                     employee.EmpAd2 = requestUser.EmpAd2;
@@ -57,12 +62,9 @@ namespace AppReport.Services
                     employee.EmpIdno = requestUser.EmpIdno;
                     employee.JobTitleId = requestUser.JobTitleId;
                 }
-
                 return base.Save<Employee>(employee, employee.EmpId);
-
             }
         }
-
 
     }
 }
