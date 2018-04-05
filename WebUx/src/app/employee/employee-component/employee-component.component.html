@@ -135,6 +135,7 @@
   (select)="person" 
   [selectionType]="'checkbox'"
   (select)="onSelect($event)"
+  (activate)="onActivate($event)"
   [headerHeight]="30"  
   [rowHeight]="'auto'"
   [footerHeight]="50">
@@ -144,19 +145,13 @@
             [sortable]="false"
             [canAutoResize]="false"
             [draggable]="false"
+            
             [resizeable]="false"
             [headerCheckboxable]="true"
             [checkboxable]="true">
           </ngx-datatable-column>
-
-  <ngx-datatable-column  name="Id" prop="empId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           <a [routerLink]="" (click)="edit(value);">edit </a>
-        </ng-template>
-		</ngx-datatable-column>
   
-  
-	 <ngx-datatable-column  name="Id" prop="empId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+	 <ngx-datatable-column name="Id" prop="empId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
            {{value}}
         </ng-template>
