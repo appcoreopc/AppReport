@@ -41,11 +41,12 @@ namespace AppReport.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(MaterialCategoryRequestModel requestData)
-        {   
-            if (requestData?.RmcatId != null && requestData.RmcatId.HasValue)
+        public IActionResult Delete([FromBody] DeleteRequestModel requestData)
+        {
+            if (requestData != null &&
+                !string.IsNullOrEmpty(requestData.DeleteItems))
             {
-                var result = new MaterialCategoryService(_ptsContext).Delete(requestData.RmcatId.Value);
+                var result = new MaterialCategoryService(_ptsContext).Delete(requestData.DeleteItems);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             return new BadRequestResult();

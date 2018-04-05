@@ -47,11 +47,12 @@ namespace AppReport.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(UserRequestModel requestData)
+        public IActionResult Delete([FromBody] DeleteRequestModel requestData)
         {
-            if (requestData.UserId.HasValue)
+            if (requestData != null &&
+                !string.IsNullOrEmpty(requestData.DeleteItems))
             {
-                var result = new UserService(_ptsContext).Delete(requestData.UserId.Value);
+                var result = new UserService(_ptsContext).Delete(requestData.DeleteItems);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
             else

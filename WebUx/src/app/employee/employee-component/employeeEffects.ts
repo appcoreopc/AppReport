@@ -116,7 +116,7 @@ export class EmployeeEffects {
           this.http.request("delete", APPLICATION_HOST + '/employee/delete/', 
           { 
             headers : headersJson,
-            body : "{empId : 123, empname : 'jerwo'}"
+            body : "{DeleteItems :'1,2,3,4'}"
           })
           .subscribe(res => {
             messageUtil.dispatchIntent(this.store, EMPLOYEE_SAVE_SUCCESS, null);

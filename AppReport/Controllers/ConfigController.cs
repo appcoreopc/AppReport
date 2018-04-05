@@ -19,8 +19,7 @@ namespace AppReport.Controllers
         {
             var cfg = new ConfigService(_ptsContext).GetAll();
             return new JsonResult(cfg);
-        }
-         
+        }         
 
         [HttpPost]
         public IActionResult Save([FromBody] ConfigRequestModel configRequest)
@@ -34,12 +33,12 @@ namespace AppReport.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(ConfigRequestModel requestData)
+        public IActionResult Delete([FromBody] DeleteRequestModel requestData)
         {
-            if (requestData != null && 
-                requestData.ConfigId > 0)
+            if (requestData != null &&
+                !string.IsNullOrEmpty(requestData.DeleteItems))
             {
-                var result = new ConfigService(_ptsContext).Delete(requestData.ConfigId);
+                var result = new ConfigService(_ptsContext).Delete(requestData.DeleteItems);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else

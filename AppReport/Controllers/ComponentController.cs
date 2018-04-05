@@ -42,12 +42,13 @@ namespace AppReport.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(ComponentRequestModel requestData)
+        public IActionResult Delete([FromBody] DeleteRequestModel requestData)
         {
-            if (requestData.ComponentId > 0)
+            if (requestData != null &&
+                !string.IsNullOrEmpty(requestData.DeleteItems))
             {
-                var result = new ComponentService(_ptsContext).Delete(Convert.ToInt32(requestData.ComponentId));
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                var result = new ComponentService(_ptsContext).Delete(Convert.ToInt32(requestData.DeleteItems));
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();
