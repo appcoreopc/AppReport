@@ -5,5 +5,6 @@ ngrx is used to fire messages and creation of http request to backend microservi
 
 Backend microservice is written in C# and EF 2.0.
 
+Sample screen outpt.
 
-
+![alt text](https://github.com/appcoreopc/AppReport/blob/grn_-_stage_1/screen1.png)
