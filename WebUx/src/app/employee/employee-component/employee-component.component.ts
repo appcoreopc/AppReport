@@ -26,7 +26,7 @@ export class EmployeeComponentComponent implements OnInit {
   person: EmployeeModel = new EmployeeModel();
   personForm: FormGroup;
   private intention: number = UPDATE;
-
+  isTargetCheckbox : boolean = false;
   selected : any;
   
   display: boolean = false;
@@ -94,9 +94,6 @@ export class EmployeeComponentComponent implements OnInit {
       this.dispatchIntent(JOBTITLE_GET);
       
       this.dispatchIntent(EMPLOYEE_GET);
-
-      this.dispatchIntent(EMPLOYEE_DELETE, "{empid : 123}");
-
     }
     
     save() {
@@ -236,64 +233,62 @@ export class EmployeeComponentComponent implements OnInit {
     mapJobToTitle(jobList: Array<JobTitleModel>) {
       for (let item of jobList) {
         this.jobListMap[item.jobTitleId] = item.jobTitleName;
-      }
-      
-    }
-
+      }      
+    }    
     edit(evt : any) {
-
-      console.log('edit event');
       
-      if (evt) {
-
-        this.person = this.rows[evt.] as EmployeeModel;      
-        this.itemSelected = true;
-        this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
-        let form = this.formUtil.createForm(false);
-        this.personForm = form;
-        this.intention = UPDATE;
+      if (evt && evt.row && evt.row.empId) {
         
-        this.personForm.valueChanges.debounceTime(300)
+        let empId = evt.row.empId;
+        if (empId) 
+        {
+          this.person = this.rows.find(x => x.empId == empId);     
+          
+          if (this.person)
+          {
+            this.itemSelected = true;  
+            this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
+            let form = this.formUtil.createForm(false);
+            this.personForm = form;
+            this.intention = UPDATE;
+            
+            this.personForm.valueChanges.debounceTime(300)
             .subscribe(data => this.onValueChanged(data));
-
-        this.display = true;
-        
-      }
-      //else
-      //this.itemSelected = false;
-      
-    }
-
-    isTargetCheckbox : boolean = false;
-
-    onActivate(evt) {
+            
+            this.display = true;  
+          }  
+        }    
+      }     
+    }      
     
-      console.log('onactivate');
-      console.log(evt);
-
-      debugger; 
-
+    onActivate(evt) {      
+     
       if (evt.type && evt.type == 'checkbox')
-      {
-          //this.selected = evt.selected;
-          this.isTargetCheckbox = true;
+      {        
+        this.isTargetCheckbox = true;
       }
       else if (evt && evt.type && evt.type == 'click')
       {
         if (this.isTargetCheckbox != true)
         {
-            this.edit(evt);
+          this.edit(evt);
         }
         this.isTargetCheckbox = false;
       }
     }
-
+    
     onSelect(evt: any) {
+      
       console.log('selected event');
       console.log(evt);
+      this.selected = evt.selected;      
+    }
 
-      this.selected = evt.selected;
-      
+    deleteForm() 
+    {
+       debugger;
+       let deleItems = this.selected.map( x  => x.empId);
+       this.dispatchIntent(EMPLOYEE_DELETE, { 'deleteItems' : deleItems.join(',')});
     }
     
     addForm() {
