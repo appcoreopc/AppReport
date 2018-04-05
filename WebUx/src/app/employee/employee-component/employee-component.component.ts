@@ -95,8 +95,6 @@ export class EmployeeComponentComponent implements OnInit {
 
       this.dispatchIntent(EMPLOYEE_DELETE, "{empid : 123}");
 
-
-
     }
     
     save() {
@@ -239,9 +237,16 @@ export class EmployeeComponentComponent implements OnInit {
       }
       
     }
-    
+
+    edit(id : any) {
+      
+      console.log('jser');
+      console.log(id);
+    }
+
     onSelect(evt: any) {
       
+
       if (evt && evt.selected && evt.selected.length > 0) {
         this.person = evt.selected[0] as EmployeeModel;      
         this.itemSelected = true;
