@@ -26,6 +26,8 @@ export class EmployeeComponentComponent implements OnInit {
   person: EmployeeModel = new EmployeeModel();
   personForm: FormGroup;
   private intention: number = UPDATE;
+
+  selected : any;
   
   display: boolean = false;
   formTitle: string = "New Employee";
@@ -94,8 +96,6 @@ export class EmployeeComponentComponent implements OnInit {
       this.dispatchIntent(EMPLOYEE_GET);
 
       this.dispatchIntent(EMPLOYEE_DELETE, "{empid : 123}");
-
-
 
     }
     
@@ -239,11 +239,14 @@ export class EmployeeComponentComponent implements OnInit {
       }
       
     }
-    
-    onSelect(evt: any) {
+
+    edit(evt : any) {
+
+      console.log('edit event');
       
-      if (evt && evt.selected && evt.selected.length > 0) {
-        this.person = evt.selected[0] as EmployeeModel;      
+      if (evt) {
+
+        this.person = this.rows[evt.] as EmployeeModel;      
         this.itemSelected = true;
         this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
         let form = this.formUtil.createForm(false);
@@ -251,13 +254,45 @@ export class EmployeeComponentComponent implements OnInit {
         this.intention = UPDATE;
         
         this.personForm.valueChanges.debounceTime(300)
-        .subscribe(data => this.onValueChanged(data));
-        
+            .subscribe(data => this.onValueChanged(data));
+
         this.display = true;
         
       }
-      else
-      this.itemSelected = false;
+      //else
+      //this.itemSelected = false;
+      
+    }
+
+    isTargetCheckbox : boolean = false;
+
+    onActivate(evt) {
+    
+      console.log('onactivate');
+      console.log(evt);
+
+      debugger; 
+
+      if (evt.type && evt.type == 'checkbox')
+      {
+          //this.selected = evt.selected;
+          this.isTargetCheckbox = true;
+      }
+      else if (evt && evt.type && evt.type == 'click')
+      {
+        if (this.isTargetCheckbox != true)
+        {
+            this.edit(evt);
+        }
+        this.isTargetCheckbox = false;
+      }
+    }
+
+    onSelect(evt: any) {
+      console.log('selected event');
+      console.log(evt);
+
+      this.selected = evt.selected;
       
     }
     
