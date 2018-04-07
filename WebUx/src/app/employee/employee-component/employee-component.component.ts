@@ -235,8 +235,8 @@ export class EmployeeComponentComponent implements OnInit {
         this.jobListMap[item.jobTitleId] = item.jobTitleName;
       }      
     }    
-
-
+    
+    
     edit(evt : any) {
       
       if (evt && evt.row && evt.row.empId) {
@@ -264,7 +264,7 @@ export class EmployeeComponentComponent implements OnInit {
     }      
     
     onActivate(evt) {      
-     
+      
       if (evt.type && evt.type == 'checkbox')
       {        
         this.isTargetCheckbox = true;
@@ -280,17 +280,20 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     onSelect(evt: any) {     
-         this.selected = evt.selected;      
+      this.selected = evt.selected;      
     }
-
+    
     deleteForm() 
     {
-       
-       let deleItems = this.selected.map( x  => x.empId);
-       if (deleItems)
-       {
-          this.dispatchIntent(EMPLOYEE_DELETE, { DELETE_ITEM_FIELD : deleItems.join(DELETE_ITEM_DELIMITER)});
-       }
+      
+      if (this.selected && this.selected.length > 0)
+      {       
+        let deleItems = this.selected.map( x  => x.empId);
+        if (deleItems)
+        {
+          this.dispatchIntent(EMPLOYEE_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+        }
+      }
     }
     
     addForm() {

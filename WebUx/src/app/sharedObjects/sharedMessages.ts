@@ -12,6 +12,9 @@ export const CONFIG_GET = 'CONFIG_GET';
 export const CONFIG_GET_ERR = 'CONFIG_GET_ERR';
 export const CONFIG_GET_OK = 'CONFIG_GET_OK';
 export const CONFIG_WAIT_PENDING = 'CONFIG_WAIT_PENDING';
+export const CONFIG_DELETE = 'CONFIG_DELETE';
+export const CONFIG_DELETE_SUCCESS = 'CONFIG_DELETE_SUCCESS';
+export const CONFIG_DELETE_ERR = 'CONFIG_DELETE_ERR';
 
 export const EMPLOYEE_SAVE = 'EMPLOYEE_SAVE';
 export const EMPLOYEE_CANCEL = 'EMPLOYEE_CANCEL';
@@ -196,6 +199,9 @@ export const VIEW = 0;
 export const UPDATE = 1; 
 export const ADD = 2; 
 export const DELETE = 4;
+
+export const DELETE_ITEM_DELIMITER = ',';
+export const DELETE_ITEM_FIELD = 'deleteItems';
 
 export interface CityAppState {
 	status?: number;	

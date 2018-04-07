@@ -110,7 +110,6 @@ export class EmployeeEffects {
     return Observable.of(payload)
     
     .map(action => {
-
       
       this.http.request("delete", APPLICATION_HOST + '/employee/delete/', 
       { 
@@ -123,7 +122,7 @@ export class EmployeeEffects {
         
       },
       err => {
-        if (err && err.status == 201) {
+        if (err && err.status == 204) {
           messageUtil.dispatchIntent(this.store, EMPLOYEE_DELETE_SUCCESS, null);
           messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
         }
