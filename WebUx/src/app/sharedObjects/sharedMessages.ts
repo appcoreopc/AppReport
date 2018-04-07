@@ -44,6 +44,9 @@ export const USER_GET = 'USER_GET';
 export const USER_GET_ERR = 'USER_GET_ERR';
 export const USER_GET_OK = 'USER_GET_OK';
 export const USER_WAIT_PENDING = 'USER_WAIT_PENDING';
+export const USER_DELETE = 'USER_DELETE';
+export const USER_DELETE_SUCCESS = 'USER_DELETE_SUCCESS';
+export const USER_DELETE_ERR = 'USER_DELETE_ERR';
 
 export const RAW_MATERIAL_SAVE = 'RAW_MATERIAL_SAVE';
 export const RAW_MATERIAL_CANCEL = 'RAW_MATERIAL_CANCEL';
