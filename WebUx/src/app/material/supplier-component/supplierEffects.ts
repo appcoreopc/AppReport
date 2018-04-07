@@ -3,7 +3,8 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import {SUPPLIER_SAVE, SUPPLIER_CANCEL, 
   SUPPLIER_SAVE_SUCCESS, SUPPLIER_WAIT_PENDING, 
-  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE, SUPPLIER_DELETE, 
+  SUPPLIER_DELETE_ERR, SUPPLIER_DELETE_SUCCESS,
   SUPPLIER_MESSAGE_END, SUPPLIER_SAVE_ERR, SUPPLIER_CANCEL_OK, SUPPLIER_GET, SUPPLIER_GET_ERR,
   SUPPLIER_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -56,6 +57,51 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL,
         return Observable.of({ type: PROGRESS_WAIT_SHOW });
       });       
       
+
+      @Effect() employeeDelete$ = this.actions$
+  .ofType(SUPPLIER_DELETE)
+  .map(action => {    
+
+    return JSON.stringify(action.data);
+  }).switchMap(payload => {
+    
+    /////////EXTRA CODE /////////////////////////////
+    
+    return Observable.of(payload)
+    
+    .map(action => {
+      
+      this.http.request("delete", APPLICATION_HOST + '/employee/delete/', 
+      { 
+        headers : headersJson,
+        body : action
+      })
+      .subscribe(res => {
+        messageUtil.dispatchIntent(this.store, SUPPLIER_DELETE_SUCCESS, null);
+        messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+        
+      },
+      err => {
+        if (err && err.status == 204) {
+          messageUtil.dispatchIntent(this.store, SUPPLIER_DELETE_SUCCESS, null);
+          messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+        }
+        else {
+          messageUtil.dispatchIntent(this.store, SUPPLIER_DELETE_ERR, null);
+          messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+        }            
+      });
+      
+      ///////////EXTRA CODE ENDS ///////////////////////////          
+    })
+    .concatMap(res => {
+      return Observable.of({ type: PROGRESS_WAIT_SHOW });
+    });
+    
+  }); 
+  
+
+
       
       @Effect() supplierReset$ = this.actions$  
       .ofType(SUPPLIER_CANCEL)  

@@ -235,13 +235,13 @@ export class EmployeeComponentComponent implements OnInit {
         this.jobListMap[item.jobTitleId] = item.jobTitleName;
       }      
     }    
-    
-    
+        
     edit(evt : any) {
       
       if (evt && evt.row && evt.row.empId) {
-        
+
         let empId = evt.row.empId;
+
         if (empId) 
         {
           this.person = this.rows.find(x => x.empId == empId);     
