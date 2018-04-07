@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
-  CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
+  CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK, DELETE_ITEM_DELIMITER, DELETE_ITEM_FIELD,
   ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE,
   JOBTITLE_GET, JOBTITLE_GET_OK, PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE
 } from '../../sharedObjects/sharedMessages';
@@ -235,6 +235,8 @@ export class EmployeeComponentComponent implements OnInit {
         this.jobListMap[item.jobTitleId] = item.jobTitleName;
       }      
     }    
+
+
     edit(evt : any) {
       
       if (evt && evt.row && evt.row.empId) {
@@ -277,18 +279,18 @@ export class EmployeeComponentComponent implements OnInit {
       }
     }
     
-    onSelect(evt: any) {
-      
-      console.log('selected event');
-      console.log(evt);
-      this.selected = evt.selected;      
+    onSelect(evt: any) {     
+         this.selected = evt.selected;      
     }
 
     deleteForm() 
     {
-       debugger;
+       
        let deleItems = this.selected.map( x  => x.empId);
-       this.dispatchIntent(EMPLOYEE_DELETE, { 'deleteItems' : deleItems.join(',')});
+       if (deleItems)
+       {
+          this.dispatchIntent(EMPLOYEE_DELETE, { DELETE_ITEM_FIELD : deleItems.join(DELETE_ITEM_DELIMITER)});
+       }
     }
     
     addForm() {

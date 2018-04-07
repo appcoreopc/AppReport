@@ -100,8 +100,8 @@ export class EmployeeEffects {
   
   @Effect() employeeDelete$ = this.actions$
   .ofType(EMPLOYEE_DELETE)
-  .map(action => {
-    
+  .map(action => {    
+
     return JSON.stringify(action.data);
   }).switchMap(payload => {
     
@@ -110,8 +110,7 @@ export class EmployeeEffects {
     return Observable.of(payload)
     
     .map(action => {
-      
-      debugger;
+
       
       this.http.request("delete", APPLICATION_HOST + '/employee/delete/', 
       { 
