@@ -7,7 +7,7 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {MATERIAL_CATEGORY_SAVE, 
   MATERIAL_CATEGORY_CANCEL, MATERIAL_CATEGORY_SAVE_SUCCESS,
-  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE, MATERIAL_CATEGORY_DELETE_SUCCESS, MATERIAL_CATEGORY_DELETE, MATERIAL_CATEGORY_DELETE_ERR,
   MATERIAL_CATEGORY_MESSAGE_END, MATERIAL_CATEGORY_SAVE_ERR, MATERIAL_CATEGORY_CANCEL_OK, MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_ERR,
   MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_WAIT_PENDING, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -15,70 +15,110 @@ import {MATERIAL_CATEGORY_SAVE,
   
   @Injectable()
   export class MaterialCategoryEffects {   
-           
-   constructor(
+    
+    constructor(
       private http: HttpClient,
       private actions$: Actions<CityAppState>, private store : Store<CityAppState>,
     ) { }
- 
-     
+    
+    
     @Effect() materialCategorySave$ = this.actions$    
     .ofType(MATERIAL_CATEGORY_SAVE)
     .map(action => {  
       console.log("save action",action);
       return JSON.stringify(action.data);
     }).switchMap(payload =>   
-    { 
+      { 
+        return Observable.of(payload)
+        .map(action => {
+          
+          this.http.post(APPLICATION_HOST + '/materialcategory/save', payload, {headers : headersJson})
+          .subscribe(res => {                   
+            messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_SUCCESS, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          },  
+          err => {                       
+            if (err && err.status == 201)
+            {
+              messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_SUCCESS, null);                
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+            } 
+            else 
+            {                    
+              messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_ERR, null);             
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+            }         
+          });  
+        });          
+        
+      })
+      .concatMap(res => {         
+        return Observable.of({ type: PROGRESS_WAIT_SHOW });
+      });       
+            
+      
+      @Effect() materialCategoryReset$ = this.actions$  
+      .ofType(MATERIAL_CATEGORY_CANCEL)  
+      .map(action => 
+        {
+          return ({ type: MATERIAL_CATEGORY_CANCEL_OK});
+        }); 
+                
+        @Effect() materialCategoryDelete$ = this.actions$
+        .ofType(MATERIAL_CATEGORY_DELETE)
+        .map(action => {    
+          
+          return JSON.stringify(action.data);
+        }).switchMap(payload => {
+          
+          /////////EXTRA CODE /////////////////////////////
+          
           return Observable.of(payload)
+          
           .map(action => {
             
-            this.http.post(APPLICATION_HOST + '/materialcategory/save', payload, {headers : headersJson})
-            .subscribe(res => {                   
-              messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_SUCCESS, null);
+            this.http.request("delete", APPLICATION_HOST + '/materialcategory/delete/', 
+            { 
+              headers : headersJson,
+              body : action
+            })
+            .subscribe(res => {
+              messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_DELETE_SUCCESS, null);
               messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
-            },  
-            err => {                       
-              if (err && err.status == 201)
-              {
-                messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_SUCCESS, null);                
+              
+            },
+            err => {
+              if (err && err.status == 204) {
+                messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_DELETE_SUCCESS, null);
                 messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
-              } 
-              else 
-              {                    
-                 messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_SAVE_ERR, null);             
-                 messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
-              }         
-            });  
-          });          
+              }
+              else {
+                messageUtil.dispatchIntent(this.store, MATERIAL_CATEGORY_DELETE_ERR, null);
+                messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+              }            
+            });
             
+            ///////////EXTRA CODE ENDS ///////////////////////////          
+          })
+          .concatMap(res => {
+            return Observable.of({ type: PROGRESS_WAIT_SHOW });
+          });
+          
+        }); 
+        
+        
+        @Effect() materialCategoryGet$ = this.actions$    
+        .ofType(MATERIAL_CATEGORY_GET)     
+        .map(action => {  
+          JSON.stringify(action);
         })
-        .concatMap(res => {         
-          return Observable.of({ type: PROGRESS_WAIT_SHOW });
-        });       
-    
-    
-    
-    @Effect() materialCategoryReset$ = this.actions$  
-    .ofType(MATERIAL_CATEGORY_CANCEL)  
-    .map(action => 
-      {
-        return ({ type: MATERIAL_CATEGORY_CANCEL_OK});
-      }); 
+        .switchMap(payload => this.http.get(APPLICATION_HOST + '/materialcategory/index')  
+        .map(res => {       
+          return { type: MATERIAL_CATEGORY_GET_OK, data: res};
+        }) 
+        .catch(() => Observable.of({ type: MATERIAL_CATEGORY_SAVE_ERR }))
+      ); 
       
-
-
-      @Effect() materialCategoryGet$ = this.actions$    
-      .ofType(MATERIAL_CATEGORY_GET)     
-      .map(action => {  
-        JSON.stringify(action);
-      })
-      .switchMap(payload => this.http.get(APPLICATION_HOST + '/materialcategory/index')  
-      .map(res => {       
-        return { type: MATERIAL_CATEGORY_GET_OK, data: res};
-      }) 
-      .catch(() => Observable.of({ type: MATERIAL_CATEGORY_SAVE_ERR }))
-    ); 
+    }
     
-  }
-  
-  
+    
