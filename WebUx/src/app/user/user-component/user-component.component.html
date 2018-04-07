@@ -45,6 +45,7 @@
 
 <div class="container">       
     <p-button icon="fa fa-fw fa-plus" (click)="addForm()" label="Add"></p-button>
+    <p-button (click)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
 </div>
 
 <div style="clear:both; height:10px"></div>
@@ -53,10 +54,35 @@
     <ngx-datatable class="material striped" 
     [rows]="rows"
     [limit]="10"
+    [selectionType]="'checkbox'"
     (select)="onSelect($event)"
-    [selectionType]="'single'"
+    (activate)="onActivate($event)"
     [columns]="columns" [headerHeight]="50"  [rowHeight]="'auto'"
     [footerHeight]="50">
+
+    <ngx-datatable-column
+    [width]="45"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    
+    [resizeable]="false"
+    [headerCheckboxable]="true"
+    [checkboxable]="true">
+  </ngx-datatable-column>
+
+  <ngx-datatable-column  name="Username" prop="username" [width]="250" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+       </ng-template>
+   </ngx-datatable-column>
+     
+   <ngx-datatable-column  name="Password" prop="password" [width]="250" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+          {{value}}
+       </ng-template>
+   </ngx-datatable-column>
+
 </ngx-datatable>
 </div>
 
