@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK, DELETE_ITEM_DELIMITER, DELETE_ITEM_FIELD,
-  ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE,
+  ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE, EMPLOYEE_DELETE_SUCCESS,
   JOBTITLE_GET, JOBTITLE_GET_OK, PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE
 } from '../../sharedObjects/sharedMessages';
 import { EmployeeModel } from "../../model/EmployeeModel";
@@ -83,7 +83,7 @@ export class EmployeeComponentComponent implements OnInit {
     this.userSubscription = this.store.subscribe(appData => {
       
       this.componentMessageHandle(messageUtil.getMultiMessage(appData,
-        [EMPLOYEE_GET_OK, EMPLOYEE_SAVE_SUCCESS, JOBTITLE_GET_OK]));
+        [EMPLOYEE_GET_OK, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE_SUCCESS, JOBTITLE_GET_OK]));
       });
       
       this.configureEditForm();
@@ -190,7 +190,7 @@ export class EmployeeComponentComponent implements OnInit {
           this.rows = this.dataList;
         }
         
-        if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {
+        if (message && (message.type == EMPLOYEE_SAVE_SUCCESS || message.type == EMPLOYEE_DELETE_SUCCESS)) {
           
           this.display = false;        
           await timeUtil.delay(TIME_DELAY);        
