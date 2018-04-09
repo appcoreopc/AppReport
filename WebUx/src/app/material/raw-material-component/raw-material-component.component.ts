@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
+import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK, 
+  RAW_MATERIAL_DELETE, DELETE_ITEM_DELIMITER, RAW_MATERIAL_DELETE_SUCCESS, 
   ADD, UPDATE, RAW_MATERIAL_GET, RAW_MATERIAL_SAVE_SUCCESS, UOM_GET, UOM_GET_OK,
   MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_OK, COUNTRY_GET, COUNTRY_GET_OK, } from '../../sharedObjects/sharedMessages';
   import { EmployeeModel } from "../../model/EmployeeModel";
@@ -31,12 +32,15 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       this.dispatchIntent(UOM_GET);
       await timeUtil.delay(2000);
       this.dispatchIntent(COUNTRY_GET);
-
+      
     }
     private currentModel: RawMaterialModel = new RawMaterialModel(); 
     personForm: FormGroup;
     private intention : number = UPDATE;    
     display: boolean = false;
+    
+    isTargetCheckbox : boolean = false;
+    selected : any;
     
     formTitle: string = "New Raw Material"; 
     dataList : Array<any> = new Array<any>(); 
@@ -127,7 +131,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       this.userSubscription = this.store.subscribe(appData => { 
         
         this.componentMessageHandle(messageUtil.getMultiMessage(appData,           
-          [ RAW_MATERIAL_GET_OK, RAW_MATERIAL_SAVE_SUCCESS, MATERIAL_CATEGORY_GET_OK, UOM_GET_OK, COUNTRY_GET_OK]));
+          [ RAW_MATERIAL_GET_OK, RAW_MATERIAL_DELETE_SUCCESS,  RAW_MATERIAL_SAVE_SUCCESS, MATERIAL_CATEGORY_GET_OK, UOM_GET_OK, COUNTRY_GET_OK]));
         }); 
         
         this.setFormValidation('');
@@ -261,18 +265,19 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
           {            
             this.rows.length = 0;
             this.dataList.length = 0;
-
+            
             for (var userInfo of message.data.data.data)
             {               
               let model  = new RawMaterialModel();
               model = {...userInfo};
               this.dataList.push(model);
             }        
-
+            
             this.rows = [...this.dataList];
           }    
           
-          if (message && message.type == RAW_MATERIAL_SAVE_SUCCESS)
+          if (message && (message.type == RAW_MATERIAL_SAVE_SUCCESS
+           || message.type == RAW_MATERIAL_DELETE_SUCCESS))
           {                  
             this.display = false; 
             await timeUtil.delay(TIME_DELAY);
@@ -289,7 +294,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
                 rmcatName : d.rmcatName 
               });
             }
-
+            
             this.rmcatRows = this.rmcatDataList;
             console.log("MATERIAL_CATEGORY_GET_OK",this.rmcatRows);
           } 
@@ -326,29 +331,71 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
         });                
       }
       
-      onSelect(evt : any) {
+      editForm(evt : any) {
+        
+        if (evt && evt.row && evt.row.rmid) {
+          
+          let targetDataId = evt.row.rmid;
+          
+          if (targetDataId) 
+          {
+            this.currentModel = this.rows.find(x => x.rmid == targetDataId);     
+            
+            if (this.currentModel)
+            {
+              this.itemSelected = true;   
+              
+              this.formUtil = new FormUtil<RawMaterialModel>(this.currentModel, this.formValidators);
+              let userform = this.formUtil.createForm(false);
+              this.personForm = userform;
+              
+              this.personForm.valueChanges.debounceTime(300)
+              .subscribe(data => this.onValueChanged(data));
+              
+            }
+            else 
+            this.itemSelected = false;
+            
+            this.edit();         
+            this.display = true; 
+          }
+        }
+      }
+      
+      onActivate(evt) {      
         
         debugger;
-        
-        if (evt && evt.selected && evt.selected.length > 0)
-        {
-          this.currentModel = evt.selected[0] as RawMaterialModel;                   
-          this.itemSelected = true;   
-          
-          this.formUtil = new FormUtil<RawMaterialModel>(this.currentModel, this.formValidators);
-          let userform = this.formUtil.createForm(false);
-          this.personForm = userform;
-          
-          this.personForm.valueChanges.debounceTime(300)
-          .subscribe(data => this.onValueChanged(data));
-          
+        if (evt.type && evt.type == 'checkbox')
+        {        
+          this.isTargetCheckbox = true;
         }
-        else 
-        this.itemSelected = false;
+        else if (evt && evt.type && evt.type == 'click')
+        {
+          if (this.isTargetCheckbox != true)
+          {
+            this.editForm(evt);
+          }
+          this.isTargetCheckbox = false;
+        }
+      }
+      
+      deleteForm() 
+      {
+
+        debugger;
         
-        this.edit();         
-        this.display = true; 
-        
+        if (this.selected && this.selected.length > 0)
+        {       
+          let deleItems = this.selected.map( x  => x.rmid);
+          if (deleItems)
+          {
+            this.dispatchIntent(RAW_MATERIAL_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+          }
+        }
+      }
+      
+      onSelect(evt: any) {     
+        this.selected = evt.selected;      
       }
       
       addForm() {        
@@ -385,7 +432,9 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
           }             
         }       
         
-      }                          
+      }                
+         
+      
       
       cancel() 
       {
