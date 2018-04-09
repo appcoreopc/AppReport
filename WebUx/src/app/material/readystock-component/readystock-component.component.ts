@@ -118,7 +118,8 @@ export class ReadyStockComponent implements OnInit {
                 model = {...rs};
                 this.dataList.push(model);  
               }
-              this.rows = this.dataList;
+              this.rows = [...this.dataList];
+              console.log(this.rows);
             }
             
             if (message && (message.type == READYSTOCK_SAVE_SUCCESS || message.type == READYSTOCK_DELETE_SUCCESS))
