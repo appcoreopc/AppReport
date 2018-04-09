@@ -1,80 +1,80 @@
  
-<div class="container"> 
+ <div class="container"> 
   <p-dialog header="{{formTitle}}" [(visible)]="display" modal='true'>
-  <form [formGroup]='personForm'>
-    
-
-    <div style="width:100%;padding:0px"> 
-		<div class="panel panel-info"> 
-			<div class="panel-body" style="padding:5px; padding-left:30px"> 
-
-           <div class="form-group row">
-					  <div class="cell c1">
-					   <label for="readyStockDesc">Stock Name :</label>
-					  </div> 
-					  <div class="cell c2">   
-              <input id="readyStockDesc" type="text" maxlength="500" class="form-control text-control" formControlName="readyStockDesc">         
-              
-              <div *ngIf="formErrors.readyStockDesc" class="alert alert-danger">
-                {{ formErrors.readyStockDesc }}
-              </div>
-            </div>  
-            <div class="cell c3"></div>
-            <div class="cell c4">
-					   <label for="tariffCode">Tariff Code :</label>
-					  </div> 
-					  <div class="cell c5">   
-              <input id="tariffCode" type="text" maxlength="500" class="form-control text-control" formControlName="tariffCode">         
-              
-              <div *ngIf="formErrors.tariffCode" class="alert alert-danger">
-                {{ formErrors.tariffCode }}
-              </div>
-					  </div>  
-           </div> 
-          
-           
-            <div class="form-group row">
-					  <div class="cell c1">
-					   <label for="dutyImpRate">Duty Import Rate :</label>
-            </div> 
-              
+    <form [formGroup]='personForm'>
+      
+      
+      <div style="width:100%;padding:0px"> 
+        <div class="panel panel-info"> 
+          <div class="panel-body" style="padding:5px; padding-left:30px"> 
             
-				  <div class="cell c2"> 
-					<div class="input-group">
-						<div class="input-group-addon">
-						  <span>RM</span>
-						</div>
-						 <input id="dutyImpRate" formControlName="dutyImpRate" maxlength="16" type="number" class="form-control decimal-control"  />
-					  </div>
-							<div *ngIf="formErrors.dutyImpRate" class="alert alert-danger">
-							{{ formErrors.dutyImpRate }}
-						</div> 
-          </div> 
-
-					  <div class="cell c3"> 
-					  </div> 
-					  <div class="cell c4">
-					   <label for="gstrate">GST Rate :</label>
-					  </div> 
-					 	<div class="cell c5"> 
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <span>RM</span>
+            <div class="form-group row">
+              <div class="cell c1">
+                <label for="readyStockDesc">Stock Name :</label>
+              </div> 
+              <div class="cell c2">   
+                <input id="readyStockDesc" type="text" maxlength="500" class="form-control text-control" formControlName="readyStockDesc">         
+                
+                <div *ngIf="formErrors.readyStockDesc" class="alert alert-danger">
+                  {{ formErrors.readyStockDesc }}
                 </div>
-                <input id="gstrate" formControlName="gstrate" maxlength="16" type="number" class="form-control decimal-control"  />
+              </div>  
+              <div class="cell c3"></div>
+              <div class="cell c4">
+                <label for="tariffCode">Tariff Code :</label>
+              </div> 
+              <div class="cell c5">   
+                <input id="tariffCode" type="text" maxlength="500" class="form-control text-control" formControlName="tariffCode">         
+                
+                <div *ngIf="formErrors.tariffCode" class="alert alert-danger">
+                  {{ formErrors.tariffCode }}
                 </div>
-                  <div *ngIf="formErrors.gstrate" class="alert alert-danger">
+              </div>  
+            </div> 
+            
+            
+            <div class="form-group row">
+              <div class="cell c1">
+                <label for="dutyImpRate">Duty Import Rate :</label>
+              </div> 
+              
+              
+              <div class="cell c2"> 
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <span>RM</span>
+                  </div>
+                  <input id="dutyImpRate" formControlName="dutyImpRate" maxlength="16" type="number" class="form-control decimal-control"  />
+                </div>
+                <div *ngIf="formErrors.dutyImpRate" class="alert alert-danger">
+                  {{ formErrors.dutyImpRate }}
+                </div> 
+              </div> 
+              
+              <div class="cell c3"> 
+              </div> 
+              <div class="cell c4">
+                <label for="gstrate">GST Rate :</label>
+              </div> 
+              <div class="cell c5"> 
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <span>RM</span>
+                  </div>
+                  <input id="gstrate" formControlName="gstrate" maxlength="16" type="number" class="form-control decimal-control"  />
+                </div>
+                <div *ngIf="formErrors.gstrate" class="alert alert-danger">
                   {{ formErrors.gstrate }}
                 </div> 
               </div> 
-
-           </div>  
-
-			  </div>     
-      </div>        
-    </div>
-    
-     <div class="form-group row">
+              
+            </div>  
+            
+          </div>     
+        </div>        
+      </div>
+      
+      <div class="form-group row">
         <div class="cell c1"> 
         </div> 
         <div class="cell c2"> 
@@ -83,65 +83,83 @@
         </div> 
         <div class="cell c4"> 
         </div> 
-         <div class="cell c5" style="text-align:right">	   
-            <p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
-            <p-button icon="fa fa-fw fa-close" label="Cancel" (click)="cancel()"></p-button>   
+        <div class="cell c5" style="text-align:right">	   
+          <p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
+          <p-button icon="fa fa-fw fa-close" label="Cancel" (click)="cancel()"></p-button>   
         </div> 
       </div>
+      
+    </form>
     
-  </form>
-  
   </p-dialog>
-
+  
 </div>
 
 
 
 <div class="container">       
-	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (onClick)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
 </div> 
 <div style="clear:both; height:10px"></div>
- 
+
 
 <div class="container"> 
   
   <ngx-datatable class="material striped" 
   [rows]="rows"
   [limit]="10"
-  [selectionType]="'single'"
+  
+  [selectionType]="'checkbox'"
   (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  
   [columns]="columns" [headerHeight]="30"  [rowHeight]="'auto'"
   [footerHeight]="50">
- 
-	 <ngx-datatable-column  name="Id" prop="readyStockId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           {{value}}
-        </ng-template>
-		</ngx-datatable-column>
   
-	 <ngx-datatable-column  name="Stock Name" prop="readyStockDesc" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           {{value}}
-        </ng-template>
-    </ngx-datatable-column> 
-     
-	 <ngx-datatable-column  name="Tariff Code" prop="tariffCode" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           {{value}}
-        </ng-template>
-    </ngx-datatable-column> 
+  
+  <ngx-datatable-column
+  [width]="45"
+  [sortable]="false"
+  [canAutoResize]="false"
+  [draggable]="false"
+  
+  [resizeable]="false"
+  [headerCheckboxable]="true"
+  [checkboxable]="true">
+</ngx-datatable-column>
 
-    <ngx-datatable-column  name="Duty Import Rate" prop="dutyImpRate" [width]="120" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           {{value | number:'1.2-2'}}
-        </ng-template>
-    </ngx-datatable-column> 
 
-    <ngx-datatable-column  name="GST Rate" prop="gstrate" [width]="120" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           {{value | number:'1.2-2'}}
-        </ng-template>
-    </ngx-datatable-column>
+
+<ngx-datatable-column  name="Id" prop="readyStockId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    {{value}}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column  name="Stock Name" prop="readyStockDesc" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    {{value}}
+  </ng-template>
+</ngx-datatable-column> 
+
+<ngx-datatable-column  name="Tariff Code" prop="tariffCode" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    {{value}}
+  </ng-template>
+</ngx-datatable-column> 
+
+<ngx-datatable-column  name="Duty Import Rate" prop="dutyImpRate" [width]="120" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    {{value | number:'1.2-2'}}
+  </ng-template>
+</ngx-datatable-column> 
+
+<ngx-datatable-column  name="GST Rate" prop="gstrate" [width]="120" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    {{value | number:'1.2-2'}}
+  </ng-template>
+</ngx-datatable-column>
 
 
 </ngx-datatable>
