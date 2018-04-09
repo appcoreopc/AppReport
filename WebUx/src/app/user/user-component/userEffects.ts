@@ -81,6 +81,7 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
           
         },
         err => {
+          debugger;
           if (err && err.status == 204) {
             messageUtil.dispatchIntent(this.store, USER_DELETE_SUCCESS, null);
             messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);

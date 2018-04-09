@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CityAppState, SUPPLIER_GET, SUPPLIER_DELETE, DELETE_ITEM_DELIMITER, 
-  ADD, UPDATE, SUPPLIER_GET_OK, SUPPLIER_SAVE, SUPPLIER_SAVE_SUCCESS
+  ADD, UPDATE, SUPPLIER_GET_OK, SUPPLIER_SAVE, SUPPLIER_SAVE_SUCCESS, SUPPLIER_DELETE_SUCCESS
 }
 from '../../sharedObjects/sharedMessages';
 import { Subscription } from 'rxjs/Subscription'
@@ -19,8 +19,7 @@ import {APPLICATION_HOST, TIME_DELAY } from '../../sharedObjects/applicationSetu
   styleUrls: ['./supplier-component.component.css']
 })
 export class SupplierComponentComponent implements OnInit {
-  
-  
+    
   private supplier: SupplierModel = new SupplierModel();
   personForm: FormGroup;
   private intention: number = UPDATE;
@@ -67,7 +66,7 @@ export class SupplierComponentComponent implements OnInit {
       
       this.userSubscription = this.store.subscribe(appData => {
         this.componentMessageHandle(messageUtil.getMultiMessage(appData,
-          [SUPPLIER_GET_OK, SUPPLIER_SAVE_SUCCESS]));
+          [SUPPLIER_GET_OK, SUPPLIER_DELETE_SUCCESS, SUPPLIER_SAVE_SUCCESS]));
         });
         
         this.configureUpdateForm();
@@ -94,7 +93,7 @@ export class SupplierComponentComponent implements OnInit {
             this.rows = [...this.dataList];
           }
           
-          if (message && message.type == SUPPLIER_SAVE_SUCCESS) { 
+          if (message && (message.type == SUPPLIER_SAVE_SUCCESS || message.type == SUPPLIER_DELETE_SUCCESS)) { 
             
             await timeUtil.delay(TIME_DELAY);
             this.getSupplier();   

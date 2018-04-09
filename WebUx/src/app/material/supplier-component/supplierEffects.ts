@@ -58,7 +58,7 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL,
       });       
       
 
-      @Effect() employeeDelete$ = this.actions$
+      @Effect() supplierDelete$ = this.actions$
   .ofType(SUPPLIER_DELETE)
   .map(action => {    
 
@@ -71,7 +71,7 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL,
     
     .map(action => {
       
-      this.http.request("delete", APPLICATION_HOST + '/employee/delete/', 
+      this.http.request("delete", APPLICATION_HOST + '/supplier/delete/', 
       { 
         headers : headersJson,
         body : action

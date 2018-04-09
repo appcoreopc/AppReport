@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Store} from '@ngrx/store';
-
 import * as timeUtil from "../../sharedObjects/timeUtil";
 
 import {
@@ -81,7 +80,7 @@ export class UserComponentComponent implements OnInit {
     this.userSubscription = this
     .store
     .subscribe(appData => {      
-      this.componentMessageHandle(messageUtil.getMultiMessage(appData, [USER_GET_OK, USER_SAVE_SUCCESS]));
+      this.componentMessageHandle(messageUtil.getMultiMessage(appData, [USER_GET_OK, USER_DELETE_SUCCESS, USER_SAVE_SUCCESS]));
     });
     
     this.configureUpdateForm();
@@ -138,7 +137,8 @@ export class UserComponentComponent implements OnInit {
         this.rows = this.dataList;
       }
       
-      if (message && message.type == USER_SAVE_SUCCESS) {
+     debugger;
+     if (message && (message.type == USER_SAVE_SUCCESS || message.type == USER_DELETE_SUCCESS)) {
         this.display = false;        
         await timeUtil.delay(TIME_DELAY);
         this.getUserList();   

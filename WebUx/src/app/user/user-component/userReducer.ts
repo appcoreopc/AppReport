@@ -1,7 +1,7 @@
 
 import { ActionReducer, Action } from '@ngrx/store';
 
-import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
+import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS, USER_DELETE_SUCCESS,
 	 USER_MESSAGE_END, USER_SAVE_ERR, USER_CANCEL_OK, USER_GET, USER_GET_ERR,
 	  USER_GET_OK, CityAppState, CityData } from '../../sharedObjects/sharedMessages';
 
@@ -12,16 +12,16 @@ import {USER_SAVE, USER_CANCEL, USER_SAVE_SUCCESS,
 		case USER_SAVE:		
 		  return  { status : 2, data : action, type: USER_MESSAGE_END };	
 		case USER_CANCEL:
-			console.log(USER_CANCEL);
 			return  { status : 3, data : action, type: USER_MESSAGE_END };	
 		case USER_SAVE_SUCCESS:
-			console.log(USER_SAVE_SUCCESS);
 			return { status : 4, data : action, type: USER_SAVE_SUCCESS }
 		case USER_SAVE_ERR:
-			console.log(USER_SAVE_ERR);
 			return  { status : 5, data : action, type: USER_MESSAGE_END };			
+		case USER_DELETE_SUCCESS:
+	    console.log('sending logging');
+			return  { status : 6, data : action, type: USER_DELETE_SUCCESS };			
 		case USER_GET_ERR: 
-		console.log(action);
+		  return  { status : 7, data : action, type: USER_GET_ERR };			
 		default:
 			return status;						
 		}					
