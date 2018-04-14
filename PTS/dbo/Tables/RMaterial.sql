@@ -4,7 +4,6 @@
     [RMCatId]         INT             NULL,
     [RMDesc]          NVARCHAR (500)  NULL,
     [UOMId]           INT             NULL,
-    [TariffCode]      VARCHAR (50)    NULL,
     [CountryList]     VARCHAR (100)   NULL,
     [DutyImpRate]     DECIMAL (18, 2) NULL,
     [GSTRate]         DECIMAL (18, 2) NULL,
@@ -14,6 +13,8 @@
     [EditedDT]        DATETIME        NULL,
     CONSTRAINT [PK_Material] PRIMARY KEY CLUSTERED ([RMId] ASC)
 );
+
+
 
 
 

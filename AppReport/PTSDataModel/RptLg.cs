@@ -40,6 +40,7 @@ namespace AppReport.PTSDataModel
         public string SignedByPos { get; set; }
         public string SignedByName { get; set; }
         public DateTime? SignedDate { get; set; }
+        public int? AppByEmpId { get; set; }
         public string AppByPos { get; set; }
         public string AppByName { get; set; }
         public string AppByIdno { get; set; }
@@ -60,7 +61,9 @@ namespace AppReport.PTSDataModel
         public string RptSignedByPos { get; set; }
         public string RptSignedByIdno { get; set; }
         public string RptSignedByName { get; set; }
-        public string MfdGood { get; set; }
+        public string MfdGoodY1 { get; set; }
+        public string MfdGoodY2 { get; set; }
+        public string MfdGoodY3 { get; set; }
         public DateTime? MfdLicenseSdate { get; set; }
         public DateTime? MfdLicenseEdate { get; set; }
         public bool? IsChgCoName { get; set; }

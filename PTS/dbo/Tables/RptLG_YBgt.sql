@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[RptLG_YBgt] (
+CREATE TABLE [dbo].[RptLG_YBgt] (
     [TxnId]         INT             IDENTITY (1, 1) NOT NULL,
     [RptId]         INT             NULL,
     [IsLocal]       BIT             NULL,
@@ -10,9 +10,9 @@
     [F_CountryList] VARCHAR (50)    NULL,
     [Qty]           INT             NULL,
     [F_Cost]        DECIMAL (18, 2) NULL,
-    [F_DutyImpRate] DECIMAL (5, 2)  NULL,
+    [F_DutyImpRate] DECIMAL (18, 2) NULL,
     [F_DutyImpCost] DECIMAL (18, 2) NULL,
-    [F_GSTRate]     DECIMAL (5, 2)  NULL,
+    [F_GSTRate]     DECIMAL (18, 2) NULL,
     [F_GSTCost]     DECIMAL (18, 2) NULL,
     [F_TaxCost]     DECIMAL (18, 2) NULL,
     CONSTRAINT [PK_RptLG_YBgtStk] PRIMARY KEY CLUSTERED ([TxnId] ASC)
@@ -25,16 +25,19 @@
 
 
 
+
+
+
+
 GO
 
 CREATE TRIGGER [dbo].[RptLG_YBgt_Update]
        ON [dbo].[RptLG_YBgt]
-AFTER INSERT, UPDATE
+AFTER UPDATE
 AS
 BEGIN
 SET NOCOUNT ON;
    
-
 	declare @RptId as int,
 	@IsLocal bit   
 

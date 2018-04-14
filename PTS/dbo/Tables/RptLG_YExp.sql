@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[RptLG_YExp] (
+CREATE TABLE [dbo].[RptLG_YExp] (
     [TxnId]        INT             IDENTITY (1, 1) NOT NULL,
     [RptId]        INT             NULL,
     [RptY]         INT             NULL,
@@ -23,11 +23,17 @@
 
 
 
+
+
+
+
 GO
+
+
 
 CREATE TRIGGER [dbo].[RptLG_YExp_Update]
        ON [dbo].[RptLG_YExp]
-AFTER INSERT, UPDATE
+AFTER UPDATE
 AS
 BEGIN
 SET NOCOUNT ON;

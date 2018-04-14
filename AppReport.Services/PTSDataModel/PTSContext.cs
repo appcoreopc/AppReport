@@ -34,7 +34,13 @@ namespace AppReport.DataServices.PTSDataModel
         public virtual DbSet<Uom> Uom { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Component>(entity =>
@@ -332,8 +338,6 @@ namespace AppReport.DataServices.PTSDataModel
                     .HasColumnName("RMDesc")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
-
                 entity.Property(e => e.Uomid).HasColumnName("UOMId");
             });
 
@@ -354,6 +358,8 @@ namespace AppReport.DataServices.PTSDataModel
                 entity.Property(e => e.RmcatName)
                     .HasColumnName("RMCatName")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<RptLg>(entity =>
@@ -1255,7 +1261,7 @@ namespace AppReport.DataServices.PTSDataModel
 
                 entity.Property(e => e.FRmdesc)
                     .HasColumnName("F_RMDesc")
-                    .HasColumnType("nchar(10)");
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.FTariffCode)
                     .HasColumnName("F_TariffCode")

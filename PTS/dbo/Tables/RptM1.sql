@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[RptM1] (
+CREATE TABLE [dbo].[RptM1] (
     [RptId]              INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]        INT             NULL,
     [RptDate]            DATE            NULL,
@@ -89,10 +89,16 @@
 
 
 
+
+
+
+
 GO
+
+
 CREATE TRIGGER [dbo].[RptM1_Insert]
        ON [dbo].[RptM1]
-AFTER INSERT, UPDATE
+AFTER INSERT,UPDATE
 AS
 BEGIN
 SET NOCOUNT ON;
@@ -183,14 +189,15 @@ where ModuleId = 0 and ConfigKey='CoGSTNo'
   
 SELECT @RptId = RptId, @RptDate = RptDate
 FROM inserted 
-
+ 
+set @RptDate = DATEFROMPARTS(year(@RptDate), month(@RptDate), 1) 
 Set @PrevRptDate = dateadd(month,-1, @RptDate)
 
 select top 1 @PrevRptId = RptId, @OpenBal = F_CloseBal
 from RptM1 with (nolock)
 where Month(RptDate) = Month(@PrevRptDate)
  and Year(RptDate) = Year(@PrevRptDate)
- and RptStatusId = 3 
+ --and RptStatusId = 3 
 
 select @TotalFreightRMCost = sum(isnull(TotalFreightRMCost,0)),
 @RMDutyImp = sum(isnull(DutyImp,0)),
@@ -201,7 +208,8 @@ where Month(g.GRNDate) = Month(@RptDate)
 	and Year(g.GRNDate) = Year(@RptDate)  
 
 update RptM1
-set F_CoName = @F_CoName,
+set RptDate = @RptDate,
+F_CoName = @F_CoName,
 F_CoRegNo = @F_CoRegNo,
 F_CoAdd1 = @F_CoAdd1,
 F_CoAdd2 = @F_CoAdd2,
@@ -228,49 +236,58 @@ F_SumTaxLost = isnull(F_RMTaxLost,0) + isnull(F_EqTaxLost,0),
 F_SumDutyExcise = isnull(RMDutyExcise,0) + isnull(EqDutyExcise,0)
 where RptId = @RptId
 
+
 if(not exists(select 1 from RptM1_MStk where RptId = @RptId))
 begin
-	insert into RptM1_MStk (RptId, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_OpenBal, UsedCost, WastedCost, F_TotalRM, F_CloseBal)
-	select @RptId, rm.RMId, rc.RMCatName, rm.RMDesc, um.UomCode,  rm.TariffCode,
-	 (select top 1 F_CloseBal from RptM1_MStk a with (nolock) where RptId = @PrevRptId and a.RMId= rm.RMId),
-	 0, 0, 0, 0
-	from RMaterial rm with (nolock) 
-	left join RMCat rc with (nolock) on rc.RMCatId = rm.RMCatId
-	left join UOM um with (nolock) on um.UomId = rm.UomId  
-	 
-	insert into RptM1_MStkInv (RptId, MStkId, InvoiceNo, F_ImpWgt, F_ImpFreightCost, F_LocWgt, F_LocFreightCost)
-	select @RptId, (select top 1 MStkId from RptM1_MStk a with (nolock) 
-	                where a.RptId = @RptId and a.RMId = g.RMId), 
-	g.InvoiceNo, 
-	case when c.IsLocal = 0 then g.Wgt end,
-	case when c.IsLocal = 0 then g.TotalFreightRMCost end,
-	case when c.IsLocal = 1 then g.Wgt end,
-	case when c.IsLocal = 1 then g.Amount end
-	from GRN g with (nolock)
-	 left join STNCustom c with (nolock) on g.STNCustomId = c.STNCustomId
-	where Month(g.GRNDate) = Month(@RptDate)
-	 and Year(g.GRNDate) = Year(@RptDate) 
+   
+   IF NOT EXISTS (SELECT 1 FROM deleted)
+   begin
+		insert into RptM1_MStk (RptId, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_OpenBal, UsedCost, WastedCost, F_TotalRM, F_CloseBal)
+		select @RptId, rm.RMId, rc.RMCatName, rm.RMDesc, um.UomCode,  rc.TariffCode,
+			(select top 1 F_CloseBal from RptM1_MStk a with (nolock) where RptId = @PrevRptId and a.RMId= rm.RMId),
+			0, 0, 0, 0
+		from RMaterial rm with (nolock) 
+		left join RMCat rc with (nolock) on rc.RMCatId = rm.RMCatId
+		left join UOM um with (nolock) on um.UomId = rm.UomId  
+
+
+		insert into RptM1_MStkInv (RptId, MStkId, InvoiceNo, F_ImpWgt, F_ImpFreightCost, F_LocWgt, F_LocFreightCost)
+		select @RptId, (select top 1 MStkId from RptM1_MStk a with (nolock) 
+						where a.RptId = @RptId and a.RMId = g.RMId), 
+		g.InvoiceNo, 
+		case when c.IsLocal = 0 then g.Wgt end,
+		case when c.IsLocal = 0 then g.TotalFreightRMCost end,
+		case when c.IsLocal = 1 then g.Wgt end,
+		case when c.IsLocal = 1 then g.Amount end
+		from GRN g with (nolock)
+			left join STNCustom c with (nolock) on g.STNCustomId = c.STNCustomId
+		where Month(g.GRNDate) = Month(@RptDate)
+			and Year(g.GRNDate) = Year(@RptDate) 
 	  
 	
-    DECLARE @temp1 TABLE (MStkId int, TotalKg decimal(10,2))
+		DECLARE @temp1 TABLE (MStkId int, TotalKg decimal(10,2))
+		
+		insert into @temp1 (MStkId, TotalKg)
+		select MStkId, sum(isnull(F_ImpWgt,0)) + sum(isnull(F_LocWgt,0)) as TotalKg 
+		from RptM1_MStkInv
+		where RptId = @RptId
+		group by MStkId
+	  
+		/*UPDATE t
+		SET t.F_TotalRM = isnull(o.TotalKg,0) + isnull(t.F_OpenBal,0) 
+		FROM @temp1 o 
+			JOIN RptM1_MStk t with (nolock) ON t.MStkId = o.MStkId
+		WHERE t.RptId = @RptId */
 
-	insert into @temp1 (MStkId, TotalKg)
-	select MStkId, sum(isnull(F_ImpWgt,0)) + sum(isnull(F_LocWgt,0)) as TotalKg 
-	from RptM1_MStkInv
-	where RptId = @RptId
-	group by MStkId
-	 
-
-	UPDATE t
-	SET t.F_TotalRM = isnull(o.TotalKg,0) + isnull(t.F_OpenBal,0) 
-	FROM @temp1 o 
-	  JOIN RptM1_MStk t with (nolock) ON t.MStkId = o.MStkId
-	WHERE t.RptId = @RptId 
+		update RptM1_MStk 
+		set F_TotalRM = isnull((select o.TotalKg from @temp1 o where o.MStkId = RptM1_MStk.MStkId),0) + isnull(F_OpenBal,0) 
+		WHERE RptId = @RptId 
 	
-	UPDATE RptM1_MStk
-	SET F_CloseBal = F_TotalRM - (WastedCost + UsedCost) 
-	WHERE RptId = @RptId
-
+		UPDATE RptM1_MStk
+		SET F_CloseBal = F_TotalRM - (WastedCost + UsedCost) 
+		WHERE RptId = @RptId
+	 
+    end
 	 
 	select @F_ImpWgt = sum(isnull(F_ImpWgt,0)),  @F_ImpFreightCost = sum(isnull(F_ImpFreightCost,0)), 
 	@F_LocWgt = sum(isnull(F_LocWgt,0)),  @F_LocFreightCost = sum(isnull(F_LocFreightCost,0))
@@ -281,7 +298,7 @@ begin
 	@F_UsedCost = sum(isnull(UsedCost,0)), @F_WastedCost = sum(isnull(WastedCost,0))
 	from RptM1_MStk with (nolock) 
 	WHERE RptId = @RptId
-
+	
 	update RptM1 
 	set F_ImpWgt = @F_ImpWgt, F_ImpFreightCost = @F_ImpFreightCost,
 	F_LocalWgt = @F_LocWgt, F_LocalFreightCost = @F_LocFreightCost,

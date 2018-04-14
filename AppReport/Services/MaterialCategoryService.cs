@@ -29,9 +29,10 @@ namespace AppReport.Services
             if (!d.RmcatId.HasValue)
             {
                 var rmcat = new Rmcat()
-                { 
-                    RmcatName = d.RmcatName
-                };
+                {
+                    RmcatName = d.RmcatName,
+                    TariffCode = d.TariffCode 
+                 };
                 return base.Save<Rmcat>(rmcat, null);
             }
             else
@@ -41,7 +42,8 @@ namespace AppReport.Services
                 if (rmcat != null)
                 {
                     rmcat.RmcatId = d.RmcatId.Value;
-                    rmcat.RmcatName = d.RmcatName; 
+                    rmcat.RmcatName = d.RmcatName;
+                    rmcat.TariffCode = d.TariffCode;
                     return base.Save<Rmcat>(rmcat, rmcat.RmcatId);
                 }
             } 

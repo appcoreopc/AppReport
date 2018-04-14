@@ -29,17 +29,22 @@ export class MaterialCategoryComponentComponent implements OnInit {
   
   formValidators = {   
     'rmcatId': [],
-    'rmcatName': [Validators.required, Validators.minLength(1)]
+    'rmcatName': [Validators.required, Validators.minLength(1)],
+    'tariffCode': [Validators.required, Validators.minLength(1)]
   }
 
   formErrors = {
     'rmcatId': '',
-    'rmcatName' : ''
+    'rmcatName' : '',
+    'tariffCode' : ''
   };
 
   validationMessages = {     
     'rmcatName': {
       'required': 'Material Category Name is required.' 
+    }, 
+    'tariffCode': {
+      'required': 'Tariff Code is required.' 
     }
   };
   
@@ -47,7 +52,8 @@ export class MaterialCategoryComponentComponent implements OnInit {
   
   columns = [
     { prop: 'rmcatId' },
-    { name: 'rmcatName' }   
+    { name: 'rmcatName' },
+    { name: 'tariffCode' }     
   ];
   
   userSubscription : Subscription;
@@ -92,7 +98,8 @@ export class MaterialCategoryComponentComponent implements OnInit {
             {                
               this.dataList.push({                   
                 rmcatId : rmcatInfo.rmcatId, 
-                rmcatName : rmcatInfo.rmcatName 
+                rmcatName : rmcatInfo.rmcatName, 
+                tariffCode : rmcatInfo.tariffCode 
               });  
               
               this.rows = [...this.dataList];
@@ -117,7 +124,8 @@ export class MaterialCategoryComponentComponent implements OnInit {
         }
         else {
           this.rmcatModel.rmcatId = data.rmcatId;
-          this.rmcatModel.rmcatName = data.rmcatName;          
+          this.rmcatModel.rmcatName = data.rmcatName;  
+          this.rmcatModel.tariffCode = data.tariffCode;         
         }                
 
         this.rows = [...this.rows];        
@@ -130,6 +138,7 @@ export class MaterialCategoryComponentComponent implements OnInit {
         this.rmcatModel = new MaterialCategoryModel();
         this.rmcatModel.rmcatId = 0;
         this.rmcatModel.rmcatName = '';
+        this.rmcatModel.tariffCode = '';
 
         this.formUtil = new FormUtil<MaterialCategoryModel>(this.rmcatModel, this.formValidators);
         let userform = this.formUtil.createForm(false);
@@ -140,10 +149,11 @@ export class MaterialCategoryComponentComponent implements OnInit {
       }
       
       private configureUpdateForm() {
-        
+         
         this.personForm = this.fb.group({
           'rmcatId': [this.rmcatModel.rmcatId, [Validators.minLength(1)]],
-          'rmcatName': [this.rmcatModel.rmcatName, [Validators.required, Validators.minLength(1)]]
+          'rmcatName': [this.rmcatModel.rmcatName, [Validators.required, Validators.minLength(1)]],
+          'tariffCode': [this.rmcatModel.tariffCode, [Validators.required, Validators.minLength(1)]]
         });
         
         this.personForm.valueChanges.debounceTime(500)

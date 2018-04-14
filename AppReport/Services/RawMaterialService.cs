@@ -47,7 +47,7 @@ namespace AppReport.Services
                     DutyImpRate = requestModel.DutyImpRate,
                     EditedDt = requestModel.EditedDt,
                     Gstrate = requestModel.Gstrate,
-                    TariffCode = requestModel.TariffCode,
+                    //TariffCode = requestModel.TariffCode,
                     Uomid = requestModel.Uomid,
                     CreatedByUserId = requestModel.CreatedByUserId,
                     EditedByUserId = requestModel.EditedByUserId
@@ -69,7 +69,7 @@ namespace AppReport.Services
                     rawMaterial.DutyImpRate = requestModel.DutyImpRate;
                     rawMaterial.EditedDt = requestModel.EditedDt;
                     rawMaterial.Gstrate = requestModel.Gstrate;
-                    rawMaterial.TariffCode = requestModel.TariffCode;
+                   // rawMaterial.TariffCode = requestModel.TariffCode;
                     rawMaterial.Uomid = requestModel.Uomid;
                     rawMaterial.CreatedByUserId = requestModel.CreatedByUserId;
                     rawMaterial.EditedByUserId = requestModel.EditedByUserId;

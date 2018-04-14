@@ -1,5 +1,5 @@
 ﻿ 
-CREATE FUNCTION fnCountryList
+CREATE FUNCTION [dbo].[fnCountryList]
 ( 
 	@list varchar(max)
 )

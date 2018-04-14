@@ -14,6 +14,7 @@ namespace AppReport.PTSDataModel
         public virtual DbSet<Grn> Grn { get; set; }
         public virtual DbSet<JobTitle> JobTitle { get; set; }
         public virtual DbSet<Module> Module { get; set; }
+        public virtual DbSet<ReadyStock> ReadyStock { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<Rmaterial> Rmaterial { get; set; }
         public virtual DbSet<Rmcat> Rmcat { get; set; }
@@ -36,8 +37,8 @@ namespace AppReport.PTSDataModel
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");
+           /* #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            optionsBuilder.UseSqlServer(@"Server=AP-MIKI\SQLEXPRESS;Database=PTS;Trusted_Connection=True;");*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -167,6 +168,8 @@ namespace AppReport.PTSDataModel
                     .HasColumnName("DONo")
                     .HasColumnType("varchar(50)");
 
+                entity.Property(e => e.DutyExcise).HasColumnType("decimal");
+
                 entity.Property(e => e.DutyImp).HasColumnType("decimal");
 
                 entity.Property(e => e.Edifee)
@@ -270,6 +273,27 @@ namespace AppReport.PTSDataModel
                 entity.Property(e => e.ModuleName).HasColumnType("varchar(20)");
             });
 
+            modelBuilder.Entity<ReadyStock>(entity =>
+            {
+                entity.Property(e => e.CreatedDt)
+                    .HasColumnName("CreatedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.DutyImpRate).HasColumnType("decimal");
+
+                entity.Property(e => e.EditedDt)
+                    .HasColumnName("EditedDT")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Gstrate)
+                    .HasColumnName("GSTRate")
+                    .HasColumnType("decimal");
+
+                entity.Property(e => e.ReadyStockDesc).HasMaxLength(500);
+
+                entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
+            });
+
             modelBuilder.Entity<Report>(entity =>
             {
                 entity.Property(e => e.ReportId).ValueGeneratedNever();
@@ -336,6 +360,8 @@ namespace AppReport.PTSDataModel
                 entity.Property(e => e.RmcatName)
                     .HasColumnName("RMCatName")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.TariffCode).HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<RptLg>(entity =>
@@ -1237,7 +1263,7 @@ namespace AppReport.PTSDataModel
 
                 entity.Property(e => e.FRmdesc)
                     .HasColumnName("F_RMDesc")
-                    .HasColumnType("nchar(10)");
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.FTariffCode)
                     .HasColumnName("F_TariffCode")

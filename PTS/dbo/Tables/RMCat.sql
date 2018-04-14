@@ -5,8 +5,11 @@
     [CreatedDT]       DATETIME      NULL,
     [EditedByUserId]  INT           NULL,
     [EditedDT]        DATETIME      NULL,
+    [TariffCode]      VARCHAR (50)  NULL,
     CONSTRAINT [PK_RMCat] PRIMARY KEY CLUSTERED ([RMCatId] ASC)
 );
+
+
 
 
 

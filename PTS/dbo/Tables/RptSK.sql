@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[RptSK] (
+CREATE TABLE [dbo].[RptSK] (
     [RptId]             INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]       INT             NULL,
     [F_CoName]          NVARCHAR (50)   NULL,
@@ -54,7 +54,12 @@
 
 
 
+
+
+
+
 GO
+
 CREATE TRIGGER [dbo].[RptSK_Insert]
        ON [dbo].[RptSK]
 AFTER INSERT, UPDATE
@@ -133,9 +138,12 @@ where ModuleId = 0 and ConfigKey='CoGSTNo'
   
 SELECT @RptId = RptId, @RptDate = RptDate
 FROM inserted
+ 
+set @RptDate = DATEFROMPARTS(year(@RptDate), month(@RptDate), 1) 
 
 update RptSK
-set F_CoName = @F_CoName,
+set RptDate = @RptDate,
+F_CoName = @F_CoName,
 F_CoRegNo = @F_CoRegNo,
 F_CoAdd1 = @F_CoAdd1,
 F_CoAdd2 = @F_CoAdd2,
@@ -150,16 +158,20 @@ F_CoSPLNo = @F_CoSPLNo,
 F_CoGSTNo= @F_CoGSTNo
 where RptId = @RptId
 
-if(not exists(select 1 from RptSK_MImp where RptId = @RptId))
+IF NOT EXISTS (SELECT 1 FROM deleted)
 begin
-	insert into RptSK_MImp (RptId, F_ImpDate, F_CustomNo, F_ImpWgt, F_ImpCost, F_GSTCost)
-	select  @RptId, GRNDate, CustomNo, sum(KASWgt), sum(CIF), sum(GST)
-	from GRN with (nolock)
-	where Month(GRNDate) = Month(@RptDate)
-	and Year(GRNDate) = Year(@RptDate)
-	Group By GRNDate, CustomNo
-	order by GRNDate, CustomNo 
+	if(not exists(select 1 from RptSK_MImp where RptId = @RptId))
+	begin
 
+		insert into RptSK_MImp (RptId, F_ImpDate, F_CustomNo, F_ImpWgt, F_ImpCost, F_GSTCost)
+		select  @RptId, GRNDate, CustomNo, sum(KASWgt), sum(CIF), sum(GST)
+		from GRN with (nolock)
+		where Month(GRNDate) = Month(@RptDate)
+		and Year(GRNDate) = Year(@RptDate)
+		Group By GRNDate, CustomNo
+		order by GRNDate, CustomNo 
+
+	end
 end
 
 

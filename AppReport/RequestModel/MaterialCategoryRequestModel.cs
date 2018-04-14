@@ -6,6 +6,7 @@ namespace AppReport.RequestModel
     { 
         public int? RmcatId { get; set; }
         public string RmcatName { get; set; }
+        public string TariffCode { get; set; }
         public int? CreatedByUserId { get; set; }
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }

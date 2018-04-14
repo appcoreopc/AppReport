@@ -33,6 +33,38 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="PTSDataModel\Component.cs" />
+    <Compile Include="PTSDataModel\Config.cs" />
+    <Compile Include="PTSDataModel\Country.cs" />
+    <Compile Include="PTSDataModel\Currency.cs" />
+    <Compile Include="PTSDataModel\Employee.cs" />
+    <Compile Include="PTSDataModel\Grn.cs" />
+    <Compile Include="PTSDataModel\JobTitle.cs" />
+    <Compile Include="PTSDataModel\Module.cs" />
+    <Compile Include="PTSDataModel\PTSContext.cs" />
+    <Compile Include="PTSDataModel\ReadyStock.cs" />
+    <Compile Include="PTSDataModel\Report.cs" />
+    <Compile Include="PTSDataModel\Rmaterial.cs" />
+    <Compile Include="PTSDataModel\Rmcat.cs" />
+    <Compile Include="PTSDataModel\RptLg.cs" />
+    <Compile Include="PTSDataModel\RptLgYbgt.cs" />
+    <Compile Include="PTSDataModel\RptLgYexp.cs" />
+    <Compile Include="PTSDataModel\RptLgYimp.cs" />
+    <Compile Include="PTSDataModel\RptLgYrdy.cs" />
+    <Compile Include="PTSDataModel\RptM1.cs" />
+    <Compile Include="PTSDataModel\RptM1Mstk.cs" />
+    <Compile Include="PTSDataModel\RptM1MstkInv.cs" />
+    <Compile Include="PTSDataModel\RptSk.cs" />
+    <Compile Include="PTSDataModel\RptSkMimp.cs" />
+    <Compile Include="PTSDataModel\RptStatus.cs" />
+    <Compile Include="PTSDataModel\Stncustom.cs" />
+    <Compile Include="PTSDataModel\Supplier.cs" />
+    <Compile Include="PTSDataModel\Uom.cs" />
+    <Compile Include="PTSDataModel\UomType.cs" />
+    <Compile Include="PTSDataModel\Users.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
   <ItemGroup>

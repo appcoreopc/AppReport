@@ -52,7 +52,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       'gstrate': [Validators.required, Validators.minLength(1)],
       'dutyImpRate': [Validators.required, Validators.minLength(1)],
       'countryList': [Validators.minLength(1)],
-      'tariffCode': [Validators.required, Validators.minLength(1)],
+      //'tariffCode': [Validators.required, Validators.minLength(1)],
       'rmcatId': [Validators.required, Validators.minLength(1), Validators.min(1)],
       'uomid': [Validators.required, Validators.minLength(1), Validators.min(1)]
     }; 
@@ -63,7 +63,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       'rmcatId': '',
       'rmdesc': '',
       'uomid': '',
-      'tariffCode': '',
+      //'tariffCode': '',
       'countryList': '',
       'dutyImpRate': '',
       'gstrate': ''    
@@ -85,9 +85,9 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       'uomid': {
         'required': 'UOM is required.' 
       },
-      'tariffCode': {
+      /*'tariffCode': {
         'required': 'Tariff Code is required.' 
-      },
+      },*/
       'countryList': {
         'required': 'Country is required.' 
       },
@@ -111,7 +111,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       { prop: 'rmcatId', name : 'RmcatId' },
       { prop: 'rmdesc', name : 'Rmdesc' },
       { prop: 'uomid', name : 'Uomid' },
-      { prop: 'tariffCode', name : 'TariffCode' },
+      //{ prop: 'tariffCode', name : 'TariffCode' },
       { prop: 'countryList', name : 'CountryList' },
       { prop: 'dutyImpRate', name : 'DutyImpRate' },
       { prop: 'gstrate', name : 'Gstrate' }
@@ -157,7 +157,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
         this.currentModel.uomid = data.uomid;
         this.currentModel.gstrate = data.gstrate;
         this.currentModel.dutyImpRate = data.dutyImpRate;
-        this.currentModel.tariffCode = data.tariffCode;
+       //this.currentModel.tariffCode = data.tariffCode;
         
         let clist = "";
         for(var c of this.countries){ 
@@ -186,7 +186,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
           'gstrate': ['', [Validators.required, Validators.minLength(1)]],
           'dutyImpRate': ['', [Validators.required, Validators.minLength(1)]],
           'countryList': [''],
-          'tariffCode': ['', [Validators.required, Validators.minLength(1)]],
+          //'tariffCode': ['', [Validators.required, Validators.minLength(1)]],
           'rmcatId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
           'uomid': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]]
         });                 
@@ -219,7 +219,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
         this.currentModel.rmcode = '';
         this.currentModel.rmdesc = '';
         this.currentModel.rmid = null;
-        this.currentModel.tariffCode = '';
+        //this.currentModel.tariffCode = '';
         this.currentModel.uomid = 0;        
         
         this.formUtil = new FormUtil<RawMaterialModel>(this.currentModel, this.formValidators);

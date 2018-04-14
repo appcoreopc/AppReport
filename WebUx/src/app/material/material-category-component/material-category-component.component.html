@@ -9,17 +9,30 @@
 			<div class="panel-body" style="padding:5px; padding-left:30px"> 
 
            <div class="form-group row">
-					  <div class="cell c1">
+					  <div class="cell" style="width:200px">
 					   <label for="rmcatName">Material Category Name :</label>
 					  </div> 
-					  <div class="cell c2345">   
+					  <div class="cell">   
               <input id="rmcatName" type="text" maxlength="50" class="form-control text-control" formControlName="rmcatName"> 
               
               <div *ngIf="formErrors.rmcatName" class="alert alert-danger">
                 {{ formErrors.rmcatName }}
               </div>
 					  </div>  
-           </div>   
+           </div> 
+
+           <div class="form-group row">
+					  <div class="cell" style="width:200px">
+					   <label for="tariffCode">Tariff Code :</label>
+					  </div> 
+					  <div class="cell">   
+              <input id="tariffCode" type="text" maxlength="50" class="form-control text-control" formControlName="tariffCode">         
+              
+              <div *ngIf="formErrors.tariffCode" class="alert alert-danger">
+                {{ formErrors.tariffCode }}
+              </div>
+					  </div> 
+           </div> 
 
 			  </div>     
       </div>        
@@ -72,6 +85,12 @@
 		</ngx-datatable-column>
   
 	 <ngx-datatable-column  name="Material Category Name" prop="rmcatName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+     <ng-template let-value="value" ngx-datatable-cell-template>
+           {{value}}
+        </ng-template>
+    </ngx-datatable-column>
+  
+	 <ngx-datatable-column  name="Tariff Code" prop="tariffCode" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
            {{value}}
         </ng-template>

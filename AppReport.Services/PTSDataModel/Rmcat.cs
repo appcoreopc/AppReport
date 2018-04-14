@@ -11,5 +11,6 @@ namespace AppReport.DataServices.PTSDataModel
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }
         public DateTime? EditedDt { get; set; }
+        public string TariffCode { get; set; }
     }
 }

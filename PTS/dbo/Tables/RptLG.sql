@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[RptLG] (
+CREATE TABLE [dbo].[RptLG] (
     [RptId]                 INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]           INT             NULL,
     [F_CoName]              NVARCHAR (50)   NULL,
@@ -181,7 +181,13 @@
 
 
 
+
+
+
+
 GO
+
+
 CREATE TRIGGER [dbo].[RptLG_Insert]
        ON [dbo].[RptLG]
 AFTER INSERT, UPDATE
@@ -341,6 +347,9 @@ where ModuleId = 1 and Id = 2 and ConfigKey='CurrentCutOffMonth'
 SELECT @RptId = RptId, @CurrentYr = RptY2
 FROM inserted 
 
+if @CurrentYr is null
+ return;
+
 set @LastYr = @CurrentYr - 1 
 
 select top 1 @MfdGoodY1= MfdGoodY2, @PrevRptId = RptId
@@ -430,135 +439,93 @@ set F_CoName = @F_CoName,
 	F_Exp_CloseQty_Y1 = @F_Exp_CloseQty_Y1,
 	F_Exp_CloseCost_Y1 = @F_Exp_CloseCost_Y1
 where RptId = @RptId
+
+IF NOT EXISTS (SELECT 1 FROM deleted)
+BEGIN
+
+	if(not exists(select 1 from RptLG_YImp where RptId = @RptId))
+	begin 
+
+		  insert into RptLG_YImp (RptId, RptY, RMId, F_OpenBalWgt, F_OpenBalCost, 
+			 F_ImpRMWgt, F_ImpRMCost, F_LocRMWgt, F_LocRMCost)
+			 select @RptId, @CurrentYr, RMId, 
+			 (select top 1 F_CloseBalWgt from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = a.RMId),  
+			 (select top 1 F_CloseBalCost from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = a.RMId),  
+			 sum(case when b.IsLocal = 0 then isnull(a.Wgt,0) else 0 end), 
+			 sum(case when b.IsLocal = 0 then isnull(a.Amount,0) else 0 end), 
+			 sum(case when b.IsLocal = 1 then isnull(a.Wgt,0) else 0 end), 
+			 sum(case when b.IsLocal = 1 then isnull(a.Amount,0) else 0 end)   
+			 from GRN a with (nolock)
+			 left join STNCustom b with (nolock) 
+			  on a.STNCustomId = b.STNCustomId
+			 where year(GRNDate) = @CurrentYr
+			 group by RMId 
+
+			 insert into RptLG_YImp (RptId, RptY, RMId, F_OpenBalWgt, F_OpenBalCost, 
+			 F_ImpRMWgt, F_ImpRMCost, F_LocRMWgt, F_LocRMCost)
+			 select @RptId, @CurrentYr, RMId, 
+			 (select top 1 F_CloseBalWgt from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = rm.RMId),  
+			 (select top 1 F_CloseBalCost from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = rm.RMId),  
+			 0,0,0,0
+			 from RMaterial rm with (nolock)
+			 where RMId not in (
+				 select r.RMId
+				 from  RptLG_YImp r with (nolock)
+				 where RptId = @RptId
+			 ) 
+		  
+	 
+	end 
+
+
+	if(not exists(select 1 from RptLG_YExp where RptId = @RptId))
+	begin 
+
+		insert into RptLG_YExp (RptId, RptY, StkDesc, TariffCode, OpenBalQty, OpenBalCost) 
+		select @RptId, @CurrentYr, b.ReadyStockDesc, b.TariffCode, 
+			(select top 1 CloseBalQty from RptLG_YExp xa where xa.RptY = @LastYr and xa.ReadyStockId = b.ReadyStockId),  
+			(select top 1 CloseBalCost from RptLG_YExp xa where xa.RptY = @LastYr and xa.ReadyStockId = b.ReadyStockId) 
+		from ReadyStock b with (nolock)  
+	 
+	end 
+
+	if(not exists(select 1 from RptLG_YBgt where RptId = @RptId))
+	begin 
  
-if(not exists(select 1 from RptLG_YImp where RptId = @RptId))
-begin 
+		insert into RptLG_YBgt (RptId, IsLocal, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_CountryList, Qty, F_Cost,
+		F_DutyImpRate, F_DutyImpCost, F_GSTRate, F_GSTCost, F_TaxCost) 
+		select @RptId, 0, a.RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, dbo.fnCountryList(b.CountryList), a.F_ImpRMWgt, a.F_ImpRMCost,
+		b.DutyImpRate, 0, b.GSTRate, 0, 0
+		from RptLG_YImp a with (nolock)
+		left join RMaterial b with (nolock)
+		  on a.RMId = b.RMId
+		where RptY = @CurrentYr
+		and (isnull(F_ImpRMWgt,0) > 0 or isnull(F_ImpRMCost,0) > 0)
 
-	  insert into RptLG_YImp (RptId, RptY, RMId, F_OpenBalWgt, F_OpenBalCost, 
-		 F_ImpRMWgt, F_ImpRMCost, F_LocRMWgt, F_LocRMCost)
-		 select @RptId, @CurrentYr, RMId, 
-		 (select top 1 F_CloseBalWgt from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = a.RMId),  
-		 (select top 1 F_CloseBalCost from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = a.RMId),  
-		 sum(case when b.IsLocal = 0 then isnull(a.Wgt,0) else 0 end), 
-		 sum(case when b.IsLocal = 0 then isnull(a.Amount,0) else 0 end), 
-		 sum(case when b.IsLocal = 1 then isnull(a.Wgt,0) else 0 end), 
-		 sum(case when b.IsLocal = 1 then isnull(a.Amount,0) else 0 end)   
-		 from GRN a with (nolock)
-		 left join STNCustom b with (nolock) 
-		  on a.STNCustomId = b.STNCustomId
-		 where year(GRNDate) = @CurrentYr
-		 group by RMId 
-
-		 insert into RptLG_YImp (RptId, RptY, RMId, F_OpenBalWgt, F_OpenBalCost, 
-		 F_ImpRMWgt, F_ImpRMCost, F_LocRMWgt, F_LocRMCost)
-		 select @RptId, @CurrentYr, RMId, 
-		 (select top 1 F_CloseBalWgt from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = rm.RMId),  
-		 (select top 1 F_CloseBalCost from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = rm.RMId),  
-		 0,0,0,0
-		 from RMaterial rm with (nolock)
-		 where RMId not in (
-			 select r.RMId
-			 from  RptLG_YImp r with (nolock)
-			 where RptId = @RptId
-		 ) 
-
-		/*UPDATE t
-		SET t.F_RMDesc = o.RMDesc, t.F_RMCatName = c.RMCatName, t.F_UOMCode = u.UomCode,
-		t.F_TariffCode = o.TariffCode, 
-		t.F_CloseBalWgt = (isnull(t.F_OpenBalWgt,0) + isnull(t.F_ImpRMWgt,0) + isnull(t.F_LocRMWgt,0)), 
-		t.F_CloseBalCost = (isnull(t.F_OpenBalCost,0) + isnull(t.F_ImpRMCost,0) + isnull(t.F_LocRMCost,0))
-		FROM RptLG_YImp t with (nolock) 
-		JOIN RMaterial o with (nolock) ON t.RMId = o.RMId
-		JOIN RMCat c with (nolock) ON t.RMId = o.RMId
-		JOIN Uom u with (nolock) ON u.UomId = o.UOMId
-		WHERE t.RptId = @RptId */
+		insert into RptLG_YBgt (RptId, IsLocal, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_CountryList, Qty, F_Cost,
+		F_DutyImpRate, F_DutyImpCost, F_GSTRate, F_GSTCost, F_TaxCost) 
+		select @RptId, 1, a.RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, dbo.fnCountryList(b.CountryList), a.F_LocRMWgt, a.F_LocRMCost,
+		b.DutyImpRate, 0, b.GSTRate, 0, 0
+		from RptLG_YImp a with (nolock)
+		left join RMaterial b with (nolock)
+		  on a.RMId = b.RMId
+		where RptY = @CurrentYr
+		and (isnull(F_LocRMWgt,0) > 0 or isnull(F_LocRMCost,0) > 0) 
 	 
-end 
-
-if(not exists(select 1 from RptLG_YExp where RptId = @RptId))
-begin 
-
-	insert into RptLG_YExp (RptId, RptY, StkDesc, TariffCode, OpenBalQty, OpenBalCost) 
-	select @RptId, @CurrentYr, b.ReadyStockDesc, b.TariffCode, 
-		(select top 1 CloseBalQty from RptLG_YExp xa where xa.RptY = @LastYr and xa.ReadyStockId = b.ReadyStockId),  
-		(select top 1 CloseBalCost from RptLG_YExp xa where xa.RptY = @LastYr and xa.ReadyStockId = b.ReadyStockId) 
-	from ReadyStock b with (nolock)  
-
-	/*
-	UPDATE t
-	SET t.CloseBalQty = (isnull(t.OpenBalQty,0) + isnull(t.MadeQty,0)) - (isnull(t.ExpQty,0) + isnull(t.LocSalesQty,0) + isnull(t.DamagedQty,0)), 
-	  t.CloseBalCost = (isnull(t.OpenBalCost,0) + isnull(t.MadeCost,0)) - (isnull(t.ExpCost,0) + isnull(t.LocSalesCost,0) + isnull(t.DamagedCost,0))
-	FROM RptLG_YExp t with (nolock)  
-	WHERE t.RptId = @RptId    
-	*/
 	 
-end 
-
-if(not exists(select 1 from RptLG_YBgt where RptId = @RptId))
-begin 
+	end 
  
+	if(not exists(select 1 from RptLG_YRdy where RptId = @RptId))
+	begin 
 
-	/*insert into RptLG_YBgt (RptId, IsLocal, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_CountryList, Qty, F_Cost,
-	F_DutyImpRate, F_DutyImpCost, F_GSTRate, F_GSTCost, F_TaxCost) 
-	select @RptId, 0, a.RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, b.CountryList, a.F_ImpRMWgt, a.F_ImpRMCost,
-	b.DutyImpRate, (isnull(a.F_ImpRMCost,0) * isnull(b.DutyImpRate,1)), b.GSTRate, 
-	(isnull(a.F_ImpRMCost,0) + (isnull(a.F_ImpRMCost,0) * isnull(b.DutyImpRate,1))), 0
-	from RptLG_YImp a with (nolock)
-	left join RMaterial b with (nolock)
-	  on a.RMId = b.RMId
-	where RptY = @CurrentYr
-	and (isnull(F_ImpRMWgt,0) > 0 or isnull(F_ImpRMCost,0) > 0)
+		insert into RptLG_YRdy (RptId, StkDesc, TariffCode, Qty, Cost, DutyImpRate, DutyImpCost, GSTRate, GSTCost, TaxCost) 
+		select @RptId, b.ReadyStockDesc, b.TariffCode, 0, 0, b.DutyImpRate, 0, b.GSTRate, 0, 0 
+		from ReadyStock b with (nolock)  
 
-	insert into RptLG_YBgt (RptId, IsLocal, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_CountryList, Qty, F_Cost,
-	F_DutyImpRate, F_DutyImpCost, F_GSTRate, F_GSTCost, F_TaxCost) 
-	select @RptId, 1, a.RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, b.CountryList, a.F_LocRMWgt, a.F_LocRMCost,
-	b.DutyImpRate, (isnull(a.F_LocRMCost,0) * isnull(b.DutyImpRate,1)), b.GSTRate, 
-	(isnull(a.F_LocRMCost,0) + (isnull(a.F_LocRMCost,0) * isnull(b.DutyImpRate,1))), 0
-	from RptLG_YImp a with (nolock)
-	left join RMaterial b with (nolock)
-	  on a.RMId = b.RMId
-	where RptY = @CurrentYr
-	and (isnull(F_LocRMWgt,0) > 0 or isnull(F_LocRMCost,0) > 0)*/
+	end 
+END
 
-
-	insert into RptLG_YBgt (RptId, IsLocal, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_CountryList, Qty, F_Cost,
-	F_DutyImpRate, F_DutyImpCost, F_GSTRate, F_GSTCost, F_TaxCost) 
-	select @RptId, 0, a.RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, dbo.fnCountryList(b.CountryList), a.F_ImpRMWgt, a.F_ImpRMCost,
-	b.DutyImpRate, 0, b.GSTRate, 0, 0
-	from RptLG_YImp a with (nolock)
-	left join RMaterial b with (nolock)
-	  on a.RMId = b.RMId
-	where RptY = @CurrentYr
-	and (isnull(F_ImpRMWgt,0) > 0 or isnull(F_ImpRMCost,0) > 0)
-
-	insert into RptLG_YBgt (RptId, IsLocal, RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, F_CountryList, Qty, F_Cost,
-	F_DutyImpRate, F_DutyImpCost, F_GSTRate, F_GSTCost, F_TaxCost) 
-	select @RptId, 1, a.RMId, F_RMCatName, F_RMDesc, F_UOMCode, F_TariffCode, dbo.fnCountryList(b.CountryList), a.F_LocRMWgt, a.F_LocRMCost,
-	b.DutyImpRate, 0, b.GSTRate, 0, 0
-	from RptLG_YImp a with (nolock)
-	left join RMaterial b with (nolock)
-	  on a.RMId = b.RMId
-	where RptY = @CurrentYr
-	and (isnull(F_LocRMWgt,0) > 0 or isnull(F_LocRMCost,0) > 0) 
-
-	 
-	/*UPDATE t
-	SET t.F_TaxCost = (isnull(t.F_DutyImpCost,0) + isnull(t.F_GSTCost,0))  	
-	FROM RptLG_YBgt t with (nolock)  
-	WHERE t.RptId = @RptId    */
-	 
-end 
  
-if(not exists(select 1 from RptLG_YRdy where RptId = @RptId))
-begin 
-
-	insert into RptLG_YRdy (RptId, StkDesc, TariffCode, Qty, Cost, DutyImpRate, DutyImpCost, GSTRate, GSTCost, TaxCost) 
-	select @RptId, b.ReadyStockDesc, b.TariffCode, 0, 0, b.DutyImpRate, 0, b.GSTRate, 0, 0 
-	from ReadyStock b with (nolock)  
-
-end 
-
-
 select 
  @F_Imp_OpenBalWgt_Y2 = sum(isnull(F_OpenBalWgt,0)), 
  @F_Imp_OpenBalCost_Y2 = sum(isnull(F_OpenBalCost,0)),
