@@ -33,6 +33,7 @@ export class UserComponentComponent implements OnInit {
   private intention : number = UPDATE;
   selected : any;
   isTargetCheckbox : boolean = false;
+  isLoading : boolean = false;
   
   formUtil : FormUtil<UserModel>;
   personForm : FormGroup;
@@ -94,6 +95,8 @@ export class UserComponentComponent implements OnInit {
   save() {
     
     debugger;
+
+    this.isLoading = false;
     
     let data = this.formUtil.commit();
     
@@ -139,9 +142,14 @@ export class UserComponentComponent implements OnInit {
       
      debugger;
      if (message && (message.type == USER_SAVE_SUCCESS || message.type == USER_DELETE_SUCCESS)) {
+
+      if (this.isLoading == false)
+      {
+        this.isLoading = true;
         this.display = false;        
         await timeUtil.delay(TIME_DELAY);
-        this.getUserList();   
+        this.getUserList();  
+      } 
       }
     });
     
@@ -296,12 +304,16 @@ export class UserComponentComponent implements OnInit {
       }
       
       deleteForm() {
+
+      
+        debugger; 
         
         if (this.selected && this.selected.length > 0)
         {       
           let deleItems = this.selected.map( x  => x.userId);
           if (deleItems)
           {
+            this.isLoading = false;
             this.dispatchIntent(USER_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
           }
         }
