@@ -29,6 +29,7 @@ export class StnCustomComponentComponent implements OnInit {
   formUtil: FormUtil<StncustomModel>;
   isTargetCheckbox : boolean = false;
   selected : any;
+  isLoading : boolean = false;
   
   formErrors = {
     'stncustomId': '',
@@ -102,15 +103,21 @@ export class StnCustomComponentComponent implements OnInit {
           
           if (message && (message.type == STN_CUSTOM_SAVE_SUCCESS || message.type == STN_CUSTOM_DELETE_SUCCESS)) 
           {
-            this.display = false;
-            await timeUtil.delay(TIME_DELAY);        
-            this.getStn();
+            if (this.isLoading == false)
+            {
+              this.isLoading = true;
+              this.display = false;
+              await timeUtil.delay(TIME_DELAY);        
+              this.getStn();
+            }
           }
         });
       }
       
       save() {
         
+        this.isLoading = false;
+
         let data = this.formUtil.commit();
         if (this.intention == ADD) {
           data.stncustomId = null;
@@ -185,8 +192,10 @@ export class StnCustomComponentComponent implements OnInit {
       }
       
       editForm(evt: any) {
+
+        debugger;
         
-        if (evt && evt.row && evt.row.supplierId) {
+        if (evt && evt.row && evt.row.stncustomId) {
           
           let targetDataId = evt.row.stncustomId;
           
@@ -216,7 +225,8 @@ export class StnCustomComponentComponent implements OnInit {
       }
       
       onActivate(evt) {      
-        
+
+        debugger;        
         if (evt.type && evt.type == 'checkbox')
         {        
           this.isTargetCheckbox = true;
@@ -246,12 +256,13 @@ export class StnCustomComponentComponent implements OnInit {
       }
       
       deleteForm() 
-      {
+      {     
         if (this.selected && this.selected.length > 0)
         {       
           let deleItems = this.selected.map( x  => x.stncustomId);
           if (deleItems)
           {
+            this.isLoading = false;
             this.dispatchIntent(STN_CUSTOM_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
           }
         }
