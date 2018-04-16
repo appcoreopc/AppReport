@@ -144,8 +144,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       
       save()
       {     
-        debugger;
-        
+              
         let data = this.formUtil.commit();        
         if (this.intention == ADD)
         {
@@ -364,7 +363,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       
       onActivate(evt) {      
         
-        debugger;
+      
         if (evt.type && evt.type == 'checkbox')
         {        
           this.isTargetCheckbox = true;
@@ -382,7 +381,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       deleteForm() 
       {
 
-        debugger;
+        
         
         if (this.selected && this.selected.length > 0)
         {       

@@ -26,9 +26,8 @@ export class EmployeeEffects {
     private actions$: Actions<CityAppState>, private store: Store<CityAppState>,
   ) { }
   
-  
-  
-  @Effect() citySave$ = this.actions$
+    
+  @Effect() employeeSave$ = this.actions$
   .ofType(EMPLOYEE_SAVE)
   .map(action => {
     return JSON.stringify(action.data);
@@ -65,13 +64,13 @@ export class EmployeeEffects {
   });
   
   
-  @Effect() cityReset$ = this.actions$
+  @Effect() employeeReset$ = this.actions$
   .ofType(EMPLOYEE_CANCEL)
   .map(action => {
     return ({ type: EMPLOYEE_CANCEL_OK });
   });
   
-  @Effect() cityGet$ = this.actions$
+  @Effect() employeeGet$ = this.actions$
   .ofType(EMPLOYEE_GET)
   .map(action => {
     JSON.stringify(action);

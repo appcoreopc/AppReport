@@ -28,6 +28,7 @@ export class EmployeeComponentComponent implements OnInit {
   private intention: number = UPDATE;
   isTargetCheckbox : boolean = false;
   selected : any;
+  isLoading : boolean = false;
   
   display: boolean = false;
   formTitle: string = "New Employee";
@@ -97,6 +98,8 @@ export class EmployeeComponentComponent implements OnInit {
     }
     
     save() {
+      
+      this.isLoading = false;
       
       let data = this.formUtil.commit();
       
@@ -187,14 +190,18 @@ export class EmployeeComponentComponent implements OnInit {
             this.dataList.push(model);
           }
           
-          this.rows = this.dataList;
+          this.rows = [...this.dataList];
         }
         
         if (message && (message.type == EMPLOYEE_SAVE_SUCCESS || message.type == EMPLOYEE_DELETE_SUCCESS)) {
           
-          this.display = false;        
-          await timeUtil.delay(TIME_DELAY);        
-          this.getEmployee();
+          if (this.isLoading == false)
+          {
+            this.isLoading = true;
+            this.display = false;        
+            await timeUtil.delay(TIME_DELAY);        
+            this.getEmployee();
+          }
         }
         
         if (message && message.type == JOBTITLE_GET_OK) {          
@@ -235,13 +242,13 @@ export class EmployeeComponentComponent implements OnInit {
         this.jobListMap[item.jobTitleId] = item.jobTitleName;
       }      
     }    
-        
+    
     edit(evt : any) {
       
       if (evt && evt.row && evt.row.empId) {
-
+        
         let empId = evt.row.empId;
-
+        
         if (empId) 
         {
           this.person = this.rows.find(x => x.empId == empId);     
@@ -291,6 +298,7 @@ export class EmployeeComponentComponent implements OnInit {
         let deleItems = this.selected.map( x  => x.empId);
         if (deleItems)
         {
+          this.isLoading = false;
           this.dispatchIntent(EMPLOYEE_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
         }
       }
