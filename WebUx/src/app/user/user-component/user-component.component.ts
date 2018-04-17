@@ -137,7 +137,7 @@ export class UserComponentComponent implements OnInit {
           this.dataList.push(model);
           
         }
-        this.rows = this.dataList;
+        this.rows = [...this.dataList];
       }
       
      debugger;
