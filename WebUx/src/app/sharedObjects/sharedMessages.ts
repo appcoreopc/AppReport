@@ -223,13 +223,13 @@ export const DELETE = 4;
 export const DELETE_ITEM_DELIMITER = ',';
 export const DELETE_ITEM_FIELD = 'deleteItems';
 
-export const DELETE_USER_PROMPT = "Do you want to remove this user(s)?";
-export const DELETE_EMPLOYEE_PROMPT = "";
-export const DELETE_SUPPLIER_PROMPT = "";
-export const DELETE_READYSTOCK_PROMPT = "";
-export const DELETE_MATERIAL_PROMPT = "";
-export const DELETE_CATEGORY_PROMPT = "";
-
+export const DELETE_USER_PROMPT = "Do you want to remove selected user(s)?";
+export const DELETE_EMPLOYEE_PROMPT = "Do you want to remove selected employee(s)?";
+export const DELETE_SUPPLIER_PROMPT = "Do you want to remove selected supplier(s)?";
+export const DELETE_READYSTOCK_PROMPT = "Do you want to remove selected ready stock(s)?";
+export const DELETE_RAWMATERIAL_PROMPT = "Do you want to remove selected raw material(s)?";
+export const DELETE_MATERIALCATEGORY_PROMPT = "Do you want to remove selected material category(s)?";
+export const DELETE_STNCUSTOM_PROMPT = "Do you want to remove selected STN/KASTAM Name(s)?";
 
 export interface CityAppState {
 	status?: number;	
@@ -267,6 +267,5 @@ export interface KeyValueData {
 	key: string;
 	description : string
 } 
-
 
 export const headersJson = new HttpHeaders().set('Content-Type', 'application/json');

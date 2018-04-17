@@ -5,7 +5,7 @@ import {FormUtil} from "../../sharedObjects/formUtil";
 import * as timeUtil from '../../sharedObjects/timeUtil';
 import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
 
-import { CityAppState, READYSTOCK_GET, 
+import { CityAppState, READYSTOCK_GET, DELETE_READYSTOCK_PROMPT,
   READYSTOCK_GET_OK, READYSTOCK_SAVE, READYSTOCK_DELETE_SUCCESS,
   READYSTOCK_SAVE_SUCCESS, READYSTOCK_SAVE_ERR,DELETE_ITEM_DELIMITER, 
   PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,READYSTOCK_DELETE, 
@@ -30,7 +30,7 @@ export class ReadyStockComponent implements OnInit {
   formUtil : FormUtil<ReadyStockModel>;
   isTargetCheckbox : boolean = false;
   selected : any;
-
+  
   isLoading : boolean = false;
   
   formValidators = {   
@@ -136,7 +136,7 @@ export class ReadyStockComponent implements OnInit {
         }
         
         save() {     
-
+          
           this.isLoading = false;
           
           let mainFormModel = this.formUtil.commit();
@@ -286,15 +286,18 @@ export class ReadyStockComponent implements OnInit {
             }
             
             deleteForm() 
-            {              
-              this.isLoading = false;
-              
-              if (this.selected && this.selected.length > 0)
-              {       
-                let deleItems = this.selected.map( x  => x.readyStockId);
-                if (deleItems)
-                {
-                  this.dispatchIntent(READYSTOCK_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+            {        
+              if (confirm(DELETE_READYSTOCK_PROMPT)) {      
+                
+                this.isLoading = false;
+                
+                if (this.selected && this.selected.length > 0)
+                {       
+                  let deleItems = this.selected.map( x  => x.readyStockId);
+                  if (deleItems)
+                  {
+                    this.dispatchIntent(READYSTOCK_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+                  }
                 }
               }
             }

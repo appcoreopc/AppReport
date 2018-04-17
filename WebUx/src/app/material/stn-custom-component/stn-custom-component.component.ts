@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
-  CityAppState, STN_CUSTOM_GET, STN_CUSTOM_DELETE,
+  CityAppState, STN_CUSTOM_GET, STN_CUSTOM_DELETE, DELETE_STNCUSTOM_PROMPT,
   STN_CUSTOM_DELETE_SUCCESS,DELETE_ITEM_DELIMITER, 
   ADD, UPDATE, STN_CUSTOM_GET_OK, STN_CUSTOM_SAVE, STN_CUSTOM_SAVE_SUCCESS
 }
@@ -117,7 +117,7 @@ export class StnCustomComponentComponent implements OnInit {
       save() {
         
         this.isLoading = false;
-
+        
         let data = this.formUtil.commit();
         if (this.intention == ADD) {
           data.stncustomId = null;
@@ -192,7 +192,7 @@ export class StnCustomComponentComponent implements OnInit {
       }
       
       editForm(evt: any) {
-
+        
         debugger;
         
         if (evt && evt.row && evt.row.stncustomId) {
@@ -225,7 +225,7 @@ export class StnCustomComponentComponent implements OnInit {
       }
       
       onActivate(evt) {      
-
+        
         debugger;        
         if (evt.type && evt.type == 'checkbox')
         {        
@@ -257,13 +257,16 @@ export class StnCustomComponentComponent implements OnInit {
       
       deleteForm() 
       {     
-        if (this.selected && this.selected.length > 0)
-        {       
-          let deleItems = this.selected.map( x  => x.stncustomId);
-          if (deleItems)
-          {
-            this.isLoading = false;
-            this.dispatchIntent(STN_CUSTOM_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+        if (confirm(DELETE_STNCUSTOM_PROMPT)) { 
+          
+          if (this.selected && this.selected.length > 0)
+          {       
+            let deleItems = this.selected.map( x  => x.stncustomId);
+            if (deleItems)
+            {
+              this.isLoading = false;
+              this.dispatchIntent(STN_CUSTOM_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+            }
           }
         }
       }

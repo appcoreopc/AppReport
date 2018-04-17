@@ -74,5 +74,25 @@ export class FormUtil<T> {
         this._model = this._originalModel;
         this.setFormWithModelValue(this._originalModel, false);
         return this._originalModel;
-    }
+    }       
 }
+
+interface OnActivateAction {
+	(event :any) : void
+}
+
+export function ExecActivate(evt : any, action : OnActivateAction, isTargetCheckbox : boolean) {      
+            
+    if (evt.type && evt.type == 'checkbox')
+    {        
+      isTargetCheckbox = true;
+    }
+    else if (evt && evt.type && evt.type == 'click')
+    {
+      if (isTargetCheckbox != true)
+      {    
+        action(evt);
+      }
+      isTargetCheckbox = false;
+    }
+  }

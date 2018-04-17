@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK, 
+import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK, DELETE_RAWMATERIAL_PROMPT,
   RAW_MATERIAL_DELETE, DELETE_ITEM_DELIMITER, RAW_MATERIAL_DELETE_SUCCESS, 
   ADD, UPDATE, RAW_MATERIAL_GET, RAW_MATERIAL_SAVE_SUCCESS, UOM_GET, UOM_GET_OK,
   MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_GET_OK, COUNTRY_GET, COUNTRY_GET_OK, } from '../../sharedObjects/sharedMessages';
@@ -144,7 +144,7 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
       
       save()
       {     
-              
+        
         let data = this.formUtil.commit();        
         if (this.intention == ADD)
         {
@@ -276,183 +276,184 @@ import { CityAppState, RAW_MATERIAL_SAVE, RAW_MATERIAL_GET_OK,
           }    
           
           if (message && (message.type == RAW_MATERIAL_SAVE_SUCCESS
-           || message.type == RAW_MATERIAL_DELETE_SUCCESS))
-          {                  
-            this.display = false; 
-            await timeUtil.delay(TIME_DELAY);
-            this.getMaterialList();
-          }    
-          
-          if (message && message.type == MATERIAL_CATEGORY_GET_OK)
-          {
-            this.rmcatRows.length = 0;
-            for (var d of message.data.data.data)
-            {    
-              this.rmcatDataList.push({   
-                rmcatId : d.rmcatId,
-                rmcatName : d.rmcatName 
-              });
-            }
+            || message.type == RAW_MATERIAL_DELETE_SUCCESS))
+            {                  
+              this.display = false; 
+              await timeUtil.delay(TIME_DELAY);
+              this.getMaterialList();
+            }    
             
-            this.rmcatRows = this.rmcatDataList;
-            console.log("MATERIAL_CATEGORY_GET_OK",this.rmcatRows);
-          } 
-          
-          if (message && message.type == UOM_GET_OK)
-          { 
-            this.uomRows.length = 0;
-            for (var d of message.data.data.data)
-            {    
-              if(d.uomTypeId != 2) continue;
-              this.uomDataList.push({   
-                uomId : d.uomId,
-                uomCode : d.uomCode 
-              });
-            }
-            
-            this.uomRows = this.uomDataList;
-            console.log("UOM_GET_OK",this.uomRows);
-          } 
-          
-          if (message && message.type == COUNTRY_GET_OK)
-          {  
-            for (var d of message.data.data.data)
-            { 
-              this.countries.push({   
-                value : d.countryId,
-                name : d.countryName,
-                checked : false
-              });
-            } 
-            
-            console.log("COUNTRY_GET_OK",this.countries);
-          } 
-        });                
-      }
-      
-      editForm(evt : any) {
-        
-        if (evt && evt.row && evt.row.rmid) {
-          
-          let targetDataId = evt.row.rmid;
-          
-          if (targetDataId) 
-          {
-            this.currentModel = this.rows.find(x => x.rmid == targetDataId);     
-            
-            if (this.currentModel)
+            if (message && message.type == MATERIAL_CATEGORY_GET_OK)
             {
-              this.itemSelected = true;   
-              
-              this.formUtil = new FormUtil<RawMaterialModel>(this.currentModel, this.formValidators);
-              let userform = this.formUtil.createForm(false);
-              this.personForm = userform;
-              
-              this.personForm.valueChanges.debounceTime(300)
-              .subscribe(data => this.onValueChanged(data));
-              
-            }
-            else 
-            this.itemSelected = false;
-            
-            this.edit();         
-            this.display = true; 
-          }
-        }
-      }
-      
-      onActivate(evt) {      
-        
-      
-        if (evt.type && evt.type == 'checkbox')
-        {        
-          this.isTargetCheckbox = true;
-        }
-        else if (evt && evt.type && evt.type == 'click')
-        {
-          if (this.isTargetCheckbox != true)
-          {
-            this.editForm(evt);
-          }
-          this.isTargetCheckbox = false;
-        }
-      }
-      
-      deleteForm() 
-      {
-
-        
-        
-        if (this.selected && this.selected.length > 0)
-        {       
-          let deleItems = this.selected.map( x  => x.rmid);
-          if (deleItems)
-          {
-            this.dispatchIntent(RAW_MATERIAL_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
-          }
-        }
-      }
-      
-      onSelect(evt: any) {     
-        this.selected = evt.selected;      
-      }
-      
-      addForm() {        
-        
-        this.formTitle = "New Raw Material"; 
-        this.display = true;                          
-        this.intention = ADD;
-        this.configureAddForm();  
-      }   
-      
-      edit() {  
-        
-        this.formTitle = "Edit Raw Material"; 
-        this.intention = UPDATE;      
-        
-        this.configureEditForm();
-        
-        if (this.currentModel && this.currentModel.countryList)
-        {                                                    
-          if (this.countries) {
-            
-            for(var c of this.countries)
-            {
-              var temp = new Array(); 
-              
-              temp = this.currentModel.countryList.split(",");
-              
-              for (var a in temp ) {
-                if(c.value == temp[a])
-                c.checked = true;
+              this.rmcatRows.length = 0;
+              for (var d of message.data.data.data)
+              {    
+                this.rmcatDataList.push({   
+                  rmcatId : d.rmcatId,
+                  rmcatName : d.rmcatName 
+                });
               }
               
-            }
-          }             
-        }       
+              this.rmcatRows = this.rmcatDataList;
+              console.log("MATERIAL_CATEGORY_GET_OK",this.rmcatRows);
+            } 
+            
+            if (message && message.type == UOM_GET_OK)
+            { 
+              this.uomRows.length = 0;
+              for (var d of message.data.data.data)
+              {    
+                if(d.uomTypeId != 2) continue;
+                this.uomDataList.push({   
+                  uomId : d.uomId,
+                  uomCode : d.uomCode 
+                });
+              }
+              
+              this.uomRows = this.uomDataList;
+              console.log("UOM_GET_OK",this.uomRows);
+            } 
+            
+            if (message && message.type == COUNTRY_GET_OK)
+            {  
+              for (var d of message.data.data.data)
+              { 
+                this.countries.push({   
+                  value : d.countryId,
+                  name : d.countryName,
+                  checked : false
+                });
+              } 
+              
+              console.log("COUNTRY_GET_OK",this.countries);
+            } 
+          });                
+        }
         
-      }                
-         
-      
-      
-      cancel() 
-      {
-        this.display = false;     
-        this.itemSelected = false;          
-      }    
-      
-      getMaterialList() {
-        this.dispatchIntent(RAW_MATERIAL_GET);
-      }
-      
-      dispatchIntent(messageType : string, data? : any)
-      {   
-        this.store.dispatch(
-          {     
-            type: messageType,
-            data : data
-          });      
-        }  
-      }
-      
-      
+        editForm(evt : any) {
+          
+          if (evt && evt.row && evt.row.rmid) {
+            
+            let targetDataId = evt.row.rmid;
+            
+            if (targetDataId) 
+            {
+              this.currentModel = this.rows.find(x => x.rmid == targetDataId);     
+              
+              if (this.currentModel)
+              {
+                this.itemSelected = true;   
+                
+                this.formUtil = new FormUtil<RawMaterialModel>(this.currentModel, this.formValidators);
+                let userform = this.formUtil.createForm(false);
+                this.personForm = userform;
+                
+                this.personForm.valueChanges.debounceTime(300)
+                .subscribe(data => this.onValueChanged(data));
+                
+              }
+              else 
+              this.itemSelected = false;
+              
+              this.edit();         
+              this.display = true; 
+            }
+          }
+        }
+        
+        onActivate(evt) {      
+          
+          
+          if (evt.type && evt.type == 'checkbox')
+          {        
+            this.isTargetCheckbox = true;
+          }
+          else if (evt && evt.type && evt.type == 'click')
+          {
+            if (this.isTargetCheckbox != true)
+            {
+              this.editForm(evt);
+            }
+            this.isTargetCheckbox = false;
+          }
+        }
+        
+        deleteForm() 
+        {
+          
+          if (confirm(DELETE_RAWMATERIAL_PROMPT)) {
+            
+            if (this.selected && this.selected.length > 0)
+            {       
+              let deleItems = this.selected.map( x  => x.rmid);
+              if (deleItems)
+              {
+                this.dispatchIntent(RAW_MATERIAL_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+              }
+            }
+          }
+        }
+        
+        onSelect(evt: any) {     
+          this.selected = evt.selected;      
+        }
+        
+        addForm() {        
+          
+          this.formTitle = "New Raw Material"; 
+          this.display = true;                          
+          this.intention = ADD;
+          this.configureAddForm();  
+        }   
+        
+        edit() {  
+          
+          this.formTitle = "Edit Raw Material"; 
+          this.intention = UPDATE;      
+          
+          this.configureEditForm();
+          
+          if (this.currentModel && this.currentModel.countryList)
+          {                                                    
+            if (this.countries) {
+              
+              for(var c of this.countries)
+              {
+                var temp = new Array(); 
+                
+                temp = this.currentModel.countryList.split(",");
+                
+                for (var a in temp ) {
+                  if(c.value == temp[a])
+                  c.checked = true;
+                }
+                
+              }
+            }             
+          }       
+          
+        }                
+        
+        
+        
+        cancel() 
+        {
+          this.display = false;     
+          this.itemSelected = false;          
+        }    
+        
+        getMaterialList() {
+          this.dispatchIntent(RAW_MATERIAL_GET);
+        }
+        
+        dispatchIntent(messageType : string, data? : any)
+        {   
+          this.store.dispatch(
+            {     
+              type: messageType,
+              data : data
+            });      
+          }  
+        }
+        
+        

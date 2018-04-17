@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
+  DELETE_SUPPLIER_PROMPT,
   CityAppState, SUPPLIER_GET, SUPPLIER_DELETE, DELETE_ITEM_DELIMITER, 
   ADD, UPDATE, SUPPLIER_GET_OK, SUPPLIER_SAVE, SUPPLIER_SAVE_SUCCESS, SUPPLIER_DELETE_SUCCESS
 }
@@ -19,7 +20,7 @@ import {APPLICATION_HOST, TIME_DELAY } from '../../sharedObjects/applicationSetu
   styleUrls: ['./supplier-component.component.css']
 })
 export class SupplierComponentComponent implements OnInit {
-    
+  
   private supplier: SupplierModel = new SupplierModel();
   personForm: FormGroup;
   private intention: number = UPDATE;
@@ -185,8 +186,6 @@ export class SupplierComponentComponent implements OnInit {
           
           editForm(evt: any) {
             
-            debugger;
-            
             if (evt && evt.row && evt.row.supplierId) {
               
               let targetSupplierId = evt.row.supplierId;
@@ -205,8 +204,7 @@ export class SupplierComponentComponent implements OnInit {
                 }
               }
             }
-          }
-
+          }          
           
           onActivate(evt) {      
             
@@ -243,12 +241,15 @@ export class SupplierComponentComponent implements OnInit {
           deleteForm() 
           {
             
-            if (this.selected && this.selected.length > 0)
-            {       
-              let deleItems = this.selected.map( x  => x.supplierId);
-              if (deleItems)
-              {
-                this.dispatchIntent(SUPPLIER_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+            if (confirm(DELETE_SUPPLIER_PROMPT))
+            {
+              if (this.selected && this.selected.length > 0)
+              {       
+                let deleItems = this.selected.map( x  => x.supplierId);
+                if (deleItems)
+                {
+                  this.dispatchIntent(SUPPLIER_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+                }
               }
             }
           }

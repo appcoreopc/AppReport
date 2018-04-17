@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
-  CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK, DELETE_ITEM_DELIMITER, DELETE_ITEM_FIELD,
+  CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
+  DELETE_ITEM_DELIMITER, DELETE_ITEM_FIELD, DELETE_EMPLOYEE_PROMPT,
   ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE, EMPLOYEE_DELETE_SUCCESS,
   JOBTITLE_GET, JOBTITLE_GET_OK, PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE
 } from '../../sharedObjects/sharedMessages';
@@ -289,17 +290,19 @@ export class EmployeeComponentComponent implements OnInit {
     onSelect(evt: any) {     
       this.selected = evt.selected;      
     }
-    
+        
     deleteForm() 
     {
-      
-      if (this.selected && this.selected.length > 0)
-      {       
-        let deleItems = this.selected.map( x  => x.empId);
-        if (deleItems)
-        {
-          this.isLoading = false;
-          this.dispatchIntent(EMPLOYEE_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+      if (confirm(DELETE_EMPLOYEE_PROMPT))
+      {
+        if (this.selected && this.selected.length > 0)
+        {       
+          let deleItems = this.selected.map( x  => x.empId);
+          if (deleItems)
+          {
+            this.isLoading = false;
+            this.dispatchIntent(EMPLOYEE_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+          }
         }
       }
     }

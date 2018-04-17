@@ -3,7 +3,8 @@ import { Store } from '@ngrx/store';
 import {FormUtil} from "../../sharedObjects/formUtil";
 import * as timeUtil from "../../sharedObjects/timeUtil";
 
-import { CityAppState, MATERIAL_CATEGORY_GET, MATERIAL_CATEGORY_DELETE_SUCCESS, 
+import { CityAppState, MATERIAL_CATEGORY_GET, 
+  MATERIAL_CATEGORY_DELETE_SUCCESS, DELETE_MATERIALCATEGORY_PROMPT,
   MATERIAL_CATEGORY_GET_OK, MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_DELETE, 
   MATERIAL_CATEGORY_SAVE_SUCCESS, MATERIAL_CATEGORY_SAVE_ERR, DELETE_ITEM_DELIMITER,
   UOM_CANCEL, UOM_CANCEL_OK, UOM_GET, UOM_GET_ERR, UOM_GET_OK, ADD, UPDATE
@@ -226,26 +227,26 @@ export class MaterialCategoryComponentComponent implements OnInit {
                 
                 this.itemSelected = true;                   
                 this.formUtil = new FormUtil<MaterialCategoryModel>(this.rmcatModel, this.formValidators);
-                  
+                
                 let form = this.formUtil.createForm(false);
                 this.personForm = form;  
-                  
+                
                 this.personForm.valueChanges.debounceTime(300)
-                  .subscribe(data => this.onValueChanged(data));
-                  
-                } 
-                else 
-                this.itemSelected = false;
+                .subscribe(data => this.onValueChanged(data));
                 
-                this.setEditIntention();
-                
-              }
+              } 
+              else 
+              this.itemSelected = false;
+              
+              this.setEditIntention();
+              
             }
-          }          
-          
-          deleteForm() 
-          {
-            debugger;
+          }
+        }          
+        
+        deleteForm() 
+        {
+          if (confirm(DELETE_MATERIALCATEGORY_PROMPT)) {
             if (this.selected && this.selected.length > 0)
             {       
               let deleItems = this.selected.map( x  => x.rmcatId);
@@ -255,24 +256,24 @@ export class MaterialCategoryComponentComponent implements OnInit {
               }
             }
           }
+        }        
+        
+        setEditIntention() {  
           
-          
-          setEditIntention() {  
-            
-            this.formTitle = "Edit Material Category"; 
-            this.intention = UPDATE;                            
-            this.display = true;
-          }
-          
-          cancel() 
-          {                               
-            this.rmcatModel = this.formUtil.rollback();
-            this.itemSelected = false;
-            this.display = false;       
-          }
-          
-          getCategoryList(): any {
-            this.dispatchIntent(MATERIAL_CATEGORY_GET);  
-          }
-          
+          this.formTitle = "Edit Material Category"; 
+          this.intention = UPDATE;                            
+          this.display = true;
         }
+        
+        cancel() 
+        {                               
+          this.rmcatModel = this.formUtil.rollback();
+          this.itemSelected = false;
+          this.display = false;       
+        }
+        
+        getCategoryList(): any {
+          this.dispatchIntent(MATERIAL_CATEGORY_GET);  
+        }
+        
+      }
