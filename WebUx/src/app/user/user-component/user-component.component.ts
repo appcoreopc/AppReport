@@ -6,7 +6,7 @@ import {
   CityAppState,
   ADD,
   UPDATE, DELETE_ITEM_DELIMITER,
-  USER_GET,
+  USER_GET, DELETE_USER_PROMPT,
   USER_GET_OK, USER_DELETE, USER_DELETE_SUCCESS, USER_DELETE_ERR,
   USER_SAVE,
   USER_SAVE_SUCCESS,
@@ -87,15 +87,12 @@ export class UserComponentComponent implements OnInit {
     this.configureUpdateForm();
   }
   
-  ngAfterViewInit() {
-    
+  ngAfterViewInit() {    
     this.dispatchIntent(USER_GET);
   }
   
-  save() {
+  save() {   
     
-    debugger;
-
     this.isLoading = false;
     
     let data = this.formUtil.commit();
@@ -140,16 +137,15 @@ export class UserComponentComponent implements OnInit {
         this.rows = [...this.dataList];
       }
       
-     debugger;
-     if (message && (message.type == USER_SAVE_SUCCESS || message.type == USER_DELETE_SUCCESS)) {
-
-      if (this.isLoading == false)
-      {
-        this.isLoading = true;
-        this.display = false;        
-        await timeUtil.delay(TIME_DELAY);
-        this.getUserList();  
-      } 
+      if (message && (message.type == USER_SAVE_SUCCESS || message.type == USER_DELETE_SUCCESS)) {
+        
+        if (this.isLoading == false)
+        {
+          this.isLoading = true;
+          this.display = false;        
+          await timeUtil.delay(TIME_DELAY);
+          this.getUserList();  
+        } 
       }
     });
     
@@ -227,7 +223,6 @@ export class UserComponentComponent implements OnInit {
       
       editForm(evt : any) {    
         
-        debugger;
         if (evt && evt.row && evt.row.userId) {
           
           let userId = evt.row.userId;
@@ -274,8 +269,6 @@ export class UserComponentComponent implements OnInit {
       
       onActivate(evt) {      
         
-        debugger; 
-        
         if (evt.type && evt.type == 'checkbox')
         {        
           this.isTargetCheckbox = true;
@@ -297,17 +290,15 @@ export class UserComponentComponent implements OnInit {
       
       cancel()
       {
-        debugger;
         this.display = false;
         this.itemSelected = false;
         this.targetItem = this.formUtil.rollback();
       }
       
       deleteForm() {
-
-      
-        debugger; 
         
+        if (confirm(DELETE_USER_PROMPT))
+        {        
         if (this.selected && this.selected.length > 0)
         {       
           let deleItems = this.selected.map( x  => x.userId);
@@ -317,6 +308,7 @@ export class UserComponentComponent implements OnInit {
             this.dispatchIntent(USER_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
           }
         }
+      }
       }      
       
       addForm() {

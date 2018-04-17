@@ -223,6 +223,14 @@ export const DELETE = 4;
 export const DELETE_ITEM_DELIMITER = ',';
 export const DELETE_ITEM_FIELD = 'deleteItems';
 
+export const DELETE_USER_PROMPT = "Do you want to remove this user(s)?";
+export const DELETE_EMPLOYEE_PROMPT = "";
+export const DELETE_SUPPLIER_PROMPT = "";
+export const DELETE_READYSTOCK_PROMPT = "";
+export const DELETE_MATERIAL_PROMPT = "";
+export const DELETE_CATEGORY_PROMPT = "";
+
+
 export interface CityAppState {
 	status?: number;	
 	type? : string; 
