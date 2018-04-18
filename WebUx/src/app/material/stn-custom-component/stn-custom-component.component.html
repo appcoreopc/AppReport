@@ -1,47 +1,47 @@
 <div class="container"> 
   <p-dialog header="{{formTitle}}" [(visible)]="display" [width]="550" modal='true'>
-  <form [formGroup]='personForm'>
-    
-
-    <div style="width:100%;padding:0px"> 
-		<div class="panel panel-info"> 
-			<div class="panel-body" style="padding:5px; padding-left:30px"> 
-
-           <div class="form-group row">
-					  <div class="cell c1">
-					   <label for="stncustomName">STN KASTAM Name :</label>
-					  </div> 
-					  <div class="cell c2345">   
-              <input id="stncustomName" type="text" maxlength="50" class="form-control text-control" formControlName="stncustomName">         
-              
-              <div *ngIf="formErrors.stncustomName" class="alert alert-danger">
-                {{ formErrors.stncustomName }}
-              </div>
-					  </div>  
-           </div>   
-
-           <div class="form-group row">
-					  <div class="cell c1">
-					   <label for="isLocal">Local / Imported :</label>
-					  </div> 
-					  <div class="cell c2345">    
-              
-              <input type="radio" formControlName="isLocal" [value]="true">
-              Local
-              <input type="radio" formControlName="isLocal" [value]="false">
-              Imported
-
-              <div *ngIf="formErrors.isLocal" class="alert alert-danger">
-                {{ formErrors.isLocal }}
-              </div>
-					  </div>  
-           </div>  
-
-			  </div>     
-      </div>        
-    </div>
-    
-     <div class="form-group row">
+    <form [formGroup]='personForm'>
+      
+      
+      <div style="width:100%;padding:0px"> 
+        <div class="panel panel-info"> 
+          <div class="panel-body" style="padding:5px; padding-left:30px"> 
+            
+            <div class="form-group row">
+              <div class="cell c1">
+                <label for="stncustomName">STN KASTAM Name :</label>
+              </div> 
+              <div class="cell c2345">   
+                <input id="stncustomName" type="text" maxlength="50" class="form-control text-control" formControlName="stncustomName">         
+                
+                <div *ngIf="formErrors.stncustomName" class="alert alert-danger">
+                  {{ formErrors.stncustomName }}
+                </div>
+              </div>  
+            </div>   
+            
+            <div class="form-group row">
+              <div class="cell c1">
+                <label for="isLocal">Local / Imported :</label>
+              </div> 
+              <div class="cell c2345">    
+                
+                <input type="radio" formControlName="isLocal" [value]="true">
+                Local
+                <input type="radio" formControlName="isLocal" [value]="false">
+                Imported
+                
+                <div *ngIf="formErrors.isLocal" class="alert alert-danger">
+                  {{ formErrors.isLocal }}
+                </div>
+              </div>  
+            </div>  
+            
+          </div>     
+        </div>        
+      </div>
+      
+      <div class="form-group row">
         <div class="cell c1"> 
         </div> 
         <div class="cell c2"> 
@@ -51,54 +51,72 @@
         <div class="cell c4"> 
         </div> 
         <div class="cell c5" style="text-align:right">	   
-            <p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
-            <p-button icon="fa fa-fw fa-close" label="Cancel" (click)="cancel()"></p-button>   
+          <p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>   
+          <p-button icon="fa fa-fw fa-close" label="Cancel" (click)="cancel()"></p-button>   
         </div>
       </div>
-        
-   
-  </form>
-  
+      
+      
+    </form>
+    
   </p-dialog>
-
+  
 </div>
 
 
 <div class="container">       
-	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (onClick)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
 </div>
 <div style="clear:both; height:10px"></div>
- 
+
 
 <div class="container"> 
   
   <ngx-datatable class="material striped" 
   [rows]="rows"
   [limit]="10"
-  [selectionType]="'single'"
+  
+  
+  [selectionType]="'checkbox'"
   (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  
+  
   [columns]="columns" [headerHeight]="30"  [rowHeight]="'auto'"
   [footerHeight]="50">
- 
-	 <ngx-datatable-column  name="Id" prop="stncustomId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           {{value}}
-        </ng-template>
-		</ngx-datatable-column>
   
-	 <ngx-datatable-column  name="STN KASTAM Name" prop="stncustomName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-           {{value}}
-        </ng-template>
-    </ngx-datatable-column>
+  <ngx-datatable-column
+  [width]="45"
+  [sortable]="false"
+  [canAutoResize]="false"
+  [draggable]="false"
   
-	 <ngx-datatable-column  name="Local / Imported" prop="isLocal" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
-     <ng-template let-value="value" ngx-datatable-cell-template>
-       
-						<div *ngIf="value===true">Local</div>
-						<div *ngIf="value===false">Imported</div>
-        </ng-template>
-    </ngx-datatable-column>
+  [resizeable]="false"
+  [headerCheckboxable]="true"
+  [checkboxable]="true">
+</ngx-datatable-column>
+
+
+<ngx-datatable-column  name="Id" prop="stncustomId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    {{value}}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column  name="STN KASTAM Name" prop="stncustomName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    {{value}}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column  name="Local / Imported" prop="isLocal" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    
+    <div *ngIf="value===true">Local</div>
+    <div *ngIf="value===false">Imported</div>
+  </ng-template>
+</ngx-datatable-column>
 
 </ngx-datatable>
 

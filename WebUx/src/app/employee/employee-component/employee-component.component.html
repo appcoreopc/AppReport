@@ -123,7 +123,8 @@
 </div>
 
 <div class="container">       
-	<p-button (click)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (click)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (click)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
 </div>
 
 <div style="clear:both; height:10px"></div>
@@ -133,13 +134,25 @@
   [rows]="rows"
   [limit]="10"
   (select)="person" 
-  [selectionType]="'single'"
+  [selectionType]="'checkbox'"
   (select)="onSelect($event)"
-  [headerHeight]="30"  [rowHeight]="'auto'"
+  (activate)="onActivate($event)"
+  [headerHeight]="30"  
+  [rowHeight]="'auto'"
   [footerHeight]="50">
 
+  <ngx-datatable-column
+            [width]="45"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            
+            [resizeable]="false"
+            [headerCheckboxable]="true"
+            [checkboxable]="true">
+          </ngx-datatable-column>
   
-	 <ngx-datatable-column  name="Id" prop="empId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+	 <ngx-datatable-column name="Id" prop="empId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
            {{value}}
         </ng-template>

@@ -12,6 +12,9 @@ export const CONFIG_GET = 'CONFIG_GET';
 export const CONFIG_GET_ERR = 'CONFIG_GET_ERR';
 export const CONFIG_GET_OK = 'CONFIG_GET_OK';
 export const CONFIG_WAIT_PENDING = 'CONFIG_WAIT_PENDING';
+export const CONFIG_DELETE = 'CONFIG_DELETE';
+export const CONFIG_DELETE_SUCCESS = 'CONFIG_DELETE_SUCCESS';
+export const CONFIG_DELETE_ERR = 'CONFIG_DELETE_ERR';
 
 export const EMPLOYEE_SAVE = 'EMPLOYEE_SAVE';
 export const EMPLOYEE_CANCEL = 'EMPLOYEE_CANCEL';
@@ -41,6 +44,9 @@ export const USER_GET = 'USER_GET';
 export const USER_GET_ERR = 'USER_GET_ERR';
 export const USER_GET_OK = 'USER_GET_OK';
 export const USER_WAIT_PENDING = 'USER_WAIT_PENDING';
+export const USER_DELETE = 'USER_DELETE';
+export const USER_DELETE_SUCCESS = 'USER_DELETE_SUCCESS';
+export const USER_DELETE_ERR = 'USER_DELETE_ERR';
 
 export const RAW_MATERIAL_SAVE = 'RAW_MATERIAL_SAVE';
 export const RAW_MATERIAL_CANCEL = 'RAW_MATERIAL_CANCEL';
@@ -52,6 +58,9 @@ export const RAW_MATERIAL_GET = 'RAW_MATERIAL_GET';
 export const RAW_MATERIAL_GET_ERR = 'RAW_MATERIAL_GET_ERR';
 export const RAW_MATERIAL_GET_OK = 'RAW_MATERIAL_GET_OK';
 export const RAW_MATERIAL_WAIT_PENDING = 'RAW_MATERIAL_WAIT_PENDING';
+export const RAW_MATERIAL_DELETE = 'RAW_MATERIAL_DELETE';
+export const RAW_MATERIAL_DELETE_SUCCESS = 'RAW_MATERIAL_DELETE_SUCCESS';
+export const RAW_MATERIAL_DELETE_ERR = 'RAW_MATERIAL_DELETE_ERR';
 
 export const SUPPLIER_SAVE = 'SUPPLIER_SAVE';
 export const SUPPLIER_CANCEL = 'SUPPLIER_CANCEL';
@@ -63,6 +72,9 @@ export const SUPPLIER_GET = 'SUPPLIER_GET';
 export const SUPPLIER_GET_ERR = 'SUPPLIER_GET_ERR';
 export const SUPPLIER_GET_OK = 'SUPPLIER_GET_OK';
 export const SUPPLIER_WAIT_PENDING = 'SUPPLIER_WAIT_PENDING';
+export const SUPPLIER_DELETE = 'SUPPLIER_DELETE';
+export const SUPPLIER_DELETE_SUCCESS = 'SUPPLIER_DELETE_SUCCESS';
+export const SUPPLIER_DELETE_ERR = 'SUPPLIER_DELETE_ERR';
 
 export const MATERIAL_CATEGORY_SAVE = 'MATERIAL_CATEGORY_SAVE';
 export const MATERIAL_CATEGORY_CANCEL = 'MATERIAL_CATEGORY_CANCEL';
@@ -74,6 +86,10 @@ export const MATERIAL_CATEGORY_GET = 'MATERIAL_CATEGORY_GET';
 export const MATERIAL_CATEGORY_GET_ERR = 'MATERIAL_CATEGORY_GET_ERR';
 export const MATERIAL_CATEGORY_GET_OK = 'MATERIAL_CATEGORY_GET_OK';
 export const MATERIAL_CATEGORY_WAIT_PENDING = 'MATERIAL_CATEGORY_WAIT_PENDING';
+
+export const MATERIAL_CATEGORY_DELETE = 'MATERIAL_CATEGORY_DELETE';
+export const MATERIAL_CATEGORY_DELETE_SUCCESS = 'MATERIAL_CATEGORY_DELETE_SUCCESS';
+export const MATERIAL_CATEGORY_DELETE_ERR = 'MATERIAL_CATEGORY_DELETE_ERR';
  
 export const READYSTOCK_SAVE = ' READYSTOCK_SAVE';
 export const READYSTOCK_CANCEL = ' READYSTOCK_CANCEL';
@@ -85,6 +101,9 @@ export const READYSTOCK_GET = ' READYSTOCK_GET';
 export const READYSTOCK_GET_ERR = ' READYSTOCK_GET_ERR';
 export const READYSTOCK_GET_OK = ' READYSTOCK_GET_OK';
 export const READYSTOCK_WAIT_PENDING = ' READYSTOCK_WAIT_PENDING';
+export const READYSTOCK_DELETE = ' READYSTOCK_DELETE';
+export const READYSTOCK_DELETE_SUCCESS = ' READYSTOCK_DELETE_SUCCESS';
+export const READYSTOCK_DELETE_ERR = ' READYSTOCK_DELETE_ERR';
 
 export const STN_CUSTOM_SAVE = 'STN_CUSTOM_SAVE';
 export const STN_CUSTOM_CANCEL = 'STN_CUSTOM_CANCEL';
@@ -96,6 +115,10 @@ export const STN_CUSTOM_GET = 'STN_CUSTOM_GET';
 export const STN_CUSTOM_GET_ERR = 'STN_CUSTOM_GET_ERR';
 export const STN_CUSTOM_GET_OK = 'STN_CUSTOM_GET_OK';
 export const STN_CUSTOM_WAIT_PENDING = 'STN_CUSTOM_WAIT_PENDING';
+
+export const STN_CUSTOM_DELETE = 'STN_CUSTOM_DELETE';
+export const STN_CUSTOM_DELETE_SUCCESS = 'STN_CUSTOM_DELETE_SUCCESS';
+export const STN_CUSTOM_DELETE_ERR = 'STN_CUSTOM_DELETE_ERR';
 
 export const REPORT_SAVE = 'REPORT_SAVE';
 export const REPORT_CANCEL = 'REPORT_CANCEL';
@@ -197,6 +220,17 @@ export const UPDATE = 1;
 export const ADD = 2; 
 export const DELETE = 4;
 
+export const DELETE_ITEM_DELIMITER = ',';
+export const DELETE_ITEM_FIELD = 'deleteItems';
+
+export const DELETE_USER_PROMPT = "Do you want to remove selected user(s)?";
+export const DELETE_EMPLOYEE_PROMPT = "Do you want to remove selected employee(s)?";
+export const DELETE_SUPPLIER_PROMPT = "Do you want to remove selected supplier(s)?";
+export const DELETE_READYSTOCK_PROMPT = "Do you want to remove selected ready stock(s)?";
+export const DELETE_RAWMATERIAL_PROMPT = "Do you want to remove selected raw material(s)?";
+export const DELETE_MATERIALCATEGORY_PROMPT = "Do you want to remove selected material category(s)?";
+export const DELETE_STNCUSTOM_PROMPT = "Do you want to remove selected STN/KASTAM Name(s)?";
+
 export interface CityAppState {
 	status?: number;	
 	type? : string; 
@@ -233,6 +267,5 @@ export interface KeyValueData {
 	key: string;
 	description : string
 } 
-
 
 export const headersJson = new HttpHeaders().set('Content-Type', 'application/json');

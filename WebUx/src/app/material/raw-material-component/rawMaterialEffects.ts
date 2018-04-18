@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store';
 import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 
 import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
-  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
+  PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE, RAW_MATERIAL_DELETE_SUCCESS, 
+  RAW_MATERIAL_DELETE, RAW_MATERIAL_DELETE_ERR, 
   RAW_MATERIAL_MESSAGE_END, RAW_MATERIAL_SAVE_ERR, RAW_MATERIAL_CANCEL_OK, 
   RAW_MATERIAL_GET, RAW_MATERIAL_GET_ERR, RAW_MATERIAL_WAIT_PENDING, 
   RAW_MATERIAL_GET_OK, UOM_GET, UOM_GET_OK, COUNTRY_GET,  COUNTRY_GET_OK,
@@ -103,6 +104,53 @@ import {RAW_MATERIAL_SAVE, RAW_MATERIAL_CANCEL, RAW_MATERIAL_SAVE_SUCCESS,
       }) 
       .catch(() => Observable.of({ type: RAW_MATERIAL_SAVE_ERR }))
     ); 
+
+
+
+    @Effect() rawMaterialDelete$ = this.actions$
+    .ofType(RAW_MATERIAL_DELETE)
+    .map(action => {    
+  
+      return JSON.stringify(action.data);
+    }).switchMap(payload => {
+      
+      /////////EXTRA CODE /////////////////////////////
+      
+      return Observable.of(payload)
+      
+      .map(action => {
+        
+        this.http.request("delete", APPLICATION_HOST + '/rawmaterial/delete/', 
+        { 
+          headers : headersJson,
+          body : action
+        })
+        .subscribe(res => {
+          messageUtil.dispatchIntent(this.store, RAW_MATERIAL_DELETE_SUCCESS, null);
+          messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          
+        },
+        err => {
+          if (err && err.status == 204) {
+            messageUtil.dispatchIntent(this.store, RAW_MATERIAL_DELETE_SUCCESS, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          }
+          else {
+            messageUtil.dispatchIntent(this.store, RAW_MATERIAL_DELETE_ERR, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          }            
+        });
+        
+        ///////////EXTRA CODE ENDS ///////////////////////////          
+      })
+      .concatMap(res => {
+        return Observable.of({ type: PROGRESS_WAIT_SHOW });
+      });
+      
+    }); 
+  
+    
+
   }
   
   

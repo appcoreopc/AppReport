@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CityAppState, EMPLOYEE_SAVE, EMPLOYEE_GET_OK,
-  ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE,
+  DELETE_ITEM_DELIMITER, DELETE_ITEM_FIELD, DELETE_EMPLOYEE_PROMPT,
+  ADD, UPDATE, EMPLOYEE_GET, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE, EMPLOYEE_DELETE_SUCCESS,
   JOBTITLE_GET, JOBTITLE_GET_OK, PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE
 } from '../../sharedObjects/sharedMessages';
 import { EmployeeModel } from "../../model/EmployeeModel";
@@ -26,6 +27,9 @@ export class EmployeeComponentComponent implements OnInit {
   person: EmployeeModel = new EmployeeModel();
   personForm: FormGroup;
   private intention: number = UPDATE;
+  isTargetCheckbox : boolean = false;
+  selected : any;
+  isLoading : boolean = false;
   
   display: boolean = false;
   formTitle: string = "New Employee";
@@ -81,7 +85,7 @@ export class EmployeeComponentComponent implements OnInit {
     this.userSubscription = this.store.subscribe(appData => {
       
       this.componentMessageHandle(messageUtil.getMultiMessage(appData,
-        [EMPLOYEE_GET_OK, EMPLOYEE_SAVE_SUCCESS, JOBTITLE_GET_OK]));
+        [EMPLOYEE_GET_OK, EMPLOYEE_SAVE_SUCCESS, EMPLOYEE_DELETE_SUCCESS, JOBTITLE_GET_OK]));
       });
       
       this.configureEditForm();
@@ -92,14 +96,11 @@ export class EmployeeComponentComponent implements OnInit {
       this.dispatchIntent(JOBTITLE_GET);
       
       this.dispatchIntent(EMPLOYEE_GET);
-
-      this.dispatchIntent(EMPLOYEE_DELETE, "{empid : 123}");
-
-
-
     }
     
     save() {
+      
+      this.isLoading = false;
       
       let data = this.formUtil.commit();
       
@@ -190,14 +191,18 @@ export class EmployeeComponentComponent implements OnInit {
             this.dataList.push(model);
           }
           
-          this.rows = this.dataList;
+          this.rows = [...this.dataList];
         }
         
-        if (message && message.type == EMPLOYEE_SAVE_SUCCESS) {
+        if (message && (message.type == EMPLOYEE_SAVE_SUCCESS || message.type == EMPLOYEE_DELETE_SUCCESS)) {
           
-          this.display = false;        
-          await timeUtil.delay(TIME_DELAY);        
-          this.getEmployee();
+          if (this.isLoading == false)
+          {
+            this.isLoading = true;
+            this.display = false;        
+            await timeUtil.delay(TIME_DELAY);        
+            this.getEmployee();
+          }
         }
         
         if (message && message.type == JOBTITLE_GET_OK) {          
@@ -236,29 +241,70 @@ export class EmployeeComponentComponent implements OnInit {
     mapJobToTitle(jobList: Array<JobTitleModel>) {
       for (let item of jobList) {
         this.jobListMap[item.jobTitleId] = item.jobTitleName;
-      }
+      }      
+    }    
+    
+    edit(evt : any) {
       
+      if (evt && evt.row && evt.row.empId) {
+        
+        let empId = evt.row.empId;
+        
+        if (empId) 
+        {
+          this.person = this.rows.find(x => x.empId == empId);     
+          
+          if (this.person)
+          {
+            this.itemSelected = true;  
+            this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
+            let form = this.formUtil.createForm(false);
+            this.personForm = form;
+            this.intention = UPDATE;
+            
+            this.personForm.valueChanges.debounceTime(300)
+            .subscribe(data => this.onValueChanged(data));
+            
+            this.display = true;  
+          }  
+        }    
+      }     
+    }      
+    
+    onActivate(evt) {      
+      
+      if (evt.type && evt.type == 'checkbox')
+      {        
+        this.isTargetCheckbox = true;
+      }
+      else if (evt && evt.type && evt.type == 'click')
+      {
+        if (this.isTargetCheckbox != true)
+        {
+          this.edit(evt);
+        }
+        this.isTargetCheckbox = false;
+      }
     }
     
-    onSelect(evt: any) {
-      
-      if (evt && evt.selected && evt.selected.length > 0) {
-        this.person = evt.selected[0] as EmployeeModel;      
-        this.itemSelected = true;
-        this.formUtil = new FormUtil<EmployeeModel>(this.person, this.formValidators);
-        let form = this.formUtil.createForm(false);
-        this.personForm = form;
-        this.intention = UPDATE;
+    onSelect(evt: any) {     
+      this.selected = evt.selected;      
+    }
         
-        this.personForm.valueChanges.debounceTime(300)
-        .subscribe(data => this.onValueChanged(data));
-        
-        this.display = true;
-        
+    deleteForm() 
+    {
+      if (confirm(DELETE_EMPLOYEE_PROMPT))
+      {
+        if (this.selected && this.selected.length > 0)
+        {       
+          let deleItems = this.selected.map( x  => x.empId);
+          if (deleItems)
+          {
+            this.isLoading = false;
+            this.dispatchIntent(EMPLOYEE_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
+          }
+        }
       }
-      else
-      this.itemSelected = false;
-      
     }
     
     addForm() {

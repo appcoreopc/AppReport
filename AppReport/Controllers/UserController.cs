@@ -53,7 +53,7 @@ namespace AppReport.Controllers
                 !string.IsNullOrEmpty(requestData.DeleteItems))
             {
                 var result = new UserService(_ptsContext).Delete(requestData.DeleteItems);
-                return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
+                return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else
                 return new BadRequestResult();

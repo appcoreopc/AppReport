@@ -168,16 +168,32 @@
 </div>
 
 <div class="container">       
-	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+  <p-button (onClick)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
 </div>
 <div style="clear:both; height:10px"></div>
 
 <div class="container"> 
   <ngx-datatable class="material striped" [rows]="rows" [limit]="10" [columns]="columns"
-  [selectionType]="'single'"
+
+  [selectionType]="'checkbox'"
   (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+
   [headerHeight]="30"  [rowHeight]="'auto'"
   [footerHeight]="50">
+
+  <ngx-datatable-column
+  [width]="45"
+  [sortable]="false"
+  [canAutoResize]="false"
+  [draggable]="false"
+  
+  [resizeable]="false"
+  [headerCheckboxable]="true"
+  [checkboxable]="true">
+</ngx-datatable-column>
+
 
 	 <ngx-datatable-column  name="Id" prop="rmid" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>

@@ -3,7 +3,8 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL,
   PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
-   STN_CUSTOM_SAVE_SUCCESS, STN_CUSTOM_WAIT_PENDING,
+  STN_CUSTOM_DELETE_SUCCESS, STN_CUSTOM_DELETE, STN_CUSTOM_DELETE_ERR,
+  STN_CUSTOM_SAVE_SUCCESS, STN_CUSTOM_WAIT_PENDING,
   STN_CUSTOM_MESSAGE_END, STN_CUSTOM_SAVE_ERR, STN_CUSTOM_CANCEL_OK, STN_CUSTOM_GET, STN_CUSTOM_GET_ERR,
   STN_CUSTOM_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -75,6 +76,50 @@ import {STN_CUSTOM_SAVE, STN_CUSTOM_CANCEL,
       }) 
       .catch(() => Observable.of({ type: STN_CUSTOM_SAVE_ERR }))
     ); 
+
+
+    @Effect() stnCustomDelete$ = this.actions$
+    .ofType(STN_CUSTOM_DELETE)
+    .map(action => {    
+  
+      return JSON.stringify(action.data);
+    }).switchMap(payload => {
+      
+      /////////EXTRA CODE /////////////////////////////
+      
+      return Observable.of(payload)
+      
+      .map(action => {
+        
+        this.http.request("delete", APPLICATION_HOST + '/stncustom/delete/', 
+        { 
+          headers : headersJson,
+          body : action
+        })
+        .subscribe(res => {
+          messageUtil.dispatchIntent(this.store, STN_CUSTOM_DELETE_SUCCESS, null);
+          messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          
+        },
+        err => {
+          if (err && err.status == 204) {
+            messageUtil.dispatchIntent(this.store, STN_CUSTOM_DELETE_SUCCESS, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          }
+          else {
+            messageUtil.dispatchIntent(this.store, STN_CUSTOM_DELETE_ERR, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+          }            
+        });
+        
+        ///////////EXTRA CODE ENDS ///////////////////////////          
+      })
+      .concatMap(res => {
+        return Observable.of({ type: PROGRESS_WAIT_SHOW });
+      });
+      
+    }); 
+    
     
   }
   
