@@ -41,10 +41,11 @@
               
               <div class="cell c2"> 
                 <div class="input-group">
-                  <div class="input-group-addon">
-                    <span>RM</span>
-                  </div>
                   <input id="dutyImpRate" formControlName="dutyImpRate" maxlength="16" type="number" class="form-control decimal-control"  />
+                  
+                  <div class="input-group-addon">
+                    <span>%</span>
+                  </div>
                 </div>
                 <div *ngIf="formErrors.dutyImpRate" class="alert alert-danger">
                   {{ formErrors.dutyImpRate }}
@@ -58,10 +59,11 @@
               </div> 
               <div class="cell c5"> 
                 <div class="input-group">
-                  <div class="input-group-addon">
-                    <span>RM</span>
-                  </div>
                   <input id="gstrate" formControlName="gstrate" maxlength="16" type="number" class="form-control decimal-control"  />
+                
+                  <div class="input-group-addon">
+                    <span>%</span>
+                  </div>
                 </div>
                 <div *ngIf="formErrors.gstrate" class="alert alert-danger">
                   {{ formErrors.gstrate }}

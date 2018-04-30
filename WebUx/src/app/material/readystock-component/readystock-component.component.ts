@@ -37,8 +37,8 @@ export class ReadyStockComponent implements OnInit {
     'readyStockId': [],
     'readyStockDesc': [Validators.required, Validators.minLength(1)],
     'tariffCode': [Validators.required, Validators.minLength(1)],
-    'dutyImpRate': [Validators.required, Validators.minLength(1)],
-    'gstrate': [Validators.required, Validators.minLength(1)]
+    'dutyImpRate': [Validators.required],
+    'gstrate': [Validators.required]
   }
   
   formErrors = {
@@ -79,7 +79,7 @@ export class ReadyStockComponent implements OnInit {
   
   display: boolean = false;
   itemSelected : boolean = false;
-  formTitle: string = "New Ready Stock"; 
+  formTitle: string = "New FG Category"; 
   
   private rsModel: ReadyStockModel = new ReadyStockModel();
   
@@ -180,8 +180,8 @@ export class ReadyStockComponent implements OnInit {
             'readyStockId': [this.rsModel.readyStockId],
             'readyStockDesc': [this.rsModel.readyStockDesc, [Validators.required, Validators.minLength(1)]],
             'tariffCode': [this.rsModel.tariffCode, [Validators.required, Validators.minLength(1)]],
-            'dutyImpRate': [this.rsModel.dutyImpRate, [Validators.required, Validators.minLength(1)]],
-            'gstrate': [this.rsModel.gstrate, [Validators.required, Validators.minLength(1)]]
+            'dutyImpRate': [this.rsModel.dutyImpRate, [Validators.required]],
+            'gstrate': [this.rsModel.gstrate, [Validators.required]]
           });
           
           this.personForm.valueChanges.debounceTime(500)
@@ -219,7 +219,7 @@ export class ReadyStockComponent implements OnInit {
           
           addForm() {              
             
-            this.formTitle = "New Ready Stock"; 
+            this.formTitle = "New FG Category"; 
             this.display = true;                          
             this.intention = ADD;
             this.configureAddForm();  
@@ -260,7 +260,7 @@ export class ReadyStockComponent implements OnInit {
             }       
             
             edit() {  
-              this.formTitle = "Edit Ready Stock"; 
+              this.formTitle = "Edit FG Category"; 
               this.intention = UPDATE;
               this.display = true;                          
             }
