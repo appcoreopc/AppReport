@@ -31,12 +31,11 @@ namespace AppReport
             services.Configure<AppConfig>(Configuration);
 
             services.AddDbContext<PTSContext>(options => options.UseSqlServer(Configuration.GetConnectionString(AppConstant.AppSettingDataConnection)));
-            
+
             services.AddMvc();
-                      
+
             services.AddCors();
 
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +51,6 @@ namespace AppReport
             {
                 routes.MapRoute("default", "{controller}/{action}/{id?}");
             }); 
-            
-            
             
         }
     }
