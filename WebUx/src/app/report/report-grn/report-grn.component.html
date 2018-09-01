@@ -35,11 +35,11 @@
 				   </div>  
 				   <div class="form-group row">
 					  <div class="cell c1">
-					   <label for="supplierId">Supplier :</label>
+					   <label for="supplierId">Vendor :</label>
 					  </div> 
 					  <div class="cell c2">
 						<select class="form-control" formControlName="supplierId" style="width:300px">
-							<option *ngFor="let obj of supplierRows" [value]="obj.supplierId">{{obj.supplierName}}</option>
+							<option *ngFor="let obj of supplierRows" [value]="obj.supplierId">{{obj.supplierCode}}</option>
 						  </select>
 							<div *ngIf="formErrors.supplierId" class="alert alert-danger">
 								{{ formErrors.supplierId }}
@@ -48,11 +48,11 @@
 					  <div class="cell c3"> 
 					  </div> 
 					  <div class="cell c4"> 
-					   <label for="rmid">Raw Material :</label>
+					   <label for="rmid">RM Code :</label>
 					  </div> 
 					  <div class="cell c5"> 
 						<select class="form-control" formControlName="rmid" style="width:300px">
-							<option *ngFor="let obj of rmRows" [value]="obj.rmid">{{obj.rmdesc}}</option>
+							<option *ngFor="let obj of rmRows" [value]="obj.rmid">{{obj.rmcode}}</option>
 						  </select> 
 							<div *ngIf="formErrors.rmid" class="alert alert-danger">
 								{{ formErrors.rmid }}
@@ -413,7 +413,7 @@
 						<div class="input-group-addon">
 						  <span>RM</span>
 						</div>
-						 <input id="amountCurrency" formControlName="amountCurrency" maxlength="16" type="number" class="form-control decimal-control"  />
+						 <input id="amountCurrency" formControlName="amountCurrency" maxlength="16" type="number" ng-change="totalRMCost()" class="form-control decimal-control"  />
 					  </div>
 						 <div *ngIf="formErrors.amountCurrency" class="alert alert-danger">
 								{{ formErrors.amountCurrency }}
@@ -453,8 +453,9 @@
 							
 					<div class="input-group-addon">
 					  <span>RM</span>
-					</div>
-					 <input id="amount" type="number" formControlName="amount" maxlength="16"  readonly class="form-control decimal-control" style="width:200px"  /> 
+					</div> 
+					 <input id="amount" type="number" formControlName="amount" maxlength="16" value="{{RMAmount}}"  readonly class="form-control decimal-control" 
+				 style="width:200px"  /> 
 					  </div>    
 				</div>
 				<div *ngIf="formErrors.amount" class="alert alert-danger">
@@ -860,7 +861,8 @@
 						<div class="input-group-addon">
 						  <span class="">RM</span>
 						</div>
-						 <input id="totalFreightCost" formControlName="totalFreightCost" maxlength="16" readonly type="number" class="form-control decimal-control" style="width:200px"  />
+						 <input id="totalFreightCost" formControlName="totalFreightCost" maxlength="16" value="{{TotalFreightCost }}"
+						 readonly type="number" class="form-control decimal-control" style="width:200px"  />
 					  </div>
 				  </div>
 			</div>
@@ -873,7 +875,9 @@
 				<div class="input-group-addon">
 				  <span>RM</span>
 				</div>
-				 <input id="totalFreightRmcost" formControlName="totalFreightRmcost" maxlength="16" readonly type="number" class="form-control decimal-control" style="width:200px" />
+				 <input id="totalFreightRmcost" formControlName="totalFreightRmcost" maxlength="16" 
+				  value="{{TotalFreightRMCost }}"
+				 readonly type="number" class="form-control decimal-control" style="width:200px" />
 			  </div>
           </div>  
        </div>
@@ -949,7 +953,7 @@
 	 <ngx-datatable-column  name="RawMaterial" prop="rmid" [width]="300" [resizeable]="true" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
 					<ng-container *ngFor = "let n of rmRows">
-						<div *ngIf="value===n.rmid">{{n.rmdesc}} / {{value}}</div>
+						<div *ngIf="value===n.rmid">{{n.rmcode}} - {{n.rmdesc}} </div>
 				  </ng-container>
         </ng-template>
 		</ngx-datatable-column>

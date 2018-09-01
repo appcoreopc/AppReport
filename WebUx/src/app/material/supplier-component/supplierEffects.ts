@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import {SUPPLIER_SAVE, SUPPLIER_CANCEL, 
   SUPPLIER_SAVE_SUCCESS, SUPPLIER_WAIT_PENDING, 
   PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE, SUPPLIER_DELETE, 
-  SUPPLIER_DELETE_ERR, SUPPLIER_DELETE_SUCCESS,
+  SUPPLIER_DELETE_ERR, SUPPLIER_DELETE_SUCCESS, CURRENCY_GET, CURRENCY_GET_OK, FACTORYSTATUS_GET, FACTORYSTATUS_GET_OK,
   SUPPLIER_MESSAGE_END, SUPPLIER_SAVE_ERR, SUPPLIER_CANCEL_OK, SUPPLIER_GET, SUPPLIER_GET_ERR,
   SUPPLIER_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
@@ -101,7 +101,17 @@ import {SUPPLIER_SAVE, SUPPLIER_CANCEL,
   }); 
   
 
-
+    @Effect() GetFactoryStatus$ = this.actions$    
+    .ofType(FACTORYSTATUS_GET)     
+    .map(action => {   
+      JSON.stringify(action);
+    })
+    .switchMap(payload => this.http.get(APPLICATION_HOST + '/factorystatus/index')  
+    .map(res => {       
+      return { type: FACTORYSTATUS_GET_OK, data: res};
+    }) 
+    .catch(() => Observable.of({ type: SUPPLIER_SAVE_ERR }))
+  ); 
       
       @Effect() supplierReset$ = this.actions$  
       .ofType(SUPPLIER_CANCEL)  

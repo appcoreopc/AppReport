@@ -44,7 +44,7 @@ namespace AppReport.Controllers
             var myArray = myList.ToArray();
             if (rptSk != null)
             {
-                string rpt = PrintLetter(rptSk);
+                string rpt = PrintLetter(rptSk, true);
                 myList.Add(rpt);
                 rpt = PrintReport(rptSk, rptSkMimp);
                 myList.Add(rpt);
@@ -65,14 +65,14 @@ namespace AppReport.Controllers
         }
 
         [HttpGet]
-        public FileResult DownloadLetter(int id)
+        public FileResult DownloadLetter(int id, [FromQuery] bool isHeader)
         {
             var rptSk = new RptSkService(_ptsContext).Get(id);
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
             string rpt = string.Empty;
             if (rptSk != null)
             {
-                 rpt = PrintLetter(rptSk); 
+                 rpt = PrintLetter(rptSk, isHeader); 
             } 
             return Download(rpt);
         }
@@ -116,7 +116,7 @@ namespace AppReport.Controllers
         }
 
 
-        private string PrintLetter(RptSk rptSk)
+        private string PrintLetter(RptSk rptSk, bool isHeader)
         {
             string rptPath = string.Empty;
             string rptName = _rptFileName + "_" + _rptFileDT + ".pdf";
@@ -129,7 +129,13 @@ namespace AppReport.Controllers
                 DateTime dtletter = rptSk.LetterDate.HasValue ? (DateTime)rptSk.LetterDate : DateTime.Today;
                 string strLDate = dtletter.Day.ToString("D" + 2) + "hb " + ResourceHelper.Get(dtletter.ToString("MMMM")) + " " + dtletter.Year.ToString();
 
-                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 40f, 20f);
+                var marginTop = 40f;
+                if (!isHeader)
+                {
+                    marginTop = 120f;
+                }
+
+                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, marginTop, 20f);
                 doc.AddAuthor(AppConstant.ReportAuthor);
                 doc.AddCreator(AppConstant.ReportCreator);
                 doc.AddKeywords(_rptFileName);
@@ -173,51 +179,57 @@ namespace AppReport.Controllers
                     cell.Border = PdfCell.NO_BORDER;
                     t1b.AddCell(cell);
 
+                    if (isHeader)
+                    {
+                        PdfPTable t1 = new PdfPTable(2);
+                        t1.SetWidths(new float[] { 1f, 3f });
 
-                    PdfPTable t1 = new PdfPTable(2);
-                    t1.SetWidths(new float[] { 1f, 3f });
+                        string imgLogoPath = webRoot + "\\img\\" + rptSk.FCoLogo;
+                        Image imgLogo = Image.GetInstance(imgLogoPath);
+                        imgLogo.Alignment = Element.ALIGN_LEFT;
+                        imgLogo.ScaleToFit(121f, 62f);
 
-                    string imgLogoPath = webRoot + "\\img\\" + rptSk.FCoLogo;
-                    Image imgLogo = Image.GetInstance(imgLogoPath);
-                    imgLogo.Alignment = Element.ALIGN_LEFT;
-                    imgLogo.ScaleToFit(121f, 62f);
+                        cell = new PdfPCell(imgLogo);
+                        cell.Rowspan = 2;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.Border = PdfCell.NO_BORDER;
+                        t1.AddCell(cell);
 
-                    cell = new PdfPCell(imgLogo);
-                    cell.Rowspan = 2;
-                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.Border = PdfCell.NO_BORDER;
-                    t1.AddCell(cell);
-
-                    cell = new PdfPCell(t1b);
-                    cell.PaddingLeft = 5f; //here
-                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                    cell.Border = PdfCell.NO_BORDER;
-                    t1.AddCell(cell);
-
-
-                    var hcontent = new Paragraph();
-                    hcontent.Alignment = Element.ALIGN_LEFT;
+                        cell = new PdfPCell(t1b);
+                        cell.PaddingLeft = 5f; //here
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell.Border = PdfCell.NO_BORDER;
+                        t1.AddCell(cell);
 
 
-                    hcontent.Add(new Chunk($@"{rptSk.FCoAdd1} {rptSk.FCoAdd2}
-{rptSk.FCoAdd3} {rptSk.FCoAdd4}
-Tel: {rptSk.FCoTel}  Fax: {rptSk.FCoFax}  E-mail: {rptSk.FCoEmail}
-Website: {rptSk.FCoWebsite}", f2));
+                        var hcontent = new Paragraph();
+                        hcontent.Alignment = Element.ALIGN_LEFT;
 
-                    cell = new PdfPCell(hcontent);
-                    cell.Padding = 0;
-                    cell.PaddingTop = 2;
-                    cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
-                    cell.Border = PdfCell.NO_BORDER;
-                    cell.PaddingLeft = 5f; //here
-                    t1.AddCell(cell);
 
-                    curTop = curTop - 67f;
+                        hcontent.Add(new Chunk($@"{rptSk.FCoAdd1} {rptSk.FCoAdd2}
+    {rptSk.FCoAdd3} {rptSk.FCoAdd4}
+    Tel: {rptSk.FCoTel}  Fax: {rptSk.FCoFax}  E-mail: {rptSk.FCoEmail}
+    Website: {rptSk.FCoWebsite}", f2));
+
+                        cell = new PdfPCell(hcontent);
+                        cell.Padding = 0;
+                        cell.PaddingTop = 2;
+                        cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                        cell.Border = PdfCell.NO_BORDER;
+                        cell.PaddingLeft = 5f; //here
+                        t1.AddCell(cell);
+                        doc.Add(t1);
+                        curTop = curTop - 67f;
+                    }
+                    else
+                    {
+                        curTop = curTop + 10f;
+                    }
+                     
                     Util.iTextSharp.DrawLine(writer, 50f, curTop, doc.PageSize.Width - 50f, curTop, BaseColor.Black, 0.5f);
                     curTop = curTop - 2f;
                     Util.iTextSharp.DrawLine(writer, 50f, curTop, doc.PageSize.Width - 50f, curTop, BaseColor.Black, 1.0f);
-                    doc.Add(t1);
-
+               
 
                     PdfPTable t2 = new PdfPTable(3);
                     t2.SpacingBefore = 10f;

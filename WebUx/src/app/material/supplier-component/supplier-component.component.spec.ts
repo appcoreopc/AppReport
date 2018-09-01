@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SupplierComponentComponent } from './supplier-component.component';
+import { SupplierComponent } from './supplier-component.component';
 
 
 import { By }              from '@angular/platform-browser';
@@ -20,13 +20,13 @@ let userServiceStub = {
   }
 };
 
-describe('SupplierComponentComponent', () => {
-  let component: SupplierComponentComponent;
-  let fixture: ComponentFixture<SupplierComponentComponent>;
+describe('SupplierComponent', () => {
+  let component: SupplierComponent;
+  let fixture: ComponentFixture<SupplierComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupplierComponentComponent ],
+      declarations: [ SupplierComponent ],
       imports : [NgxDatatableModule, ButtonModule,
         DialogModule, ReactiveFormsModule, FormsModule, 
         StoreModule, HttpClientModule, BrowserAnimationsModule], 
@@ -37,7 +37,7 @@ describe('SupplierComponentComponent', () => {
   
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SupplierComponentComponent);
+    fixture = TestBed.createComponent(SupplierComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

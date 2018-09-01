@@ -1,5 +1,5 @@
 <div class="container"> 
-  <p-dialog header="{{formTitle}}" [(visible)]="display" [minWidth]="550" modal='true'>
+  <p-dialog header="{{formTitle}}" [(visible)]="display" [minWidth]="900" modal='true'>
   <form [formGroup]='personForm'>
     
 
@@ -9,16 +9,206 @@
 
            <div class="form-group row">
 					  <div class="cell c1">
-					   <label for="supplierName">Supplier Name :</label>
+					   <label for="supplierName">Vendor Name :</label>
 					  </div> 
-					  <div class="cell c2345">   
+					  <div class="cell c2">   
               <input id="supplierName" type="text" maxlength="50" class="form-control text-control" formControlName="supplierName">         
               
               <div *ngIf="formErrors.supplierName" class="alert alert-danger">
                 {{ formErrors.supplierName }}
               </div>
-					  </div>  
+					  </div> 
+            <div class="cell c3"></div>
+            <div class="cell c4">
+              <label for="supplierCode">Vendor Code :</label>
+            </div> 
+            <div class="cell c5">   
+              <input id="supplierCode" type="text" maxlength="100" class="form-control text-control" formControlName="supplierCode">         
+              
+              <div *ngIf="formErrors.supplierCode" class="alert alert-danger">
+                {{ formErrors.supplierCode }}
+              </div>
+            </div>  
            </div>   
+
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="phoneNo1">Phone No 1 :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="phoneNo1" type="text" maxlength="50" class="form-control text-control" formControlName="phoneNo1">         
+              
+              <div *ngIf="formErrors.phoneNo1" class="alert alert-danger">
+                {{ formErrors.phoneNo1 }}
+              </div>
+					  </div> 
+            <div class="cell c3"></div>
+            <div class="cell c4">
+              <label for="phoneNo2">Phone No 2 :</label>
+            </div> 
+            <div class="cell c5">   
+              <input id="phoneNo2" type="text" maxlength="100" class="form-control text-control" formControlName="phoneNo2">         
+              
+              <div *ngIf="formErrors.phoneNo2" class="alert alert-danger">
+                {{ formErrors.phoneNo2 }}
+              </div>
+            </div>  
+           </div>   
+ 
+           <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="supplierAd1">Address :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="supplierAd1" type="text" maxlength="50" class="form-control text-control" formControlName="supplierAd1">         
+              
+              <div *ngIf="formErrors.supplierAd1" class="alert alert-danger">
+                {{ formErrors.supplierAd1 }}
+              </div>
+					  </div> 
+            <div class="cell c3"></div>
+            <div class="cell c4"> 
+              <label for="bankAccNo">Bank Account No. :</label>
+            </div> 
+            <div class="cell c5">    
+              <input id="bankAccNo" type="text" maxlength="100" class="form-control text-control" formControlName="bankAccNo">         
+              
+              <div *ngIf="formErrors.bankAccNo" class="alert alert-danger">
+                {{ formErrors.bankAccNo }}
+              </div>
+            </div>  
+           </div>   
+
+           <div class="form-group row">
+					  <div class="cell c1"> 
+					  </div> 
+					  <div class="cell c2">   
+              <input id="supplierAd2" type="text" maxlength="50" class="form-control text-control" formControlName="supplierAd2">         
+              
+              <div *ngIf="formErrors.supplierAd2" class="alert alert-danger">
+                {{ formErrors.supplierAd2 }}
+              </div>
+					  </div> 
+            <div class="cell c3"></div>
+            <div class="cell c4"> 
+              <label for="bankName">Bank Name :</label>
+            </div> 
+            <div class="cell c5">    
+              <input id="bankName" type="text" maxlength="100" class="form-control text-control" formControlName="bankName">         
+              
+              <div *ngIf="formErrors.bankName" class="alert alert-danger">
+                {{ formErrors.bankName }}
+              </div>
+            </div>  
+           </div>   
+
+           <div class="form-group row">
+					  <div class="cell c1"> 
+					  </div> 
+					  <div class="cell c2">   
+              <input id="supplierAd3" type="text" maxlength="50" class="form-control text-control" formControlName="supplierAd3">         
+              
+              <div *ngIf="formErrors.supplierAd3" class="alert alert-danger">
+                {{ formErrors.supplierAd3 }}
+              </div>
+					  </div> 
+            <div class="cell c3"></div>
+            <div class="cell c4"> 
+              <label for="bankAddress">Bank Address :</label>
+            </div> 
+            <div class="cell c5">    
+              <input id="bankAddress" type="text" maxlength="100" class="form-control text-control" formControlName="bankAddress">         
+              
+              <div *ngIf="formErrors.bankAddress" class="alert alert-danger">
+                {{ formErrors.bankAddress }}
+              </div>
+            </div>  
+           </div>  
+
+           <div class="form-group row">
+					  <div class="cell c1"> 
+              <label for="swift">Swift :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="swift" type="text" maxlength="50" class="form-control text-control" formControlName="swift">         
+              
+              <div *ngIf="formErrors.swift" class="alert alert-danger">
+                {{ formErrors.swift }}
+              </div>
+					  </div> 
+            <div class="cell c3"></div>
+					  <div class="cell c4">
+					   <label for="currencyId">Currency :</label>
+					  </div> 
+					  <div class="cell c5">	  
+						<select class="form-control" formControlName="currencyId" style="width:100px">
+						<option *ngFor="let obj of currencyRows" [value]="obj.currencyId">{{obj.currencyCode}}</option>
+						 </select>	
+						 <div *ngIf="formErrors.currencyId" class="alert alert-danger">
+								{{ formErrors.currencyId }}
+							</div>	 
+					  </div> 
+           </div>  
+
+           <div class="form-group row">
+					  <div class="cell c1"><label for="paymentTerms">Payment Terms :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="paymentTerms" type="text" maxlength="50" class="form-control text-control" formControlName="paymentTerms">         
+              
+              <div *ngIf="formErrors.paymentTerms" class="alert alert-danger">
+                {{ formErrors.paymentTerms }}
+              </div>
+					  </div> 
+            <div class="cell c3"></div>
+            <div class="cell c4"> 
+              <label for="forwarder">Forwarder :</label>
+            </div> 
+            <div class="cell c5">    
+              <input id="forwarder" type="text" maxlength="100" class="form-control text-control" formControlName="forwarder">         
+              
+              <div *ngIf="formErrors.forwarder" class="alert alert-danger">
+                {{ formErrors.forwarder }}
+              </div>
+            </div>  
+           </div>  
+
+           <div class="form-group row">
+					  <div class="cell c1"><label for="deliveryTerms">Delivery Terms :</label>
+					  </div> 
+					  <div class="cell c2">   
+              <input id="deliveryTerms" type="text" maxlength="50" class="form-control text-control" formControlName="deliveryTerms">         
+              
+              <div *ngIf="formErrors.deliveryTerms" class="alert alert-danger">
+                {{ formErrors.deliveryTerms }}
+              </div>
+					  </div> 
+            <div class="cell c3"></div>
+            <div class="cell c4"> 
+              <label for="gstno">GST No. :</label>
+            </div> 
+            <div class="cell c5">    
+              <input id="gstno" type="text" maxlength="100" class="form-control text-control" formControlName="gstno">         
+              
+              <div *ngIf="formErrors.gstno" class="alert alert-danger">
+                {{ formErrors.gstno }}
+              </div>
+            </div>  
+           </div> 
+
+           <div class="form-group row"> 
+					  <div class="cell c1">
+					   <label for="factoryStatusId">Factory Status :</label>
+					  </div> 
+					  <div class="cell c2">	  
+						<select class="form-control" formControlName="factoryStatusId" style="width:100px">
+						<option *ngFor="let obj of factoryStatusRows" [value]="obj.factoryStatusId">{{obj.factoryStatusName}}</option>
+						 </select>	
+						 <div *ngIf="formErrors.factoryStatusId" class="alert alert-danger">
+								{{ formErrors.factoryStatusId }}
+							</div>	 
+					  </div> 
+           </div>  
 
 			  </div>     
       </div>        
@@ -48,10 +238,16 @@
 </div>
 
 
-<div class="container">       
-  <p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
-  <p-button (onClick)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
+<div class="container">
+  <div style="text-align:left; float:left"> 
+    <b>VENDOR</b>
+  </div>  
+  <div style="text-align:right; float:right">        
+    <p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+    <p-button (onClick)="deleteForm()" icon="fa fa-fw fa-trash" label="Delete"></p-button> 
 </div>
+</div>
+ 
 
 <div style="clear:both; height:10px"></div>
  
@@ -86,7 +282,7 @@
         </ng-template>
 		</ngx-datatable-column>
   
-	 <ngx-datatable-column  name="Supplier Name" prop="supplierName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+	 <ngx-datatable-column  name="Vendor Name" prop="supplierName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
            {{value}}
         </ng-template>

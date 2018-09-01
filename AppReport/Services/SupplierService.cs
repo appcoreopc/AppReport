@@ -31,7 +31,24 @@ namespace AppReport.Services
             {
                 var supplier = new Supplier()
                 {                 
-                    SupplierName = supplierRequest.SupplierName,
+                    SupplierName = supplierRequest.SupplierName, 
+                    SupplierCode = supplierRequest.SupplierCode,
+                    PhoneNo1 = supplierRequest.PhoneNo1,
+                    PhoneNo2 = supplierRequest.PhoneNo2,
+                    FaxNo = supplierRequest.FaxNo,
+                    SupplierAd1 = supplierRequest.SupplierAd1,
+                    SupplierAd2 = supplierRequest.SupplierAd2,
+                    SupplierAd3 = supplierRequest.SupplierAd3,
+                    BankAccNo = supplierRequest.BankAccNo,
+                    BankName = supplierRequest.BankName,
+                    BankAddress = supplierRequest.BankAddress,
+                    Swift = supplierRequest.Swift,
+                    CurrencyId = supplierRequest.CurrencyId,
+                    PaymentTerms = supplierRequest.PaymentTerms,
+                    Forwarder = supplierRequest.Forwarder,
+                    DeliveryTerms = supplierRequest.DeliveryTerms,
+                    Gstno = supplierRequest.Gstno,
+                    FactoryStatusId = supplierRequest.FactoryStatusId, 
                     CreatedByUserId = supplierRequest.CreatedByUserId,
                     EditedByUserId = supplierRequest.EditedByUserId
                 };
@@ -44,6 +61,23 @@ namespace AppReport.Services
                 {
                     supplier.SupplierId = supplierRequest.SupplierId.Value;
                     supplier.SupplierName = supplierRequest.SupplierName;
+                    supplier.SupplierCode = supplierRequest.SupplierCode;
+                    supplier.PhoneNo1 = supplierRequest.PhoneNo1;
+                    supplier.PhoneNo2 = supplierRequest.PhoneNo2;
+                    supplier.FaxNo = supplierRequest.FaxNo;
+                    supplier.SupplierAd1 = supplierRequest.SupplierAd1;
+                    supplier.SupplierAd2 = supplierRequest.SupplierAd2;
+                    supplier.SupplierAd3 = supplierRequest.SupplierAd3;
+                    supplier.BankAccNo = supplierRequest.BankAccNo;
+                    supplier.BankName = supplierRequest.BankName;
+                    supplier.BankAddress = supplierRequest.BankAddress;
+                    supplier.Swift = supplierRequest.Swift;
+                    supplier.CurrencyId = supplierRequest.CurrencyId;
+                    supplier.PaymentTerms = supplierRequest.PaymentTerms;
+                    supplier.Forwarder = supplierRequest.Forwarder;
+                    supplier.DeliveryTerms = supplierRequest.DeliveryTerms;
+                    supplier.Gstno = supplierRequest.Gstno;
+                    supplier.FactoryStatusId = supplierRequest.FactoryStatusId; 
                     supplier.CreatedByUserId = supplierRequest.CreatedByUserId;
                     supplier.EditedByUserId = supplierRequest.EditedByUserId;
                     return base.Save<Supplier>(supplier, supplier.SupplierId);

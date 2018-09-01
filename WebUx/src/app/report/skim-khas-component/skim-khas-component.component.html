@@ -561,7 +561,21 @@
 
 <p-dialog id="formPrintReport" header="Print SKIM Khas - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
 	 
-	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptsk/DownloadLetter/{{data.rptId}}">SKIM Khas (Letter)</a>
-	&nbsp; 
-	<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptsk/DownloadReport/{{data.rptId}}">Lampiran B</a>
+	<div class="form-check">
+	<label style="float:left; padding-right:10px;"  >
+		<input
+		class="form-check-input"
+		type="checkbox"
+		id="printHeader"
+		name="tagOptions"
+		(change)="printHeader($event)">
+		&nbsp; &nbsp; &nbsp; with letter head
+	</label>
+	</div>
+
+	<div style="clear:both; padding-top:10px">
+		<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptsk/DownloadLetter/{{data.rptId}}?isHeader={{selectedPrintHeader}}">SKIM Khas (Letter)</a>
+		&nbsp; 
+		<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptsk/DownloadReport/{{data.rptId}}">Lampiran B</a>
+	</div>
 </p-dialog>

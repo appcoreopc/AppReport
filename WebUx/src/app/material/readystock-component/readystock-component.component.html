@@ -10,7 +10,7 @@
             
             <div class="form-group row">
               <div class="cell c1">
-                <label for="readyStockDesc">Stock Name :</label>
+                <label for="readyStockDesc">Product Type :</label>
               </div> 
               <div class="cell c2">   
                 <input id="readyStockDesc" type="text" maxlength="500" class="form-control text-control" formControlName="readyStockDesc">         
@@ -71,7 +71,23 @@
               </div> 
               
             </div>  
-            
+
+
+
+            <div class="form-group row">
+              <div class="cell c1">
+                <label for="uomid">UOM :</label>
+              </div> 
+              <div class="cell c2">
+              <select class="form-control" formControlName="uomid" style="width:300px">
+                <option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+                </select>
+                <div *ngIf="formErrors.uomid" class="alert alert-danger">
+                  {{ formErrors.uomid }}
+                </div>  
+              </div>  
+            </div> 
+
           </div>     
         </div>        
       </div>
@@ -99,10 +115,16 @@
 
 
 
-<div class="container">       
+<div class="container">
+  <div style="text-align:left; float:left"> 
+    <b>FG CATEGORY</b>
+  </div>  
+  <div style="text-align:right; float:right">   
   <p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
-  <p-button (onClick)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
+  <p-button (onClick)="deleteForm()" icon="fa fa-fw fa-trash" label="Delete"></p-button>  
 </div> 
+</div>
+
 <div style="clear:both; height:10px"></div>
 
 
@@ -139,7 +161,7 @@
   </ng-template>
 </ngx-datatable-column>
 
-<ngx-datatable-column  name="Stock Name" prop="readyStockDesc" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+<ngx-datatable-column  name="Product Type" prop="readyStockDesc" [resizeable]="false" [sortable]="true" [flexGrow]="1">
   <ng-template let-value="value" ngx-datatable-cell-template>
     {{value}}
   </ng-template>
@@ -162,6 +184,15 @@
     {{value | number:'1.2-2'}}
   </ng-template>
 </ngx-datatable-column>
+
+
+<ngx-datatable-column  name="UOM" prop="uomid" [width]="200" [resizeable]="true" [sortable]="true" [flexGrow]="1">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+         <ng-container *ngFor = "let n of uomRows">
+           <div *ngIf="value===n.uomId">{{n.uomCode}}</div>
+         </ng-container>
+       </ng-template>
+   </ngx-datatable-column>  
 
 
 </ngx-datatable>

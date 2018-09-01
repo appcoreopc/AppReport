@@ -65,7 +65,7 @@ namespace AppReport.Services
                     CurrencyId = d.CurrencyId,
                     AmountCurrency = d.AmountCurrency,
                     ExRate = d.ExRate,
-                    Amount = d.Amount,
+                    Amount = d.AmountCurrency * d.ExRate,
                     Pono = d.Pono,
                     Otdlate = d.Otdlate,
                     FwdInvNo = d.FwdInvNo,
@@ -86,10 +86,11 @@ namespace AppReport.Services
                     BreakBulk = d.BreakBulk,
                     Edifee = d.Edifee,
                     FreightGst = d.FreightGst,
-                    TotalFreightCost = d.TotalFreightCost,
-                    TotalFreightRmcost = d.TotalFreightRmcost,
+                    TotalFreightCost = d.ImpFreight + d.TermChrg + d.AprtTxFee + d.Delivery + d.HandFwd + d.CustomExamFee + d.CollectFee + d.DocFee + d.BreakBulk + d.Edifee + d.FreightGst,
                     DutyExcise = d.DutyExcise
                 };
+                data.TotalFreightRmcost = data.TotalFreightCost + data.Amount;
+
                 return base.Save<Grn>(data, null);
             }
             else
@@ -124,7 +125,7 @@ namespace AppReport.Services
                     data.CurrencyId = d.CurrencyId;
                     data.AmountCurrency = d.AmountCurrency;
                     data.ExRate = d.ExRate;
-                    data.Amount = d.Amount;
+                    data.Amount = d.AmountCurrency * d.ExRate;
                     data.Pono = d.Pono;
                     data.Otdlate = d.Otdlate;
                     data.FwdInvNo = d.FwdInvNo;
@@ -145,8 +146,8 @@ namespace AppReport.Services
                     data.BreakBulk = d.BreakBulk;
                     data.Edifee = d.Edifee;
                     data.FreightGst = d.FreightGst;
-                    data.TotalFreightCost = d.TotalFreightCost;
-                    data.TotalFreightRmcost = d.TotalFreightRmcost;
+                    data.TotalFreightCost = d.ImpFreight + d.TermChrg + d.AprtTxFee + d.Delivery + d.HandFwd + d.CustomExamFee + d.CollectFee + d.DocFee + d.BreakBulk + d.Edifee + d.FreightGst;
+                    data.TotalFreightRmcost = data.TotalFreightCost + data.Amount;
                     data.DutyExcise = d.DutyExcise;
                 }
 

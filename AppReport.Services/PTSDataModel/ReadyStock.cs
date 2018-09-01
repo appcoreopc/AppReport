@@ -10,6 +10,7 @@ namespace AppReport.DataServices.PTSDataModel
         public string TariffCode { get; set; }
         public decimal? DutyImpRate { get; set; }
         public decimal? Gstrate { get; set; }
+        public int? Uomid { get; set; }
         public int? CreatedByUserId { get; set; }
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }

@@ -1569,50 +1569,62 @@
 
 <p-dialog id="formPrintReport" header="Print Lesen Gudang - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
 	 
- 
-     <div style="float:left">
-       <a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptLg/DownloadLetter/{{data.rptId}}">Lesen Gudang (Letter)</a>
-    </div>
-    <div style="padding-left:20px;float:left">
-      <a target="_self" class="btn btn-danger" role="button" href="{{applicationHost}}/rptLg/DownloadAttachment/{{data.rptId}}">Lampiran B</a>
-    </div>
-	
-	
-    <div style="clear:both; padding-top:20px"></div>
-  
-     <div style="float:left">
-      <a target="_self" class="btn btn-warning" role="button" href="{{applicationHost}}/rptLg/DownloadImportRptY1/{{data.rptId}}">Laporan Bahan yang diimport tahun lepas</a>
-	</div> 
-     <div style="padding-left:20px;float:left">
-       <a target="_self" class="btn btn-warning" role="button" href="{{applicationHost}}/rptLg/DownloadImportRptY2/{{data.rptId}}">Laporan Bahan yang diimport tahun ini</a>
-     </div>
- 
-	<div style="clear:both; padding-top:20px"></div>
-	
-     <div style="float:left">
-      <a target="_self" class="btn btn-primary" role="button" href="{{applicationHost}}/rptLg/DownloadExportRptY1/{{data.rptId}}">Laporan Bahan yang dieksport tahun lepas</a>
-     </div>
-     <div style="float:left;padding-left:20px">
-      <a target="_self" class="btn btn-primary" role="button" href="{{applicationHost}}/rptLg/DownloadExportRptY2/{{data.rptId}}">Laporan Bahan yang dieksport tahun ini</a>
-	</div>
-	
-	<div style="clear:both; padding-top:20px"></div>
+	<div class="form-check">
+		<label style="float:left; padding-right:10px;"  >
+		  <input
+			class="form-check-input"
+			type="checkbox"
+			id="printHeader"
+			name="tagOptions"
+			(change)="printHeader($event)">
+		   &nbsp; &nbsp; &nbsp; with letter head
+		</label>
+	  </div>
 
+	  <div style="clear:both; padding-top:10px">
+		<div style="float:left">
+		<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptLg/DownloadLetter/{{data.rptId}}?isHeader={{selectedPrintHeader}}">Lesen Gudang (Letter)</a>
+		</div>
+		<div style="padding-left:20px;float:left">
+		<a target="_self" class="btn btn-danger" role="button" href="{{applicationHost}}/rptLg/DownloadAttachment/{{data.rptId}}">Lampiran B</a>
+		</div>
+		
+		
+		<div style="clear:both; padding-top:20px"></div>
 	
-      <div style="float:left">
-       <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA1/{{data.rptId}}">Lampiran A1</a>
-     </div>
-     <div style="float:left;padding-left:20px">
-      <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA2/{{data.rptId}}">Lampiran A2</a>
-	 </div>
+		<div style="float:left">
+		<a target="_self" class="btn btn-warning" role="button" href="{{applicationHost}}/rptLg/DownloadImportRptY1/{{data.rptId}}">Laporan Bahan yang diimport tahun lepas</a>
+		</div> 
+		<div style="padding-left:20px;float:left">
+		<a target="_self" class="btn btn-warning" role="button" href="{{applicationHost}}/rptLg/DownloadImportRptY2/{{data.rptId}}">Laporan Bahan yang diimport tahun ini</a>
+		</div>
+	
+		<div style="clear:both; padding-top:20px"></div>
+		
+		<div style="float:left">
+		<a target="_self" class="btn btn-primary" role="button" href="{{applicationHost}}/rptLg/DownloadExportRptY1/{{data.rptId}}">Laporan Bahan yang dieksport tahun lepas</a>
+		</div>
+		<div style="float:left;padding-left:20px">
+		<a target="_self" class="btn btn-primary" role="button" href="{{applicationHost}}/rptLg/DownloadExportRptY2/{{data.rptId}}">Laporan Bahan yang dieksport tahun ini</a>
+		</div>
+		
+		<div style="clear:both; padding-top:20px"></div>
 
-     <div style="float:left;padding-left:20px">
-      <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA21/{{data.rptId}}">Lampiran A2 (1)</a>
-     </div>
-  
-     <div style="float:left;padding-left:20px">
-       <a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA3/{{data.rptId}}">Lampiran A3</a>
-    </div>
-  
+		
+		<div style="float:left">
+		<a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA1/{{data.rptId}}">Lampiran A1</a>
+		</div>
+		<div style="float:left;padding-left:20px">
+		<a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA2/{{data.rptId}}">Lampiran A2</a>
+		</div>
+
+		<div style="float:left;padding-left:20px">
+		<a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA21/{{data.rptId}}">Lampiran A2 (1)</a>
+		</div>
+	
+		<div style="float:left;padding-left:20px">
+		<a target="_self" class="btn btn-info" role="button" href="{{applicationHost}}/rptLg/DownloadLampiranA3/{{data.rptId}}">Lampiran A3</a>
+		</div>
+	  </div>
 
 </p-dialog>

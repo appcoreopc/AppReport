@@ -670,10 +670,28 @@
 
 <p-dialog id="formPrintReport" header="Print LAMPIRAN M1 - {{data.rptId}}" [(visible)]="displayPrintReport" modal='true'> 
 	 
-	<a target="_self" class="btn btn-success" role="button" href="{{applicationHost}}/rptm1/DownloadLetter/{{data.rptId}}">Lampiran M1 (Letter)</a>
-	&nbsp; 
-	<a target="_self" class="btn btn-primary" role="button"  href="{{applicationHost}}/rptm1/DownloadMonthlyReport/{{data.rptId}}">Penyata Bulanan Mentah / Komponen</a>
-	&nbsp; 
-	<a target="_self" class="btn btn-warning" role="button"  
-	href="{{applicationHost}}/rptm1/DownloadMonthlySummary/{{data.rptId}}">Maklumat Cukai Terkoban</a>
+	<div class="form-check">
+		<label style="float:left; padding-right:10px;"  >
+		  <input
+			class="form-check-input"
+			type="checkbox"
+			id="printHeader"
+			name="tagOptions"
+			(change)="printHeader($event)">
+		   &nbsp; &nbsp; &nbsp; with letter head
+		</label>
+	  </div>
+
+	  <div style="clear:both; padding-top:10px">
+		<a target="_self" class="btn btn-success" role="button" 
+		href="{{applicationHost}}/rptm1/DownloadLetter/{{data.rptId}}?isHeader={{selectedPrintHeader}}">Lampiran M1 (Letter)</a>
+		&nbsp; 
+		<a target="_self" class="btn btn-primary" role="button"  
+		href="{{applicationHost}}/rptm1/DownloadMonthlyReport/{{data.rptId}}?isHeader={{selectedPrintHeader}}">Penyata Bulanan Mentah / Komponen</a>
+		&nbsp; 
+		<a target="_self" class="btn btn-warning" role="button"  
+		href="{{applicationHost}}/rptm1/DownloadMonthlySummary/{{data.rptId}}?isHeader={{selectedPrintHeader}}">Maklumat Cukai Terkoban</a>
+	  </div>
+
+	
 </p-dialog>

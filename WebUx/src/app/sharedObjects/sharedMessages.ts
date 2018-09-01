@@ -209,6 +209,8 @@ export const JOBTITLE_GET = 'JOBTITLE_GET';
 export const JOBTITLE_GET_OK = 'JOBTITLE_GET_OK';
 export const COUNTRY_GET = 'COUNTRY_GET'; 
 export const COUNTRY_GET_OK = 'COUNTRY_GET_OK';
+export const FACTORYSTATUS_GET = 'FACTORYSTATUS_GET'; 
+export const FACTORYSTATUS_GET_OK = 'FACTORYSTATUS_GET_OK';
 
 
 export const LOGIN_DO = 'LOGIN_DO';
@@ -225,7 +227,7 @@ export const DELETE_ITEM_FIELD = 'deleteItems';
 
 export const DELETE_USER_PROMPT = "Do you want to remove selected user(s)?";
 export const DELETE_EMPLOYEE_PROMPT = "Do you want to remove selected employee(s)?";
-export const DELETE_SUPPLIER_PROMPT = "Do you want to remove selected supplier(s)?";
+export const DELETE_SUPPLIER_PROMPT = "Do you want to remove selected vendor(s)?";
 export const DELETE_READYSTOCK_PROMPT = "Do you want to remove selected ready stock(s)?";
 export const DELETE_RAWMATERIAL_PROMPT = "Do you want to remove selected raw material(s)?";
 export const DELETE_MATERIALCATEGORY_PROMPT = "Do you want to remove selected material category(s)?";

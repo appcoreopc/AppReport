@@ -4,6 +4,7 @@ export class ReadyStockModel {
     tariffCode : string;
     dutyImpRate : number;
     gstrate : number;
+    uomid? : number;
     createdByUserId : number;
     createdDt : Date;
     editedByUserId : number;

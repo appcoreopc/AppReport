@@ -9,6 +9,7 @@ namespace AppReport.RequestModel
         public string TariffCode { get; set; }
         public decimal? DutyImpRate { get; set; }
         public decimal? Gstrate { get; set; }
+        public int? UOMId { get; set; }
         public int? CreatedByUserId { get; set; }
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }

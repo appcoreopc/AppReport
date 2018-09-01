@@ -39,7 +39,8 @@ namespace AppReport.Services
                     TariffCode = requestModel.TariffCode,
                     CreatedDt = requestModel.CreatedDt,
                     DutyImpRate = requestModel.DutyImpRate,
-                    Gstrate = requestModel.Gstrate, 
+                    Gstrate = requestModel.Gstrate,
+                    Uomid = requestModel.UOMId,
                     CreatedByUserId = requestModel.CreatedByUserId,
                     EditedByUserId = requestModel.EditedByUserId
                 };
@@ -57,6 +58,7 @@ namespace AppReport.Services
                     readyStock.CreatedDt = requestModel.CreatedDt;
                     readyStock.DutyImpRate = requestModel.DutyImpRate;
                     readyStock.Gstrate = requestModel.Gstrate;
+                    readyStock.Uomid = requestModel.UOMId;
                     readyStock.CreatedByUserId = requestModel.CreatedByUserId;
                     readyStock.EditedByUserId = requestModel.EditedByUserId; 
 

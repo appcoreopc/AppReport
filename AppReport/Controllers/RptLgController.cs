@@ -119,7 +119,7 @@ namespace AppReport.Controllers
         }
 
         [HttpGet]
-        public FileResult DownloadLetter(int id)
+        public FileResult DownloadLetter(int id, [FromQuery] bool isHeader)
         {
             var rptLg = new RptLgService(_ptsContext).Get(id);
 
@@ -127,7 +127,7 @@ namespace AppReport.Controllers
             string rpt = string.Empty;
             if (rptLg != null)
             {
-                rpt = PrintLetter(rptLg);
+                rpt = PrintLetter(rptLg, isHeader);
             }
             return Download(rpt);
         }
@@ -462,7 +462,7 @@ namespace AppReport.Controllers
             }
         }
          
-        private string PrintLetter(RptLg rptLg)
+        private string PrintLetter(RptLg rptLg, bool isHeader)
         {
             string rptPath = string.Empty;
             string rptName = _rptFileName + "_" + _rptFileDT + ".pdf";
@@ -473,7 +473,13 @@ namespace AppReport.Controllers
                 DateTime dtletter = rptLg.Ldate.HasValue ? (DateTime)rptLg.Ldate : DateTime.Today;
                 string strLDate = dtletter.ToString("dd-MMM-yyyy");
 
-                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 40f, 20f);
+                var marginTop = 40f;
+                if (!isHeader)
+                {
+                    marginTop = 120f;
+                }
+
+                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, marginTop, 20f);
                 doc.AddAuthor(AppConstant.ReportAuthor);
                 doc.AddCreator(AppConstant.ReportCreator);
                 doc.AddKeywords(_rptFileName);
@@ -487,8 +493,7 @@ namespace AppReport.Controllers
                 {
                     var curTop = doc.Top;
                     var webRoot = _env.WebRootPath;
-
-
+                     
                     PdfPTable t1b = new PdfPTable(2);
                     t1b.SetWidths(new float[] { 12f, 2f });
 
@@ -508,51 +513,58 @@ namespace AppReport.Controllers
                     t1b.AddCell(cell);
 
 
-                    PdfPTable t1 = new PdfPTable(2);
-                    t1.SetWidths(new float[] { 1f, 3f });
+                    if (isHeader)
+                    {
+                        PdfPTable t1 = new PdfPTable(2);
+                        t1.SetWidths(new float[] { 1f, 3f });
 
-                    string imgLogoPath = webRoot + "\\img\\" + rptLg.FCoLogo;
-                    Image imgLogo = Image.GetInstance(imgLogoPath);
-                    imgLogo.Alignment = Element.ALIGN_LEFT;
-                    imgLogo.ScaleToFit(121f, 62f);
+                        string imgLogoPath = webRoot + "\\img\\" + rptLg.FCoLogo;
+                        Image imgLogo = Image.GetInstance(imgLogoPath);
+                        imgLogo.Alignment = Element.ALIGN_LEFT;
+                        imgLogo.ScaleToFit(121f, 62f);
 
-                    cell = new PdfPCell(imgLogo);
-                    cell.Rowspan = 2;
-                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.Border = PdfCell.NO_BORDER;
-                    t1.AddCell(cell);
+                        cell = new PdfPCell(imgLogo);
+                        cell.Rowspan = 2;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.Border = PdfCell.NO_BORDER;
+                        t1.AddCell(cell);
 
-                    cell = new PdfPCell(t1b);
-                    cell.PaddingLeft = 5f; //here
-                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                    cell.Border = PdfCell.NO_BORDER;
-                    t1.AddCell(cell);
-
-
-                    var hcontent = new Paragraph();
-                    hcontent.Alignment = Element.ALIGN_LEFT;
+                        cell = new PdfPCell(t1b);
+                        cell.PaddingLeft = 5f; //here
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell.Border = PdfCell.NO_BORDER;
+                        t1.AddCell(cell);
 
 
-                    hcontent.Add(new Chunk($@"{rptLg.FCoAdd1} {rptLg.FCoAdd2}
-{rptLg.FCoAdd3} {rptLg.FCoAdd4}
-Tel: {rptLg.FCoTel}  Fax: {rptLg.FCoFax}  E-mail: {rptLg.FCoEmail}
-Website: {rptLg.FCoWebsite}", f2));
+                        var hcontent = new Paragraph();
+                        hcontent.Alignment = Element.ALIGN_LEFT;
 
-                    cell = new PdfPCell(hcontent);
-                    cell.Padding = 0;
-                    cell.PaddingTop = 2;
-                    cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
-                    cell.Border = PdfCell.NO_BORDER;
-                    cell.PaddingLeft = 5f; //here
-                    t1.AddCell(cell);
 
-                    curTop = curTop - 67f;
+                        hcontent.Add(new Chunk($@"{rptLg.FCoAdd1} {rptLg.FCoAdd2}
+    {rptLg.FCoAdd3} {rptLg.FCoAdd4}
+    Tel: {rptLg.FCoTel}  Fax: {rptLg.FCoFax}  E-mail: {rptLg.FCoEmail}
+    Website: {rptLg.FCoWebsite}", f2));
+
+                        cell = new PdfPCell(hcontent);
+                        cell.Padding = 0;
+                        cell.PaddingTop = 2;
+                        cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                        cell.Border = PdfCell.NO_BORDER;
+                        cell.PaddingLeft = 5f; //here
+                        t1.AddCell(cell);
+
+                        doc.Add(t1);
+                        curTop = curTop - 67f;
+                    }
+                    else
+                    {
+                        curTop = curTop + 10f;
+                    }
+                     
                     Util.iTextSharp.DrawLine(writer, 50f, curTop, doc.PageSize.Width - 50f, curTop, BaseColor.Black, 0.5f);
                     curTop = curTop - 2f;
                     Util.iTextSharp.DrawLine(writer, 50f, curTop, doc.PageSize.Width - 50f, curTop, BaseColor.Black, 1.0f);
-                    doc.Add(t1);
-
-
+                   
                     PdfPTable t2 = new PdfPTable(3);
                     t2.SpacingBefore = 15f;
                     t2.SetWidths(new float[] { 3f, 1f, 14f });

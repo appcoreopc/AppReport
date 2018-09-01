@@ -64,6 +64,7 @@ export class SkimKhasComponentComponent implements OnInit {
   selectedDetailEntry: boolean = false;
   tabIndex:number = 0; 
   applicationHost:string = APPLICATION_HOST;
+  selectedPrintHeader: boolean = false;
   
   formTitle: string = "New GRN";
   dataList: Array<RptSkModel> = new Array<RptSkModel>();
@@ -601,6 +602,10 @@ export class SkimKhasComponentComponent implements OnInit {
       cancel() {
         this.display = false;
         this.itemSelected = false;
+      }
+    
+      printHeader(evt){ 
+        this.selectedPrintHeader = !this.selectedPrintHeader; 
       }
       
       dispatchIntent(messageType: string, data?: any) {

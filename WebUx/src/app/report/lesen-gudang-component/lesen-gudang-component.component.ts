@@ -81,6 +81,7 @@ export class LesenGudangComponentComponent implements OnInit {
   tabIndex:number = 0; 
   applicationHost:string = APPLICATION_HOST;
   currentCutOffMonth:number = 1; 
+  selectedPrintHeader: boolean = false;
   //mfdGoodList:string = "";
   
   formTitle: string = "New Lesen Gudang";
@@ -949,6 +950,10 @@ export class LesenGudangComponentComponent implements OnInit {
       this.itemSelected = false;
     }
     
+    printHeader(evt){ 
+      this.selectedPrintHeader = !this.selectedPrintHeader; 
+    }
+
     dispatchIntent(messageType: string, data?: any) {
       
       this.store.dispatch(

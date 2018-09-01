@@ -11,7 +11,7 @@ import { RawMaterialComponentComponent } from './material/raw-material-component
 import { ReadyStockComponent } from './material/readystock-component/readystock-component.component';
 import { MaterialCategoryComponentComponent } from './material/material-category-component/material-category-component.component';
 import { StnCustomComponentComponent } from './material/stn-custom-component/stn-custom-component.component';
-import { SupplierComponentComponent } from './material/supplier-component/supplier-component.component';
+import { SupplierComponent } from './material/supplier-component/supplier-component.component';
 import { ConfigResourceComponentComponent } from './setup/config-resource-component/config-resource-component.component';
 
 import { StoreModule } from '@ngrx/store';
@@ -86,7 +86,7 @@ export const ROUTES: Routes = [
   { path: 'config', component  : ConfigComponentComponent, canActivate: [AuthGuard] },
   { path: 'employee', component: EmployeeComponentComponent, canActivate: [AuthGuard] },
   { path: 'user', component: UserComponentComponent, canActivate: [AuthGuard] }, 
-  { path: 'supplier', component  : SupplierComponentComponent, canActivate: [AuthGuard]  },
+  { path: 'supplier', component  : SupplierComponent, canActivate: [AuthGuard]  },
   { path: 'materialCategory', component  : MaterialCategoryComponentComponent, canActivate: [AuthGuard] },
   { path: 'rawMaterial', component  : RawMaterialComponentComponent, canActivate: [AuthGuard] },
   { path: 'readyStock', component  : ReadyStockComponent, canActivate: [AuthGuard] },
@@ -111,7 +111,7 @@ export const ROUTES: Routes = [
     ReadyStockComponent,
     MaterialCategoryComponentComponent,
     StnCustomComponentComponent,
-    SupplierComponentComponent,
+    SupplierComponent,
     ConfigResourceComponentComponent,
     ReportGrnComponent,
     LampiranM1ComponentComponent,

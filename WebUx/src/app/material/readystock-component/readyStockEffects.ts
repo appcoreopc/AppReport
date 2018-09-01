@@ -8,7 +8,7 @@ import * as messageUtil from "../../sharedObjects/storeMessageUtil";
 import { READYSTOCK_SAVE,  READYSTOCK_CANCEL,  READYSTOCK_SAVE_SUCCESS, READYSTOCK_DELETE_ERR,
   PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE, READYSTOCK_DELETE_SUCCESS, READYSTOCK_DELETE,
   READYSTOCK_MESSAGE_END,  READYSTOCK_SAVE_ERR,  READYSTOCK_CANCEL_OK,  READYSTOCK_GET,  READYSTOCK_GET_ERR,
-  READYSTOCK_GET_OK,  READYSTOCK_WAIT_PENDING, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
+  READYSTOCK_GET_OK,  UOM_GET, UOM_GET_OK, READYSTOCK_WAIT_PENDING, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
   
@@ -109,6 +109,18 @@ import { READYSTOCK_SAVE,  READYSTOCK_CANCEL,  READYSTOCK_SAVE_SUCCESS, READYSTO
         }); 
         
         
+        @Effect() GrnGetUom$ = this.actions$    
+        .ofType(UOM_GET)     
+        .map(action => {   
+          JSON.stringify(action);
+        })
+        .switchMap(payload => this.http.get(APPLICATION_HOST + '/uom/index')  
+        .map(res => {       
+          return { type: UOM_GET_OK, data: res};
+        }) 
+        .catch(() => Observable.of({ type: READYSTOCK_SAVE_ERR }))
+      ); 
+
         @Effect()  readyStockGet$ = this.actions$    
         .ofType( READYSTOCK_GET)     
         .map(action => {  

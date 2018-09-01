@@ -31,8 +31,12 @@ namespace AppReport.Services
                 var rmcat = new Rmcat()
                 {
                     RmcatName = d.RmcatName,
-                    TariffCode = d.TariffCode 
-                 };
+                    TariffCode = d.TariffCode,
+                    IsLocal = d.IsLocal,
+                    DutyImpRate = d.DutyImpRate,
+                    Gstrate = d.Gstrate,
+                    Uomid = d.Uomid
+            };
                 return base.Save<Rmcat>(rmcat, null);
             }
             else
@@ -44,6 +48,10 @@ namespace AppReport.Services
                     rmcat.RmcatId = d.RmcatId.Value;
                     rmcat.RmcatName = d.RmcatName;
                     rmcat.TariffCode = d.TariffCode;
+                    rmcat.IsLocal = d.IsLocal;
+                    rmcat.DutyImpRate = d.DutyImpRate;
+                    rmcat.Gstrate = d.Gstrate;
+                    rmcat.Uomid = d.Uomid;
                     return base.Save<Rmcat>(rmcat, rmcat.RmcatId);
                 }
             } 

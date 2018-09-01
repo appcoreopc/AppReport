@@ -4,12 +4,15 @@
     [TariffCode]      VARCHAR (50)    NULL,
     [DutyImpRate]     DECIMAL (18, 2) NULL,
     [GSTRate]         DECIMAL (18, 2) NULL,
+    [UOMId]           INT             NULL,
     [CreatedByUserId] INT             NULL,
     [CreatedDT]       DATETIME        NULL,
     [EditedByUserId]  INT             NULL,
     [EditedDT]        DATETIME        NULL,
     CONSTRAINT [PK_ReadyStock] PRIMARY KEY CLUSTERED ([ReadyStockId] ASC)
 );
+
+
 
 
 

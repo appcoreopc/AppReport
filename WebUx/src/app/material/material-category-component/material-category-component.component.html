@@ -1,6 +1,6 @@
  
- <div class="container"> 
-  <p-dialog header="{{formTitle}}" [(visible)]="display" [minWidth]="550" modal='true'>
+ <div class="container">  
+ <p-dialog header="{{formTitle}}" [(visible)]="display" [width]="1000" modal='true'>
   <form [formGroup]='personForm'>
     
 
@@ -9,30 +9,94 @@
 			<div class="panel-body" style="padding:5px; padding-left:30px"> 
 
            <div class="form-group row">
-					  <div class="cell" style="width:200px">
-					   <label for="rmcatName">Material Category Name :</label>
+					  <div class="cell c1">
+					   <label for="rmcatName">RM Category Name :</label>
 					  </div> 
-					  <div class="cell">   
+					  <div class="cell c2">   
               <input id="rmcatName" type="text" maxlength="50" class="form-control text-control" formControlName="rmcatName"> 
               
               <div *ngIf="formErrors.rmcatName" class="alert alert-danger">
                 {{ formErrors.rmcatName }}
               </div>
-					  </div>  
+            </div>  
+            <div class="cell c3"></div>
+            <div class="cell c4">
+              <label for="isLocal">Local / Imported :</label>
+            </div> 
+            <div class="cell c5">    
+              
+              <input type="radio" formControlName="isLocal" [value]="true">
+              Local
+              <input type="radio" formControlName="isLocal" [value]="false">
+              Imported
+              
+              <div *ngIf="formErrors.isLocal" class="alert alert-danger">
+                {{ formErrors.isLocal }}
+              </div>
+            </div>  
            </div> 
 
            <div class="form-group row">
-					  <div class="cell" style="width:200px">
+					  <div class="cell c1">
 					   <label for="tariffCode">Tariff Code :</label>
 					  </div> 
-					  <div class="cell">   
+					  <div class="cel c2">   
               <input id="tariffCode" type="text" maxlength="50" class="form-control text-control" formControlName="tariffCode">         
               
               <div *ngIf="formErrors.tariffCode" class="alert alert-danger">
                 {{ formErrors.tariffCode }}
               </div>
-					  </div> 
+            </div> 
+            
+            <div class="cell c3"></div>
+            <div class="cell c4">
+              <label for="uomid">UOM :</label>
+             </div> 
+             <div class="cell c5">
+              <select class="form-control" formControlName="uomid" style="width:300px">
+               <option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+               </select>
+               <div *ngIf="formErrors.uomid" class="alert alert-danger">
+                 {{ formErrors.uomid }}
+             </div>  
            </div> 
+          </div>
+          <div class="form-group row">
+					  <div class="cell c1">
+					   <label for="dutyImpRate">Duty Import Rate :</label>
+            </div> 
+              
+            
+				  <div class="cell c2"> 
+					<div class="input-group">
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
+						 <input id="dutyImpRate" formControlName="dutyImpRate" maxlength="16" type="number" class="form-control decimal-control"  />
+					  </div>
+							<div *ngIf="formErrors.dutyImpRate" class="alert alert-danger">
+							{{ formErrors.dutyImpRate }}
+						</div> 
+          </div> 
+
+					  <div class="cell c3"> 
+					  </div> 
+					  <div class="cell c4">
+					   <label for="gstrate">GST Rate :</label>
+					  </div> 
+					 	<div class="cell c5"> 
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <span>RM</span>
+                </div>
+                <input id="gstrate" formControlName="gstrate" maxlength="16" type="number" class="form-control decimal-control"  />
+                </div>
+                  <div *ngIf="formErrors.gstrate" class="alert alert-danger">
+                  {{ formErrors.gstrate }}
+                </div> 
+              </div> 
+           </div> 
+           
 
 			  </div>     
       </div>        
@@ -62,10 +126,16 @@
 </div>
 
 
-<div class="container">       
+<div class="container">
+  <div style="text-align:left; float:left"> 
+    <b>RM CATEGORY</b>
+  </div>  
+  <div style="text-align:right; float:right">       
   <p-button icon="fa fa-fw fa-plus" (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
-  <p-button (click)="deleteForm()" icon="fa fa-fw fa-plus" label="Delete"></p-button>  
+  <p-button (click)="deleteForm()" icon="fa fa-fw fa-trash" label="Delete"></p-button>  
 </div>
+</div>  
+
 <div style="clear:both; height:10px"></div>
 
 <div class="container"> 
@@ -90,17 +160,25 @@
   [checkboxable]="true">
 </ngx-datatable-column>
 
-<ngx-datatable-column  name="Material Category Name" prop="rmcatName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+<ngx-datatable-column  name="RM Category Name" prop="rmcatName" [width]="500" [resizeable]="false" [sortable]="true" [flexGrow]="1">
   <ng-template let-value="value" ngx-datatable-cell-template>
         {{value}}
      </ng-template>
  </ngx-datatable-column>
 
-<ngx-datatable-column  name="Tariff Code" prop="tariffCode" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+<ngx-datatable-column  name="Tariff Code" prop="tariffCode" [width]="400" [resizeable]="false" [sortable]="true" [flexGrow]="1">
   <ng-template let-value="value" ngx-datatable-cell-template>
         {{value}}
      </ng-template>
  </ngx-datatable-column>
+
+ <ngx-datatable-column  name="Local / Imported" prop="isLocal" [width]="150" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+    
+    <div *ngIf="value===true">Local</div>
+    <div *ngIf="value===false">Imported</div>
+  </ng-template>
+</ngx-datatable-column>
 
 </ngx-datatable>
 

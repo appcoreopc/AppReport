@@ -106,21 +106,20 @@ namespace AppReport.Controllers
         }
 
         [HttpGet]
-        public FileResult DownloadLetter(int id)
+        public FileResult DownloadLetter(int id, [FromQuery] bool isHeader)
         {
-            var rptM1 = new RptM1Service(_ptsContext).Get(id); 
-
+            var rptM1 = new RptM1Service(_ptsContext).Get(id);  
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
             string rpt = string.Empty;
             if (rptM1 != null)
             {
-                rpt = PrintLetter(rptM1);
+                rpt = PrintLetter(rptM1, isHeader);
             }
             return Download(rpt);
         }
 
         [HttpGet]
-        public FileResult DownloadMonthlyReport(int id)
+        public FileResult DownloadMonthlyReport(int id, [FromQuery] bool isHeader)
         {
             var rptM1 = new RptM1Service(_ptsContext).Get(id);
 
@@ -134,13 +133,13 @@ namespace AppReport.Controllers
             string rpt = string.Empty;
             if (rptM1 != null)
             {
-                rpt = PrintMonthlyRpt(rptM1, rptM1MstkList, RptM1MstkInvList);
+                rpt = PrintMonthlyRpt(rptM1, rptM1MstkList, RptM1MstkInvList, isHeader);
             }
             return Download(rpt);
         }
 
         [HttpGet]
-        public FileResult DownloadMonthlySummary(int id)
+        public FileResult DownloadMonthlySummary(int id, [FromQuery] bool isHeader)
         {
             var rptM1 = new RptM1Service(_ptsContext).Get(id);
              
@@ -148,7 +147,7 @@ namespace AppReport.Controllers
             string rpt = string.Empty;
             if (rptM1 != null)
             {
-                rpt = PrintMonthlySummary(rptM1);
+                rpt = PrintMonthlySummary(rptM1, isHeader);
             }
             return Download(rpt);
         }
@@ -349,7 +348,7 @@ namespace AppReport.Controllers
             }
         }
          
-        private string PrintLetter(RptM1 rptM1)
+        private string PrintLetter(RptM1 rptM1, bool isHeader)
         { 
             string rptPath = string.Empty;
             string rptName = _rptFileName + "_" + _rptFileDT + ".pdf";
@@ -365,7 +364,12 @@ namespace AppReport.Controllers
 
                 decimal totalSales = (decimal)rptM1.SalesExpCont + (decimal)rptM1.SalesFiz + (decimal)rptM1.SalesGpb + (decimal)rptM1.SalesLocal;
 
-                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, 40f, 20f);
+                var marginTop = 40f;
+                if (!isHeader)
+                {
+                    marginTop = 120f;
+                }
+                Document doc = new Document(iTextSharp.text.PageSize.A4, 0f, 0f, marginTop, 20f);
                 doc.AddAuthor(AppConstant.ReportAuthor);
                 doc.AddCreator(AppConstant.ReportCreator);
                 doc.AddKeywords(_rptFileName);
@@ -400,49 +404,59 @@ namespace AppReport.Controllers
                     t1b.AddCell(cell);
 
 
-                    PdfPTable t1 = new PdfPTable(2);
-                    t1.SetWidths(new float[] { 1f, 3f });
+                    if (isHeader)
+                    {
+                        PdfPTable t1 = new PdfPTable(2);
+                        t1.SetWidths(new float[] { 1f, 3f });
 
-                    string imgLogoPath = webRoot + "\\img\\" + rptM1.FCoLogo;
-                    Image imgLogo = Image.GetInstance(imgLogoPath);
-                    imgLogo.Alignment = Element.ALIGN_LEFT;
-                    imgLogo.ScaleToFit(121f, 62f);
+                        string imgLogoPath = webRoot + "\\img\\" + rptM1.FCoLogo;
+                        Image imgLogo = Image.GetInstance(imgLogoPath);
+                        imgLogo.Alignment = Element.ALIGN_LEFT;
+                        imgLogo.ScaleToFit(121f, 62f);
 
-                    cell = new PdfPCell(imgLogo);
-                    cell.Rowspan = 2;
-                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                    cell.Border = PdfCell.NO_BORDER;
-                    t1.AddCell(cell);
+                        cell = new PdfPCell(imgLogo);
+                        cell.Rowspan = 2;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.Border = PdfCell.NO_BORDER;
+                        t1.AddCell(cell);
 
-                    cell = new PdfPCell(t1b);
-                    cell.PaddingLeft = 5f; //here
-                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
-                    cell.Border = PdfCell.NO_BORDER;
-                    t1.AddCell(cell);
-
-
-                    var hcontent = new Paragraph();
-                    hcontent.Alignment = Element.ALIGN_LEFT;
+                        cell = new PdfPCell(t1b);
+                        cell.PaddingLeft = 5f; //here
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell.Border = PdfCell.NO_BORDER;
+                        t1.AddCell(cell);
 
 
-                    hcontent.Add(new Chunk($@"{rptM1.FCoAdd1} {rptM1.FCoAdd2}
+
+                        var hcontent = new Paragraph();
+                        hcontent.Alignment = Element.ALIGN_LEFT;
+
+
+                        hcontent.Add(new Chunk($@"{rptM1.FCoAdd1} {rptM1.FCoAdd2}
 {rptM1.FCoAdd3} {rptM1.FCoAdd4}
 Tel: {rptM1.FCoTel}  Fax: {rptM1.FCoFax}  E-mail: {rptM1.FCoEmail}
 Website: {rptM1.FCoWebsite}", f2));
 
-                    cell = new PdfPCell(hcontent);
-                    cell.Padding = 0;
-                    cell.PaddingTop = 2;
-                    cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
-                    cell.Border = PdfCell.NO_BORDER;
-                    cell.PaddingLeft = 5f; //here
-                    t1.AddCell(cell);
+                        cell = new PdfPCell(hcontent);
+                        cell.Padding = 0;
+                        cell.PaddingTop = 2;
+                        cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                        cell.Border = PdfCell.NO_BORDER;
+                        cell.PaddingLeft = 5f; //here
+                        t1.AddCell(cell);
 
-                    curTop = curTop - 67f;
+                        doc.Add(t1);
+                        curTop = curTop - 67f;
+
+                    }
+                    else
+                    {
+                        curTop = curTop + 10f;
+                    }
+
                     Util.iTextSharp.DrawLine(writer, 50f, curTop, doc.PageSize.Width - 50f, curTop, BaseColor.Black, 0.5f);
                     curTop = curTop - 2f;
                     Util.iTextSharp.DrawLine(writer, 50f, curTop, doc.PageSize.Width - 50f, curTop, BaseColor.Black, 1.0f);
-                    doc.Add(t1);
 
 
                     PdfPTable t2 = new PdfPTable(3);
@@ -931,7 +945,7 @@ Website: {rptM1.FCoWebsite}", f2));
             return rptName;
         }
          
-        private string PrintMonthlyRpt(RptM1 rptM1, List<RptM1Mstk> rptList, List<RptM1MstkInv> rptInvList)
+        private string PrintMonthlyRpt(RptM1 rptM1, List<RptM1Mstk> rptList, List<RptM1MstkInv> rptInvList, bool isHeader)
         {
             string rptPath = string.Empty;
             string rptName = _rptFileName + " - Monthly_" + _rptFileDT + ".pdf";
@@ -1531,7 +1545,7 @@ Website: {rptM1.FCoWebsite}", f2));
             return rptName;
         }
          
-        private string PrintMonthlySummary(RptM1 rptM1)
+        private string PrintMonthlySummary(RptM1 rptM1, bool isHeader)
         {
             string rptPath = string.Empty;
             string rptName = _rptFileName + " - Summary_" + _rptFileDT + ".pdf";

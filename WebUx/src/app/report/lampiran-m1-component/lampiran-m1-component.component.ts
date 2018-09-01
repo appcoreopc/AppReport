@@ -63,6 +63,7 @@ export class LampiranM1ComponentComponent implements OnInit {
   selectedDetailEntry: boolean = false;
   tabIndex:number = 0; 
   applicationHost:string = APPLICATION_HOST;
+  selectedPrintHeader: boolean = false;
   
   formTitle: string = "New Lampian M1";
   dataList: Array<RptM1Model> = new Array<RptM1Model>();
@@ -686,6 +687,10 @@ export class LampiranM1ComponentComponent implements OnInit {
       cancel() {
         this.display = false;
         this.itemSelected = false;
+      }
+
+      printHeader(evt){ 
+          this.selectedPrintHeader = !this.selectedPrintHeader; 
       }
       
       dispatchIntent(messageType: string, data?: any) {

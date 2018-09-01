@@ -55,6 +55,9 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
     supplierDataList : Array<any> = new Array<any>(); 
     rmDataList : Array<any> = new Array<any>(); 
     formUtil : FormUtil<GrnModel>;
+    RMAmount : number = 0;
+    TotalFreightCost : number = 0;
+    TotalFreightRMCost : number = 0;
         
     formValidators = {   
       'grnid': [],
@@ -62,53 +65,53 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       'lotno': [Validators.required, Validators.minLength(1)], 
       'supplierId': [Validators.required, Validators.minLength(1), Validators.min(1)], 
       'rmid': [Validators.required, Validators.minLength(1), Validators.min(1)],  
-      'height': [Validators.required, Validators.minLength(1)],
+      'height': [Validators.required],
       'heightUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'width': [Validators.required, Validators.minLength(1)],
+      'width': [Validators.required],
       'widthUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'thick': [Validators.required, Validators.minLength(1)],
+      'thick': [Validators.required],
       'thickUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'wgt': [Validators.required, Validators.minLength(1)],
-      'roll': [Validators.required, Validators.minLength(1)],
+      'wgt': [Validators.required],
+      'roll': [Validators.required],
       'rollUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
       'dom': [Validators.required, Validators.minLength(1)],
       'dono': [Validators.required, Validators.minLength(1)],
       'stncustomId': [Validators.required, Validators.minLength(1), Validators.min(1)],
       'componentId': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'kaswgt': [Validators.required, Validators.minLength(1)],
-      'dutyImp': [Validators.required, Validators.minLength(1)],
-      'gst': [Validators.required, Validators.minLength(1)],
-      'cif': [Validators.required, Validators.minLength(1)],
+      'kaswgt': [Validators.required],
+      'dutyImp': [Validators.required],
+      'gst': [Validators.required],
+      'cif': [Validators.required],
       'customDate': [Validators.required, Validators.minLength(1)],
       'customNo': [Validators.required, Validators.minLength(1)],
       'dutyExcise': [],
       'invoiceNo': [Validators.required, Validators.minLength(1)],
       'currencyId': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'amountCurrency': [Validators.required, Validators.minLength(1)],
-      'exRate': [Validators.required, Validators.minLength(1)],
-      'amount': [Validators.required, Validators.minLength(1)],
+      'amountCurrency': [Validators.required],
+      'exRate': [Validators.required],
+      'amount': [Validators.required],
       'pono': [Validators.required, Validators.minLength(1)],
       'otdlate': [Validators.required, Validators.minLength(1)],
       'fwdInvNo': [Validators.required, Validators.minLength(1)],
-      'amt': [Validators.required, Validators.minLength(1)],
+      'amt': [Validators.required],
       'forwarder': [Validators.required, Validators.minLength(1)],
       'docRefNo': [Validators.required, Validators.minLength(1)],
       'vcarno': [Validators.required, Validators.minLength(1)],
-      'impFreight': [Validators.required, Validators.minLength(1)],
+      'impFreight': [Validators.required],
       'currencyAdj': [],
-      'termChrg': [Validators.required, Validators.minLength(1)],
-      'aprtTxFee': [Validators.required, Validators.minLength(1)],
-      'delivery': [Validators.required, Validators.minLength(1)],
-      'handFwd': [Validators.required, Validators.minLength(1)],
-      'customExamFee': [Validators.required, Validators.minLength(1)],
-      'collectFee': [Validators.required, Validators.minLength(1)],
-      'cargoPrmt': [Validators.required, Validators.minLength(1)],
-      'docFee': [Validators.required, Validators.minLength(1)],
-      'breakBulk': [Validators.required, Validators.minLength(1)],
-      'edifee': [Validators.required, Validators.minLength(1)],
-      'freightGst': [Validators.required, Validators.minLength(1)],
-      'totalFreightCost': [Validators.required, Validators.minLength(1)],
-      'totalFreightRmcost': [Validators.required, Validators.minLength(1)]
+      'termChrg': [Validators.required],
+      'aprtTxFee': [Validators.required],
+      'delivery': [Validators.required],
+      'handFwd': [Validators.required],
+      'customExamFee': [Validators.required],
+      'collectFee': [Validators.required],
+      'cargoPrmt': [Validators.required],
+      'docFee': [Validators.required],
+      'breakBulk': [Validators.required],
+      'edifee': [Validators.required],
+      'freightGst': [Validators.required],
+      'totalFreightCost': [Validators.required],
+      'totalFreightRmcost': [Validators.required]
     }    
     
     formErrors = {
@@ -176,8 +179,8 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         'required': 'LOT No is required.' 
       },
       'supplierId': {
-        'required': 'Supplier is required.' ,
-        'min': 'Supplier is required.'
+        'required': 'Vendor is required.' ,
+        'min': 'Vendor is required.'
       },
       'rmid': {
         'required': 'Raw Material is required.',
@@ -345,9 +348,6 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
     
     constructor(private store : Store<CityAppState>, private fb: FormBuilder) { }
     
-    totalRMCost() {
-      return this.data.amountCurrency * this.data.exRate;
-    }
     
     name : string; 
     description : string; 
@@ -523,6 +523,26 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.dataForm.valueChanges.debounceTime(100)
         .subscribe(data => this.onValueChanged(data));
       }*/
+
+      recalculateAmount(){
+        
+        if (!this.dataForm) { return; }
+        console.log(this.dataForm); 
+        this.RMAmount =  this.dataForm.value.amountCurrency * this.dataForm.value.exRate;
+        this.TotalFreightCost = this.dataForm.value.impFreight +    
+        this.dataForm.value.termChrg + 
+        this.dataForm.value.aprtTxFee + 
+        this.dataForm.value.delivery + 
+        this.dataForm.value.handFwd + 
+        this.dataForm.value.customExamFee + 
+        this.dataForm.value.collectFee +  
+        this.dataForm.value.docFee + 
+        this.dataForm.value.breakBulk + 
+        this.dataForm.value.edifee + 
+        this.dataForm.value.freightGst;
+
+        this.TotalFreightRMCost = this.RMAmount + this.TotalFreightCost;
+      }
       
       onValueChanged(data?: GrnModel) {
         
@@ -531,6 +551,8 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         
         console.log('test');
         const form = this.dataForm; 
+
+        this.recalculateAmount();
                 
         for (const field in this.formErrors) {
           // clear previous error message (if any)
@@ -577,7 +599,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
             
             this.supplierDataList.push({   
               supplierId : 0,
-              supplierName : ''
+              supplierCode : ''
             });
             
             let supplierDataSource = message.data.data.data;        
@@ -597,7 +619,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
             
             this.rmDataList.push({   
               rmid : 0,
-              rmdesc : ''
+              rmcode : ''
             });
             
             let rmaterialDataSource = message.data.data.data;
@@ -759,53 +781,53 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
           'lotno': ['', [Validators.required, Validators.minLength(1)]], 
           'supplierId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]], 
           'rmid': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],  
-          'height': ['', [Validators.required, Validators.minLength(1)]],
+          'height': ['', [Validators.required]],
           'heightUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'width': ['', [Validators.required, Validators.minLength(1)]],
+          'width': ['', [Validators.required]],
           'widthUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'thick': ['', [Validators.required, Validators.minLength(1)]],
+          'thick': ['', [Validators.required]],
           'thickUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'wgt': ['', [Validators.required, Validators.minLength(1)]],
-          'roll': ['', [Validators.required, Validators.minLength(1)]],
+          'wgt': ['', [Validators.required]],
+          'roll': ['', [Validators.required]],
           'rollUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
           'dom': ['', [Validators.required, Validators.minLength(1)]],
           'dono': ['', [Validators.required, Validators.minLength(1)]],
           'stncustomId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
           'componentId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'kaswgt': ['', [Validators.required, Validators.minLength(1)]],
-          'dutyImp': ['', [Validators.required, Validators.minLength(1)]],
-          'gst': ['', [Validators.required, Validators.minLength(1)]],
-          'cif': ['', [Validators.required, Validators.minLength(1)]],
+          'kaswgt': ['', [Validators.required]],
+          'dutyImp': ['', [Validators.required]],
+          'gst': ['', [Validators.required]],
+          'cif': ['', [Validators.required]],
           'customDate': ['', [Validators.required, Validators.minLength(1)]],
           'customNo': ['', [Validators.required, Validators.minLength(1)]],
           'dutyExcise': [''],
           'invoiceNo': ['', [Validators.required, Validators.minLength(1)]],
           'currencyId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'amountCurrency': ['', [Validators.required, Validators.minLength(1)]],
-          'exRate': ['', [Validators.required, Validators.minLength(1)]],
-          'amount': ['', [Validators.required, Validators.minLength(1)]],
+          'amountCurrency': ['', [Validators.required]],
+          'exRate': ['', [Validators.required]],
+          'amount': ['', [Validators.required]],
           'pono': ['', [Validators.required, Validators.minLength(1)]],
           'otdlate': ['', [Validators.required, Validators.minLength(1)]],
           'fwdInvNo': ['', [Validators.required, Validators.minLength(1)]],
-          'amt': ['', [Validators.required, Validators.minLength(1)]],
+          'amt': ['', [Validators.required]],
           'forwarder': ['', [Validators.required, Validators.minLength(1)]],
           'docRefNo': ['', [Validators.required, Validators.minLength(1)]],
           'vcarno': ['', [Validators.required, Validators.minLength(1)]],
-          'impFreight': ['', [Validators.required, Validators.minLength(1)]],
+          'impFreight': ['', [Validators.required]],
           'currencyAdj': [''],
-          'termChrg': ['', [Validators.required, Validators.minLength(1)]],
-          'aprtTxFee': ['', [Validators.required, Validators.minLength(1)]],
-          'delivery': ['', [Validators.required, Validators.minLength(1)]],
-          'handFwd': ['', [Validators.required, Validators.minLength(1)]],
-          'customExamFee': ['', [Validators.required, Validators.minLength(1)]],
-          'collectFee': ['', [Validators.required, Validators.minLength(1)]],
-          'cargoPrmt': ['', [Validators.required, Validators.minLength(1)]],
-          'docFee': ['', [Validators.required, Validators.minLength(1)]],
-          'breakBulk': ['', [Validators.required, Validators.minLength(1)]],
-          'edifee': ['', [Validators.required, Validators.minLength(1)]],
-          'freightGst': ['', [Validators.required, Validators.minLength(1)]],
-          'totalFreightCost': ['', [Validators.required, Validators.minLength(1)]],
-          'totalFreightRmcost': ['', [Validators.required, Validators.minLength(1)]]
+          'termChrg': ['', [Validators.required]],
+          'aprtTxFee': ['', [Validators.required]],
+          'delivery': ['', [Validators.required]],
+          'handFwd': ['', [Validators.required]],
+          'customExamFee': ['', [Validators.required]],
+          'collectFee': ['', [Validators.required]],
+          'cargoPrmt': ['', [Validators.required]],
+          'docFee': ['', [Validators.required]],
+          'breakBulk': ['', [Validators.required]],
+          'edifee': ['', [Validators.required]],
+          'freightGst': ['', [Validators.required]],
+          'totalFreightCost': ['', [Validators.required]],
+          'totalFreightRmcost': ['', [Validators.required]]
         }); 
         
       }
@@ -836,13 +858,15 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
           this.intention = UPDATE;
           this.display = true;      
           
+          this.recalculateAmount();
+
           this.dataForm.valueChanges.debounceTime(300)
           .subscribe(data => this.onValueChanged(data));
         }
         else 
         this.itemSelected = false;
         
-        this.edit();      
+        this.edit(this.data.grnid);      
       }
       
       addForm() {        
@@ -853,9 +877,9 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.configureAddForm();  
       }   
       
-      edit() {  
+      edit(id) {  
         
-        this.formTitle = "Edit GRN"; 
+        this.formTitle = "Edit GRN (" + id + ")"; 
         this.intention = UPDATE;                            
         this.configureEditForm();
                 
@@ -929,7 +953,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.dispatchIntent(GRN_GET);        
       }
 
-      
+   
       dispatchIntent(messageType : string, data? : any)
       {   
             
