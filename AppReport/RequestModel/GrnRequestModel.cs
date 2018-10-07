@@ -6,18 +6,147 @@ namespace AppReport.RequestModel
     {
         public int Grnid { get; set; }
         public DateTime? Grndate { get; set; }
+        public int? DailyNo { get; set; }
+        public string Grncode { get; set; }
         public string Lotno { get; set; }
         public int? SupplierId { get; set; }
         public int? Rmid { get; set; }
-        public decimal? Height { get; set; }
-        public int? HeightUom { get; set; }
-        public decimal? Width { get; set; }
-        public int WidthUom { get; set; }
-        public decimal? Thick { get; set; }
-        public int? ThickUom { get; set; }
-        public decimal? Wgt { get; set; }
-        public int? Roll { get; set; }
-        public int? RollUom { get; set; }
+        public int? SizeCount { get; set; }
+        public decimal? Height1 { get; set; }
+        public int? HeightUom1 { get; set; }
+        public decimal? Width1 { get; set; }
+        public int WidthUom1 { get; set; }
+        public decimal? Thick1 { get; set; }
+        public int? ThickUom1 { get; set; }
+        public decimal? Wgt1 { get; set; }
+        public int? Roll1 { get; set; }
+        public int? RollUom1 { get; set; }
+        public decimal? Height2 { get; set; }
+        public int? HeightUom2 { get; set; }
+        public decimal? Width2 { get; set; }
+        public int WidthUom2 { get; set; }
+        public decimal? Thick2 { get; set; }
+        public int? ThickUom2 { get; set; }
+        public decimal? Wgt2 { get; set; }
+        public int? Roll2 { get; set; }
+        public int? RollUom2 { get; set; }
+        public decimal? Height3 { get; set; }
+        public int? HeightUom3 { get; set; }
+        public decimal? Width3 { get; set; }
+        public int WidthUom3 { get; set; }
+        public decimal? Thick3 { get; set; }
+        public int? ThickUom3 { get; set; }
+        public decimal? Wgt3 { get; set; }
+        public int? Roll3 { get; set; }
+        public int? RollUom3 { get; set; }
+        public decimal? Height4 { get; set; }
+        public int? HeightUom4 { get; set; }
+        public decimal? Width4 { get; set; }
+        public int WidthUom4 { get; set; }
+        public decimal? Thick4 { get; set; }
+        public int? ThickUom4 { get; set; }
+        public decimal? Wgt4 { get; set; }
+        public int? Roll4 { get; set; }
+        public int? RollUom4 { get; set; }
+        public decimal? Height5 { get; set; }
+        public int? HeightUom5 { get; set; }
+        public decimal? Width5 { get; set; }
+        public int WidthUom5 { get; set; }
+        public decimal? Thick5 { get; set; }
+        public int? ThickUom5 { get; set; }
+        public decimal? Wgt5 { get; set; }
+        public int? Roll5 { get; set; }
+        public int? RollUom5 { get; set; }
+        public decimal? Height6 { get; set; }
+        public int? HeightUom6 { get; set; }
+        public decimal? Width6 { get; set; }
+        public int WidthUom6 { get; set; }
+        public decimal? Thick6 { get; set; }
+        public int? ThickUom6 { get; set; }
+        public decimal? Wgt6 { get; set; }
+        public int? Roll6 { get; set; }
+        public int? RollUom6 { get; set; }
+        public decimal? Height7 { get; set; }
+        public int? HeightUom7 { get; set; }
+        public decimal? Width7 { get; set; }
+        public int WidthUom7 { get; set; }
+        public decimal? Thick7 { get; set; }
+        public int? ThickUom7 { get; set; }
+        public decimal? Wgt7 { get; set; }
+        public int? Roll7 { get; set; }
+        public int? RollUom7 { get; set; }
+        public decimal? Height8 { get; set; }
+        public int? HeightUom8 { get; set; }
+        public decimal? Width8 { get; set; }
+        public int WidthUom8 { get; set; }
+        public decimal? Thick8 { get; set; }
+        public int? ThickUom8 { get; set; }
+        public decimal? Wgt8 { get; set; }
+        public int? Roll8 { get; set; }
+        public int? RollUom8 { get; set; }
+        public decimal? Height9 { get; set; }
+        public int? HeightUom9 { get; set; }
+        public decimal? Width9 { get; set; }
+        public int WidthUom9 { get; set; }
+        public decimal? Thick9 { get; set; }
+        public int? ThickUom9 { get; set; }
+        public decimal? Wgt9 { get; set; }
+        public int? Roll9 { get; set; }
+        public int? RollUom9 { get; set; }
+        public decimal? Height10 { get; set; }
+        public int? HeightUom10 { get; set; }
+        public decimal? Width10 { get; set; }
+        public int WidthUom10 { get; set; }
+        public decimal? Thick10 { get; set; }
+        public int? ThickUom10 { get; set; }
+        public decimal? Wgt10 { get; set; }
+        public int? Roll10 { get; set; }
+        public int? RollUom10 { get; set; }
+        public decimal? Height11 { get; set; }
+        public int? HeightUom11 { get; set; }
+        public decimal? Width11 { get; set; }
+        public int WidthUom11 { get; set; }
+        public decimal? Thick11 { get; set; }
+        public int? ThickUom11 { get; set; }
+        public decimal? Wgt11 { get; set; }
+        public int? Roll11 { get; set; }
+        public int? RollUom11 { get; set; }
+        public decimal? Height12 { get; set; }
+        public int? HeightUom12 { get; set; }
+        public decimal? Width12 { get; set; }
+        public int WidthUom12 { get; set; }
+        public decimal? Thick12 { get; set; }
+        public int? ThickUom12 { get; set; }
+        public decimal? Wgt12 { get; set; }
+        public int? Roll12 { get; set; }
+        public int? RollUom12 { get; set; }
+        public decimal? Height13 { get; set; }
+        public int? HeightUom13 { get; set; }
+        public decimal? Width13 { get; set; }
+        public int WidthUom13 { get; set; }
+        public decimal? Thick13 { get; set; }
+        public int? ThickUom13 { get; set; }
+        public decimal? Wgt13 { get; set; }
+        public int? Roll13 { get; set; }
+        public int? RollUom13 { get; set; }
+        public decimal? Height14 { get; set; }
+        public int? HeightUom14 { get; set; }
+        public decimal? Width14 { get; set; }
+        public int WidthUom14 { get; set; }
+        public decimal? Thick14 { get; set; }
+        public int? ThickUom14 { get; set; }
+        public decimal? Wgt14 { get; set; }
+        public int? Roll14 { get; set; }
+        public int? RollUom14 { get; set; }
+        public decimal? Height15 { get; set; }
+        public int? HeightUom15 { get; set; }
+        public decimal? Width15 { get; set; }
+        public int WidthUom15 { get; set; }
+        public decimal? Thick15 { get; set; }
+        public int? ThickUom15 { get; set; }
+        public decimal? Wgt15 { get; set; }
+        public int? Roll15 { get; set; }
+        public int? RollUom15 { get; set; }
         public DateTime? Dom { get; set; }
         public string Dono { get; set; }
         public int? StncustomId { get; set; }
@@ -59,7 +188,7 @@ namespace AppReport.RequestModel
         public int? CreatedByUserId { get; set; }
         public DateTime? CreatedDt { get; set; }
         public int? EditedByUserId { get; set; }
-        public DateTime? EditedDt { get; set; }
+        public DateTime? EditedDt { get; set; } 
 
     }
 }

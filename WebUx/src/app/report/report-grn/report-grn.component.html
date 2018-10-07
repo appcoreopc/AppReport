@@ -58,157 +58,2405 @@
 								{{ formErrors.rmid }}
 							</div>	
 					  </div>
-				   </div>   
-				   
-					 <div class="form-group row">
-					  <div class="cell c1">
-						<div class="input-group">
-							<div> 
-							 <label>Size :</label>
-							</div>
-						  </div>
-					  </div> 
-					  <div class="cell c2"> 
-						<div class="input-group">
-							<div class="input-group-addon">
-							  <span>Height</span>
-							</div>
-							 <input id="height" type="number" formControlName="height" maxlength="8" class="form-control decimal-control"  />
-							 <span class="input-group-btn">
-							 </span>
-						 
-								<select class="form-control" formControlName="heightUom" style="width:100px">
-							  	<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-							  </select>
-						  </div>
-						</div> 
-						<div class="cell">
-								<div *ngIf="formErrors.height" class="alert alert-danger">
-									{{ formErrors.height }}	
-								</div>	
-						</div>
-						<div class="cell">
-								<div *ngIf="formErrors.heightUom" class="alert alert-danger">
-								{{ formErrors.heightUom }}
-								</div>	
-						</div>
-					 </div>  
-					
+					 </div>   
 					 
-					 <div class="form-group row">
-					  <div class="cell c1">
-						<div class="input-group">
-							<div> 
-							 <label> </label>
-							</div>
-						  </div>
-					  </div> 
-					  <div class="cell c2"> 
-						<div class="input-group">
-							<div class="input-group-addon">
-							  <span>Width</span>
-							</div>
-							 <input id="width" type="number" formControlName="width" maxlength="8" class="form-control decimal-control"  />
-							  <span class="input-group-btn">
-							 </span>
-						 
-								<select class="form-control" formControlName="widthUom" style="width:100px">
-								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-						  </select>
-						 
-						  </div>
-					  </div> 
-						<div class="cell">
-								<div *ngIf="formErrors.width" class="alert alert-danger">
-									{{ formErrors.width }}	
-								</div>	
-						</div>
-						<div class="cell">
-								<div *ngIf="formErrors.widthUom" class="alert alert-danger">
-								{{ formErrors.widthUom }}
-								</div>	
-						</div>
-					 </div> 
-				    
-					 <div class="form-group row">
-					  <div class="cell c1">
-						<div class="input-group">
-							<div> 
-							 <label> </label>
-							</div>
-						  </div>
-					  </div> 
-					  <div class="cell c2"> 
-						<div class="input-group">
-							<div class="input-group-addon">
-							  <span>Thickness</span>
-							</div>
-							 <input id="thick" type="number" formControlName="thick" maxlength="8" class="form-control decimal-control"  />
-							 <span class="input-group-btn">
-							 </span>
-								<select class="form-control" formControlName="thickUom" style="width:100px">
-								<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-							  </select> 
-						  </div>
-					  </div> 
-						<div class="cell">
-								<div *ngIf="formErrors.thick" class="alert alert-danger">
-									{{ formErrors.thick }}	
-								</div>	
-						</div>
-						<div class="cell">
-								<div *ngIf="formErrors.thickUom" class="alert alert-danger">
-								{{ formErrors.thickUom }}
-								</div>	
-						</div>
-					 </div> 
+					 <div style="clear:both; padding:10px"></div>
 
 					 <div class="form-group row">
-					  <div class="cell c1">
-						<div class="input-group">
-							<div> 
-							 <label>WT :</label>
+							<div class="cell c1">
+							 <label for="grndate">Total Material Size :</label>
+							</div> 
+							<div class="cell c2"> 
+									<select class="form-control" formControlName="sizeCount" style="width:150px" (change)="onSizeCountChange($event.target.value)">
+										<option  value="1">1</option>
+										<option  value="2">2</option>
+										<option  value="3">3</option>
+										<option  value="4">4</option>
+										<option  value="5">5</option>
+										<option  value="6">6</option>
+										<option  value="7">7</option>
+										<option  value="8">8</option>
+										<option  value="9">9</option>
+										<option  value="10">10</option>
+										<option  value="11">11</option>
+										<option  value="12">12</option>
+										<option  value="13">13</option>
+										<option  value="14">14</option>
+										<option  value="15">15</option>
+									</select>
 							</div>
-						  </div>
-					  </div> 
-					  <div class="cell c2"> 
-						<div class="input-group">
-							 <input id="wgt" type="number" formControlName="wgt" maxlength="8" class="form-control decimal-control"  /> 
-							<div class="input-group-addon">
-							  <span>KG</span>
-							</div> 	
-						  </div>
-							<div *ngIf="formErrors.wgt" class="alert alert-danger">
-							  {{ formErrors.wgt }}
-							</div>
-					  </div> 
-					  <div class="cell c3"> 
-					  </div> 
-					  <div class="cell c4">
-						<div class="input-group">
-							<div> 
-							 <label for="roll">Qty (Roll) :</label>
-							</div>
-						  </div>
-					  </div> 
-					  <div class="cell c5"> 
-						<div class="input-group"> 
-							 <input id="roll" type="number" formControlName="roll" maxlength="9" class="form-control decimal-control"  /> 
-							 <span class="input-group-btn">
-							 </span> 
-								<select class="form-control" formControlName="rollUom" style="width:100px">
-									<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
-								  </select>
-						  </div>
-							<div *ngIf="formErrors.roll" class="alert alert-danger">
-								{{ formErrors.roll }}
-							</div>
-							<div *ngIf="formErrors.rollUom" class="alert alert-danger">
-								{{ formErrors.rollUom }}
-							</div>
-					  </div> 
-				   </div> 
+					</div>
 					 
+					<div style="clear:both; padding:10px"></div>
+
+					<div id="size1">
+					 <div> 
+							<label>Material Size 1:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height1" type="number" style="width:150px" formControlName="height1" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom1" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height1" class="alert alert-danger">
+											{{ formErrors.height1 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom1" class="alert alert-danger">
+										{{ formErrors.heightUom1 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width1" type="number" style="width:150px" formControlName="width1" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom1" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width1" class="alert alert-danger">
+											{{ formErrors.width1 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom1" class="alert alert-danger">
+										{{ formErrors.widthUom1 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick1" type="number" style="width:150px" formControlName="thick1" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom1" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick1" class="alert alert-danger">
+											{{ formErrors.thick1 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom1" class="alert alert-danger">
+										{{ formErrors.thickUom1 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt1" type="number" formControlName="wgt1" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt1" class="alert alert-danger">
+										{{ formErrors.wgt1 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll1">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll1" type="number" formControlName="roll1" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom1" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll1" class="alert alert-danger">
+										{{ formErrors.roll1 }}
+									</div>
+									<div *ngIf="formErrors.rollUom1" class="alert alert-danger">
+										{{ formErrors.rollUom1 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+				</div>
+
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 2"></div>
+
+					<div id="size2" *ngIf="newSizeCount >= 2">
+					<div> 
+							<label>Material Size 2:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height2" type="number" style="width:150px" formControlName="height2" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom2" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height2" class="alert alert-danger">
+											{{ formErrors.height2 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom2" class="alert alert-danger">
+										{{ formErrors.heightUom2 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width2" type="number" style="width:150px" formControlName="width2" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom2" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width2" class="alert alert-danger">
+											{{ formErrors.width2 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom2" class="alert alert-danger">
+										{{ formErrors.widthUom2 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick2" type="number" style="width:150px" formControlName="thick2" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom2" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick2" class="alert alert-danger">
+											{{ formErrors.thick2 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom2" class="alert alert-danger">
+										{{ formErrors.thickUom2 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt2" type="number" formControlName="wgt2" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt2" class="alert alert-danger">
+										{{ formErrors.wgt2 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll2">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll2" type="number" formControlName="roll2" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom2" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll2" class="alert alert-danger">
+										{{ formErrors.roll2 }}
+									</div>
+									<div *ngIf="formErrors.rollUom2" class="alert alert-danger">
+										{{ formErrors.rollUom2 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+					</div>
+
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 3"></div>
+
+					<div id="size3" *ngIf="newSizeCount >= 3">
+					<div> 
+							<label>Material Size 3:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height3" type="number" style="width:150px" formControlName="height3" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom3" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height3" class="alert alert-danger">
+											{{ formErrors.height3 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom3" class="alert alert-danger">
+										{{ formErrors.heightUom3 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width3" type="number" style="width:150px" formControlName="width3" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom3" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width3" class="alert alert-danger">
+											{{ formErrors.width3 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom3" class="alert alert-danger">
+										{{ formErrors.widthUom3 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick3" type="number" style="width:150px" formControlName="thick3" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom3" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick3" class="alert alert-danger">
+											{{ formErrors.thick3 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom3" class="alert alert-danger">
+										{{ formErrors.thickUom3 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt3" type="number" formControlName="wgt3" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt3" class="alert alert-danger">
+										{{ formErrors.wgt3 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll3">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll3" type="number" formControlName="roll3" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom3" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll3" class="alert alert-danger">
+										{{ formErrors.roll3 }}
+									</div>
+									<div *ngIf="formErrors.rollUom3" class="alert alert-danger">
+										{{ formErrors.rollUom3 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+					</div>
+
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 4"></div> 
+					<div id="size4" *ngIf="newSizeCount >= 4"> 
+					<div> 
+							<label>Material Size 4:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height4" type="number" style="width:150px" formControlName="height4" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom4" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height4" class="alert alert-danger">
+											{{ formErrors.height4 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom4" class="alert alert-danger">
+										{{ formErrors.heightUom4 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width4" type="number" style="width:150px" formControlName="width4" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom4" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width4" class="alert alert-danger">
+											{{ formErrors.width4 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom4" class="alert alert-danger">
+										{{ formErrors.widthUom4 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick4" type="number" style="width:150px" formControlName="thick4" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom4" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick4" class="alert alert-danger">
+											{{ formErrors.thick4 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom4" class="alert alert-danger">
+										{{ formErrors.thickUom4 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt4" type="number" formControlName="wgt4" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt4" class="alert alert-danger">
+										{{ formErrors.wgt4 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll4">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll4" type="number" formControlName="roll4" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom4" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll4" class="alert alert-danger">
+										{{ formErrors.roll4 }}
+									</div>
+									<div *ngIf="formErrors.rollUom4" class="alert alert-danger">
+										{{ formErrors.rollUom4 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+					</div>
+					
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 5"></div> 
+					
+					<div id="size5" *ngIf="newSizeCount >= 5"> 
+					<div> 
+							<label>Material Size 5:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height5" type="number" style="width:150px" formControlName="height5" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom5" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height5" class="alert alert-danger">
+											{{ formErrors.height5 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom5" class="alert alert-danger">
+										{{ formErrors.heightUom5 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width5" type="number" style="width:150px" formControlName="width5" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom5" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width5" class="alert alert-danger">
+											{{ formErrors.width5 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom5" class="alert alert-danger">
+										{{ formErrors.widthUom5 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick5" type="number" style="width:150px" formControlName="thick5" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom5" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick5" class="alert alert-danger">
+											{{ formErrors.thick5 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom5" class="alert alert-danger">
+										{{ formErrors.thickUom5 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt5" type="number" formControlName="wgt5" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt5" class="alert alert-danger">
+										{{ formErrors.wgt5 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll5">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll5" type="number" formControlName="roll5" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom5" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll5" class="alert alert-danger">
+										{{ formErrors.roll5 }}
+									</div>
+									<div *ngIf="formErrors.rollUom5" class="alert alert-danger">
+										{{ formErrors.rollUom5 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+					</div>
+
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 6"></div> 
+					
+					<div id="size6" *ngIf="newSizeCount >= 6"> 
+					<div> 
+							<label>Material Size 6:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height6" type="number" style="width:150px" formControlName="height6" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom6" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height6" class="alert alert-danger">
+											{{ formErrors.height6 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom6" class="alert alert-danger">
+										{{ formErrors.heightUom6 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width6" type="number" style="width:150px" formControlName="width6" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom6" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width6" class="alert alert-danger">
+											{{ formErrors.width6 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom6" class="alert alert-danger">
+										{{ formErrors.widthUom6 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick6" type="number" style="width:150px" formControlName="thick6" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom6" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick6" class="alert alert-danger">
+											{{ formErrors.thick6 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom6" class="alert alert-danger">
+										{{ formErrors.thickUom6 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt6" type="number" formControlName="wgt6" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt6" class="alert alert-danger">
+										{{ formErrors.wgt6 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll6">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll6" type="number" formControlName="roll6" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom6" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll6" class="alert alert-danger">
+										{{ formErrors.roll6 }}
+									</div>
+									<div *ngIf="formErrors.rollUom6" class="alert alert-danger">
+										{{ formErrors.rollUom6 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+					</div>
+					
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 7"></div> 
+					<div id="size7" *ngIf="newSizeCount >= 7"> 
+					<div> 
+							<label>Material Size 7:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height7" type="number" style="width:150px" formControlName="height7" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom7" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height7" class="alert alert-danger">
+											{{ formErrors.height7 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom7" class="alert alert-danger">
+										{{ formErrors.heightUom7 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width7" type="number" style="width:150px" formControlName="width7" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom7" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width7" class="alert alert-danger">
+											{{ formErrors.width7 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom7" class="alert alert-danger">
+										{{ formErrors.widthUom7 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick7" type="number" style="width:150px" formControlName="thick7" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom7" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick7" class="alert alert-danger">
+											{{ formErrors.thick7 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom7" class="alert alert-danger">
+										{{ formErrors.thickUom7 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt7" type="number" formControlName="wgt7" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt7" class="alert alert-danger">
+										{{ formErrors.wgt7 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll7">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll7" type="number" formControlName="roll7" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom7" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll7" class="alert alert-danger">
+										{{ formErrors.roll7 }}
+									</div>
+									<div *ngIf="formErrors.rollUom7" class="alert alert-danger">
+										{{ formErrors.rollUom7 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+					</div>
+
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 8"></div>   
+					
+					<div id="size8" *ngIf="newSizeCount >= 8"> 
+					<div> 
+							<label>Material Size 8:</label>
+					</div>
+					<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell">
+								<div class="input-group">
+									<div> 
+									<label>Size :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Height</span>
+									</div>
+									<input id="height8" type="number" style="width:150px" formControlName="height8" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="heightUom8" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.height8" class="alert alert-danger">
+											{{ formErrors.height8 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.heightUom8" class="alert alert-danger">
+										{{ formErrors.heightUom8 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Width</span>
+									</div>
+									<input id="width8" type="number" style="width:150px" formControlName="width8" maxlength="8" class="form-control decimal-control"  />
+										<span class="input-group-btn">
+									</span>
+								
+										<select class="form-control" formControlName="widthUom8" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+									</select>
+								
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.width8" class="alert alert-danger">
+											{{ formErrors.width8 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.widthUom8" class="alert alert-danger">
+										{{ formErrors.widthUom8 }}
+										</div>	
+								</div> 
+								<div class="cell" style="width:20px">
+								<div class="input-group">
+									<div> 
+									<label> </label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell"> 
+								<div class="input-group">
+									<div class="input-group-addon">
+										<span>Thickness</span>
+									</div>
+									<input id="thick8" type="number" style="width:150px" formControlName="thick8" maxlength="8" class="form-control decimal-control"  />
+									<span class="input-group-btn">
+									</span>
+										<select class="form-control" formControlName="thickUom8" style="width:100px">
+										<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+										</select> 
+									</div>
+								</div> 
+								<div class="cell">
+										<div *ngIf="formErrors.thick8" class="alert alert-danger">
+											{{ formErrors.thick8 }}	
+										</div>	
+								</div>
+								<div class="cell">
+										<div *ngIf="formErrors.thickUom8" class="alert alert-danger">
+										{{ formErrors.thickUom8 }}
+										</div>	
+								</div>
+							</div> 
+
+							<div class="form-group row" style="padding-left:20px">
+								<div class="cell c1">
+								<div class="input-group">
+									<div> 
+									<label>WT :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c2"> 
+								<div class="input-group">
+									<input id="wgt8" type="number" formControlName="wgt8" maxlength="8" class="form-control decimal-control"  /> 
+									<div class="input-group-addon">
+										<span>KG</span>
+									</div> 	
+									</div>
+									<div *ngIf="formErrors.wgt8" class="alert alert-danger">
+										{{ formErrors.wgt8 }}
+									</div>
+								</div> 
+								<div class="cell c3" style="width:20px"> 
+								</div> 
+								<div class="cell c4">
+								<div class="input-group">
+									<div> 
+									<label for="roll8">Qty (Roll) :</label>
+									</div>
+									</div>
+								</div> 
+								<div class="cell c5"> 
+								<div class="input-group"> 
+									<input id="roll8" type="number" formControlName="roll8" maxlength="9" class="form-control decimal-control"  /> 
+									<span class="input-group-btn">
+									</span> 
+										<select class="form-control" formControlName="rollUom8" style="width:100px">
+											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+									</div>
+									<div *ngIf="formErrors.roll8" class="alert alert-danger">
+										{{ formErrors.roll8 }}
+									</div>
+									<div *ngIf="formErrors.rollUom8" class="alert alert-danger">
+										{{ formErrors.rollUom8 }}
+									</div>
+								</div> 
+							</div> 
+					</div> 
+					</div>
+					
+					<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 9"></div> 
+					
+					<div id="size9" *ngIf="newSizeCount >= 9"> 
+							<div> 
+									<label>Material Size 9:</label>
+							</div>
+							<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell">
+										<div class="input-group">
+											<div> 
+											<label>Size :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Height</span>
+											</div>
+											<input id="height9" type="number" style="width:150px" formControlName="height9" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="heightUom9" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select>
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.height9" class="alert alert-danger">
+													{{ formErrors.height9 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.heightUom9" class="alert alert-danger">
+												{{ formErrors.heightUom9 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Width</span>
+											</div>
+											<input id="width9" type="number" style="width:150px" formControlName="width9" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="widthUom9" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+										
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.width9" class="alert alert-danger">
+													{{ formErrors.width9 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.widthUom9" class="alert alert-danger">
+												{{ formErrors.widthUom9 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Thickness</span>
+											</div>
+											<input id="thick9" type="number" style="width:150px" formControlName="thick9" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+												<select class="form-control" formControlName="thickUom9" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select> 
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.thick9" class="alert alert-danger">
+													{{ formErrors.thick9 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.thickUom9" class="alert alert-danger">
+												{{ formErrors.thickUom9 }}
+												</div>	
+										</div>
+									</div> 
+		
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell c1">
+										<div class="input-group">
+											<div> 
+											<label>WT :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c2"> 
+										<div class="input-group">
+											<input id="wgt9" type="number" formControlName="wgt9" maxlength="8" class="form-control decimal-control"  /> 
+											<div class="input-group-addon">
+												<span>KG</span>
+											</div> 	
+											</div>
+											<div *ngIf="formErrors.wgt9" class="alert alert-danger">
+												{{ formErrors.wgt9 }}
+											</div>
+										</div> 
+										<div class="cell c3" style="width:20px"> 
+										</div> 
+										<div class="cell c4">
+										<div class="input-group">
+											<div> 
+											<label for="roll9">Qty (Roll) :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c5"> 
+										<div class="input-group"> 
+											<input id="roll9" type="number" formControlName="roll9" maxlength="9" class="form-control decimal-control"  /> 
+											<span class="input-group-btn">
+											</span> 
+												<select class="form-control" formControlName="rollUom9" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select>
+											</div>
+											<div *ngIf="formErrors.roll9" class="alert alert-danger">
+												{{ formErrors.roll9 }}
+											</div>
+											<div *ngIf="formErrors.rollUom9" class="alert alert-danger">
+												{{ formErrors.rollUom9 }}
+											</div>
+										</div> 
+									</div> 
+							</div> 
+							</div> 
+							
+							<div style="clear:both; padding:10px"  *ngIf="newSizeCount >= 10"></div>
+ 
+							<div id="size10" *ngIf="newSizeCount >= 10"> 
+								<div> 
+										<label>Material Size 10:</label>
+								</div>
+								<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+										<div class="form-group row" style="padding-left:20px">
+											<div class="cell">
+											<div class="input-group">
+												<div> 
+												<label>Size :</label>
+												</div>
+												</div>
+											</div> 
+											<div class="cell" style="width:20px">
+											<div class="input-group">
+												<div> 
+												<label> </label>
+												</div>
+												</div>
+											</div> 
+											<div class="cell"> 
+											<div class="input-group">
+												<div class="input-group-addon">
+													<span>Height</span>
+												</div>
+												<input id="height10" type="number" style="width:150px" formControlName="height10" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+												</span>
+											
+													<select class="form-control" formControlName="heightUom10" style="width:100px">
+														<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select>
+												</div>
+											</div> 
+											<div class="cell">
+													<div *ngIf="formErrors.height10" class="alert alert-danger">
+														{{ formErrors.height10 }}	
+													</div>	
+											</div>
+											<div class="cell">
+													<div *ngIf="formErrors.heightUom10" class="alert alert-danger">
+													{{ formErrors.heightUom10 }}
+													</div>	
+											</div> 
+											<div class="cell" style="width:20px">
+											<div class="input-group">
+												<div> 
+												<label> </label>
+												</div>
+												</div>
+											</div> 
+											<div class="cell"> 
+											<div class="input-group">
+												<div class="input-group-addon">
+													<span>Width</span>
+												</div>
+												<input id="width10" type="number" style="width:150px" formControlName="width10" maxlength="8" class="form-control decimal-control"  />
+													<span class="input-group-btn">
+												</span>
+											
+													<select class="form-control" formControlName="widthUom10" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select>
+											
+												</div>
+											</div> 
+											<div class="cell">
+													<div *ngIf="formErrors.width10" class="alert alert-danger">
+														{{ formErrors.width10 }}	
+													</div>	
+											</div>
+											<div class="cell">
+													<div *ngIf="formErrors.widthUom10" class="alert alert-danger">
+													{{ formErrors.widthUom10 }}
+													</div>	
+											</div> 
+											<div class="cell" style="width:20px">
+											<div class="input-group">
+												<div> 
+												<label> </label>
+												</div>
+												</div>
+											</div> 
+											<div class="cell"> 
+											<div class="input-group">
+												<div class="input-group-addon">
+													<span>Thickness</span>
+												</div>
+												<input id="thick10" type="number" style="width:150px" formControlName="thick10" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+												</span>
+													<select class="form-control" formControlName="thickUom10" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select> 
+												</div>
+											</div> 
+											<div class="cell">
+													<div *ngIf="formErrors.thick10" class="alert alert-danger">
+														{{ formErrors.thick10 }}	
+													</div>	
+											</div>
+											<div class="cell">
+													<div *ngIf="formErrors.thickUom10" class="alert alert-danger">
+													{{ formErrors.thickUom10 }}
+													</div>	
+											</div>
+										</div> 
+			
+										<div class="form-group row" style="padding-left:20px">
+											<div class="cell c1">
+											<div class="input-group">
+												<div> 
+												<label>WT :</label>
+												</div>
+												</div>
+											</div> 
+											<div class="cell c2"> 
+											<div class="input-group">
+												<input id="wgt10" type="number" formControlName="wgt10" maxlength="8" class="form-control decimal-control"  /> 
+												<div class="input-group-addon">
+													<span>KG</span>
+												</div> 	
+												</div>
+												<div *ngIf="formErrors.wgt10" class="alert alert-danger">
+													{{ formErrors.wgt10 }}
+												</div>
+											</div> 
+											<div class="cell c3" style="width:20px"> 
+											</div> 
+											<div class="cell c4">
+											<div class="input-group">
+												<div> 
+												<label for="roll10">Qty (Roll) :</label>
+												</div>
+												</div>
+											</div> 
+											<div class="cell c5"> 
+											<div class="input-group"> 
+												<input id="roll10" type="number" formControlName="roll10" maxlength="9" class="form-control decimal-control"  /> 
+												<span class="input-group-btn">
+												</span> 
+													<select class="form-control" formControlName="rollUom10" style="width:100px">
+														<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+														</select>
+												</div>
+												<div *ngIf="formErrors.roll10" class="alert alert-danger">
+													{{ formErrors.roll10 }}
+												</div>
+												<div *ngIf="formErrors.rollUom10" class="alert alert-danger">
+													{{ formErrors.rollUom10 }}
+												</div>
+											</div> 
+										</div> 
+								</div> 
+						</div> 
+								
+						<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 11"></div> 
+						
+					<div id="size11" *ngIf="newSizeCount >= 11"> 
+							<div> 
+									<label>Material Size 11:</label>
+							</div>
+							<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell">
+										<div class="input-group">
+											<div> 
+											<label>Size :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Height</span>
+											</div>
+											<input id="height11" type="number" style="width:150px" formControlName="height11" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="heightUom11" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select>
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.height11" class="alert alert-danger">
+													{{ formErrors.height11 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.heightUom11" class="alert alert-danger">
+												{{ formErrors.heightUom11 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Width</span>
+											</div>
+											<input id="width11" type="number" style="width:150px" formControlName="width11" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="widthUom11" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+										
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.width11" class="alert alert-danger">
+													{{ formErrors.width11 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.widthUom11" class="alert alert-danger">
+												{{ formErrors.widthUom11 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Thickness</span>
+											</div>
+											<input id="thick11" type="number" style="width:150px" formControlName="thick11" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+												<select class="form-control" formControlName="thickUom11" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select> 
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.thick11" class="alert alert-danger">
+													{{ formErrors.thick11 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.thickUom11" class="alert alert-danger">
+												{{ formErrors.thickUom11 }}
+												</div>	
+										</div>
+									</div> 
+		
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell c1">
+										<div class="input-group">
+											<div> 
+											<label>WT :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c2"> 
+										<div class="input-group">
+											<input id="wgt11" type="number" formControlName="wgt11" maxlength="8" class="form-control decimal-control"  /> 
+											<div class="input-group-addon">
+												<span>KG</span>
+											</div> 	
+											</div>
+											<div *ngIf="formErrors.wgt11" class="alert alert-danger">
+												{{ formErrors.wgt11 }}
+											</div>
+										</div> 
+										<div class="cell c3" style="width:20px"> 
+										</div> 
+										<div class="cell c4">
+										<div class="input-group">
+											<div> 
+											<label for="roll11">Qty (Roll) :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c5"> 
+										<div class="input-group"> 
+											<input id="roll11" type="number" formControlName="roll11" maxlength="9" class="form-control decimal-control"  /> 
+											<span class="input-group-btn">
+											</span> 
+												<select class="form-control" formControlName="rollUom11" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select>
+											</div>
+											<div *ngIf="formErrors.roll11" class="alert alert-danger">
+												{{ formErrors.roll11 }}
+											</div>
+											<div *ngIf="formErrors.rollUom11" class="alert alert-danger">
+												{{ formErrors.rollUom11 }}
+											</div>
+										</div> 
+									</div> 
+							</div> 
+							</div> 
+							
+							<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 12"></div> 
+						
+					<div id="size12" *ngIf="newSizeCount >= 12"> 
+							<div> 
+									<label>Material Size 12:</label>
+							</div>
+							<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell">
+										<div class="input-group">
+											<div> 
+											<label>Size :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Height</span>
+											</div>
+											<input id="height12" type="number" style="width:150px" formControlName="height12" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="heightUom12" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select>
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.height12" class="alert alert-danger">
+													{{ formErrors.height12 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.heightUom12" class="alert alert-danger">
+												{{ formErrors.heightUom12 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Width</span>
+											</div>
+											<input id="width12" type="number" style="width:150px" formControlName="width12" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="widthUom12" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+										
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.width12" class="alert alert-danger">
+													{{ formErrors.width12 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.widthUom12" class="alert alert-danger">
+												{{ formErrors.widthUom12 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Thickness</span>
+											</div>
+											<input id="thick12" type="number" style="width:150px" formControlName="thick12" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+												<select class="form-control" formControlName="thickUom12" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select> 
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.thick12" class="alert alert-danger">
+													{{ formErrors.thick12 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.thickUom12" class="alert alert-danger">
+												{{ formErrors.thickUom12 }}
+												</div>	
+										</div>
+									</div> 
+		
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell c1">
+										<div class="input-group">
+											<div> 
+											<label>WT :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c2"> 
+										<div class="input-group">
+											<input id="wgt12" type="number" formControlName="wgt12" maxlength="8" class="form-control decimal-control"  /> 
+											<div class="input-group-addon">
+												<span>KG</span>
+											</div> 	
+											</div>
+											<div *ngIf="formErrors.wgt12" class="alert alert-danger">
+												{{ formErrors.wgt12 }}
+											</div>
+										</div> 
+										<div class="cell c3" style="width:20px"> 
+										</div> 
+										<div class="cell c4">
+										<div class="input-group">
+											<div> 
+											<label for="roll12">Qty (Roll) :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c5"> 
+										<div class="input-group"> 
+											<input id="roll12" type="number" formControlName="roll12" maxlength="9" class="form-control decimal-control"  /> 
+											<span class="input-group-btn">
+											</span> 
+												<select class="form-control" formControlName="rollUom12" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select>
+											</div>
+											<div *ngIf="formErrors.roll12" class="alert alert-danger">
+												{{ formErrors.roll12 }}
+											</div>
+											<div *ngIf="formErrors.rollUom12" class="alert alert-danger">
+												{{ formErrors.rollUom12 }}
+											</div>
+										</div> 
+									</div> 
+							</div> 
+							</div> 
+							
+							<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 13"></div> 
+							
+					<div id="size13" *ngIf="newSizeCount >= 13"> 
+							<div> 
+									<label>Material Size 13:</label>
+							</div>
+							<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell">
+										<div class="input-group">
+											<div> 
+											<label>Size :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Height</span>
+											</div>
+											<input id="height13" type="number" style="width:150px" formControlName="height13" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="heightUom13" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select>
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.height13" class="alert alert-danger">
+													{{ formErrors.height13 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.heightUom13" class="alert alert-danger">
+												{{ formErrors.heightUom13 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Width</span>
+											</div>
+											<input id="width13" type="number" style="width:150px" formControlName="width13" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="widthUom13" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+										
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.width13" class="alert alert-danger">
+													{{ formErrors.width13 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.widthUom13" class="alert alert-danger">
+												{{ formErrors.widthUom13 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Thickness</span>
+											</div>
+											<input id="thick13" type="number" style="width:150px" formControlName="thick13" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+												<select class="form-control" formControlName="thickUom13" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select> 
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.thick13" class="alert alert-danger">
+													{{ formErrors.thick13 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.thickUom13" class="alert alert-danger">
+												{{ formErrors.thickUom13 }}
+												</div>	
+										</div>
+									</div> 
+		
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell c1">
+										<div class="input-group">
+											<div> 
+											<label>WT :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c2"> 
+										<div class="input-group">
+											<input id="wgt13" type="number" formControlName="wgt13" maxlength="8" class="form-control decimal-control"  /> 
+											<div class="input-group-addon">
+												<span>KG</span>
+											</div> 	
+											</div>
+											<div *ngIf="formErrors.wgt13" class="alert alert-danger">
+												{{ formErrors.wgt13 }}
+											</div>
+										</div> 
+										<div class="cell c3" style="width:20px"> 
+										</div> 
+										<div class="cell c4">
+										<div class="input-group">
+											<div> 
+											<label for="roll13">Qty (Roll) :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c5"> 
+										<div class="input-group"> 
+											<input id="roll13" type="number" formControlName="roll13" maxlength="9" class="form-control decimal-control"  /> 
+											<span class="input-group-btn">
+											</span> 
+												<select class="form-control" formControlName="rollUom13" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select>
+											</div>
+											<div *ngIf="formErrors.roll13" class="alert alert-danger">
+												{{ formErrors.roll13 }}
+											</div>
+											<div *ngIf="formErrors.rollUom13" class="alert alert-danger">
+												{{ formErrors.rollUom13 }}
+											</div>
+										</div> 
+									</div> 
+							</div> 
+							</div> 
+							
+							<div style="clear:both; padding:10px" *ngIf="newSizeCount >= 14"></div>
+
+							
+					<div id="size14" *ngIf="newSizeCount >= 14"> 
+							<div> 
+									<label>Material Size 14:</label>
+							</div>
+							<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell">
+										<div class="input-group">
+											<div> 
+											<label>Size :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Height</span>
+											</div>
+											<input id="height14" type="number" style="width:150px" formControlName="height14" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="heightUom14" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select>
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.height14" class="alert alert-danger">
+													{{ formErrors.height14 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.heightUom14" class="alert alert-danger">
+												{{ formErrors.heightUom14 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Width</span>
+											</div>
+											<input id="width14" type="number" style="width:150px" formControlName="width14" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="widthUom14" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+										
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.width14" class="alert alert-danger">
+													{{ formErrors.width14 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.widthUom14" class="alert alert-danger">
+												{{ formErrors.widthUom14 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Thickness</span>
+											</div>
+											<input id="thick14" type="number" style="width:150px" formControlName="thick14" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+												<select class="form-control" formControlName="thickUom14" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select> 
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.thick14" class="alert alert-danger">
+													{{ formErrors.thick14 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.thickUom14" class="alert alert-danger">
+												{{ formErrors.thickUom14 }}
+												</div>	
+										</div>
+									</div> 
+		
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell c1">
+										<div class="input-group">
+											<div> 
+											<label>WT :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c2"> 
+										<div class="input-group">
+											<input id="wgt14" type="number" formControlName="wgt14" maxlength="8" class="form-control decimal-control"  /> 
+											<div class="input-group-addon">
+												<span>KG</span>
+											</div> 	
+											</div>
+											<div *ngIf="formErrors.wgt14" class="alert alert-danger">
+												{{ formErrors.wgt14 }}
+											</div>
+										</div> 
+										<div class="cell c3" style="width:20px"> 
+										</div> 
+										<div class="cell c4">
+										<div class="input-group">
+											<div> 
+											<label for="roll14">Qty (Roll) :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c5"> 
+										<div class="input-group"> 
+											<input id="roll14" type="number" formControlName="roll14" maxlength="9" class="form-control decimal-control"  /> 
+											<span class="input-group-btn">
+											</span> 
+												<select class="form-control" formControlName="rollUom14" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select>
+											</div>
+											<div *ngIf="formErrors.roll14" class="alert alert-danger">
+												{{ formErrors.roll14 }}
+											</div>
+											<div *ngIf="formErrors.rollUom14" class="alert alert-danger">
+												{{ formErrors.rollUom14 }}
+											</div>
+										</div> 
+									</div> 
+							</div> 
+							</div> 
+							
+					 <div style="clear:both; padding:10px" *ngIf="newSizeCount >= 15"></div> 
+					<div id="size15" *ngIf="newSizeCount >= 15"> 
+							<div> 
+									<label>Material Size 15:</label>
+							</div>
+							<div  class="form-group row" style="border:1px solid #ccc; width:98%; padding:10px">
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell">
+										<div class="input-group">
+											<div> 
+											<label>Size :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Height</span>
+											</div>
+											<input id="height15" type="number" style="width:150px" formControlName="height15" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="heightUom15" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select>
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.height15" class="alert alert-danger">
+													{{ formErrors.height15 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.heightUom15" class="alert alert-danger">
+												{{ formErrors.heightUom15 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Width</span>
+											</div>
+											<input id="width15" type="number" style="width:150px" formControlName="width15" maxlength="8" class="form-control decimal-control"  />
+												<span class="input-group-btn">
+											</span>
+										
+												<select class="form-control" formControlName="widthUom15" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											</select>
+										
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.width15" class="alert alert-danger">
+													{{ formErrors.width15 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.widthUom15" class="alert alert-danger">
+												{{ formErrors.widthUom15 }}
+												</div>	
+										</div> 
+										<div class="cell" style="width:20px">
+										<div class="input-group">
+											<div> 
+											<label> </label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell"> 
+										<div class="input-group">
+											<div class="input-group-addon">
+												<span>Thickness</span>
+											</div>
+											<input id="thick15" type="number" style="width:150px" formControlName="thick15" maxlength="8" class="form-control decimal-control"  />
+											<span class="input-group-btn">
+											</span>
+												<select class="form-control" formControlName="thickUom15" style="width:100px">
+												<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+												</select> 
+											</div>
+										</div> 
+										<div class="cell">
+												<div *ngIf="formErrors.thick15" class="alert alert-danger">
+													{{ formErrors.thick15 }}	
+												</div>	
+										</div>
+										<div class="cell">
+												<div *ngIf="formErrors.thickUom15" class="alert alert-danger">
+												{{ formErrors.thickUom15 }}
+												</div>	
+										</div>
+									</div> 
+		
+									<div class="form-group row" style="padding-left:20px">
+										<div class="cell c1">
+										<div class="input-group">
+											<div> 
+											<label>WT :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c2"> 
+										<div class="input-group">
+											<input id="wgt15" type="number" formControlName="wgt15" maxlength="8" class="form-control decimal-control"  /> 
+											<div class="input-group-addon">
+												<span>KG</span>
+											</div> 	
+											</div>
+											<div *ngIf="formErrors.wgt15" class="alert alert-danger">
+												{{ formErrors.wgt15 }}
+											</div>
+										</div> 
+										<div class="cell c3" style="width:20px"> 
+										</div> 
+										<div class="cell c4">
+										<div class="input-group">
+											<div> 
+											<label for="roll15">Qty (Roll) :</label>
+											</div>
+											</div>
+										</div> 
+										<div class="cell c5"> 
+										<div class="input-group"> 
+											<input id="roll15" type="number" formControlName="roll15" maxlength="9" class="form-control decimal-control"  /> 
+											<span class="input-group-btn">
+											</span> 
+												<select class="form-control" formControlName="rollUom15" style="width:100px">
+													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													</select>
+											</div>
+											<div *ngIf="formErrors.roll15" class="alert alert-danger">
+												{{ formErrors.roll15 }}
+											</div>
+											<div *ngIf="formErrors.rollUom15" class="alert alert-danger">
+												{{ formErrors.rollUom15 }}
+											</div>
+										</div> 
+									</div> 
+							</div> 
+							</div> 
+							
+							<div style="clear:both; padding:10px"></div>
+
 				   <div class="form-group row">
 					  <div class="cell c1">
 					   <label for="dom">DOM :</label>
@@ -392,7 +2640,7 @@
 					   <label for="currencyId">Currency :</label>
 					  </div> 
 					  <div class="cell c5">	  
-						<select class="form-control" formControlName="currencyId" style="width:100px">
+						<select class="form-control" formControlName="currencyId" style="width:100px"  (change)="onCurrencyChange($event.target.value)">
 						<option *ngFor="let obj of currencyRows" [value]="obj.currencyId">{{obj.currencyCode}}</option>
 						 </select>	
 						 <div *ngIf="formErrors.currencyId" class="alert alert-danger">
@@ -411,7 +2659,7 @@
 				  <div class="cell c2"> 
 					<div class="input-group">
 						<div class="input-group-addon">
-						  <span>RM</span>
+						  <span>{{ rmCurrency }}</span>
 						</div>
 						 <input id="amountCurrency" formControlName="amountCurrency" maxlength="16" type="number" ng-change="totalRMCost()" class="form-control decimal-control"  />
 					  </div>
@@ -452,7 +2700,7 @@
 				 <div class="input-group">
 							
 					<div class="input-group-addon">
-					  <span>RM</span>
+					  <span>{{ rmCurrency }}</span>
 					</div> 
 					 <input id="amount" type="number" formControlName="amount" maxlength="16" value="{{RMAmount}}"  readonly class="form-control decimal-control" 
 				 style="width:200px"  /> 
@@ -938,7 +3186,7 @@
   [headerHeight]="30"  [rowHeight]="'auto'"
 	[footerHeight]="30">
 	
-	 <ngx-datatable-column  name="Id" prop="grnid" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+	 <ngx-datatable-column  name="Code" prop="grncode" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
            {{value}}
         </ng-template>

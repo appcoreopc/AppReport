@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[RptLG] (
+﻿CREATE TABLE [dbo].[RptLG] (
     [RptId]                 INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]           INT             NULL,
     [F_CoName]              NVARCHAR (50)   NULL,
@@ -185,7 +185,10 @@ CREATE TABLE [dbo].[RptLG] (
 
 
 
+
+
 GO
+ 
 
 
 CREATE TRIGGER [dbo].[RptLG_Insert]
@@ -451,9 +454,9 @@ BEGIN
 			 select @RptId, @CurrentYr, RMId, 
 			 (select top 1 F_CloseBalWgt from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = a.RMId),  
 			 (select top 1 F_CloseBalCost from RptLG_YImp xa where xa.RptY = @LastYr and xa.RMId = a.RMId),  
-			 sum(case when b.IsLocal = 0 then isnull(a.Wgt,0) else 0 end), 
+			 sum(case when b.IsLocal = 0 then isnull(a.Wgt_1,0) else 0 end), 
 			 sum(case when b.IsLocal = 0 then isnull(a.Amount,0) else 0 end), 
-			 sum(case when b.IsLocal = 1 then isnull(a.Wgt,0) else 0 end), 
+			 sum(case when b.IsLocal = 1 then isnull(a.Wgt_1,0) else 0 end), 
 			 sum(case when b.IsLocal = 1 then isnull(a.Amount,0) else 0 end)   
 			 from GRN a with (nolock)
 			 left join STNCustom b with (nolock) 

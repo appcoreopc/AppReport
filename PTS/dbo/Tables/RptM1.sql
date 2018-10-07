@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[RptM1] (
+﻿CREATE TABLE [dbo].[RptM1] (
     [RptId]              INT             IDENTITY (1, 1) NOT NULL,
     [RptStatusId]        INT             NULL,
     [RptDate]            DATE            NULL,
@@ -93,7 +93,10 @@ CREATE TABLE [dbo].[RptM1] (
 
 
 
+
+
 GO
+
 
 
 CREATE TRIGGER [dbo].[RptM1_Insert]
@@ -255,9 +258,9 @@ begin
 		select @RptId, (select top 1 MStkId from RptM1_MStk a with (nolock) 
 						where a.RptId = @RptId and a.RMId = g.RMId), 
 		g.InvoiceNo, 
-		case when c.IsLocal = 0 then g.Wgt end,
+		case when c.IsLocal = 0 then g.Wgt_1 end,
 		case when c.IsLocal = 0 then g.TotalFreightRMCost end,
-		case when c.IsLocal = 1 then g.Wgt end,
+		case when c.IsLocal = 1 then g.Wgt_1 end,
 		case when c.IsLocal = 1 then g.Amount end
 		from GRN g with (nolock)
 			left join STNCustom c with (nolock) on g.STNCustomId = c.STNCustomId

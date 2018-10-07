@@ -47,6 +47,8 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
     
     display: boolean = false; 
     formTitle: string = "New GRN"; 
+    rmCurrency: string = "-";
+    newSizeCount: number = 1;
     dataList : Array<any> = new Array<any>(); 
     //uomDataList : Array<any> = new Array<any>(); 
     componentDataList : Array<any> = new Array<any>(); 
@@ -64,16 +66,159 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       'grndate': [Validators.required, Validators.minLength(1)], 
       'lotno': [Validators.required, Validators.minLength(1)], 
       'supplierId': [Validators.required, Validators.minLength(1), Validators.min(1)], 
-      'rmid': [Validators.required, Validators.minLength(1), Validators.min(1)],  
-      'height': [Validators.required],
-      'heightUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'width': [Validators.required],
-      'widthUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'thick': [Validators.required],
-      'thickUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
-      'wgt': [Validators.required],
-      'roll': [Validators.required],
-      'rollUom': [Validators.required, Validators.minLength(1), Validators.min(1)],
+      'rmid': [Validators.required, Validators.minLength(1), Validators.min(1)],   
+      'sizeCount': [Validators.required],
+
+      'height1': [Validators.required],
+      'heightUom1': [Validators.required, Validators.minLength(1), Validators.min(1)],
+      'width1': [Validators.required],
+      'widthUom1': [Validators.required, Validators.minLength(1), Validators.min(1)],
+      'thick1': [Validators.required],
+      'thickUom1': [Validators.required, Validators.minLength(1), Validators.min(1)],
+      'wgt1': [Validators.required],
+      'roll1': [Validators.required],
+      'rollUom1': [Validators.required, Validators.minLength(1), Validators.min(1)],
+
+      'height2': [],
+      'heightUom2': [],
+      'width2': [],
+      'widthUom2': [],
+      'thick2': [],
+      'thickUom2': [],
+      'wgt2': [],
+      'roll2': [],
+      'rollUom2': [],
+
+      'height3': [],
+      'heightUom3': [],
+      'width3': [],
+      'widthUom3': [],
+      'thick3': [],
+      'thickUom3': [],
+      'wgt3': [],
+      'roll3': [],
+      'rollUom3': [],
+
+      'height4': [],
+      'heightUom4': [],
+      'width4': [],
+      'widthUom4': [],
+      'thick4': [],
+      'thickUom4': [],
+      'wgt4': [],
+      'roll4': [],
+      'rollUom4': [],
+
+      'height5': [],
+      'heightUom5': [],
+      'width5': [],
+      'widthUom5': [],
+      'thick5': [],
+      'thickUom5': [],
+      'wgt5': [],
+      'roll5': [],
+      'rollUom5': [],
+
+      'height6': [],
+      'heightUom6': [],
+      'width6': [],
+      'widthUom6': [],
+      'thick6': [],
+      'thickUom6': [],
+      'wgt6': [],
+      'roll6': [],
+      'rollUom6': [],
+
+      'height7': [],
+      'heightUom7': [],
+      'width7': [],
+      'widthUom7': [],
+      'thick7': [],
+      'thickUom7': [],
+      'wgt7': [],
+      'roll7': [],
+      'rollUom7': [],
+
+      'height8': [],
+      'heightUom8': [],
+      'width8': [],
+      'widthUom8': [],
+      'thick8': [],
+      'thickUom8': [],
+      'wgt8': [],
+      'roll8': [],
+      'rollUom8': [],
+
+      'height9': [],
+      'heightUom9': [],
+      'width9': [],
+      'widthUom9': [],
+      'thick9': [],
+      'thickUom9': [],
+      'wgt9': [],
+      'roll9': [],
+      'rollUom9': [],
+
+      'height10': [],
+      'heightUom10': [],
+      'width10': [],
+      'widthUom10': [],
+      'thick10': [],
+      'thickUom10': [],
+      'wgt10': [],
+      'roll10': [],
+      'rollUom10': [],
+
+      'height11': [],
+      'heightUom11': [],
+      'width11': [],
+      'widthUom11': [],
+      'thick11': [],
+      'thickUom11': [],
+      'wgt11': [],
+      'roll11': [],
+      'rollUom11': [],
+
+      'height12': [],
+      'heightUom12': [],
+      'width12': [],
+      'widthUom12': [],
+      'thick12': [],
+      'thickUom12': [],
+      'wgt12': [],
+      'roll12': [],
+      'rollUom12': [],
+
+      'height13': [],
+      'heightUom13': [],
+      'width13': [],
+      'widthUom13': [],
+      'thick13': [],
+      'thickUom13': [],
+      'wgt13': [],
+      'roll13': [],
+      'rollUom13': [],
+
+      'height14': [],
+      'heightUom14': [],
+      'width14': [],
+      'widthUom14': [],
+      'thick14': [],
+      'thickUom14': [],
+      'wgt14': [],
+      'roll14': [],
+      'rollUom14': [],
+ 
+      'height15': [],
+      'heightUom15': [],
+      'width15': [],
+      'widthUom15': [],
+      'thick15': [],
+      'thickUom15': [],
+      'wgt15': [],
+      'roll15': [],
+      'rollUom15': [],
+
       'dom': [Validators.required, Validators.minLength(1)],
       'dono': [Validators.required, Validators.minLength(1)],
       'stncustomId': [Validators.required, Validators.minLength(1), Validators.min(1)],
@@ -120,15 +265,138 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       'lotno': '', 
       'supplierId':'', 
       'rmid':'',  
-      'height':'',
-      'heightUom':'',
-      'width':'',
-      'widthUom':'',
-      'thick':'',
-      'thickUom':'',
-      'wgt':'',
-      'roll':'',
-      'rollUom':'',
+      'sizeCount':'',
+
+      'height1':'',
+      'heightUom1':'',
+      'width1':'',
+      'widthUom1':'',
+      'thick1':'',
+      'thickUom1':'',
+      'wgt1':'',
+      'roll1':'',
+      'rollUom1':'',
+
+      'height2':'',
+      'heightUom2':'',
+      'width2':'',
+      'widthUom2':'',
+      'thick2':'',
+      'thickUom2':'',
+      'wgt2':'',
+      'roll2':'',
+      'rollUom2':'',
+      
+      'height3':'',
+      'heightUom3':'',
+      'width3':'',
+      'widthUom3':'',
+      'thick3':'',
+      'thickUom3':'',
+      'wgt3':'',
+      'roll3':'',
+      'rollUom3':'',
+      
+      'height4':'',
+      'heightUom4':'',
+      'width4':'',
+      'widthUom4':'',
+      'thick4':'',
+      'thickUom4':'',
+      'wgt4':'',
+      'roll4':'',
+      'rollUom4':'',
+      
+      'height5':'',
+      'heightUom5':'',
+      'width5':'',
+      'widthUom5':'',
+      'thick5':'',
+      'thickUom5':'',
+      'wgt5':'',
+      'roll5':'',
+      'rollUom5':'',
+      
+      'height6':'',
+      'heightUom6':'',
+      'width6':'',
+      'widthUom6':'',
+      'thick6':'',
+      'thickUom6':'',
+      'wgt6':'',
+      'roll6':'',
+      'rollUom6':'',
+      
+      'height7':'',
+      'heightUom7':'',
+      'width7':'',
+      'widthUom7':'',
+      'thick7':'',
+      'thickUom7':'',
+      'wgt7':'',
+      'roll7':'',
+      'rollUom7':'',
+      
+      'height8':'',
+      'heightUom8':'',
+      'width8':'',
+      'widthUom8':'',
+      'thick8':'',
+      'thickUom8':'',
+      'wgt8':'',
+      'roll8':'',
+      'rollUom8':'',
+      
+      'height9':'',
+      'heightUom9':'',
+      'width9':'',
+      'widthUom9':'',
+      'thick9':'',
+      'thickUom9':'',
+      'wgt9':'',
+      'roll9':'',
+      'rollUom9':'',
+      
+      'height10':'',
+      'heightUom10':'',
+      'width10':'',
+      'widthUom10':'',
+      'thick10':'',
+      'thickUom10':'',
+      'wgt10':'',
+      'roll10':'',
+      'rollUom10':'',
+      
+      'height11':'',
+      'heightUom11':'',
+      'width11':'',
+      'widthUom11':'',
+      'thick11':'',
+      'thickUom11':'',
+      'wgt11':'',
+      'roll11':'',
+      'rollUom11':'',
+      
+      'height12':'',
+      'heightUom12':'',
+      'width12':'',
+      'widthUom12':'',
+      'thick12':'',
+      'thickUom12':'',
+      'wgt12':'',
+      'roll12':'',
+      'rollUom12':'',
+      
+      'height13':'',
+      'heightUom13':'',
+      'width13':'',
+      'widthUom13':'',
+      'thick13':'',
+      'thickUom13':'',
+      'wgt13':'',
+      'roll13':'',
+      'rollUom13':'',
+ 
       'dom':'',
       'dono':'',
       'stncustomId':'',
@@ -185,38 +453,43 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       'rmid': {
         'required': 'Raw Material is required.',
         'min': 'Raw Material is required.'  
+      }, 
+      'sizeCount': {
+        'required': 'Total Material Size is required.' 
       },
-      'height': {
+      'height1': {
         'required': 'Height is required.' 
       },
-      'heightUom': {
+      'heightUom1': {
         'required': 'Height\'s UOM is required.',
         'min': 'Height\'s UOM is required.' 
       },
-      'width': {
+      'width1': {
         'required': 'Width is required.' 
       },
-      'widthUom': {
+      'widthUom1': {
         'required': 'Width\'s UOM is required.',
         'min': 'Width\'s UOM is required.' 
       },
-      'thick': {
+      'thick1': {
         'required': 'Thickness is required.' 
       },
-      'thickUom': {
+      'thickUom1': {
         'required': 'Thickness\'s UOM is required.',
         'min': 'Thickness\'s UOM is required.' 
       },
-      'wgt': {
+      'wgt1': {
         'required': 'WT is required.' 
       },
-      'roll': {
+      'roll1': {
         'required': 'Qty (Roll) is required.' 
       },
-      'rollUom': {
+      'rollUom1': {
         'required': 'Qty (Roll)\'s UOM is required.',
         'min': 'Qty (Roll)\'s UOM is required.' 
       },
+
+      
       'dom': {
         'required': 'DOM is required.' 
       },
@@ -338,6 +611,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
     
     columns = [
       { prop: 'grnid', name : 'Id' },
+      { prop: 'grncode', name : 'Code' },
       { prop: 'grndate', name : 'Date' },
       { prop: 'lotno', name : 'LOT No' },
       { prop: 'customNo', name : 'KASTAM No' },
@@ -404,15 +678,159 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.data.lotno = dataModel.lotno;
         this.data.supplierId = dataModel.supplierId; 
         this.data.rmid = dataModel.rmid;  
-        this.data.height = dataModel.height;
-        this.data.heightUom = dataModel.heightUom;
-        this.data.width = dataModel.width;
-        this.data.widthUom = dataModel.widthUom;
-        this.data.thick = dataModel.thick;
-        this.data.thickUom = dataModel.thickUom;
-        this.data.wgt = dataModel.wgt;
-        this.data.roll = dataModel.roll;
-        this.data.rollUom = dataModel.rollUom;
+        this.data.sizeCount = dataModel.sizeCount;  
+
+        this.data.height1 = dataModel.height1;
+        this.data.heightUom1 = dataModel.heightUom1;
+        this.data.width1 = dataModel.width1;
+        this.data.widthUom1 = dataModel.widthUom1;
+        this.data.thick1 = dataModel.thick1;
+        this.data.thickUom1 = dataModel.thickUom1;
+        this.data.wgt1 = dataModel.wgt1;
+        this.data.roll1 = dataModel.roll1;
+        this.data.rollUom1 = dataModel.rollUom1;
+
+        this.data.height2 = dataModel.height2;
+        this.data.heightUom2 = dataModel.heightUom2;
+        this.data.width2 = dataModel.width2;
+        this.data.widthUom2 = dataModel.widthUom2;
+        this.data.thick2 = dataModel.thick2;
+        this.data.thickUom2 = dataModel.thickUom2;
+        this.data.wgt2 = dataModel.wgt2;
+        this.data.roll2 = dataModel.roll2;
+        this.data.rollUom2 = dataModel.rollUom2;
+
+        this.data.height3 = dataModel.height3;
+        this.data.heightUom3 = dataModel.heightUom3;
+        this.data.width3 = dataModel.width3;
+        this.data.widthUom3 = dataModel.widthUom3;
+        this.data.thick3 = dataModel.thick3;
+        this.data.thickUom3 = dataModel.thickUom3;
+        this.data.wgt3 = dataModel.wgt3;
+        this.data.roll3 = dataModel.roll3;
+        this.data.rollUom3 = dataModel.rollUom3;
+
+        this.data.height4 = dataModel.height4;
+        this.data.heightUom4 = dataModel.heightUom4;
+        this.data.width4 = dataModel.width4;
+        this.data.widthUom4 = dataModel.widthUom4;
+        this.data.thick4 = dataModel.thick4;
+        this.data.thickUom4 = dataModel.thickUom4;
+        this.data.wgt4 = dataModel.wgt4;
+        this.data.roll4 = dataModel.roll4;
+        this.data.rollUom4 = dataModel.rollUom4;
+
+        this.data.height5 = dataModel.height5;
+        this.data.heightUom5 = dataModel.heightUom5;
+        this.data.width5 = dataModel.width5;
+        this.data.widthUom5 = dataModel.widthUom5;
+        this.data.thick5 = dataModel.thick5;
+        this.data.thickUom5 = dataModel.thickUom5;
+        this.data.wgt5 = dataModel.wgt5;
+        this.data.roll5 = dataModel.roll5;
+        this.data.rollUom5 = dataModel.rollUom5;
+
+        this.data.height6 = dataModel.height6;
+        this.data.heightUom6 = dataModel.heightUom6;
+        this.data.width6 = dataModel.width6;
+        this.data.widthUom6 = dataModel.widthUom6;
+        this.data.thick6 = dataModel.thick6;
+        this.data.thickUom6 = dataModel.thickUom6;
+        this.data.wgt6 = dataModel.wgt6;
+        this.data.roll6 = dataModel.roll6;
+        this.data.rollUom6 = dataModel.rollUom6;
+
+        this.data.height7 = dataModel.height7;
+        this.data.heightUom7 = dataModel.heightUom7;
+        this.data.width7 = dataModel.width7;
+        this.data.widthUom7 = dataModel.widthUom7;
+        this.data.thick7 = dataModel.thick7;
+        this.data.thickUom7 = dataModel.thickUom7;
+        this.data.wgt7 = dataModel.wgt7;
+        this.data.roll7 = dataModel.roll7;
+        this.data.rollUom7 = dataModel.rollUom7;
+
+        this.data.height8 = dataModel.height8;
+        this.data.heightUom8 = dataModel.heightUom8;
+        this.data.width8 = dataModel.width8;
+        this.data.widthUom8 = dataModel.widthUom8;
+        this.data.thick8 = dataModel.thick8;
+        this.data.thickUom8 = dataModel.thickUom8;
+        this.data.wgt8 = dataModel.wgt8;
+        this.data.roll8 = dataModel.roll8;
+        this.data.rollUom8 = dataModel.rollUom8;
+
+        this.data.height9 = dataModel.height9;
+        this.data.heightUom9 = dataModel.heightUom9;
+        this.data.width9 = dataModel.width9;
+        this.data.widthUom9 = dataModel.widthUom9;
+        this.data.thick9 = dataModel.thick9;
+        this.data.thickUom9 = dataModel.thickUom9;
+        this.data.wgt9 = dataModel.wgt9;
+        this.data.roll9 = dataModel.roll9;
+        this.data.rollUom9 = dataModel.rollUom9;
+
+        this.data.height10 = dataModel.height10;
+        this.data.heightUom10 = dataModel.heightUom10;
+        this.data.width10 = dataModel.width10;
+        this.data.widthUom10 = dataModel.widthUom10;
+        this.data.thick10 = dataModel.thick10;
+        this.data.thickUom10 = dataModel.thickUom10;
+        this.data.wgt10 = dataModel.wgt10;
+        this.data.roll10 = dataModel.roll10;
+        this.data.rollUom10 = dataModel.rollUom10;
+
+        this.data.height11 = dataModel.height11;
+        this.data.heightUom11 = dataModel.heightUom11;
+        this.data.width11 = dataModel.width11;
+        this.data.widthUom11 = dataModel.widthUom11;
+        this.data.thick11 = dataModel.thick11;
+        this.data.thickUom11 = dataModel.thickUom11;
+        this.data.wgt11 = dataModel.wgt11;
+        this.data.roll11 = dataModel.roll11;
+        this.data.rollUom11 = dataModel.rollUom11;
+
+        this.data.height12 = dataModel.height12;
+        this.data.heightUom12 = dataModel.heightUom12;
+        this.data.width12 = dataModel.width12;
+        this.data.widthUom12 = dataModel.widthUom12;
+        this.data.thick12 = dataModel.thick12;
+        this.data.thickUom12 = dataModel.thickUom12;
+        this.data.wgt12 = dataModel.wgt12;
+        this.data.roll12 = dataModel.roll12;
+        this.data.rollUom12 = dataModel.rollUom12;
+
+        this.data.height13 = dataModel.height13;
+        this.data.heightUom13 = dataModel.heightUom13;
+        this.data.width13 = dataModel.width13;
+        this.data.widthUom13 = dataModel.widthUom13;
+        this.data.thick13 = dataModel.thick13;
+        this.data.thickUom13 = dataModel.thickUom13;
+        this.data.wgt13 = dataModel.wgt13;
+        this.data.roll13 = dataModel.roll13;
+        this.data.rollUom13 = dataModel.rollUom13;
+
+        this.data.height14 = dataModel.height14;
+        this.data.heightUom14 = dataModel.heightUom14;
+        this.data.width14 = dataModel.width14;
+        this.data.widthUom14 = dataModel.widthUom14;
+        this.data.thick14 = dataModel.thick14;
+        this.data.thickUom14 = dataModel.thickUom14;
+        this.data.wgt14 = dataModel.wgt14;
+        this.data.roll14 = dataModel.roll14;
+        this.data.rollUom14 = dataModel.rollUom14;
+
+        this.data.height15 = dataModel.height15;
+        this.data.heightUom15 = dataModel.heightUom15;
+        this.data.width15 = dataModel.width15;
+        this.data.widthUom15 = dataModel.widthUom15;
+        this.data.thick15 = dataModel.thick15;
+        this.data.thickUom15 = dataModel.thickUom15;
+        this.data.wgt15 = dataModel.wgt15;
+        this.data.roll15 = dataModel.roll15;
+        this.data.rollUom15 = dataModel.rollUom15;
+
+
         this.data.dom = dataModel.dom;
         this.data.dono = dataModel.dono;
         this.data.stncustomId = dataModel.stncustomId;
@@ -713,19 +1131,164 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       {         
         let model  = new GrnModel();
         model.grnid = null; 
+        model.grncode = '';
         model.grndate = new Date();
         model.lotno = '';
         model.supplierId = 0;
         model.rmid = 0;
-        model.height = 0;
-        model.heightUom = 0;
-        model.width = 0;
-        model.heightUom = 0;
-        model.thick = 0;
-        model.thickUom = 0;
-        model.wgt = 0;
-        model.roll = 0;
-        model.rollUom = 0; 
+        model.sizeCount = 1;
+
+        model.height1 = 0;
+        model.heightUom1 = 1;
+        model.width1 = 0; 
+        model.widthUom1 = 5; 
+        model.thick1 = 0;
+        model.thickUom1 = 0;
+        model.wgt1 = 0;
+        model.roll1 = 0;
+        model.rollUom1 = 0; 
+
+        model.height2 = 0;
+        model.heightUom2 = 1;
+        model.width2 = 0; 
+        model.widthUom2 = 5; 
+        model.thick2 = 0;
+        model.thickUom2 = 0;
+        model.wgt2 = 0;
+        model.roll2 = 0;
+        model.rollUom2 = 0; 
+        
+        model.height3 = 0;
+        model.heightUom3 = 1;
+        model.width3 = 0; 
+        model.widthUom3 = 5; 
+        model.thick3 = 0;
+        model.thickUom3 = 0;
+        model.wgt3 = 0;
+        model.roll3 = 0;
+        model.rollUom3 = 0; 
+        
+        model.height4 = 0;
+        model.heightUom4 = 1;
+        model.width4 = 0; 
+        model.widthUom4 = 5; 
+        model.thick4 = 0;
+        model.thickUom4 = 0;
+        model.wgt4 = 0;
+        model.roll4 = 0;
+        model.rollUom4 = 0; 
+        
+        model.height5 = 0;
+        model.heightUom5 = 1;
+        model.width5 = 0; 
+        model.widthUom5 = 5; 
+        model.thick5 = 0;
+        model.thickUom5 = 0;
+        model.wgt5 = 0;
+        model.roll5 = 0;
+        model.rollUom5 = 0; 
+        
+        model.height6 = 0;
+        model.heightUom6 = 1;
+        model.width6 = 0; 
+        model.widthUom6 = 5; 
+        model.thick6 = 0;
+        model.thickUom6 = 0;
+        model.wgt6 = 0;
+        model.roll6 = 0;
+        model.rollUom6 = 0; 
+        
+        model.height7 = 0;
+        model.heightUom7 = 1;
+        model.width7 = 0; 
+        model.widthUom7 = 5; 
+        model.thick7 = 0;
+        model.thickUom7 = 0;
+        model.wgt7 = 0;
+        model.roll7 = 0;
+        model.rollUom7 = 0; 
+        
+        model.height8 = 0;
+        model.heightUom8 = 1;
+        model.width8 = 0; 
+        model.widthUom8 = 5; 
+        model.thick8 = 0;
+        model.thickUom8 = 0;
+        model.wgt8 = 0;
+        model.roll8 = 0;
+        model.rollUom8 = 0; 
+        
+        model.height9 = 0;
+        model.heightUom9 = 1;
+        model.width9 = 0; 
+        model.widthUom9 = 5; 
+        model.thick9 = 0;
+        model.thickUom9 = 0;
+        model.wgt9 = 0;
+        model.roll9 = 0;
+        model.rollUom9 = 0; 
+        
+        model.height10 = 0;
+        model.heightUom10 = 1;
+        model.width10 = 0; 
+        model.widthUom10 = 5; 
+        model.thick10 = 0;
+        model.thickUom10 = 0;
+        model.wgt10 = 0;
+        model.roll10 = 0;
+        model.rollUom10 = 0; 
+        
+        model.height11 = 0;
+        model.heightUom11 = 1;
+        model.width11 = 0; 
+        model.widthUom11 = 5; 
+        model.thick11 = 0;
+        model.thickUom11 = 0;
+        model.wgt11 = 0;
+        model.roll11 = 0;
+        model.rollUom11 = 0; 
+        
+        model.height12 = 0;
+        model.heightUom12 = 1;
+        model.width12 = 0; 
+        model.widthUom12 = 5; 
+        model.thick12 = 0;
+        model.thickUom12 = 0;
+        model.wgt12 = 0;
+        model.roll12 = 0;
+        model.rollUom12 = 0; 
+        
+        model.height13 = 0;
+        model.heightUom13 = 1;
+        model.width13 = 0; 
+        model.widthUom13 = 5; 
+        model.thick13 = 0;
+        model.thickUom13 = 0;
+        model.wgt13 = 0;
+        model.roll13 = 0;
+        model.rollUom13 = 0; 
+        
+        model.height14 = 0;
+        model.heightUom14 = 1;
+        model.width14 = 0; 
+        model.widthUom14 = 5; 
+        model.thick14 = 0;
+        model.thickUom14 = 0;
+        model.wgt14 = 0;
+        model.roll14 = 0;
+        model.rollUom14 = 0; 
+        
+        model.height15 = 0;
+        model.heightUom15 = 1;
+        model.width15 = 0; 
+        model.widthUom15 = 5; 
+        model.thick15 = 0;
+        model.thickUom15 = 0;
+        model.wgt15 = 0;
+        model.roll15 = 0;
+        model.rollUom15 = 0; 
+         
+        
         model.dom = new Date();
         model.dono = '';
         model.stncustomId = 0;
@@ -781,15 +1344,158 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
           'lotno': ['', [Validators.required, Validators.minLength(1)]], 
           'supplierId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]], 
           'rmid': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],  
-          'height': ['', [Validators.required]],
-          'heightUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'width': ['', [Validators.required]],
-          'widthUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'thick': ['', [Validators.required]],
-          'thickUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
-          'wgt': ['', [Validators.required]],
-          'roll': ['', [Validators.required]],
-          'rollUom': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
+          'sizeCount': ['', [Validators.required]],
+         
+          'height1': ['', [Validators.required]],
+          'heightUom1': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
+          'width1': ['', [Validators.required]],
+          'widthUom1': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
+          'thick1': ['', [Validators.required]],
+          'thickUom1': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
+          'wgt1': ['', [Validators.required]],
+          'roll1': ['', [Validators.required]],
+          'rollUom1': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
+ 
+          'height2': [''],
+          'heightUom2': [''],
+          'width2': [''],
+          'widthUom2': [''],
+          'thick2': [''],
+          'thickUom2': [''],
+          'wgt2': [''],
+          'roll2': [''],
+          'rollUom2': [''],
+          
+          'height3': [''],
+          'heightUom3': [''],
+          'width3': [''],
+          'widthUom3': [''],
+          'thick3': [''],
+          'thickUom3': [''],
+          'wgt3': [''],
+          'roll3': [''],
+          'rollUom3': [''],
+          
+          'height4': [''],
+          'heightUom4': [''],
+          'width4': [''],
+          'widthUom4': [''],
+          'thick4': [''],
+          'thickUom4': [''],
+          'wgt4': [''],
+          'roll4': [''],
+          'rollUom4': [''],
+          
+          'height5': [''],
+          'heightUom5': [''],
+          'width5': [''],
+          'widthUom5': [''],
+          'thick5': [''],
+          'thickUom5': [''],
+          'wgt5': [''],
+          'roll5': [''],
+          'rollUom5': [''],
+          
+          'height6': [''],
+          'heightUom6': [''],
+          'width6': [''],
+          'widthUom6': [''],
+          'thick6': [''],
+          'thickUom6': [''],
+          'wgt6': [''],
+          'roll6': [''],
+          'rollUom6': [''],
+          
+          'height7': [''],
+          'heightUom7': [''],
+          'width7': [''],
+          'widthUom7': [''],
+          'thick7': [''],
+          'thickUom7': [''],
+          'wgt7': [''],
+          'roll7': [''],
+          'rollUom7': [''],
+          
+          'height8': [''],
+          'heightUom8': [''],
+          'width8': [''],
+          'widthUom8': [''],
+          'thick8': [''],
+          'thickUom8': [''],
+          'wgt8': [''],
+          'roll8': [''],
+          'rollUom8': [''],
+          
+          'height9': [''],
+          'heightUom9': [''],
+          'width9': [''],
+          'widthUom9': [''],
+          'thick9': [''],
+          'thickUom9': [''],
+          'wgt9': [''],
+          'roll9': [''],
+          'rollUom9': [''],
+          
+          'height10': [''],
+          'heightUom10': [''],
+          'width10': [''],
+          'widthUom10': [''],
+          'thick10': [''],
+          'thickUom10': [''],
+          'wgt10': [''],
+          'roll10': [''],
+          'rollUom10': [''],
+          
+          'height11': [''],
+          'heightUom11': [''],
+          'width11': [''],
+          'widthUom11': [''],
+          'thick11': [''],
+          'thickUom11': [''],
+          'wgt11': [''],
+          'roll11': [''],
+          'rollUom11': [''],
+          
+          'height12': [''],
+          'heightUom12': [''],
+          'width12': [''],
+          'widthUom12': [''],
+          'thick12': [''],
+          'thickUom12': [''],
+          'wgt12': [''],
+          'roll12': [''],
+          'rollUom12': [''],
+          
+          'height13': [''],
+          'heightUom13': [''],
+          'width13': [''],
+          'widthUom13': [''],
+          'thick13': [''],
+          'thickUom13': [''],
+          'wgt13': [''],
+          'roll13': [''],
+          'rollUom13': [''],
+          
+          'height14': [''],
+          'heightUom14': [''],
+          'width14': [''],
+          'widthUom14': [''],
+          'thick14': [''],
+          'thickUom14': [''],
+          'wgt14': [''],
+          'roll14': [''],
+          'rollUom14': [''],
+          
+          'height15': [''],
+          'heightUom15': [''],
+          'width15': [''],
+          'widthUom15': [''],
+          'thick15': [''],
+          'thickUom15': [''],
+          'wgt15': [''],
+          'roll15': [''],
+          'rollUom15': [''],
+
           'dom': ['', [Validators.required, Validators.minLength(1)]],
           'dono': ['', [Validators.required, Validators.minLength(1)]],
           'stncustomId': ['', [Validators.required, Validators.minLength(1), Validators.min(1)]],
@@ -833,7 +1539,27 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
       }
       private configureEditForm() {
        
-      }                          
+      }  
+      
+      onSizeCountChange(selectedValue: number) { 
+         this.newSizeCount = selectedValue; 
+      }
+
+
+      onCurrencyChange(selectedValue: string) {
+          
+        console.log("currencyRows",this.currencyRows);
+ 
+        for (let i = 0; i < this.currencyRows.length; i++) {
+          console.log(this.currencyRows[i].currencyId,this.currencyRows[i].currencyCode,selectedValue);
+          if(String(this.currencyRows[i].currencyId) == selectedValue){ 
+            this.rmCurrency = this.currencyRows[i].currencyCode;
+            break;
+          }
+
+        }
+        
+      }
       
       onSelect(evt : any) {
         
@@ -860,13 +1586,16 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
           
           this.recalculateAmount();
 
+          this.onCurrencyChange(String(this.data.currencyId));
+          this.newSizeCount = this.data.sizeCount;
+          
           this.dataForm.valueChanges.debounceTime(300)
           .subscribe(data => this.onValueChanged(data));
         }
         else 
         this.itemSelected = false;
         
-        this.edit(this.data.grnid);      
+        this.edit(this.data.grncode);      
       }
       
       addForm() {        

@@ -189,15 +189,106 @@ namespace AppReport.DataServices.PTSDataModel
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Grncode)
+                    .HasColumnName("GRNCode")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Grndate)
                     .HasColumnName("GRNDate")
                     .HasColumnType("date");
 
                 entity.Property(e => e.Gst).HasColumnName("GST");
 
-                entity.Property(e => e.Height).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.Height1)
+                    .HasColumnName("Height_1")
+                    .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.HeightUom).HasColumnName("HeightUOM");
+                entity.Property(e => e.Height10)
+                    .HasColumnName("Height_10")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height11)
+                    .HasColumnName("Height_11")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height12)
+                    .HasColumnName("Height_12")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height13)
+                    .HasColumnName("Height_13")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height14)
+                    .HasColumnName("Height_14")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height15)
+                    .HasColumnName("Height_15")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height2)
+                    .HasColumnName("Height_2")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height3)
+                    .HasColumnName("Height_3")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height4)
+                    .HasColumnName("Height_4")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height5)
+                    .HasColumnName("Height_5")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height6)
+                    .HasColumnName("Height_6")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height7)
+                    .HasColumnName("Height_7")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height8)
+                    .HasColumnName("Height_8")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Height9)
+                    .HasColumnName("Height_9")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.HeightUom1).HasColumnName("HeightUOM_1");
+
+                entity.Property(e => e.HeightUom10).HasColumnName("HeightUOM_10");
+
+                entity.Property(e => e.HeightUom11).HasColumnName("HeightUOM_11");
+
+                entity.Property(e => e.HeightUom12).HasColumnName("HeightUOM_12");
+
+                entity.Property(e => e.HeightUom13).HasColumnName("HeightUOM_13");
+
+                entity.Property(e => e.HeightUom14).HasColumnName("HeightUOM_14");
+
+                entity.Property(e => e.HeightUom15).HasColumnName("HeightUOM_15");
+
+                entity.Property(e => e.HeightUom2).HasColumnName("HeightUOM_2");
+
+                entity.Property(e => e.HeightUom3).HasColumnName("HeightUOM_3");
+
+                entity.Property(e => e.HeightUom4).HasColumnName("HeightUOM_4");
+
+                entity.Property(e => e.HeightUom5).HasColumnName("HeightUOM_5");
+
+                entity.Property(e => e.HeightUom6).HasColumnName("HeightUOM_6");
+
+                entity.Property(e => e.HeightUom7).HasColumnName("HeightUOM_7");
+
+                entity.Property(e => e.HeightUom8).HasColumnName("HeightUOM_8");
+
+                entity.Property(e => e.HeightUom9).HasColumnName("HeightUOM_9");
 
                 entity.Property(e => e.InvoiceNo)
                     .HasMaxLength(50)
@@ -224,13 +315,157 @@ namespace AppReport.DataServices.PTSDataModel
 
                 entity.Property(e => e.Rmid).HasColumnName("RMId");
 
-                entity.Property(e => e.RollUom).HasColumnName("RollUOM");
+                entity.Property(e => e.Roll1).HasColumnName("Roll_1");
+
+                entity.Property(e => e.Roll10).HasColumnName("Roll_10");
+
+                entity.Property(e => e.Roll11).HasColumnName("Roll_11");
+
+                entity.Property(e => e.Roll12).HasColumnName("Roll_12");
+
+                entity.Property(e => e.Roll13).HasColumnName("Roll_13");
+
+                entity.Property(e => e.Roll14).HasColumnName("Roll_14");
+
+                entity.Property(e => e.Roll15).HasColumnName("Roll_15");
+
+                entity.Property(e => e.Roll2).HasColumnName("Roll_2");
+
+                entity.Property(e => e.Roll3).HasColumnName("Roll_3");
+
+                entity.Property(e => e.Roll4).HasColumnName("Roll_4");
+
+                entity.Property(e => e.Roll5).HasColumnName("Roll_5");
+
+                entity.Property(e => e.Roll6).HasColumnName("Roll_6");
+
+                entity.Property(e => e.Roll7).HasColumnName("Roll_7");
+
+                entity.Property(e => e.Roll8).HasColumnName("Roll_8");
+
+                entity.Property(e => e.Roll9).HasColumnName("Roll_9");
+
+                entity.Property(e => e.RollUom1).HasColumnName("RollUOM_1");
+
+                entity.Property(e => e.RollUom10).HasColumnName("RollUOM_10");
+
+                entity.Property(e => e.RollUom11).HasColumnName("RollUOM_11");
+
+                entity.Property(e => e.RollUom12).HasColumnName("RollUOM_12");
+
+                entity.Property(e => e.RollUom13).HasColumnName("RollUOM_13");
+
+                entity.Property(e => e.RollUom14).HasColumnName("RollUOM_14");
+
+                entity.Property(e => e.RollUom15).HasColumnName("RollUOM_15");
+
+                entity.Property(e => e.RollUom2).HasColumnName("RollUOM_2");
+
+                entity.Property(e => e.RollUom3).HasColumnName("RollUOM_3");
+
+                entity.Property(e => e.RollUom4).HasColumnName("RollUOM_4");
+
+                entity.Property(e => e.RollUom5).HasColumnName("RollUOM_5");
+
+                entity.Property(e => e.RollUom6).HasColumnName("RollUOM_6");
+
+                entity.Property(e => e.RollUom7).HasColumnName("RollUOM_7");
+
+                entity.Property(e => e.RollUom8).HasColumnName("RollUOM_8");
+
+                entity.Property(e => e.RollUom9).HasColumnName("RollUOM_9");
 
                 entity.Property(e => e.StncustomId).HasColumnName("STNCustomId");
 
-                entity.Property(e => e.Thick).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.Thick1)
+                    .HasColumnName("Thick_1")
+                    .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.ThickUom).HasColumnName("ThickUOM");
+                entity.Property(e => e.Thick10)
+                    .HasColumnName("Thick_10")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick11)
+                    .HasColumnName("Thick_11")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick12)
+                    .HasColumnName("Thick_12")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick13)
+                    .HasColumnName("Thick_13")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick14)
+                    .HasColumnName("Thick_14")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick15)
+                    .HasColumnName("Thick_15")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick2)
+                    .HasColumnName("Thick_2")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick3)
+                    .HasColumnName("Thick_3")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick4)
+                    .HasColumnName("Thick_4")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick5)
+                    .HasColumnName("Thick_5")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick6)
+                    .HasColumnName("Thick_6")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick7)
+                    .HasColumnName("Thick_7")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick8)
+                    .HasColumnName("Thick_8")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Thick9)
+                    .HasColumnName("Thick_9")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.ThickUom1).HasColumnName("ThickUOM_1");
+
+                entity.Property(e => e.ThickUom10).HasColumnName("ThickUOM_10");
+
+                entity.Property(e => e.ThickUom11).HasColumnName("ThickUOM_11");
+
+                entity.Property(e => e.ThickUom12).HasColumnName("ThickUOM_12");
+
+                entity.Property(e => e.ThickUom13).HasColumnName("ThickUOM_13");
+
+                entity.Property(e => e.ThickUom14).HasColumnName("ThickUOM_14");
+
+                entity.Property(e => e.ThickUom15).HasColumnName("ThickUOM_15");
+
+                entity.Property(e => e.ThickUom2).HasColumnName("ThickUOM_2");
+
+                entity.Property(e => e.ThickUom3).HasColumnName("ThickUOM_3");
+
+                entity.Property(e => e.ThickUom4).HasColumnName("ThickUOM_4");
+
+                entity.Property(e => e.ThickUom5).HasColumnName("ThickUOM_5");
+
+                entity.Property(e => e.ThickUom6).HasColumnName("ThickUOM_6");
+
+                entity.Property(e => e.ThickUom7).HasColumnName("ThickUOM_7");
+
+                entity.Property(e => e.ThickUom8).HasColumnName("ThickUOM_8");
+
+                entity.Property(e => e.ThickUom9).HasColumnName("ThickUOM_9");
 
                 entity.Property(e => e.TotalFreightRmcost).HasColumnName("TotalFreightRMCost");
 
@@ -239,11 +474,155 @@ namespace AppReport.DataServices.PTSDataModel
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Wgt).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.Wgt1)
+                    .HasColumnName("Wgt_1")
+                    .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.Width).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.Wgt10)
+                    .HasColumnName("Wgt_10")
+                    .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.WidthUom).HasColumnName("WidthUOM");
+                entity.Property(e => e.Wgt11)
+                    .HasColumnName("Wgt_11")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt12)
+                    .HasColumnName("Wgt_12")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt13)
+                    .HasColumnName("Wgt_13")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt14)
+                    .HasColumnName("Wgt_14")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt15)
+                    .HasColumnName("Wgt_15")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt2)
+                    .HasColumnName("Wgt_2")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt3)
+                    .HasColumnName("Wgt_3")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt4)
+                    .HasColumnName("Wgt_4")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt5)
+                    .HasColumnName("Wgt_5")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt6)
+                    .HasColumnName("Wgt_6")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt7)
+                    .HasColumnName("Wgt_7")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt8)
+                    .HasColumnName("Wgt_8")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Wgt9)
+                    .HasColumnName("Wgt_9")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width1)
+                    .HasColumnName("Width_1")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width10)
+                    .HasColumnName("Width_10")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width11)
+                    .HasColumnName("Width_11")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width12)
+                    .HasColumnName("Width_12")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width13)
+                    .HasColumnName("Width_13")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width14)
+                    .HasColumnName("Width_14")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width15)
+                    .HasColumnName("Width_15")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width2)
+                    .HasColumnName("Width_2")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width3)
+                    .HasColumnName("Width_3")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width4)
+                    .HasColumnName("Width_4")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width5)
+                    .HasColumnName("Width_5")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width6)
+                    .HasColumnName("Width_6")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width7)
+                    .HasColumnName("Width_7")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width8)
+                    .HasColumnName("Width_8")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Width9)
+                    .HasColumnName("Width_9")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.WidthUom1).HasColumnName("WidthUOM_1");
+
+                entity.Property(e => e.WidthUom10).HasColumnName("WidthUOM_10");
+
+                entity.Property(e => e.WidthUom11).HasColumnName("WidthUOM_11");
+
+                entity.Property(e => e.WidthUom12).HasColumnName("WidthUOM_12");
+
+                entity.Property(e => e.WidthUom13).HasColumnName("WidthUOM_13");
+
+                entity.Property(e => e.WidthUom14).HasColumnName("WidthUOM_14");
+
+                entity.Property(e => e.WidthUom15).HasColumnName("WidthUOM_15");
+
+                entity.Property(e => e.WidthUom2).HasColumnName("WidthUOM_2");
+
+                entity.Property(e => e.WidthUom3).HasColumnName("WidthUOM_3");
+
+                entity.Property(e => e.WidthUom4).HasColumnName("WidthUOM_4");
+
+                entity.Property(e => e.WidthUom5).HasColumnName("WidthUOM_5");
+
+                entity.Property(e => e.WidthUom6).HasColumnName("WidthUOM_6");
+
+                entity.Property(e => e.WidthUom7).HasColumnName("WidthUOM_7");
+
+                entity.Property(e => e.WidthUom8).HasColumnName("WidthUOM_8");
+
+                entity.Property(e => e.WidthUom9).HasColumnName("WidthUOM_9");
             });
 
             modelBuilder.Entity<JobTitle>(entity =>

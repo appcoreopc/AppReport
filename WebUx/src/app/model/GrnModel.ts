@@ -1,18 +1,162 @@
 export class GrnModel { 
     grnid? : number;
+    grncode? : string;
     grndate : Date; 
     lotno : string;
     supplierId : number;
     rmid : number;
-    height : number;
-    heightUom : number;
-    width : number;
-    widthUom : number;
-    thick : number;
-    thickUom : number;
-    wgt : number;
-    roll : number;
-    rollUom : number;
+    sizeCount : number;
+ 
+    height1 : number;
+    heightUom1 : number;
+    width1 : number;
+    widthUom1 : number;
+    thick1 : number;
+    thickUom1 : number;
+    wgt1 : number;
+    roll1 : number;
+    rollUom1 : number;
+
+    height2 : number;
+    heightUom2 : number;
+    width2 : number;
+    widthUom2 : number;
+    thick2 : number;
+    thickUom2 : number;
+    wgt2 : number;
+    roll2 : number;
+    rollUom2 : number;
+
+    height3 : number;
+    heightUom3 : number;
+    width3 : number;
+    widthUom3 : number;
+    thick3 : number;
+    thickUom3 : number;
+    wgt3 : number;
+    roll3 : number;
+    rollUom3 : number;
+
+    height4 : number;
+    heightUom4 : number;
+    width4 : number;
+    widthUom4 : number;
+    thick4 : number;
+    thickUom4 : number;
+    wgt4 : number;
+    roll4 : number;
+    rollUom4 : number;
+
+    height5 : number;
+    heightUom5 : number;
+    width5 : number;
+    widthUom5 : number;
+    thick5 : number;
+    thickUom5 : number;
+    wgt5 : number;
+    roll5 : number;
+    rollUom5 : number;
+
+    height6 : number;
+    heightUom6 : number;
+    width6 : number;
+    widthUom6 : number;
+    thick6 : number;
+    thickUom6 : number;
+    wgt6 : number;
+    roll6 : number;
+    rollUom6 : number;
+
+    height7 : number;
+    heightUom7 : number;
+    width7 : number;
+    widthUom7 : number;
+    thick7 : number;
+    thickUom7 : number;
+    wgt7 : number;
+    roll7 : number;
+    rollUom7 : number;
+
+    height8 : number;
+    heightUom8 : number;
+    width8 : number;
+    widthUom8 : number;
+    thick8 : number;
+    thickUom8 : number;
+    wgt8 : number;
+    roll8 : number;
+    rollUom8 : number;
+
+    height9 : number;
+    heightUom9 : number;
+    width9 : number;
+    widthUom9 : number;
+    thick9 : number;
+    thickUom9 : number;
+    wgt9 : number;
+    roll9 : number;
+    rollUom9 : number;
+
+    height10 : number;
+    heightUom10 : number;
+    width10 : number;
+    widthUom10 : number;
+    thick10 : number;
+    thickUom10 : number;
+    wgt10 : number;
+    roll10 : number;
+    rollUom10 : number;
+
+    height11 : number;
+    heightUom11 : number;
+    width11 : number;
+    widthUom11 : number;
+    thick11 : number;
+    thickUom11 : number;
+    wgt11 : number;
+    roll11 : number;
+    rollUom11 : number;
+
+    height12 : number;
+    heightUom12 : number;
+    width12 : number;
+    widthUom12 : number;
+    thick12 : number;
+    thickUom12 : number;
+    wgt12 : number;
+    roll12 : number;
+    rollUom12 : number;
+
+    height13 : number;
+    heightUom13 : number;
+    width13 : number;
+    widthUom13 : number;
+    thick13 : number;
+    thickUom13 : number;
+    wgt13 : number;
+    roll13 : number;
+    rollUom13 : number;
+
+    height14 : number;
+    heightUom14 : number;
+    width14 : number;
+    widthUom14 : number;
+    thick14 : number;
+    thickUom14 : number;
+    wgt14 : number;
+    roll14 : number;
+    rollUom14 : number;
+
+    height15 : number;
+    heightUom15 : number;
+    width15 : number;
+    widthUom15 : number;
+    thick15 : number;
+    thickUom15 : number;
+    wgt15 : number;
+    roll15 : number;
+    rollUom15 : number;
+
     dom : Date;
     dono : string;
     stncustomId : number;
