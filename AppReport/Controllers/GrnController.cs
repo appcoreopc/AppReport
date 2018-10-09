@@ -9,10 +9,8 @@ using System;
 
 namespace AppReport.Controllers
 {
-  
     public class GrnController : Controller
     {
-
         private PTSContext _ptsContext;
 
         public GrnController(PTSContext ptsContext, IOptions<AppConfig> accessConfig)
@@ -33,6 +31,9 @@ namespace AppReport.Controllers
 
             if (d != null && !string.IsNullOrEmpty(d.Lotno))
             {
+                if (d.Grndate.HasValue)
+                   d.Grndate = d.Grndate.Value.ToLocalTime();
+
                 var result = new GrnService(_ptsContext).Save(d);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
             }
