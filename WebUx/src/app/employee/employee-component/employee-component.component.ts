@@ -15,6 +15,7 @@ import { DialogModule } from 'primeng/dialog';
 import {FormUtil} from "../../sharedObjects/formUtil";
 import * as timeUtil from '../../sharedObjects/timeUtil';
 import { TIME_DELAY } from '../../sharedObjects/applicationSetup';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-employee-component',
@@ -46,7 +47,7 @@ export class EmployeeComponentComponent implements OnInit {
     'empAd3': '',
     'jobTitleId': ''
   };
-  
+    
   itemSelected: boolean = false;
   
   validationMessages = {
@@ -73,15 +74,18 @@ export class EmployeeComponentComponent implements OnInit {
   
   userSubscription: Subscription;
   rows = [];
-  jobTitleRows = [];
-  
-  constructor(private store: Store<CityAppState>, private fb: FormBuilder) { }
+  jobTitleRows = [];  
+  blogs : Observable<any>;
+    
+  constructor(private store: Store<any>, private fb: FormBuilder) { }
   
   name: string;
   description: string;
   
   ngOnInit() {
-    
+	  	  
+	this.blogs = this.store.select('EmployeeReducer');
+   	
     this.userSubscription = this.store.subscribe(appData => {
       
       this.componentMessageHandle(messageUtil.getMultiMessage(appData,

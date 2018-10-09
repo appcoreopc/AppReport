@@ -124,10 +124,17 @@
 
 
 
-
 <div class="container">
   <div style="text-align:left; float:left"> 
     <b>EMPLOYEE</b>
+	<div>
+	displaying ....
+	<div *ngFor="let item of blogs; let i = index">
+    {{i}} {{item.empName}}
+  </div>
+	
+	
+	</div>
   </div>  
   <div style="text-align:right; float:right">         
     <p-button (click)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
