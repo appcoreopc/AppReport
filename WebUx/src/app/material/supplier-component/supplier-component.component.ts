@@ -89,7 +89,8 @@ import { CityAppState, SUPPLIER_SAVE, SUPPLIER_GET_OK, DELETE_SUPPLIER_PROMPT,
       'paymentTerms': '',
       'fordwarder': '',
       'gstno': '', 
-      'factoryStatusId':''
+      'factoryStatusId':'',
+      'forwarder' : ''
     };
     
     itemSelected : boolean = false;
