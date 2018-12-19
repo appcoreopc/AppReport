@@ -68,12 +68,13 @@
               
             
 				  <div class="cell c2"> 
-					<div class="input-group">
-						<div class="input-group-addon">
-						  <span>RM</span>
-						</div>
+					<div class="input-group"> 
 						 <input id="dutyImpRate" formControlName="dutyImpRate" maxlength="16" type="number" class="form-control decimal-control"  />
-					  </div>
+             <div class="input-group-addon">
+              <span>%</span>
+            </div>
+            
+            </div>
 							<div *ngIf="formErrors.dutyImpRate" class="alert alert-danger">
 							{{ formErrors.dutyImpRate }}
 						</div> 
@@ -82,15 +83,15 @@
 					  <div class="cell c3"> 
 					  </div> 
 					  <div class="cell c4">
-					   <label for="gstrate">GST Rate :</label>
+					   <label for="gstrate">SST Rate :</label>
 					  </div> 
 					 	<div class="cell c5"> 
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <span>RM</span>
-                </div>
+              <div class="input-group"> 
                 <input id="gstrate" formControlName="gstrate" maxlength="16" type="number" class="form-control decimal-control"  />
+                <div class="input-group-addon">
+                  <span>%</span>
                 </div>
+                 </div>
                   <div *ngIf="formErrors.gstrate" class="alert alert-danger">
                   {{ formErrors.gstrate }}
                 </div> 
@@ -160,6 +161,12 @@
   [checkboxable]="true">
 </ngx-datatable-column>
 
+<ngx-datatable-column  name="Id" prop="rmcatId" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+  <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value}}
+     </ng-template>
+ </ngx-datatable-column>
+ 
 <ngx-datatable-column  name="RM Category Name" prop="rmcatName" [width]="500" [resizeable]="false" [sortable]="true" [flexGrow]="1">
   <ng-template let-value="value" ngx-datatable-cell-template>
         {{value}}

@@ -310,7 +310,7 @@ import { CityAppState, MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_GET_OK, DELETE_
             
             if (this.selected && this.selected.length > 0)
             {       
-              let deleItems = this.selected.map( x  => x.rmid);
+              let deleItems = this.selected.map( x  => x.rmcatId);
               if (deleItems)
               {
                 this.dispatchIntent(MATERIAL_CATEGORY_DELETE, { 'deleteItems' : deleItems.join(DELETE_ITEM_DELIMITER)});
@@ -318,6 +318,7 @@ import { CityAppState, MATERIAL_CATEGORY_SAVE, MATERIAL_CATEGORY_GET_OK, DELETE_
             }
           }
         }
+        
         
         onSelect(evt: any) {     
           this.selected = evt.selected;      

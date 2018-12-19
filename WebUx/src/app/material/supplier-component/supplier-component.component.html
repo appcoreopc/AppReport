@@ -185,7 +185,7 @@
 					  </div> 
             <div class="cell c3"></div>
             <div class="cell c4"> 
-              <label for="gstno">GST No. :</label>
+              <label for="gstno">SST No. :</label>
             </div> 
             <div class="cell c5">    
               <input id="gstno" type="text" maxlength="100" class="form-control text-control" formControlName="gstno">         
@@ -282,6 +282,12 @@
         </ng-template>
 		</ngx-datatable-column>
   
+    <ngx-datatable-column  name="Vendor Code" prop="supplierCode" [width]="300" [resizeable]="false" [sortable]="true" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+            {{value}}
+         </ng-template>
+     </ngx-datatable-column>
+
 	 <ngx-datatable-column  name="Vendor Name" prop="supplierName" [width]="600" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>
            {{value}}

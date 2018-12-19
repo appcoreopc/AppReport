@@ -39,7 +39,7 @@
 					  </div> 
 					  <div class="cell c2">
 						<select class="form-control" formControlName="supplierId" style="width:300px">
-							<option *ngFor="let obj of supplierRows" [value]="obj.supplierId">{{obj.supplierCode}}</option>
+							<option *ngFor="let obj of supplierRows" [value]="obj.supplierId">{{obj.supplierCode}} - {{obj.supplierName}}</option>
 						  </select>
 							<div *ngIf="formErrors.supplierId" class="alert alert-danger">
 								{{ formErrors.supplierId }}
@@ -221,7 +221,7 @@
 								<div class="cell c4">
 								<div class="input-group">
 									<div> 
-									<label for="roll1">Qty (Roll) :</label>
+									<label for="roll1">Qty :</label>
 									</div>
 									</div>
 								</div> 
@@ -2535,6 +2535,9 @@
 						  </div>
 					  </div> 
 					  <div class="cell c5"> 
+						<div class="input-group-addon">
+						  <span>RM</span>
+						</div>
 						<div class="input-group"> 
 							 <input id="dutyImp" formControlName="dutyImp" maxlength="16" type="number" class="form-control decimal-control"  />  
 						  </div>
