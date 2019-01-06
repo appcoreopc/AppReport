@@ -79,6 +79,7 @@ export class LoginComponent implements OnInit {
     console.log('logging user in');
     if (!this.authService.isLogin)
     {   
+      this.person = this.personForm.value;
       await this.authService.login(this.person.username, this.person.password);    
     }
     // else redirect to requested route url //        

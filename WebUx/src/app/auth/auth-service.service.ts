@@ -26,10 +26,8 @@ export class AuthService {
 
   private  _isLogin : boolean = false;
   targetRedirectUrl : string;
-  router : Router; 
 
-  constructor(private http : HttpClient, private store : Store < CityAppState >) {
-
+  constructor(private http : HttpClient, private store : Store <CityAppState>, private router : Router) {
   }
 
   public get isLogin():boolean {
@@ -47,7 +45,10 @@ export class AuthService {
         console.log(res);
         this._isLogin = true;
         messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE);
-
+      
+       if (!this.targetRedirectUrl || this.targetRedirectUrl == "/login")
+         this.targetRedirectUrl = "/user";
+    
         if (this.router && this.targetRedirectUrl)
             this.router.navigateByUrl(this.targetRedirectUrl);
 
