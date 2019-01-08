@@ -23,6 +23,12 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot):boolean   
     { 
+      if (state.url == "/logout")
+      {
+        this.authService.logout();
+        state.url = '/employee';
+      }
+
       if (state.url)
       {
         this.authService.setRedirectUrl(this.router, state.url);
