@@ -1683,7 +1683,7 @@ Website: {rptM1.FCoWebsite}", f2));
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                     t1b.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase("GST 6%".ToUpper(), f11));
+                    cell = new PdfPCell(new Phrase("Cukai Jualan".ToUpper(), f11));
                     cell.Padding = 0;
                     cell.Padding = 5f;
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;

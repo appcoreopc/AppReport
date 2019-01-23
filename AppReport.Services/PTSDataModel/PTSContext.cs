@@ -1016,21 +1016,13 @@ namespace AppReport.DataServices.PTSDataModel
                     .HasColumnName("F_Imp_UsedRMWgt_Y2")
                     .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.FLocalSalesCost).HasColumnName("F_LocalSalesCost");
-
-                entity.Property(e => e.FMktExpCost).HasColumnName("F_MktExpCost");
-
                 entity.Property(e => e.FRdyCost).HasColumnName("F_Rdy_Cost");
 
                 entity.Property(e => e.FRdyDutyImpCost).HasColumnName("F_Rdy_DutyImpCost");
 
-                entity.Property(e => e.FRdyGoodCost).HasColumnName("F_RdyGoodCost");
-
                 entity.Property(e => e.FRdyGstcost).HasColumnName("F_Rdy_GSTCost");
 
                 entity.Property(e => e.FRdyTaxCost).HasColumnName("F_Rdy_TaxCost");
-
-                entity.Property(e => e.FRmcost).HasColumnName("F_RMCost");
 
                 entity.Property(e => e.IpcRdc)
                     .HasColumnName("IPC_RDC")
@@ -1085,6 +1077,8 @@ namespace AppReport.DataServices.PTSDataModel
                     .IsUnicode(false);
 
                 entity.Property(e => e.RepairSvc).HasMaxLength(200);
+
+                entity.Property(e => e.Rmcost).HasColumnName("RMCost");
 
                 entity.Property(e => e.RptCoName).HasMaxLength(50);
 

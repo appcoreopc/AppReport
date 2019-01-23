@@ -32,7 +32,13 @@ namespace AppReport.Controllers
             if (d != null && !string.IsNullOrEmpty(d.Lotno))
             {
                 if (d.Grndate.HasValue)
-                   d.Grndate = d.Grndate.Value.ToLocalTime();
+                   d.Grndate = d.Grndate.Value.ToLocalTime(); 
+
+                if (d.Dom.HasValue)
+                    d.Dom = d.Dom.Value.ToLocalTime();
+
+                if (d.CustomDate.HasValue)
+                    d.CustomDate = d.CustomDate.Value.ToLocalTime();
 
                 var result = new GrnService(_ptsContext).Save(d);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Save, result, null);
@@ -41,12 +47,12 @@ namespace AppReport.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(GrnRequestModel requestData)
+        public IActionResult Delete([FromBody] DeleteRequestModel requestData)
         {
-            if (requestData != null && 
-                requestData.Grnid > 0)
+            if (requestData != null &&
+                !string.IsNullOrEmpty(requestData.DeleteItems))
             {
-                var result = new GrnService(_ptsContext).Delete(Convert.ToInt32(requestData.Grnid));
+                var result = new GrnService(_ptsContext).Delete(requestData.DeleteItems);
                 return HttpResultIntention.GetStatusCode(ActionIntent.Delete, result, null);
             }
             else

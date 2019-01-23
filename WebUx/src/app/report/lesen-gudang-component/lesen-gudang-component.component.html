@@ -586,6 +586,26 @@
                                 </div>  
                             </div>  
 					
+							
+                            <div class="form-group row">
+                                <div class="cell" style="width: 600px">
+                                    <label for="rmcost">4.1. Nilai bahan-bahan mentah / Komponen yang telah digunakan tahun lepas :</label>
+                                </div>
+                                <div class="cell" style="width: 300px">
+                                
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <span>RM</span>
+                                        </div>
+                                    <input id="rmcost" formControlName="rmcost" maxlength="16" type="number" class="form-control text-control"/> 
+                                    </div> 
+                                    <div *ngIf="formErrors.rmcost" class="alert alert-danger">
+                                        {{ formErrors.rmcost }}
+                                    </div>  
+                                    
+                                </div>
+						</div>
+						
                             <div class="form-group row">
                                 <div class="cell" style="width: 600px">
                                     <label for="bgtRmcost">4.2. Anggaran nilai bahan-bahan mentah / komponen yang akan digunakan dalam tahun ini :</label>
@@ -634,7 +654,26 @@
                                 </div>  
                                 
                             </div>
-                        </div> -->
+						</div> -->
+						
+						<div class="form-group row">
+                            <div class="cell" style="width:400px">
+                                <label for="rdyGoodCost">4.5. Nilai pengeluaran barang siap tahun lepas : </label>
+                            </div>
+                            <div class="cell" style="width: 300px">
+                            
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span>RM</span>
+                                    </div>
+                                <input id="rdyGoodCost" formControlName="rdyGoodCost" maxlength="16" type="number" class="form-control text-control"/> 
+                                </div> 
+                                <div *ngIf="formErrors.rdyGoodCost" class="alert alert-danger">
+                                    {{ formErrors.rdyGoodCost }}
+                                </div>  
+                                
+                            </div>
+                        </div> 
 
                         <div class="form-group row">
                             <div class="cell" style="width:400px">
@@ -663,6 +702,19 @@
                             <div class="cell" style="width:400px">
                                 <label for="mktExpRate">i) Nilai eksport tahun lepas : </label>
                             </div>
+                            <div class="cell" style="width: 300px">
+                            
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span>RM</span>
+                                    </div>
+                                <input id="mktExpCost" formControlName="mktExpCost" maxlength="16" type="number" class="form-control text-control"/> 
+                                </div> 
+                                <div *ngIf="formErrors.mktExpCost" class="alert alert-danger">
+                                    {{ formErrors.mktExpCost }}
+                                </div>  
+                                
+                            </div> 
                             <div class="cell" style="width: 150px">
                             
                                 <div class="input-group">
@@ -714,6 +766,20 @@
                         <div class="form-group row">
                             <div class="cell" style="width:400px">
                                 <label for="localSalesRate">iii) Nilai jualan tempatan tahun lepas : </label>
+							</div> 
+							
+                            <div class="cell" style="width: 300px">
+                            
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <span>RM</span>
+                                    </div>
+                                <input id="localSalesCost" formControlName="localSalesCost" maxlength="16" type="number" class="form-control text-control"/> 
+                                </div> 
+                                <div *ngIf="formErrors.localSalesCost" class="alert alert-danger">
+                                    {{ formErrors.localSalesCost }}
+                                </div>  
+                                
                             </div> 
                             <div class="cell" style="width: 150px">
                             

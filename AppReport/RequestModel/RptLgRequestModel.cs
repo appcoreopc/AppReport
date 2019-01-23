@@ -71,15 +71,15 @@ namespace AppReport.RequestModel
         public bool? IsChgAddress { get; set; }
         public bool? IsChgFtyStr { get; set; }
         public bool? IsChgEq { get; set; }
-        public decimal? FRmcost { get; set; }
+        public decimal? Rmcost { get; set; }
         public decimal? BgtRmcost { get; set; }
-        public decimal? FRdyGoodCost { get; set; }
+        public decimal? RdyGoodCost { get; set; }
         public decimal? BgtRdyGoodCost { get; set; }
-        public decimal? FMktExpCost { get; set; }
+        public decimal? MktExpCost { get; set; }
         public decimal? MktExpRate { get; set; }
         public decimal? BgtMktExpCost { get; set; }
         public decimal? BgtMktExpRate { get; set; }
-        public decimal? FLocalSalesCost { get; set; }
+        public decimal? LocalSalesCost { get; set; }
         public decimal? LocalSalesRate { get; set; }
         public decimal? BgtLocSalesCost { get; set; }
         public decimal? BgtLocSalesRate { get; set; }

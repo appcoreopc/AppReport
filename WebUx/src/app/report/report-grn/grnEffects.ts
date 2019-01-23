@@ -11,7 +11,8 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
   PROGRESS_WAIT_SHOW, PROGRESS_WAIT_HIDE,
   COMPONENT_GET, COMPONENT_GET_OK, 
   CURRENCY_GET, CURRENCY_GET_OK, 
-  STNCUSTOM_GET, STNCUSTOM_GET_OK,  
+  STNCUSTOM_GET, STNCUSTOM_GET_OK, GRN_DELETE, 
+  GRN_DELETE_ERR, GRN_DELETE_SUCCESS, 
   GRN_GET_ERR, GRN_GET_OK, CityAppState, CityData, headersJson } from '../../sharedObjects/sharedMessages';
   import { APPLICATION_HOST } from '../../sharedObjects/applicationSetup';
   import 'rxjs/Rx';
@@ -32,6 +33,7 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
     .ofType(GRN_SAVE)
     .map(action => {  
       console.log("save action",action);
+      console.log("save action",JSON.stringify(action.data));
       return JSON.stringify(action.data);
     }).switchMap(payload =>   
       { 
@@ -62,7 +64,47 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
         return Observable.of({ type: PROGRESS_WAIT_SHOW });
       });       
       
-      
+      @Effect() GrnDelete$ = this.actions$
+      .ofType(GRN_DELETE)
+      .map(action => {    
+    
+        return JSON.stringify(action.data);
+      }).switchMap(payload => {
+        
+        /////////EXTRA CODE /////////////////////////////
+        
+        return Observable.of(payload)
+        
+        .map(action => {
+          
+          this.http.request("delete", APPLICATION_HOST + '/grn/delete/', 
+          { 
+            headers : headersJson,
+            body : action
+          })
+          .subscribe(res => {
+            messageUtil.dispatchIntent(this.store, GRN_DELETE_SUCCESS, null);
+            messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+            
+          },
+          err => {
+            if (err && err.status == 204) {
+              messageUtil.dispatchIntent(this.store, GRN_DELETE_SUCCESS, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+            }
+            else {
+              messageUtil.dispatchIntent(this.store, GRN_DELETE_ERR, null);
+              messageUtil.dispatchIntent(this.store, PROGRESS_WAIT_HIDE, null);
+            }            
+          });
+          
+          ///////////EXTRA CODE ENDS ///////////////////////////          
+        })
+        .concatMap(res => {
+          return Observable.of({ type: PROGRESS_WAIT_SHOW });
+        });
+        
+      }); 
       
       @Effect() GrnReset$ = this.actions$  
       .ofType(GRN_CANCEL)  

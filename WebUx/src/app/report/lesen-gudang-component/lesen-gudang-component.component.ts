@@ -148,11 +148,15 @@ export class LesenGudangComponentComponent implements OnInit {
     'isChgAddress': '',
     'isChgFtyStr': '',
     'isChgEq': '',
+    'rmcost': '', 
     'bgtRmcost': '', 
+    'rdyGoodCost': '',
     'bgtRdyGoodCost': '',
+    'mktExpCost': '',
     'mktExpRate': '',
     'bgtMktExpCost': '',
     'bgtMktExpRate': '',
+    'localSalesCost': '',
     'localSalesRate': '',
     'bgtLocSalesCost': '',
     'bgtLocSalesRate': '',
@@ -222,11 +226,15 @@ export class LesenGudangComponentComponent implements OnInit {
     'isChgAddress' : { 'required': 'required.' }, 
     'isChgFtyStr' : { 'required': 'required.' }, 
     'isChgEq' : { 'required': 'required.' }, 
-    'bgtRmcost' : { 'required': 'required.' },  
+    'rmcost' : { 'required': 'required.' }, 
+    'bgtRmcost' : { 'required': 'required.' }, 
+    'rdyGoodCost' : { 'required': 'required.' },  
     'bgtRdyGoodCost' : { 'required': 'required.' }, 
+    'mktExpCost' : { 'required': 'required.' }, 
     'mktExpRate' : { 'required': 'required.' }, 
     'bgtMktExpCost' : { 'required': 'required.' }, 
-    'bgtMktExpRate' : { 'required': 'required.' }, 
+    'bgtMktExpRate' : { 'required': 'required.' },
+    'localSalesCost' : { 'required': 'required.' },  
     'localSalesRate' : { 'required': 'required.' }, 
     'bgtLocSalesCost' : { 'required': 'required.' }, 
     'bgtLocSalesRate' : { 'required': 'required.' }, 
@@ -380,11 +388,15 @@ export class LesenGudangComponentComponent implements OnInit {
       this.data.isChgAddress = mainFormModel.isChgAddress;
       this.data.isChgFtyStr = mainFormModel.isChgFtyStr;
       this.data.isChgEq = mainFormModel.isChgEq; 
+      this.data.rmcost = mainFormModel.rmcost; 
       this.data.bgtRmcost = mainFormModel.bgtRmcost; 
-      this.data.bgtRdyGoodCost = mainFormModel.bgtRdyGoodCost; 
+      this.data.rdyGoodCost = mainFormModel.rdyGoodCost; 
+      this.data.bgtRdyGoodCost = mainFormModel.bgtRdyGoodCost;
+      this.data.mktExpCost = mainFormModel.mktExpCost; 
       this.data.mktExpRate = mainFormModel.mktExpRate;
       this.data.bgtMktExpCost = mainFormModel.bgtMktExpCost;
       this.data.bgtMktExpRate = mainFormModel.bgtMktExpRate; 
+      this.data.localSalesCost = mainFormModel.localSalesCost;
       this.data.localSalesRate = mainFormModel.localSalesRate;
       this.data.bgtLocSalesCost = mainFormModel.bgtLocSalesCost;
       this.data.bgtLocSalesRate = mainFormModel.bgtLocSalesRate;
@@ -788,11 +800,15 @@ export class LesenGudangComponentComponent implements OnInit {
       'isChgAddress': [false],
       'isChgFtyStr': [false],
       'isChgEq': [false],
+      'rmcost': ['', [Validators.required, Validators.minLength(1)]], 
       'bgtRmcost': ['', [Validators.required, Validators.minLength(1)]], 
+      'rdyGoodCost': ['', [Validators.required, Validators.minLength(1)]],
       'bgtRdyGoodCost': ['', [Validators.required, Validators.minLength(1)]],
+      'mktExpCost': ['', [Validators.required, Validators.minLength(1)]],
       'mktExpRate': ['', [Validators.required, Validators.minLength(1)]],
       'bgtMktExpCost': ['', [Validators.required, Validators.minLength(1)]],
       'bgtMktExpRate': ['', [Validators.required, Validators.minLength(1)]],
+      'localSalesCost': ['', [Validators.required, Validators.minLength(1)]],
       'localSalesRate': ['', [Validators.required, Validators.minLength(1)]],
       'bgtLocSalesCost': ['', [Validators.required, Validators.minLength(1)]],
       'bgtLocSalesRate': ['', [Validators.required, Validators.minLength(1)]],
@@ -870,11 +886,15 @@ export class LesenGudangComponentComponent implements OnInit {
       'isChgAddress': [this.data.isChgAddress],
       'isChgFtyStr': [this.data.isChgFtyStr],
       'isChgEq': [this.data.isChgEq],
+      'rmcost': [this.data.rmcost, [Validators.required, Validators.minLength(1)]], 
       'bgtRmcost': [this.data.bgtRmcost, [Validators.required, Validators.minLength(1)]], 
+      'rdyGoodCost': [this.data.rdyGoodCost, [Validators.required, Validators.minLength(1)]],
       'bgtRdyGoodCost': [this.data.bgtRdyGoodCost, [Validators.required, Validators.minLength(1)]],
+      'mktExpCost': [this.data.mktExpCost, [Validators.required, Validators.minLength(1)]],
       'mktExpRate': [this.data.mktExpRate, [Validators.required, Validators.minLength(1)]],
       'bgtMktExpCost': [this.data.bgtMktExpCost, [Validators.required, Validators.minLength(1)]],
       'bgtMktExpRate': [this.data.bgtMktExpRate, [Validators.required, Validators.minLength(1)]],
+      'localSalesCost': [this.data.localSalesCost, [Validators.required, Validators.minLength(1)]],
       'localSalesRate': [this.data.localSalesRate, [Validators.required, Validators.minLength(1)]],
       'bgtLocSalesCost': [this.data.bgtLocSalesCost, [Validators.required, Validators.minLength(1)]],
       'bgtLocSalesRate': [this.data.bgtLocSalesRate, [Validators.required, Validators.minLength(1)]],

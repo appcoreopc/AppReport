@@ -65,15 +65,15 @@
     [IsChgAddress]          BIT             NULL,
     [IsChgFtyStr]           BIT             NULL,
     [IsChgEq]               BIT             NULL,
-    [F_RMCost]              DECIMAL (18, 2) NULL,
+    [RMCost]                DECIMAL (18, 2) NULL,
     [BgtRMCost]             DECIMAL (18, 2) NULL,
-    [F_RdyGoodCost]         DECIMAL (18, 2) NULL,
+    [RdyGoodCost]           DECIMAL (18, 2) NULL,
     [BgtRdyGoodCost]        DECIMAL (18, 2) NULL,
-    [F_MktExpCost]          DECIMAL (18, 2) NULL,
+    [MktExpCost]            DECIMAL (18, 2) NULL,
     [MktExpRate]            DECIMAL (5, 2)  NULL,
     [BgtMktExpCost]         DECIMAL (18, 2) NULL,
     [BgtMktExpRate]         DECIMAL (5, 2)  NULL,
-    [F_LocalSalesCost]      DECIMAL (18, 2) NULL,
+    [LocalSalesCost]        DECIMAL (18, 2) NULL,
     [LocalSalesRate]        DECIMAL (5, 2)  NULL,
     [BgtLocSalesCost]       DECIMAL (18, 2) NULL,
     [BgtLocSalesRate]       DECIMAL (5, 2)  NULL,
@@ -147,6 +147,8 @@
     [EditedDT]              DATETIME        NULL,
     CONSTRAINT [PK_RptLG_1] PRIMARY KEY CLUSTERED ([RptId] ASC)
 );
+
+
 
 
 

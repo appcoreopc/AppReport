@@ -1223,7 +1223,7 @@ namespace AppReport.Controllers
                     Font zapfdingbats = new Font(Font.ZAPFDINGBATS);
                     var cp1 = new Phrase(); 
                     cp1.Add(new Chunk("\u0033", zapfdingbats));
-                    cp1.Add("                RM " + @String.Format("{0:N}", rptLg.FRmcost));
+                    cp1.Add("                RM " + @String.Format("{0:N}", rptLg.Rmcost));
                     cp1.Font.Size = 10f;
 
                     cell = new PdfPCell();
@@ -1305,7 +1305,7 @@ namespace AppReport.Controllers
                      
                     cp1 = new Phrase();
                     cp1.Add(new Chunk("\u0033", zapfdingbats));
-                    cp1.Add("                RM " + @String.Format("{0:N}", rptLg.FRdyGoodCost));
+                    cp1.Add("                RM " + @String.Format("{0:N}", rptLg.RdyGoodCost));
                     cp1.Font.Size = 10f;
 
                     cell = new PdfPCell();
@@ -1375,7 +1375,7 @@ namespace AppReport.Controllers
 
                     cp1 = new Phrase();
                     cp1.Add(new Chunk("\u0033", zapfdingbats));
-                    cp1.Add("       RM " + @String.Format("{0:N}", rptLg.FMktExpCost) + @" / " + rptLg.MktExpRate.ToString() + @"%");
+                    cp1.Add("       RM " + @String.Format("{0:N}", rptLg.MktExpCost) + @" / " + rptLg.MktExpRate.ToString() + @"%");
                     cp1.Font.Size = 10f;
 
                     cell = new PdfPCell();
@@ -1417,7 +1417,7 @@ namespace AppReport.Controllers
 
                     cp1 = new Phrase();
                     cp1.Add(new Chunk("\u0033", zapfdingbats));
-                    cp1.Add("       RM " + @String.Format("{0:N}", rptLg.FLocalSalesCost) + @" / " + rptLg.LocalSalesRate.ToString() + @"%");
+                    cp1.Add("       RM " + @String.Format("{0:N}", rptLg.LocalSalesCost) + @" / " + rptLg.LocalSalesRate.ToString() + @"%");
                     cp1.Font.Size = 10f;
 
                     cell = new PdfPCell();
@@ -1628,9 +1628,9 @@ namespace AppReport.Controllers
   
         private string PrintImportRpt(RptLg rptLg, List<RptLgYimp> rptLgYimpList, string rptType)
         {
-            var rptName1 = rptLg.RptY1.ToString() + "-" + rptLg.RptY2.ToString();
+            var rptName1 = rptLg.RptY2.ToString() + "-" + rptLg.RptY2.ToString();
 
-            var titlePeriod =  ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptSdateY1).Month).ToString()) + " " + ((DateTime)rptLg.RptSdateY1).Year.ToString()
+            var titlePeriod =  ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptSdateY2).Month).ToString()) + " " + ((DateTime)rptLg.RptSdateY2).Year.ToString()
                 + " HINGGA " + ResourceHelper.Get("MMMM_" + (((DateTime)rptLg.RptEdateY2).Month).ToString()) + " " + ((DateTime)rptLg.RptEdateY2).Year.ToString();
 
 
@@ -2523,12 +2523,12 @@ namespace AppReport.Controllers
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE; 
                     tbl.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase("Kadar GST (%)", f3));
+                    cell = new PdfPCell(new Phrase("Kadar SST (%)", f3));
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE; 
                     tbl.AddCell(cell);
 
-                    cell = new PdfPCell(new Phrase("Jumlah GST (%)", f3));
+                    cell = new PdfPCell(new Phrase("Jumlah SST (%)", f3));
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.VerticalAlignment = Element.ALIGN_MIDDLE; 
                     tbl.AddCell(cell);

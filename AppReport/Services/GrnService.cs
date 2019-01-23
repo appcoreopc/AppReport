@@ -24,12 +24,17 @@ namespace AppReport.Services
         {
             return _context.Grn.Skip(skipAmount).Take(takeAmount);
         }
-
-        public bool Delete(int id)
-        {
-            return Remove<Grn>(id);
-        }
          
+        public bool Delete(int grnId)
+        {
+            return Remove<Grn>(grnId);
+        }
+
+        public bool Delete(string deleteItems)
+        {
+            return base.DeleteItems<Grn>(deleteItems);
+        }
+
 
         public bool Save(GrnRequestModel d)
         {

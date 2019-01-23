@@ -3,7 +3,7 @@ import { ActionReducer, Action } from '@ngrx/store';
 
 import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
 	 GRN_MESSAGE_END, GRN_SAVE_ERR, GRN_CANCEL_OK, GRN_GET, GRN_GET_ERR,
-		GRN_GET_OK, GRN_WAIT_PENDING,
+		GRN_GET_OK, GRN_WAIT_PENDING, GRN_DELETE_SUCCESS, 
   SUPPLIER_GET, SUPPLIER_GET_OK,  
   RAW_MATERIAL_GET, RAW_MATERIAL_GET_OK,  
 		UOM_GET, UOM_GET_OK, 
@@ -43,7 +43,9 @@ import {GRN_SAVE, GRN_CANCEL, GRN_SAVE_SUCCESS,
 			return  { status : 11, data : action, type: RAW_MATERIAL_GET_OK }; 
 		case GRN_WAIT_PENDING:	
 		  console.log('GRN pending');	  
-		  return  { status : 12, data : action, type: GRN_WAIT_PENDING };			
+		  return  { status : 12, data : action, type: GRN_WAIT_PENDING };	
+   	case GRN_DELETE_SUCCESS:		
+				return  { status : 7, data : action, type: GRN_DELETE_SUCCESS }; 		
 		default:
 			return status;						
 		}					

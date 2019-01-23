@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[RptLG_YImp] (
+﻿CREATE TABLE [dbo].[RptLG_YImp] (
     [TxnId]          INT             IDENTITY (1, 1) NOT NULL,
     [RptId]          INT             NULL,
     [RptY]           INT             NULL,
@@ -32,13 +32,15 @@ CREATE TABLE [dbo].[RptLG_YImp] (
 
 
 
-GO
 
+
+GO
+ 
 
 
 CREATE TRIGGER [dbo].[RptLG_YImp_Update]
        ON [dbo].[RptLG_YImp]
-AFTER UPDATE
+AFTER INSERT, UPDATE 
 AS
 BEGIN
 SET NOCOUNT ON;

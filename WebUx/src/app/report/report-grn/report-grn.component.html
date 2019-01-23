@@ -1,9 +1,9 @@
  
 <div class="container"> 
   
-  <p-dialog id="formAction" header="{{formTitle}}"  [(visible)]="display" modal='true'>
+  <p-dialog header="{{formTitle}}"  [(visible)]="display" modal='true'>
      
-<form [formGroup]='dataForm'> 
+<form [formGroup]='personForm'> 
 <div style="width:100%;padding:0px">
  
 	  
@@ -231,7 +231,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom1" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll1" class="alert alert-danger">
@@ -389,7 +389,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom2" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll2" class="alert alert-danger">
@@ -547,7 +547,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom3" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll3" class="alert alert-danger">
@@ -704,7 +704,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom4" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll4" class="alert alert-danger">
@@ -862,7 +862,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom5" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll5" class="alert alert-danger">
@@ -1020,7 +1020,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom6" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll6" class="alert alert-danger">
@@ -1177,7 +1177,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom7" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll7" class="alert alert-danger">
@@ -1335,7 +1335,7 @@
 									<span class="input-group-btn">
 									</span> 
 										<select class="form-control" formControlName="rollUom8" style="width:100px">
-											<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+											<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 											</select>
 									</div>
 									<div *ngIf="formErrors.roll8" class="alert alert-danger">
@@ -1493,7 +1493,7 @@
 											<span class="input-group-btn">
 											</span> 
 												<select class="form-control" formControlName="rollUom9" style="width:100px">
-													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 													</select>
 											</div>
 											<div *ngIf="formErrors.roll9" class="alert alert-danger">
@@ -1651,7 +1651,7 @@
 												<span class="input-group-btn">
 												</span> 
 													<select class="form-control" formControlName="rollUom10" style="width:100px">
-														<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+														<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 														</select>
 												</div>
 												<div *ngIf="formErrors.roll10" class="alert alert-danger">
@@ -1809,7 +1809,7 @@
 											<span class="input-group-btn">
 											</span> 
 												<select class="form-control" formControlName="rollUom11" style="width:100px">
-													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 													</select>
 											</div>
 											<div *ngIf="formErrors.roll11" class="alert alert-danger">
@@ -1967,7 +1967,7 @@
 											<span class="input-group-btn">
 											</span> 
 												<select class="form-control" formControlName="rollUom12" style="width:100px">
-													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 													</select>
 											</div>
 											<div *ngIf="formErrors.roll12" class="alert alert-danger">
@@ -2125,7 +2125,7 @@
 											<span class="input-group-btn">
 											</span> 
 												<select class="form-control" formControlName="rollUom13" style="width:100px">
-													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 													</select>
 											</div>
 											<div *ngIf="formErrors.roll13" class="alert alert-danger">
@@ -2284,7 +2284,7 @@
 											<span class="input-group-btn">
 											</span> 
 												<select class="form-control" formControlName="rollUom14" style="width:100px">
-													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 													</select>
 											</div>
 											<div *ngIf="formErrors.roll14" class="alert alert-danger">
@@ -2441,7 +2441,7 @@
 											<span class="input-group-btn">
 											</span> 
 												<select class="form-control" formControlName="rollUom15" style="width:100px">
-													<option *ngFor="let obj of uomRows" [value]="obj.uomId">{{obj.uomCode}}</option>
+													<option *ngFor="let obj of uomRows2" [value]="obj.uomId">{{obj.uomCode}}</option>
 													</select>
 											</div>
 											<div *ngIf="formErrors.roll15" class="alert alert-danger">
@@ -2535,10 +2535,10 @@
 						  </div>
 					  </div> 
 					  <div class="cell c5"> 
-						<div class="input-group-addon">
-						  <span>RM</span>
-						</div>
 						<div class="input-group"> 
+							<div class="input-group-addon">
+							  <span>RM</span>
+							</div>
 							 <input id="dutyImp" formControlName="dutyImp" maxlength="16" type="number" class="form-control decimal-control"  />  
 						  </div>
 							<div *ngIf="formErrors.dutyImp" class="alert alert-danger">
@@ -2551,7 +2551,7 @@
 					  <div class="cell c1">
 						<div class="input-group">
 							<div> 
-							 <label for="gst">GST 6% :</label>
+							 <label for="gst">SST :</label>
 							</div>
 						  </div>
 					  </div> 
@@ -3078,7 +3078,7 @@
 				  <div class="cell c1">
 					<div class="input-group">
 						<div> 
-						 <label for="freightGst">6% GST :</label>
+						 <label for="freightGst">SST :</label>
 						</div>
 					  </div>
 				  </div> 
@@ -3156,7 +3156,8 @@
           <div class="cell c4"> 
           </div> 
           <div class="cell c5" style="text-align:right">	    
-							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!dataForm.valid" (click)="save()"></p-button>   
+							<p-button icon="fa fa-fw fa-save" label="Save" [disabled]="!personForm.valid" (click)="save()"></p-button>  
+							 
 			 	</div>
        </div>
 		  <!-- <p>Form value: {{ dataForm.value | json }}</p>
@@ -3175,7 +3176,8 @@
 		<b>REPORT - GRN</b>
 	</div>
 	<div style="text-align:right; float:right">
-	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>  
+	<p-button (onClick)="addForm()" icon="fa fa-fw fa-plus" label="Add"></p-button>   
+	<p-button (onClick)="deleteForm()" icon="fa fa-fw fa-trash" label="Delete"></p-button> 
 	</div> 
 </div>  
 
@@ -3183,11 +3185,24 @@
 <div class="container"> 
   <ngx-datatable class="material striped"
   [rows]="rows"
-  [limit]="10"
-  [selectionType]="'single'"
-	(select)="onSelect($event)" 
+  [limit]="10" 
+  [selectionType]="'checkbox'"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
   [headerHeight]="30"  [rowHeight]="'auto'"
 	[footerHeight]="30">
+
+	
+	<ngx-datatable-column
+	[width]="45"
+	[sortable]="false"
+	[canAutoResize]="false"
+	[draggable]="false"
+	
+	[resizeable]="false"
+	[headerCheckboxable]="true"
+	[checkboxable]="true">
+  </ngx-datatable-column>
 	
 	 <ngx-datatable-column  name="Code" prop="grncode" [width]="80" [resizeable]="false" [sortable]="true" [flexGrow]="1">
      <ng-template let-value="value" ngx-datatable-cell-template>

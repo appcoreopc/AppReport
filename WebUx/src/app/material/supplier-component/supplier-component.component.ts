@@ -65,7 +65,7 @@ import { CityAppState, SUPPLIER_SAVE, SUPPLIER_GET_OK, DELETE_SUPPLIER_PROMPT,
       'currencyId':[],
       'deliveryTerms': [],
       'paymentTerms': [],
-      'fordwarder': [],
+      'forwarder': [],
       'gstno': [], 
       'factoryStatusId':[]
     }; 
@@ -87,10 +87,9 @@ import { CityAppState, SUPPLIER_SAVE, SUPPLIER_GET_OK, DELETE_SUPPLIER_PROMPT,
       'currencyId': '',
       'deliveryTerms': '',
       'paymentTerms': '',
-      'fordwarder': '',
+      'forwarder': '',
       'gstno': '', 
-      'factoryStatusId':'',
-      'forwarder' : ''
+      'factoryStatusId':'' 
     };
     
     itemSelected : boolean = false;
@@ -127,7 +126,7 @@ import { CityAppState, SUPPLIER_SAVE, SUPPLIER_GET_OK, DELETE_SUPPLIER_PROMPT,
       { prop: 'currencyId', name : 'currencyId' },
       { prop: 'deliveryTerms', name : 'deliveryTerms' },
       { prop: 'paymentTerms', name : 'paymentTerms' },
-      { prop: 'fordwarder', name : 'fordwarder' },
+      { prop: 'forwarder', name : 'forwarder' },
       { prop: 'gstno', name : 'gstno' }, 
       { prop: 'factoryStatusId', name : 'factoryStatusId' }
     ];

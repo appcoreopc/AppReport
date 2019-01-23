@@ -151,6 +151,9 @@ export const GRN_GET = 'GRN_GET';
 export const GRN_GET_ERR = 'GRN_GET_ERR';
 export const GRN_GET_OK = 'GRN_GET_OK';
 export const GRN_WAIT_PENDING = 'GRN_WAIT_PENDING';
+export const GRN_DELETE = 'GRN_DELETE';
+export const GRN_DELETE_SUCCESS = 'GRN_DELETE_SUCCESS';
+export const GRN_DELETE_ERR = 'GRN_DELETE_ERR';
 
 export const M1LAMPIRAN_SAVE = 'M1LAMPIRAN_SAVE';
 export const M1LAMPIRAN_CANCEL = 'M1LAMPIRAN_CANCEL';
@@ -232,6 +235,7 @@ export const DELETE_READYSTOCK_PROMPT = "Do you want to remove selected ready st
 export const DELETE_RAWMATERIAL_PROMPT = "Do you want to remove selected raw material(s)?";
 export const DELETE_MATERIALCATEGORY_PROMPT = "Do you want to remove selected material category(s)?";
 export const DELETE_STNCUSTOM_PROMPT = "Do you want to remove selected STN/KASTAM Name(s)?";
+export const DELETE_GRN_PROMPT = "Do you want to remove selected GRN(s)?";
 
 export interface CityAppState {
 	status?: number;	
