@@ -14,6 +14,7 @@ using AppReport.Util;
 using AppReport.RequestModel;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Data.SqlClient;
 
 namespace AppReport.Controllers
 {
@@ -23,11 +24,13 @@ namespace AppReport.Controllers
         private IHostingEnvironment _env; 
         const string _rptFileName = "PTS Skim Khas";
         string _rptFileDT;
-        
+        private AppConfig _accessConfig;
+
         public RptSkController(IHostingEnvironment env, PTSContext ptsContext, IOptions<AppConfig> accessConfig)
         {
             _env = env;
-            _ptsContext = ptsContext; 
+            _ptsContext = ptsContext;
+            _accessConfig = accessConfig?.Value;
         }
         
         [HttpGet]
@@ -55,6 +58,20 @@ namespace AppReport.Controllers
             //return View();
         }
          
+        public void ProcessReportData(int id)
+        {
+            var cnnString = $"{_accessConfig?.ConnectionStrings.PTSDatabase}";
+            SqlConnection cnn = new SqlConnection(cnnString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnn;
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = "ProcessRptSK";
+            cmd.Parameters.AddWithValue("@RptId", id);
+            //add any parameters the stored procedure might require
+            cnn.Open();
+            object o = cmd.ExecuteScalar();
+            cnn.Close();
+        }
 
         [HttpGet]
         public FileResult Download(string fileName)
@@ -67,6 +84,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadLetter(int id, [FromQuery] bool isHeader)
         {
+            ProcessReportData(id);
             var rptSk = new RptSkService(_ptsContext).Get(id);
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
             string rpt = string.Empty;
@@ -80,6 +98,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadReport(int id)
         {
+            ProcessReportData(id);
             var rptSk = new RptSkService(_ptsContext).Get(id);
             var rptSkMimp = new RptSkMimpService(_ptsContext).Get(id);
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");

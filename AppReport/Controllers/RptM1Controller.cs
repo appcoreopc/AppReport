@@ -17,6 +17,8 @@ using AppReport.Util;
 using iTextSharp.text.pdf.draw;
 using System.Linq;
 using AppReport.RequestModel;
+using System.Data.SqlClient; 
+using Microsoft.EntityFrameworkCore; 
 
 namespace AppReport.Controllers
 { 
@@ -26,6 +28,7 @@ namespace AppReport.Controllers
         private IHostingEnvironment _env;
         const string _rptFileName = "PTS Lampiran M1";
         string _rptFileDT;
+        private AppConfig _accessConfig;
 
         static BaseFont bFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, false);
 
@@ -45,7 +48,8 @@ namespace AppReport.Controllers
         public RptM1Controller(IHostingEnvironment env, PTSContext ptsContext, IOptions<AppConfig> accessConfig)
         {
             _env = env;
-            _ptsContext = ptsContext; 
+            _ptsContext = ptsContext;
+            _accessConfig = accessConfig?.Value;
         }
 
         /*public IActionResult Index(int id)
@@ -99,7 +103,7 @@ namespace AppReport.Controllers
 
         [HttpGet]
         public FileResult Download(string fileName)
-        {
+        { 
             string filepath = Path.Combine(AppConstant.ReportFilePath, fileName);
             byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
             return File(fileBytes, "application/pdf", fileName);
@@ -108,6 +112,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadLetter(int id, [FromQuery] bool isHeader)
         {
+            ProcessReportData(id);
             var rptM1 = new RptM1Service(_ptsContext).Get(id);  
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
             string rpt = string.Empty;
@@ -121,12 +126,13 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadMonthlyReport(int id, [FromQuery] bool isHeader)
         {
+            ProcessReportData(id);
             var rptM1 = new RptM1Service(_ptsContext).Get(id);
 
             IEnumerable<RptM1Mstk> rptM1Mstk = new RptM1MstkService(_ptsContext).Get(id);
             List<RptM1Mstk> rptM1MstkList = (rptM1Mstk != null) ? rptM1Mstk.ToList() : new List<RptM1Mstk>(); 
 
-            IEnumerable<RptM1MstkInv> RptM1MstkInv = new RptM1MstkInvService(_ptsContext).Get(id);
+            IEnumerable<RptM1MstkInv> RptM1MstkInv = new RptM1MstkInvService(_ptsContext).Get(id).OrderBy(x => x.MstkId);
             List<RptM1MstkInv> RptM1MstkInvList = (RptM1MstkInv != null) ? RptM1MstkInv.ToList() : new List<RptM1MstkInv>();
 
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -141,6 +147,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadMonthlySummary(int id, [FromQuery] bool isHeader)
         {
+            ProcessReportData(id);
             var rptM1 = new RptM1Service(_ptsContext).Get(id);
              
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -151,7 +158,22 @@ namespace AppReport.Controllers
             }
             return Download(rpt);
         }
+         
 
+        public void ProcessReportData(int id)
+        {
+            var cnnString = $"{_accessConfig?.ConnectionStrings.PTSDatabase}";
+            SqlConnection cnn = new SqlConnection(cnnString); 
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnn;
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = "ProcessRptM1";
+            cmd.Parameters.AddWithValue("@RptId", id);
+            //add any parameters the stored procedure might require
+            cnn.Open();
+            object o = cmd.ExecuteScalar();
+            cnn.Close();
+        }
 
         public class ITextEvents : PdfPageEventHelper
         {

@@ -71,7 +71,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
     selected : any;
     
     formTitle: string = "New GRN"; 
-    rmCurrency: string = "-";
+    rmCurrency: string = "RM";
     newSizeCount: number = 1;
     dataList : Array<any> = new Array<any>(); 
     componentDataList : Array<any> = new Array<any>(); 
@@ -1290,7 +1290,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.currentModel.invoiceNo = '';    
         this.currentModel.currencyId = 1;
         this.currentModel.amountCurrency = 0;
-        this.currentModel.exRate = 0;
+        this.currentModel.exRate = 1;
         this.currentModel.amount = 0;
         this.currentModel.pono = '';
         this.currentModel.otdlate = '';
@@ -1316,7 +1316,7 @@ import { CityAppState,  ADD, UPDATE, GRN_SAVE, GRN_GET_OK, GRN_GET,
         this.currentModel.edifee = 0;
         this.currentModel.customNo = '';
 
-        this.rmCurrency = "MYR";
+        this.rmCurrency = "RM";
         
         this.formUtil = new FormUtil<GrnModel>(this.currentModel, this.formValidators);
         let userform = this.formUtil.createForm(false);

@@ -17,6 +17,7 @@ using AppReport.Util;
 using iTextSharp.text.pdf.draw;
 using System.Linq;
 using AppReport.RequestModel;
+using System.Data.SqlClient;
 
 namespace AppReport.Controllers
 { 
@@ -26,6 +27,7 @@ namespace AppReport.Controllers
         private IHostingEnvironment _env;
         const string _rptFileName = "PTS Lesen Gudang";
         string _rptFileDT;
+        private AppConfig _accessConfig;
 
         static BaseFont bFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, false);
 
@@ -43,7 +45,8 @@ namespace AppReport.Controllers
         public RptLgController(IHostingEnvironment env, PTSContext ptsContext, IOptions<AppConfig> accessConfig)
         {
             _env = env;
-            _ptsContext = ptsContext; 
+            _ptsContext = ptsContext;
+            _accessConfig = accessConfig?.Value;
         }
 
         /*public IActionResult Index(int id)
@@ -110,6 +113,21 @@ namespace AppReport.Controllers
             return new BadRequestResult();
         }
 
+        public void ProcessReportData(int id)
+        {
+            var cnnString = $"{_accessConfig?.ConnectionStrings.PTSDatabase}";
+            SqlConnection cnn = new SqlConnection(cnnString);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cnn;
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = "ProcessRptLG";
+            cmd.Parameters.AddWithValue("@RptId", id);
+            //add any parameters the stored procedure might require
+            cnn.Open();
+            object o = cmd.ExecuteScalar();
+            cnn.Close();
+        }
+
         [HttpGet]
         public FileResult Download(string fileName)
         {
@@ -121,6 +139,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadLetter(int id, [FromQuery] bool isHeader)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
 
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -135,6 +154,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadAttachment(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
 
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -149,6 +169,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadImportRptY1(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);  
             IEnumerable<RptLgYimp> rptLgYimp1 = new RptLgYimpService(_ptsContext).Get(0, (int)rptLg.RptY1);  
             List<RptLgYimp> rptLgYimp1List = (rptLgYimp1 != null) ? rptLgYimp1.ToList() : new List<RptLgYimp>(); 
@@ -165,6 +186,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadImportRptY2(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id); 
             IEnumerable<RptLgYimp> rptLgYimp2 = new RptLgYimpService(_ptsContext).Get(id, (int)rptLg.RptY2);  
             List<RptLgYimp> rptLgYimp2List = (rptLgYimp2 != null) ? rptLgYimp2.ToList() : new List<RptLgYimp>(); 
@@ -181,6 +203,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadExportRptY1(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
             IEnumerable<RptLgYexp> rptLgYexp1 = new RptLgYexpService(_ptsContext).Get(0, (int)rptLg.RptY1); 
             List<RptLgYexp> rptLgYexp1List = (rptLgYexp1 != null) ? rptLgYexp1.ToList() : new List<RptLgYexp>(); 
@@ -197,6 +220,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadExportRptY2(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
             IEnumerable<RptLgYexp> rptLgYexp2 = new RptLgYexpService(_ptsContext).Get(id, (int)rptLg.RptY2);
             List<RptLgYexp> rptLgYexp2List = (rptLgYexp2 != null) ? rptLgYexp2.ToList() : new List<RptLgYexp>();
@@ -213,6 +237,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadLampiranA1(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
 
             _rptFileDT = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -227,6 +252,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadLampiranA2(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
             IEnumerable<RptLgYbgt> rptLgYbgt1 = new RptLgYbgtService(_ptsContext).Get(id, false); 
             List<RptLgYbgt> rptLgYbgt1List = (rptLgYbgt1 != null) ? rptLgYbgt1.ToList() : new List<RptLgYbgt>(); 
@@ -243,6 +269,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadLampiranA21(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
             IEnumerable<RptLgYbgt> rptLgYbgt2 = new RptLgYbgtService(_ptsContext).Get(id, true); 
             List<RptLgYbgt> rptLgYbgt2List = (rptLgYbgt2 != null) ? rptLgYbgt2.ToList() : new List<RptLgYbgt>();
@@ -259,6 +286,7 @@ namespace AppReport.Controllers
         [HttpGet]
         public FileResult DownloadLampiranA3(int id)
         {
+            ProcessReportData(id);
             var rptLg = new RptLgService(_ptsContext).Get(id);
             IEnumerable<RptLgYrdy> rptLgYrdy = new RptLgYrdyService(_ptsContext).Get(id); 
             List<RptLgYrdy> rptLgYrdyList = (rptLgYrdy != null) ? rptLgYrdy.ToList() : new List<RptLgYrdy>();
