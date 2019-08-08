@@ -1,26 +1,23 @@
-using System;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using AppReport.Config;
+using AppReport.DataServices.PTSDataModel;
+using AppReport.RequestModel;
+using AppReport.Services;
+using AppReport.Util;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using AppReport.Services;
-using AppReport.DataServices.PTSDataModel;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using AppReport.Config;
+using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Localization;
-using System.Resources;
-using System.Globalization;
-using AppReport.Resources;
-using AppReport.Util;
-using iTextSharp.text.pdf.draw;
-using System.Linq;
-using AppReport.RequestModel;
 using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
 
 namespace AppReport.Controllers
-{ 
+{
+    [EnableCors("DevPolicy")]
     public class RptLgController : Controller
     { 
         private PTSContext _ptsContext; 

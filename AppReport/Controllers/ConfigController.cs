@@ -3,9 +3,11 @@ using AppReport.DataServices.PTSDataModel;
 using AppReport.Services;
 using AppReport.Util;
 using AppReport.RequestModel;
+using Microsoft.AspNetCore.Cors;
 
 namespace AppReport.Controllers
-{    
+{
+    [EnableCors("DevPolicy")]
     public class ConfigController : Controller
     {
         private PTSContext _ptsContext;

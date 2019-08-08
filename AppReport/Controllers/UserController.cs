@@ -4,10 +4,11 @@ using AppReport.RequestModel;
 using AppReport.Services;
 using AppReport.Util;
 using System;
+using Microsoft.AspNetCore.Cors;
 
 namespace AppReport.Controllers
 {
-
+    [EnableCors("DevPolicy")]
     public class UserController : Controller
     {
         private PTSContext _ptsContext;

@@ -2,10 +2,12 @@ using AppReport.DataServices.PTSDataModel;
 using AppReport.RequestModel;
 using AppReport.Services;
 using AppReport.Util;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppReport.Controllers
 {
+    [EnableCors("DevPolicy")]
     public class RawMaterialController : Controller
     {
         private PTSContext _ptsContext;

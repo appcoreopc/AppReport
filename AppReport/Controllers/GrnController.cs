@@ -6,9 +6,11 @@ using AppReport.Services;
 using AppReport.Util;
 using AppReport.RequestModel;
 using System;
+using Microsoft.AspNetCore.Cors;
 
 namespace AppReport.Controllers
 {
+    [EnableCors("DevPolicy")]
     public class GrnController : Controller
     {
         private PTSContext _ptsContext;

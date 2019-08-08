@@ -32,9 +32,36 @@ namespace AppReport
 
             services.AddDbContext<PTSContext>(options => options.UseSqlServer(Configuration.GetConnectionString(AppConstant.AppSettingDataConnection)));
 
-            services.AddMvc();
 
-            services.AddCors();
+            //services.AddCors();
+            /*services.AddCors(o => o.AddPolicy("DevPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials();
+            }));*/
+
+            /*You have to add Cors before MVC. The registration order of the middleware is important. If Cors is registered after mvc it will never be called. They are called in the order of registration.
+
+            Once cors process the request, it will pass it to next middleware (Mvc)*/
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("DevPolicy",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            });
+
+            services.AddMvc()
+    .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //services.AddMvc();
+
 
         }
 
@@ -46,12 +73,14 @@ namespace AppReport
             loggerFactory.AddDebug();
 
             app.UseCors(option => option.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
+            //app.UseCors("DevPolicy");
+             
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller}/{action}/{id?}");
             }); 
-            
+
         }
-    }
+     }
 }

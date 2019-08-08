@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Cors;
 
 namespace AppReport.Controllers
-{
+{ 
     public partial class RptSkController : Controller
     {
         public class PDFFooter : PdfPageEventHelper

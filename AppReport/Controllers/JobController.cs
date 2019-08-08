@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using AppReport.DataServices.PTSDataModel;
 using AppReport.Config;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Cors;
 
 namespace AppReport.Controllers
 {
-   
-
+    [EnableCors("DevPolicy")]
     public class JobController : Controller
     {
         private PTSContext _ptsContext;

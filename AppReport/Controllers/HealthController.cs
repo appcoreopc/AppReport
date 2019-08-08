@@ -6,9 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using AppReport.DataServices.PTSDataModel;
 using AppReport.Config;
+using Microsoft.AspNetCore.Cors;
 
 namespace ACC.IDS.NetCore.Service.SelfHost.Controllers
 {
+    [EnableCors("DevPolicy")]
     [Route("api/[controller]")]
     public class HealthController : Controller
     {

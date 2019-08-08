@@ -7,10 +7,11 @@ using AppReport.DataServices.PTSDataModel;
 using AppReport.RequestModel;
 using AppReport.Util;
 using AppReport.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace AppReport.Controllers
-{
-    
+{ 
+    [EnableCors("DevPolicy")]
     public class AuthController : Controller
     {
         private PTSContext _ptsContext;
@@ -24,7 +25,8 @@ namespace AppReport.Controllers
             return View();
         }
 
-        
+
+        [EnableCors("DevPolicy")]
         [HttpPost]
         public IActionResult Login([FromBody] UserRequestModel requestUser)
         {
